@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06T17:00:04Z",
+  "updatedAt": "2026-09-06T17:15:55Z",
   "items": [
     {
       "id": "pf-u1dQJSKk393KddEWzuErjDyU8BZaaZ9tYYNWowwpump",
@@ -302,6 +302,18 @@
       "address": "HnztZn6GQMffJAZoBWEJS657ikUs9U2vfH3tVmzxpump"
     },
     {
+      "id": "pf-BLJX2JkcPG5fmnCLdHvmSBcyMKhATaemjaN2X4rpump",
+      "name": "Robinhood",
+      "symbol": "HOOD",
+      "chain": "Solana",
+      "platform": "pump.fun",
+      "marketCapUsd": 23740549.51,
+      "createdAt": "2026-09-06T17:10:56Z",
+      "fetchedAt": "2026-09-06T17:15:54Z",
+      "link": "https://pump.fun/BLJX2JkcPG5fmnCLdHvmSBcyMKhATaemjaN2X4rpump",
+      "address": "BLJX2JkcPG5fmnCLdHvmSBcyMKhATaemjaN2X4rpump"
+    },
+    {
       "id": "pf-nhANnuj2NZTQVpXChRZWnsHHCHCL3j9GjofG8N6pump",
       "name": "OTC",
       "symbol": "OTC",
@@ -492,6 +504,18 @@
       "fetchedAt": "2026-09-06T16:02:16Z",
       "link": "https://dexscreener.com/base/0x858147b232f2e769a6ef83b602f3e202971f2f121d6d4f2c2f31ed5185dacf28",
       "address": "0x89d8cb38067b55f820f29a9e12d0ce18682a2bfc"
+    },
+    {
+      "id": "ds-0xd8775c2522f447a503d8e57abf32590ef5b9a6a8",
+      "name": "Deal",
+      "symbol": "DEAL",
+      "chain": "Robinhood Chain",
+      "platform": "DexScreener / Robinhood Chain",
+      "marketCapUsd": 1226811.0,
+      "createdAt": null,
+      "fetchedAt": "2026-09-06T17:15:54Z",
+      "link": "https://dexscreener.com/robinhood/0x3c6e96d67e69cde54af78354282032b506ecb63d0fa410d06253e7fe24bd2d47",
+      "address": "0xd8775c2522f447a503d8e57abf32590ef5b9a6a8"
     }
   ]
 }

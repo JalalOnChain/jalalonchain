@@ -33,6 +33,8 @@ TX_PATH = os.path.join(DATA_DIR, "transactions.json")
 KNOWLEDGE_PATH = os.path.join(DATA_DIR, "knowledge.json")
 POOL_PATH = os.path.join(DATA_DIR, "knowledge-pool.json")
 STATE_PATH = os.path.join(DATA_DIR, "knowledge-state.json")
+NEWS_PATH = os.path.join(DATA_DIR, "news.json")
+LAUNCHES_PATH = os.path.join(DATA_DIR, "launches.json")
 
 MIN_USD = 100_000
 MAX_TX = 300
@@ -269,6 +271,307 @@ def scrape_lookonchain(existing_ids):
     return out
 
 
+def chain_label(c):
+    return CHAIN_LABELS.get(c, c.capitalize() if c else "Unknown")
+
+
+CHAIN_LABELS = {
+    "solana": "Solana", "ethereum": "Ethereum", "bsc": "BNB Chain", "base": "Base",
+    "robinhood": "Robinhood Chain", "polygon": "Polygon", "arbitrum": "Arbitrum",
+    "avalanche": "Avalanche", "blast": "Blast", "sui": "Sui", "ton": "TON",
+    "tron": "Tron", "optimism": "Optimism",
+}
+
+# --- News & enforcement ------------------------------------------------
+# Deliberately excludes Chainalysis and TRM Labs (direct competitors) as
+# both a source and as a mentioned brand. Twitter/X isn't pulled live here:
+# X's API no longer allows free automated reading of tweets, and scraping
+# it without login is against their ToS and unreliable — so real-time
+# hack/investigator accounts are hand-curated in data/twitter-watch.json
+# instead of synced.
+MAX_NEWS = 150
+NEWS_RSS_SOURCES = [
+    {"url": "https://www.justice.gov/news/rss?type=press_release&m=1", "source": "U.S. Dept. of Justice", "category": "enforcement", "filter": True},
+    {"url": "https://www.sec.gov/enforcement-litigation/litigation-releases/rss", "source": "U.S. SEC Litigation", "category": "enforcement", "filter": True},
+    {"url": "https://www.coindesk.com/arc/outboundfeeds/rss/", "source": "CoinDesk", "category": "market-news", "filter": True},
+    {"url": "https://www.theblock.co/rss.xml", "source": "The Block", "category": "market-news", "filter": False},
+]
+OFAC_URL = "https://ofac.treasury.gov/recent-actions"
+CRYPTO_KEYWORDS = [
+    "crypto", "cryptocurrency", "bitcoin", "ether", "ethereum", "blockchain",
+    "digital asset", "digital currency", "virtual currency", "virtual asset",
+    "stablecoin", "defi", "nft", "token", "wallet", "smart contract", "web3",
+    "coin offering", "usdt", "usdc", "binance", "coinbase", "solana",
+    "hyperliquid", "mining", "exchange hack", "seized", "seizure",
+]
+EXCLUDE_BRANDS = ["chainalysis", "trm labs", "trmlabs"]
+MONTHS_RE = r"(January|February|March|April|May|June|July|August|September|October|November|December)"
+
+
+def is_crypto_relevant(text):
+    low = (text or "").lower()
+    return any(k in low for k in CRYPTO_KEYWORDS)
+
+
+def mentions_excluded_brand(text):
+    low = (text or "").lower()
+    return any(b in low for b in EXCLUDE_BRANDS)
+
+
+def strip_html(s):
+    try:
+        from bs4 import BeautifulSoup
+        return BeautifulSoup(s or "", "html.parser").get_text(" ").strip()
+    except Exception:
+        return re.sub(r"<[^>]+>", " ", s or "").strip()
+
+
+def parse_rss_date(s):
+    try:
+        from email.utils import parsedate_to_datetime
+        dt = parsedate_to_datetime(s)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    except Exception:
+        return None
+
+
+def fetch_rss(url):
+    import xml.etree.ElementTree as ET
+    out = []
+    try:
+        r = requests.get(url, timeout=20, headers={
+            "User-Agent": UA, "Accept": "application/rss+xml, application/xml, text/xml",
+        })
+        root = ET.fromstring(r.content)
+        for item in root.iter("item"):
+            def get(tag):
+                el = item.find(tag)
+                return el.text if el is not None and el.text else ""
+            title = get("title").strip()
+            link = get("link").strip()
+            pub = get("pubDate").strip()
+            desc = strip_html(get("description"))[:400]
+            if not title:
+                continue
+            out.append({"title": title, "link": link, "pubDate": pub, "description": desc})
+    except Exception:
+        traceback.print_exc()
+    return out
+
+
+def scrape_ofac(existing_ids):
+    entries = []
+    try:
+        from bs4 import BeautifulSoup
+        r = requests.get(OFAC_URL, timeout=20, headers={"User-Agent": UA})
+        soup = BeautifulSoup(r.text, "html.parser")
+        text = soup.get_text("\n")
+        lines = [l.strip() for l in text.split("\n") if l.strip()]
+        date_re = re.compile(r"^" + MONTHS_RE + r"\s+\d{1,2},\s*\d{4}$")
+        i = 0
+        while i < len(lines):
+            if date_re.match(lines[i]):
+                date_str = lines[i]
+                title = lines[i + 1] if i + 1 < len(lines) else ""
+                if title and not date_re.match(title):
+                    entries.append({"date": date_str, "title": title})
+                i += 2
+            else:
+                i += 1
+    except Exception:
+        traceback.print_exc()
+
+    items = []
+    for entry in entries[:20]:
+        if not is_crypto_relevant(entry["title"]) or mentions_excluded_brand(entry["title"]):
+            continue
+        uid = "ofac-" + str(abs(hash((entry["title"][:100],))))[:12]
+        if uid in existing_ids:
+            continue
+        try:
+            dt = datetime.strptime(entry["date"], "%B %d, %Y").replace(tzinfo=timezone.utc)
+            iso = dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+        except Exception:
+            iso = now_iso()
+        items.append({
+            "id": uid, "title": entry["title"], "source": "OFAC (U.S. Treasury)",
+            "category": "enforcement", "link": OFAC_URL, "publishedAt": iso,
+            "fetchedAt": now_iso(), "summary": "Sanctions action listed on OFAC's recent actions page.",
+        })
+    return items
+
+
+def sync_news():
+    current = load_json(NEWS_PATH, {"updatedAt": None, "items": []})
+    items = current.get("items", [])
+    existing_ids = {n.get("id") for n in items}
+    new_items = []
+
+    for cfg in NEWS_RSS_SOURCES:
+        try:
+            entries = fetch_rss(cfg["url"])
+        except Exception:
+            traceback.print_exc()
+            entries = []
+        for e in entries:
+            haystack = e["title"] + " " + e["description"]
+            if cfg.get("filter") and not is_crypto_relevant(haystack):
+                continue
+            if mentions_excluded_brand(haystack):
+                continue
+            uid = "news-" + str(abs(hash((cfg["source"], e["title"][:120]))))[:12]
+            if uid in existing_ids or uid in {n["id"] for n in new_items}:
+                continue
+            new_items.append({
+                "id": uid, "title": e["title"], "source": cfg["source"],
+                "category": cfg["category"], "link": e["link"],
+                "publishedAt": parse_rss_date(e["pubDate"]) or now_iso(),
+                "fetchedAt": now_iso(), "summary": e["description"][:280],
+            })
+        time.sleep(0.3)
+
+    try:
+        new_items += scrape_ofac(existing_ids | {n["id"] for n in new_items})
+    except Exception:
+        traceback.print_exc()
+
+    items = new_items + items
+    items.sort(key=lambda n: n.get("publishedAt") or n.get("fetchedAt") or "", reverse=True)
+    items = items[:MAX_NEWS]
+    save_json(NEWS_PATH, {"updatedAt": now_iso(), "items": items})
+    print(f"news: {len(new_items)} new, {len(items)} total")
+
+
+# --- New token launches ($1M+ market cap, across platforms) ---------------
+MAX_LAUNCHES = 80
+LAUNCH_MIN_USD = 1_000_000
+LAUNCH_MAX_AGE_DAYS = 30
+PUMPFUN_URL = "https://frontend-api-v3.pump.fun/coins?offset=0&limit=50&sort=market_cap&order=DESC&includeNsfw=false"
+DEXSCREENER_PROFILES_URL = "https://api.dexscreener.com/token-profiles/latest/v1"
+DEXSCREENER_PAIR_URL = "https://api.dexscreener.com/tokens/v1/{chain}/{addresses}"
+
+
+def fetch_pumpfun_launches(existing_ids):
+    out = []
+    try:
+        r = requests.get(PUMPFUN_URL, timeout=20, headers={"User-Agent": UA})
+        coins = r.json()
+        if not isinstance(coins, list):
+            return out
+        cutoff = datetime.now(timezone.utc) - timedelta(days=LAUNCH_MAX_AGE_DAYS)
+        for c in coins:
+            try:
+                mc = float(c.get("usd_market_cap") or c.get("market_cap_usd") or 0)
+                if mc < LAUNCH_MIN_USD:
+                    continue
+                created_ms = c.get("created_timestamp")
+                created_dt = None
+                if created_ms:
+                    created_dt = datetime.fromtimestamp(int(created_ms) / 1000, tz=timezone.utc)
+                    if created_dt < cutoff:
+                        continue
+                mint = c.get("mint")
+                if not mint or ("pf-" + mint) in existing_ids:
+                    continue
+                out.append({
+                    "id": "pf-" + mint, "name": c.get("name") or c.get("symbol") or "Unknown",
+                    "symbol": c.get("symbol") or "", "chain": "Solana", "platform": "pump.fun",
+                    "marketCapUsd": round(mc, 2),
+                    "createdAt": created_dt.strftime("%Y-%m-%dT%H:%M:%SZ") if created_dt else None,
+                    "fetchedAt": now_iso(), "link": f"https://pump.fun/{mint}", "address": mint,
+                })
+            except Exception:
+                continue
+    except Exception:
+        traceback.print_exc()
+    return out
+
+
+def fetch_dexscreener_launches(existing_ids):
+    out = []
+    try:
+        r = requests.get(DEXSCREENER_PROFILES_URL, timeout=20, headers={"User-Agent": UA})
+        profiles = r.json()
+        if not isinstance(profiles, list):
+            return out
+    except Exception:
+        traceback.print_exc()
+        return out
+
+    # Group latest-profile addresses by chain so the market-cap lookup can be
+    # batched (DexScreener accepts comma-separated addresses per call). This
+    # naturally covers new launches across whatever platforms/chains
+    # DexScreener has indexed — pump.fun clones, Robinhood's tokenized-asset
+    # chain, Base/Solana launchpads, etc — not just one named platform.
+    by_chain = {}
+    for p in profiles[:60]:
+        chain = p.get("chainId")
+        addr = p.get("tokenAddress")
+        if not chain or not addr:
+            continue
+        by_chain.setdefault(chain, []).append(addr)
+
+    for chain, addrs in by_chain.items():
+        for i in range(0, len(addrs), 20):
+            batch = addrs[i:i + 20]
+            url = DEXSCREENER_PAIR_URL.format(chain=chain, addresses=",".join(batch))
+            try:
+                r = requests.get(url, timeout=20, headers={"User-Agent": UA})
+                pairs = r.json()
+                if not isinstance(pairs, list):
+                    continue
+            except Exception:
+                continue
+            seen_addr = set()
+            for pr in pairs:
+                try:
+                    base = pr.get("baseToken") or {}
+                    addr = (base.get("address") or "").lower()
+                    if not addr or addr in seen_addr:
+                        continue
+                    mc = float(pr.get("marketCap") or pr.get("fdv") or 0)
+                    uid = "ds-" + addr
+                    if mc < LAUNCH_MIN_USD or uid in existing_ids:
+                        continue
+                    seen_addr.add(addr)
+                    out.append({
+                        "id": uid, "name": base.get("name") or base.get("symbol") or "Unknown",
+                        "symbol": base.get("symbol") or "", "chain": chain_label(chain),
+                        "platform": "DexScreener / " + chain_label(chain),
+                        "marketCapUsd": round(mc, 2), "createdAt": None,
+                        "fetchedAt": now_iso(), "link": pr.get("url") or "", "address": addr,
+                    })
+                except Exception:
+                    continue
+            time.sleep(0.2)
+    return out
+
+
+def sync_launches():
+    current = load_json(LAUNCHES_PATH, {"updatedAt": None, "items": []})
+    items = current.get("items", [])
+    existing_ids = {l.get("id") for l in items}
+
+    new_items = []
+    try:
+        new_items += fetch_pumpfun_launches(existing_ids)
+    except Exception:
+        traceback.print_exc()
+    try:
+        new_items += fetch_dexscreener_launches(existing_ids | {l["id"] for l in new_items})
+    except Exception:
+        traceback.print_exc()
+
+    items = new_items + items
+    items.sort(key=lambda l: l.get("marketCapUsd") or 0, reverse=True)
+    items = items[:MAX_LAUNCHES]
+
+    save_json(LAUNCHES_PATH, {"updatedAt": now_iso(), "items": items})
+    print(f"launches: {len(new_items)} new, {len(items)} total")
+
+
 def sync_transactions():
     current = load_json(TX_PATH, {"updatedAt": None, "items": []})
     items = current.get("items", [])
@@ -320,6 +623,8 @@ def main():
     os.makedirs(DATA_DIR, exist_ok=True)
     sync_transactions()
     sync_knowledge()
+    sync_news()
+    sync_launches()
 
 
 if __name__ == "__main__":

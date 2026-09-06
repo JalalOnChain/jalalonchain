@@ -181,6 +181,47 @@
   .source-note{ font-size:11px; color:var(--text-faint); line-height:1.5; padding:2px 4px; }
   .source-note a{ color:var(--text-faint); }
 
+  /* ---- launches / news / govt / watch sections ---- */
+  .section{ padding:36px 0 4px; }
+  .section-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px; flex-wrap:wrap; gap:6px; }
+  .section-head h2{ font-size:15px; text-transform:uppercase; letter-spacing:.06em; color:var(--text); font-weight:800; }
+  .section-head .hint{ font-size:11.5px; color:var(--text-faint); }
+
+  .grid-cards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; padding:16px; }
+  .launch-card{ background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+  .launch-card .lc-top{ display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
+  .launch-card .lc-name{ font-weight:700; font-size:14px; }
+  .launch-card .lc-sym{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; }
+  .launch-card .lc-mc{ font-family:"IBM Plex Mono",monospace; font-weight:700; color:var(--good); font-size:16px; margin-top:8px; }
+  .launch-card .lc-meta{ display:flex; justify-content:space-between; align-items:center; margin-top:9px; font-size:11px; color:var(--text-muted); }
+  .launch-card .lc-meta a{ color:var(--text-muted); }
+  .platform-badge{ background:var(--chip-bg); border:1px solid var(--border); border-radius:6px; padding:2px 7px; font-size:10px; color:var(--text-muted); }
+
+  .news-row{ padding:12px 18px; border-top:1px solid var(--border); }
+  .news-row:first-child{ border-top:none; }
+  .news-row .n-top{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:4px; }
+  .cat-badge{ font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 7px; border-radius:5px; white-space:nowrap; }
+  .cat-enforcement{ background:var(--bad-soft); color:var(--bad); }
+  .cat-market-news{ background:var(--teal-soft); color:var(--teal); }
+  .n-source{ font-size:11px; color:var(--text-faint); }
+  .n-time{ font-size:11px; color:var(--text-faint); margin-left:auto; font-family:"IBM Plex Mono",monospace; }
+  .news-row .n-title{ font-size:13.5px; font-weight:600; line-height:1.4; }
+  .news-row .n-title a{ color:var(--text); text-decoration:none; }
+  .news-row .n-title a:hover{ text-decoration:underline; }
+  .news-row .n-summary{ font-size:12px; color:var(--text-muted); margin-top:4px; line-height:1.5; }
+
+  .watch-card{ padding:18px; margin-bottom:16px; }
+  .watch-card h4{ font-size:12.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); font-weight:700; margin-bottom:5px; }
+  .watch-card p{ font-size:11.5px; color:var(--text-faint); margin-bottom:14px; line-height:1.55; max-width:640px; }
+  .watch-groups{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media (max-width:640px){ .watch-groups{ grid-template-columns:1fr; } }
+  .watch-group h5{ font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; }
+  .watch-handle{ display:flex; align-items:center; gap:8px; padding:6px 0; font-size:12.5px; border-top:1px solid var(--border); }
+  .watch-handle:first-of-type{ border-top:none; }
+  .watch-handle a{ color:var(--text); font-weight:700; text-decoration:none; font-family:"IBM Plex Mono",monospace; }
+  .watch-handle a:hover{ color:var(--teal); }
+  .watch-handle .wh-role{ color:var(--text-faint); font-size:11px; }
+
   footer.page-foot{
     border-top:1px solid var(--border); padding:22px 0 40px;
     display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
@@ -208,6 +249,9 @@
     </div>
     <div class="nav-links">
       <a href="#feed">Whale feed</a>
+      <a href="#launches">Launches</a>
+      <a href="#news">News</a>
+      <a href="#govt">Enforcement</a>
       <a href="#learn">Learn</a>
       <a href="#subscribe">Subscribe</a>
       <div class="live-pill"><span class="live-dot live" id="liveDot"></span><span id="liveText">syncing&hellip;</span></div>
@@ -334,6 +378,44 @@
     </aside>
   </div>
 
+  <section class="section" id="launches">
+    <div class="section-head">
+      <h2>New token launches &middot; $1M+ market cap</h2>
+      <span class="hint" id="launchesCount">0 tracked</span>
+    </div>
+    <div class="card">
+      <div class="grid-cards" id="launchesGrid"><div class="empty-state">Loading new launches&hellip;</div></div>
+    </div>
+    <div class="source-note">Tracks tokens that crossed $1M market cap after launching on pump.fun (Solana) and other platforms/chains indexed by DexScreener &mdash; including Robinhood&rsquo;s tokenized-asset chain where DexScreener has coverage. New listings carry very high risk; this is tracking, not an endorsement.</div>
+  </section>
+
+  <section class="section" id="news">
+    <div class="section-head">
+      <h2>Crypto news &amp; hack alerts</h2>
+      <span class="hint" id="newsCount">0 items</span>
+    </div>
+    <div class="card watch-card">
+      <h4>Real-time hack &amp; investigation watch</h4>
+      <p>These accounts aren&rsquo;t pulled automatically &mdash; X/Twitter&rsquo;s API no longer allows free live reading of tweets, so a bot-fed feed here would be unreliable. This is a hand-picked, manually reviewed list of accounts that reliably report crypto hacks/exploits and the independent investigators who trace the funds. Follow them directly for the fastest signal.</p>
+      <div class="watch-groups" id="watchGroups"></div>
+    </div>
+    <div class="card feed-card">
+      <div class="feed-list" id="newsList"><div class="empty-state">Loading news&hellip;</div></div>
+    </div>
+    <div class="source-note">Market &amp; hack news sourced from CoinDesk and The Block. Chainalysis and TRM Labs are intentionally excluded as sources. Refreshes hourly.</div>
+  </section>
+
+  <section class="section" id="govt">
+    <div class="section-head">
+      <h2>Government &amp; regulatory actions</h2>
+      <span class="hint" id="govtCount">0 items</span>
+    </div>
+    <div class="card feed-card">
+      <div class="feed-list" id="govtList"><div class="empty-state">Loading enforcement actions&hellip;</div></div>
+    </div>
+    <div class="source-note">Sourced directly from U.S. Dept. of Justice press releases, U.S. SEC litigation releases and OFAC (Treasury) sanctions actions &mdash; filtered to crypto/blockchain relevance. Chainalysis and TRM Labs are intentionally excluded as sources. Refreshes hourly.</div>
+  </section>
+
   <footer class="page-foot">
     <span>JalalOnChain &middot; live whale tracker for traders &amp; learners</span>
     <span id="footSync">Waiting for first sync&hellip;</span>
@@ -344,7 +426,7 @@
 (function(){
   "use strict";
   var state = {
-    tx: [], knowledge: [], updatedAt: null,
+    tx: [], knowledge: [], launches: [], news: [], watch: [], updatedAt: null,
     filters: { token:"all", chain:"all", minAmount:100000, dir:"all" }
   };
 
@@ -478,6 +560,58 @@
     }).join("") || "<div class=\"hd\">More briefings appear here daily.</div>";
   }
 
+  function renderLaunches(){
+    var list = state.launches.slice().sort(function(a,b){ return (Number(b.marketCapUsd)||0)-(Number(a.marketCapUsd)||0); });
+    document.getElementById("launchesCount").textContent = list.length+(list.length===1?" token":" tokens");
+    var el = document.getElementById("launchesGrid");
+    if(!list.length){ el.innerHTML = "<div class=\"empty-state\">No qualifying launches yet &mdash; check back after the next sync.</div>"; return; }
+    el.innerHTML = list.slice(0,60).map(function(t){
+      var link = t.link ? "<a href=\""+esc(t.link)+"\" target=\"_blank\" rel=\"noopener\">view</a>" : "";
+      return "<div class=\"launch-card\">"+
+        "<div class=\"lc-top\"><span class=\"lc-name\">"+esc(t.name||"Unknown")+"</span><span class=\"lc-sym\">"+esc(t.symbol||"")+"</span></div>"+
+        "<div class=\"lc-mc\">"+fmtUsd(t.marketCapUsd)+"</div>"+
+        "<div class=\"lc-meta\"><span class=\"platform-badge\">"+esc(t.platform||t.chain||"")+"</span>"+link+"</div>"+
+      "</div>";
+    }).join("");
+  }
+
+  function newsRowHtml(n){
+    var catClass = n.category==="enforcement" ? "cat-enforcement" : "cat-market-news";
+    var catLabel = n.category==="enforcement" ? "Enforcement" : "News";
+    return "<div class=\"news-row\">"+
+      "<div class=\"n-top\"><span class=\"cat-badge "+catClass+"\">"+catLabel+"</span><span class=\"n-source\">"+esc(n.source||"")+"</span><span class=\"n-time\">"+esc(timeAgo(n.publishedAt||n.fetchedAt))+"</span></div>"+
+      "<div class=\"n-title\">"+(n.link?"<a href=\""+esc(n.link)+"\" target=\"_blank\" rel=\"noopener\">"+esc(n.title)+"</a>":esc(n.title))+"</div>"+
+      (n.summary?"<div class=\"n-summary\">"+esc(n.summary)+"</div>":"")+
+    "</div>";
+  }
+  function renderNews(){
+    var all = state.news.slice().sort(function(a,b){ return new Date(b.publishedAt||b.fetchedAt) - new Date(a.publishedAt||a.fetchedAt); });
+    var marketNews = all.filter(function(n){ return n.category !== "enforcement"; });
+    var govtNews = all.filter(function(n){ return n.category === "enforcement"; });
+
+    document.getElementById("newsCount").textContent = marketNews.length+(marketNews.length===1?" item":" items");
+    var newsEl = document.getElementById("newsList");
+    newsEl.innerHTML = marketNews.length ? marketNews.slice(0,60).map(newsRowHtml).join("") :
+      "<div class=\"empty-state\">No news synced yet &mdash; check back after the next sync.</div>";
+
+    document.getElementById("govtCount").textContent = govtNews.length+(govtNews.length===1?" item":" items");
+    var govtEl = document.getElementById("govtList");
+    govtEl.innerHTML = govtNews.length ? govtNews.slice(0,60).map(newsRowHtml).join("") :
+      "<div class=\"empty-state\">No crypto-relevant enforcement actions synced yet &mdash; check back after the next sync.</div>";
+  }
+
+  function renderWatch(){
+    var el = document.getElementById("watchGroups");
+    if(!state.watch || !state.watch.length){ el.innerHTML=""; return; }
+    el.innerHTML = state.watch.map(function(g){
+      return "<div class=\"watch-group\"><h5>"+esc(g.group)+"</h5>"+
+        (g.accounts||[]).map(function(a){
+          return "<div class=\"watch-handle\"><a href=\"https://x.com/"+esc(a.handle)+"\" target=\"_blank\" rel=\"noopener\">@"+esc(a.handle)+"</a><span class=\"wh-role\">"+esc(a.role||"")+"</span></div>";
+        }).join("")+
+      "</div>";
+    }).join("");
+  }
+
   function renderStatus(){
     var dot = document.getElementById("liveDot"), txt = document.getElementById("liveText"), foot = document.getElementById("footSync");
     if(!state.updatedAt){ dot.className="live-dot"; txt.textContent="waiting for first sync"; foot.textContent="Waiting for first sync."; return; }
@@ -494,12 +628,18 @@
     var bust = "?t=" + Date.now();
     Promise.all([
       fetch("./data/transactions.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
-      fetch("./data/knowledge.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
+      fetch("./data/knowledge.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/launches.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/news.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/twitter-watch.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
     ]).then(function(results){
-      var txData = results[0], kData = results[1];
+      var txData = results[0], kData = results[1], launchData = results[2], newsData = results[3], watchData = results[4];
       if(txData && txData.items){ state.tx = txData.items; state.updatedAt = txData.updatedAt || state.updatedAt; }
       if(kData && kData.items){ state.knowledge = kData.items; }
-      render(); renderKnowledge(); renderStatus();
+      if(launchData && launchData.items){ state.launches = launchData.items; }
+      if(newsData && newsData.items){ state.news = newsData.items; }
+      if(watchData && watchData.groups){ state.watch = watchData.groups; }
+      render(); renderKnowledge(); renderLaunches(); renderNews(); renderWatch(); renderStatus();
     });
   }
 
@@ -551,7 +691,7 @@
     }).catch(function(){ msg.textContent = "Something went wrong. Try again."; msg.className = "sub-msg err"; });
   });
 
-  render(); renderKnowledge(); renderStatus();
+  render(); renderKnowledge(); renderLaunches(); renderNews(); renderWatch(); renderStatus();
   loadData();
   setInterval(loadData, 90000);
   setInterval(renderStatus, 30000);

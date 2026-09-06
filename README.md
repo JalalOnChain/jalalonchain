@@ -6,6 +6,9 @@ daily on-chain/off-chain knowledge briefing, built for traders and learners.
 - `index.html` — the site
 - `data/transactions.json` — whale moves, refreshed hourly by the GitHub Action
 - `data/knowledge.json` — daily briefings, advanced one-per-day from `data/knowledge-pool.json`
+- `data/launches.json` — new tokens that crossed $1M market cap (pump.fun + DexScreener across chains, including Robinhood's chain where indexed)
+- `data/news.json` — crypto news, hacks, and government/regulatory actions (CoinDesk, The Block, DOJ, SEC, OFAC — Chainalysis and TRM Labs are deliberately excluded)
+- `data/twitter-watch.json` — hand-curated list of hack-alert and investigator X/Twitter accounts (not live-synced; X's API doesn't allow free reading, so this is reviewed manually instead)
 - `.github/workflows/sync.yml` — the hourly job that keeps everything current
 - `scripts/sync.py` — what that job actually runs
 

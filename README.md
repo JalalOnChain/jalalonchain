@@ -1,12 +1,12 @@
 # JalalOnChain
 
-Crypto news, live prices, and new token launches — plus a daily on-chain/off-chain
-knowledge briefing, built for traders and learners.
+Crypto news, live prices, and new tokens monitored once they cross $1M+ market cap —
+plus a daily on-chain/off-chain knowledge briefing, with clear, informative reads on
+how crypto and blockchain actually work.
 
 - `index.html` — the site
-- `data/news.json` — crypto news and government/regulatory enforcement actions
-  (DOJ, SEC, OFAC, plus Chainalysis, TRM Labs, Merkle Science and Elliptic blogs),
-  refreshed hourly by the GitHub Action
+- `data/news.json` — crypto news (Decrypt) and U.S. government/regulatory enforcement
+  actions (DOJ, SEC, OFAC), refreshed hourly by the GitHub Action
 - `data/launches.json` — new tokens that crossed $1M market cap (pump.fun + DexScreener
   across chains, including Robinhood's chain and Robinhood-branded tokens elsewhere)
 - `data/prices.json` — a live top-20 coin price snapshot (CoinGecko) for the homepage

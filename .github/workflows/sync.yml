@@ -1,4 +1,4 @@
-name: Sync whale data
+name: Sync site data
 
 on:
   schedule:
@@ -26,8 +26,6 @@ jobs:
         run: pip install -r scripts/requirements.txt
 
       - name: Run sync
-        env:
-          ETHERSCAN_KEY: ${{ secrets.ETHERSCAN_KEY }}
         run: python scripts/sync.py
 
       - name: Commit and push if changed
@@ -39,16 +37,18 @@ jobs:
             echo "No data changes."
             exit 0
           fi
-          git commit -m "Auto-sync whale data $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git commit -m "Auto-sync site data $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           for i in 1 2 3 4 5; do
             if git push; then
-              echo "Pushed successfully."
+              echo "Pushed on attempt $i."
               exit 0
             fi
-            echo "Push rejected, rebasing onto latest main and retrying ($i)..."
+            echo "Push rejected (attempt $i) — rebasing onto latest main before retry."
             git fetch origin main
-            git rebase origin/main
-            sleep 3
+            # -X ours: on conflict in the generated data/ files, prefer this
+            # run's freshly-synced content rather than getting stuck.
+            git rebase -X ours origin/main
+            sleep $((RANDOM % 5 + 1))
           done
-          echo "Push still failing after retries."
+          echo "Gave up after 5 push attempts."
           exit 1

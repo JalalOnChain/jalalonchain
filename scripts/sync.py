@@ -98,24 +98,24 @@ CHAIN_LABELS = {
 # unreliable — so real-time hack/investigator accounts are hand-curated in
 # data/twitter-watch.json instead of synced.
 #
-# CoinDesk and The Block are intentionally NOT sources here — they publish
-# far too frequently and would flood a feed meant to stay low-noise. This
-# list favors lower-frequency, higher-signal sources: government agencies
-# (which only post when there's an actual action) and blockchain-intel firm
-# blogs (which post occasionally, not multiple times a day). rekt.news was
-# considered too — its RSS feed (rekt.news/feed) currently returns a server
-# error and could not be wired up; if that changes it'd be a good fit.
+# CoinDesk and The Block were dropped (too high-frequency/generic), and the
+# blockchain-intel firm blogs (Chainalysis, TRM Labs, Merkle Science,
+# Elliptic) were dropped per request — their posts were stale/not needed.
+# REMOVED_NEWS_SOURCES actively purges any of those already sitting in the
+# saved data file, not just future fetches, so old items from them disappear
+# on the next sync too. Decrypt fills the coin-specific/market-news slot —
+# moderate frequency, and it covers non-crypto tech stories too (it's a
+# broader tech-and-crypto outlet), so filter=True keeps only the
+# crypto/blockchain-relevant articles from it.
 MAX_NEWS = 150
 MAX_PER_SOURCE_PER_RUN = 4  # anti-spam cap: at most this many new items per source per sync
 NEWS_RSS_SOURCES = [
     {"url": "https://www.justice.gov/news/rss?type=press_release&m=1", "source": "U.S. Dept. of Justice", "category": "enforcement", "filter": True},
     {"url": "https://www.sec.gov/enforcement-litigation/litigation-releases/rss", "source": "U.S. SEC Litigation", "category": "enforcement", "filter": True},
-    {"url": "https://www.chainalysis.com/blog/feed/", "source": "Chainalysis", "category": "market-news", "filter": False},
-    {"url": "https://www.trmlabs.com/resources/blog/rss.xml", "source": "TRM Labs", "category": "market-news", "filter": False},
-    {"url": "https://blog.merklescience.com/general/rss.xml", "source": "Merkle Science", "category": "market-news", "filter": False},
+    {"url": "https://decrypt.co/feed", "source": "Decrypt", "category": "market-news", "filter": True},
 ]
+REMOVED_NEWS_SOURCES = {"Chainalysis", "TRM Labs", "Merkle Science", "Elliptic", "The Block", "CoinDesk"}
 OFAC_URL = "https://ofac.treasury.gov/recent-actions"
-ELLIPTIC_BLOG_URL = "https://www.elliptic.co/blog"
 CRYPTO_KEYWORDS = [
     "crypto", "cryptocurrency", "bitcoin", "ether", "ethereum", "blockchain",
     "digital asset", "digital currency", "virtual currency", "virtual asset",
@@ -244,43 +244,16 @@ def scrape_ofac(existing_ids):
     return items
 
 
-def scrape_elliptic_blog(existing_ids):
-    out = []
-    try:
-        from bs4 import BeautifulSoup
-        r = requests.get(ELLIPTIC_BLOG_URL, timeout=20, headers={"User-Agent": UA})
-        soup = BeautifulSoup(r.text, "html.parser")
-        seen = set()
-        for a in soup.find_all("a", href=True):
-            href = a["href"]
-            if "/blog/" not in href:
-                continue
-            if any(seg in href for seg in ("/tag/", "/author/", "/page/")):
-                continue
-            title = a.get_text(" ", strip=True)
-            if not title or len(title) < 15 or len(title) > 200:
-                continue
-            full_url = href if href.startswith("http") else "https://www.elliptic.co" + href
-            if full_url in seen:
-                continue
-            seen.add(full_url)
-            uid = stable_id("elliptic", full_url)
-            if uid in existing_ids:
-                continue
-            out.append({
-                "id": uid, "title": title, "source": "Elliptic", "category": "market-news",
-                "link": full_url, "publishedAt": now_iso(), "fetchedAt": now_iso(), "summary": "",
-            })
-            if len(out) >= MAX_PER_SOURCE_PER_RUN:
-                break
-    except Exception:
-        traceback.print_exc()
-    return out
-
-
 def sync_news():
     current = load_json(NEWS_PATH, {"updatedAt": None, "items": []})
     items = current.get("items", [])
+    # Actively purge any already-saved items from sources we no longer want,
+    # not just skip fetching new ones from them.
+    purged = len(items)
+    items = [n for n in items if n.get("source") not in REMOVED_NEWS_SOURCES]
+    purged -= len(items)
+    if purged:
+        print(f"news: purged {purged} item(s) from removed sources")
     existing_ids = {n.get("id") for n in items}
     new_items = []
 
@@ -311,10 +284,6 @@ def sync_news():
 
     try:
         new_items += scrape_ofac(existing_ids | {n["id"] for n in new_items})
-    except Exception:
-        traceback.print_exc()
-    try:
-        new_items += scrape_elliptic_blog(existing_ids | {n["id"] for n in new_items})
     except Exception:
         traceback.print_exc()
 

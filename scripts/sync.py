@@ -15,7 +15,11 @@ for git itself — GitHub provides GITHUB_TOKEN automatically). Responsibilities
    price ticker, and write data/prices.json.
 4. Pull newly-listed DeFi protocols/entities (by TVL) from DefiLlama, and
    write data/defi.json.
-5. Advance the daily knowledge briefing from a pre-written rotating pool.
+5. Pull large ($100K+) Hyperliquid perp positions and recent large trades for
+   the current top accounts on Hyperliquid's own public leaderboard/info API
+   (not any third-party wallet-tracking product), and write
+   data/hyperliquid.json.
+6. Advance the daily knowledge briefing from a pre-written rotating pool.
 
 Every step is defensive: a failing data source is skipped, never fatal —
 the workflow should always leave the repo in a valid, up-to-date state.
@@ -48,6 +52,7 @@ NEWS_PATH = os.path.join(DATA_DIR, "news.json")
 LAUNCHES_PATH = os.path.join(DATA_DIR, "launches.json")
 PRICES_PATH = os.path.join(DATA_DIR, "prices.json")
 DEFI_PATH = os.path.join(DATA_DIR, "defi.json")
+HYPERLIQUID_PATH = os.path.join(DATA_DIR, "hyperliquid.json")
 
 MAX_KNOWLEDGE = 120
 UA = "Mozilla/5.0 (compatible; JalalOnChainBot/1.0; +https://github.com/JalalOnChain/jalalonchain)"
@@ -560,6 +565,154 @@ def sync_defi():
     print(f"defi: {len(items)} newly-listed protocols")
 
 
+# --- Hyperliquid whale positions & activity ($100K+) ----------------------
+# Sourced directly from Hyperliquid's own public, unauthenticated endpoints —
+# the same ones the Hyperliquid app itself calls from the browser — never
+# from a third-party wallet-tracking product's private backend. The address
+# pool isn't a fixed hand-picked watchlist: it's re-derived from Hyperliquid's
+# public leaderboard every run, so it naturally rotates as accounts move up
+# or down in size.
+HL_INFO_URL = "https://api.hyperliquid.xyz/info"
+HL_LEADERBOARD_URL = "https://stats-data.hyperliquid.xyz/Mainnet/leaderboard"
+HL_MIN_USD = 100_000
+HL_POOL_SIZE = 40          # how many top-by-account-value addresses to scan per run
+HL_MAX_POSITIONS = 60
+HL_MAX_ACTIVITY = 60
+HL_FILL_LOOKBACK_HOURS = 6  # only report trades from roughly the last sync window
+HL_STABLES = {"USDC", "USDT0", "USDH", "USDE"}
+
+
+def hl_info(payload):
+    try:
+        r = requests.post(HL_INFO_URL, json=payload, timeout=20, headers={"User-Agent": UA})
+        return r.json()
+    except Exception:
+        return None
+
+
+def fetch_hl_top_addresses(n):
+    try:
+        r = requests.get(HL_LEADERBOARD_URL, timeout=60, headers={"User-Agent": UA})
+        rows = r.json().get("leaderboardRows") or []
+    except Exception:
+        traceback.print_exc()
+        return []
+    ranked = []
+    for row in rows:
+        try:
+            addr = row.get("ethAddress")
+            av = float(row.get("accountValue") or 0)
+            if addr:
+                ranked.append((av, addr))
+        except Exception:
+            continue
+    ranked.sort(key=lambda t: t[0], reverse=True)
+    return [addr for _, addr in ranked[:n]]
+
+
+def fetch_hl_positions_for(address):
+    out = []
+    data = hl_info({"type": "clearinghouseState", "user": address})
+    if not data:
+        return out
+    for ap in data.get("assetPositions") or []:
+        try:
+            pos = ap.get("position") or {}
+            value = float(pos.get("positionValue") or 0)
+            if value < HL_MIN_USD:
+                continue
+            szi = float(pos.get("szi") or 0)
+            out.append({
+                "id": stable_id("hlpos", address, pos.get("coin")),
+                "address": address, "coin": pos.get("coin"),
+                "side": "long" if szi >= 0 else "short",
+                "size": abs(szi), "positionValueUsd": round(value, 2),
+                "entryPx": pos.get("entryPx"), "unrealizedPnlUsd": round(float(pos.get("unrealizedPnl") or 0), 2),
+                "leverage": (pos.get("leverage") or {}).get("value"),
+                "kind": "perp", "fetchedAt": now_iso(),
+                "link": f"https://hypurrscan.io/address/{address}",
+            })
+        except Exception:
+            continue
+
+    spot = hl_info({"type": "spotClearinghouseState", "user": address})
+    if spot:
+        try:
+            stable_total = 0.0
+            for bal in spot.get("balances") or []:
+                if bal.get("coin") in HL_STABLES:
+                    stable_total += float(bal.get("total") or 0)
+            if stable_total >= HL_MIN_USD:
+                out.append({
+                    "id": stable_id("hlpos", address, "spot-stables"),
+                    "address": address, "coin": "USDC-equiv",
+                    "side": "spot", "size": round(stable_total, 2),
+                    "positionValueUsd": round(stable_total, 2),
+                    "entryPx": None, "unrealizedPnlUsd": None, "leverage": None,
+                    "kind": "spot", "fetchedAt": now_iso(),
+                    "link": f"https://hypurrscan.io/address/{address}",
+                })
+        except Exception:
+            pass
+    return out
+
+
+def fetch_hl_activity_for(address, cutoff_ms):
+    out = []
+    fills = hl_info({"type": "userFills", "user": address})
+    if not isinstance(fills, list):
+        return out
+    for f in fills:
+        try:
+            t = int(f.get("time") or 0)
+            if t < cutoff_ms:
+                continue
+            px = float(f.get("px") or 0)
+            sz = float(f.get("sz") or 0)
+            notional = px * sz
+            if notional < HL_MIN_USD:
+                continue
+            out.append({
+                "id": "hlfill-" + str(f.get("hash") or f.get("tid")),
+                "address": address, "coin": f.get("coin"), "dir": f.get("dir") or f.get("side"),
+                "size": sz, "price": px, "notionalUsd": round(notional, 2),
+                "closedPnlUsd": round(float(f.get("closedPnl") or 0), 2),
+                "time": datetime.fromtimestamp(t / 1000, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "fetchedAt": now_iso(), "link": f"https://hypurrscan.io/address/{address}",
+            })
+        except Exception:
+            continue
+    return out
+
+
+def sync_hyperliquid():
+    addresses = fetch_hl_top_addresses(HL_POOL_SIZE)
+    if not addresses:
+        print("hyperliquid: leaderboard fetch failed — keeping previous snapshot")
+        return
+    cutoff_ms = int((datetime.now(timezone.utc) - timedelta(hours=HL_FILL_LOOKBACK_HOURS)).timestamp() * 1000)
+
+    positions, activity = [], []
+    for addr in addresses:
+        try:
+            positions += fetch_hl_positions_for(addr)
+        except Exception:
+            traceback.print_exc()
+        try:
+            activity += fetch_hl_activity_for(addr, cutoff_ms)
+        except Exception:
+            traceback.print_exc()
+        time.sleep(0.15)
+
+    positions.sort(key=lambda p: p.get("positionValueUsd") or 0, reverse=True)
+    positions = positions[:HL_MAX_POSITIONS]
+    activity_by_id = {a["id"]: a for a in activity}
+    activity = sorted(activity_by_id.values(), key=lambda a: a.get("time") or "", reverse=True)[:HL_MAX_ACTIVITY]
+
+    save_json(HYPERLIQUID_PATH, {"updatedAt": now_iso(), "positions": positions, "activity": activity})
+    print(f"hyperliquid: {len(addresses)} addresses scanned, {len(positions)} positions, {len(activity)} large trades")
+
+
 def sync_knowledge():
     knowledge = load_json(KNOWLEDGE_PATH, {"updatedAt": None, "items": []})
     pool = load_json(POOL_PATH, {"items": []}).get("items", [])
@@ -591,6 +744,7 @@ def main():
     sync_launches()
     sync_prices()
     sync_defi()
+    sync_hyperliquid()
 
 
 if __name__ == "__main__":

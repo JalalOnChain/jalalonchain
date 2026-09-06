@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>JalalOnChain — Live Whale Tracker &amp; On-Chain Learning</title>
-<meta name="description" content="Live crypto whale-transaction tracker across Bitcoin, Ethereum and every major EVM chain, plus daily on-chain knowledge for traders and learners.">
+<title>JalalOnChain — Crypto News, Prices &amp; New Token Launches</title>
+<meta name="description" content="Crypto news, hack and enforcement alerts, live coin prices, and new token launches crossing $1M market cap — plus a daily on-chain knowledge briefing for traders and learners.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Ccircle cx='19' cy='19' r='17.5' fill='%230A0F1A'/%3E%3Cpath d='M10 22c2.5 3.5 6 5.2 9.5 5.2 4 0 7.6-2.2 8.5-4.6-1.7 1-4 .9-5.4-.5-1-1-3-1-3.6.6-.4-1.7-2.2-2.6-3.8-1.9-1.3.6-1.7 1-5.2 1.2z' fill='%23F2A93B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,84 +72,39 @@
   @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.45; } }
 
   /* ---- hero ---- */
-  .hero{ padding:44px 0 28px; }
+  .hero{ padding:40px 0 24px; }
   .hero h1{ font-size:clamp(28px,4vw,40px); font-weight:800; letter-spacing:-0.02em; max-width:720px; }
   .hero h1 em{ font-style:normal; color:var(--accent-ink); }
-  .hero p{ max-width:620px; color:var(--text-muted); font-size:15.5px; line-height:1.6; margin-top:12px; }
+  .hero p{ max-width:640px; color:var(--text-muted); font-size:15.5px; line-height:1.6; margin-top:12px; }
   .hero-chains{ display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
   .chain-badge{ font-size:11.5px; font-weight:600; background:var(--chip-bg); border:1px solid var(--border); color:var(--text-muted); padding:5px 10px; border-radius:999px; }
 
-  /* ---- controls ---- */
-  .controls{
-    display:flex; align-items:flex-end; gap:16px; flex-wrap:wrap;
-    background:var(--surface); border:1px solid var(--border); border-radius:14px;
-    padding:16px 18px; margin:22px 0 20px; box-shadow:0 1px 2px var(--shadow);
-  }
-  .field{ display:flex; flex-direction:column; gap:6px; }
-  .field label{ font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--text-faint); font-weight:600; }
-  select, .amt-input{
-    background:var(--surface-2); border:1px solid var(--border); color:var(--text);
-    border-radius:8px; padding:8px 10px; font-size:13.5px; min-width:140px; font-family:inherit;
-  }
-  .amt-input{ font-family:"IBM Plex Mono", monospace; min-width:120px; }
-  select:focus, .amt-input:focus, button:focus-visible{ outline:2px solid var(--teal); outline-offset:1px; }
-  .chips{ display:flex; gap:6px; }
-  .chip{ background:var(--chip-bg); border:1px solid var(--border); color:var(--text-muted); border-radius:7px; padding:7px 10px; font-size:12px; cursor:pointer; font-family:"IBM Plex Mono",monospace; }
-  .chip:hover{ border-color:var(--teal); color:var(--text); }
-  .chip.active{ background:var(--accent-soft); border-color:var(--accent); color:var(--accent-ink); font-weight:600; }
-  .segmented{ display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden; }
-  .segmented button{ background:var(--surface-2); border:none; color:var(--text-muted); font-size:12.5px; padding:8px 12px; cursor:pointer; border-right:1px solid var(--border); }
-  .segmented button:last-child{ border-right:none; }
-  .segmented button.active{ background:var(--accent); color:#1a1204; font-weight:700; }
-  .reset-btn{ margin-left:auto; background:none; border:1px solid var(--border); color:var(--text-muted); border-radius:8px; padding:8px 14px; font-size:12.5px; cursor:pointer; align-self:center; }
-  .reset-btn:hover{ color:var(--bad); border-color:var(--bad); }
+  /* ---- price ticker ---- */
+  .ticker-wrap{ border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--surface); overflow:hidden; position:relative; }
+  .ticker-track{ display:flex; width:max-content; animation:ticker-scroll 55s linear infinite; }
+  .ticker-track:hover{ animation-play-state:paused; }
+  @media (prefers-reduced-motion: reduce){ .ticker-track{ animation:none; overflow-x:auto; } }
+  @keyframes ticker-scroll{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+  .ticker-item{ display:flex; align-items:center; gap:8px; padding:11px 22px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; white-space:nowrap; border-right:1px solid var(--border); }
+  .ticker-item .t-sym{ font-weight:700; color:var(--text); }
+  .ticker-item .t-price{ color:var(--text-muted); }
+  .ticker-item .t-chg{ font-weight:600; }
+  .ticker-item .t-chg.up{ color:var(--good); }
+  .ticker-item .t-chg.down{ color:var(--bad); }
 
   /* ---- layout ---- */
-  .layout{ display:grid; grid-template-columns: 1fr 340px; gap:20px; align-items:start; padding-bottom:40px; }
+  .layout{ display:grid; grid-template-columns: 1fr 340px; gap:20px; align-items:start; padding:28px 0 40px; }
   @media (max-width:900px){ .layout{ grid-template-columns:1fr; } }
   .card{ background:var(--surface); border:1px solid var(--border); border-radius:14px; box-shadow:0 1px 2px var(--shadow); }
 
-  .tiles{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; }
-  @media (max-width:640px){ .tiles{ grid-template-columns:repeat(2,1fr); } }
-  .tile{ padding:14px 16px; }
-  .tile .label{ font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); font-weight:600; margin-bottom:8px; }
-  .tile .value{ font-size:22px; font-weight:700; font-family:"IBM Plex Mono",monospace; letter-spacing:-0.01em; }
-  .tile .sub{ font-size:11.5px; color:var(--text-muted); margin-top:4px; }
-  .tile.accent .value{ color:var(--accent-ink); }
-
-  .chart-card{ padding:16px 18px 10px; margin-bottom:16px; }
-  .chart-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
-  .chart-head h3{ font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); font-weight:600; }
-  .chart-head .hint{ font-size:11px; color:var(--text-faint); }
-  .chart-wrap{ position:relative; }
-  #volChart{ display:block; width:100%; height:130px; overflow:visible; }
-  .bar{ fill:var(--accent); opacity:.85; cursor:pointer; }
-  .bar:hover{ opacity:1; }
-  .chart-tooltip{ position:absolute; pointer-events:none; background:var(--text); color:var(--bg); font-family:"IBM Plex Mono",monospace; font-size:11.5px; padding:5px 8px; border-radius:6px; transform:translate(-50%,-115%); white-space:nowrap; opacity:0; transition:opacity .1s; z-index:5; }
-  .chart-tooltip.show{ opacity:1; }
-  .axis-label{ fill:var(--text-faint); font-size:9.5px; font-family:"IBM Plex Mono",monospace; }
+  .feed-col{ display:flex; flex-direction:column; gap:14px; }
+  .feed-head-row{ display:flex; justify-content:space-between; align-items:baseline; }
+  .feed-head-row h3{ font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); font-weight:700; }
 
   .feed-card{ padding:4px 0 8px; }
-  .feed-head{ display:flex; justify-content:space-between; align-items:center; padding:14px 18px 10px; }
-  .feed-head h3{ font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); font-weight:600; }
   .feed-count{ font-size:12px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; }
   .feed-list{ display:flex; flex-direction:column; }
   .empty-state{ padding:40px 18px; text-align:center; color:var(--text-muted); font-size:13.5px; }
-  .row{ display:grid; grid-template-columns: 78px 1fr 130px 90px; gap:14px; align-items:center; padding:12px 18px; border-top:1px solid var(--border); }
-  .row:hover{ background:var(--surface-2); }
-  @media (max-width:640px){ .row{ grid-template-columns:64px 1fr 96px; } .row .row-time{ display:none; } }
-  .dir-badge{ font-size:10.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:4px 8px; border-radius:6px; text-align:center; white-space:nowrap; }
-  .dir-buy{ background:var(--good-soft); color:var(--good); }
-  .dir-sell{ background:var(--bad-soft); color:var(--bad); }
-  .dir-transfer{ background:var(--teal-soft); color:var(--teal); }
-  .dir-other{ background:var(--chip-bg); color:var(--text-muted); }
-  .row-main .token-line{ display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; }
-  .row-main .token{ font-weight:700; font-size:14px; }
-  .row-main .chain{ font-size:10.5px; color:var(--text-faint); border:1px solid var(--border); border-radius:5px; padding:1px 6px; }
-  .row-main .summary{ font-size:12.5px; color:var(--text-muted); margin-top:3px; }
-  .row-main .summary a{ color:var(--text-muted); text-decoration:underline; text-decoration-color:var(--border); }
-  .row-amt{ font-family:"IBM Plex Mono",monospace; font-weight:700; font-size:14.5px; text-align:right; }
-  .row-time{ font-size:11.5px; color:var(--text-faint); text-align:right; font-family:"IBM Plex Mono",monospace; }
 
   /* ---- knowledge / subscribe ---- */
   .side{ position:sticky; top:20px; display:flex; flex-direction:column; gap:16px; }
@@ -202,8 +157,8 @@
   .source-note{ font-size:11px; color:var(--text-faint); line-height:1.5; padding:2px 4px; }
   .source-note a{ color:var(--text-faint); }
 
-  /* ---- launches / news / govt / watch sections ---- */
-  .section{ padding:36px 0 4px; }
+  /* ---- launches / news / watch sections ---- */
+  .section{ padding:8px 0 4px; }
   .section-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px; flex-wrap:wrap; gap:6px; }
   .section-head h2{ font-size:15px; text-transform:uppercase; letter-spacing:.06em; color:var(--text); font-weight:800; }
   .section-head .hint{ font-size:11.5px; color:var(--text-faint); }
@@ -231,9 +186,8 @@
   .news-row .n-title a:hover{ text-decoration:underline; }
   .news-row .n-summary{ font-size:12px; color:var(--text-muted); margin-top:4px; line-height:1.5; }
 
-  .watch-card{ padding:18px; margin-bottom:16px; }
-  .watch-card h4{ font-size:12.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); font-weight:700; margin-bottom:5px; }
-  .watch-card p{ font-size:11.5px; color:var(--text-faint); margin-bottom:14px; line-height:1.55; max-width:640px; }
+  .watch-card{ padding:16px 18px; }
+  .watch-card h4{ font-size:12.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); font-weight:700; margin-bottom:12px; }
   .watch-groups{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
   @media (max-width:640px){ .watch-groups{ grid-template-columns:1fr; } }
   .watch-group h5{ font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; }
@@ -242,12 +196,6 @@
   .watch-handle a{ color:var(--text); font-weight:700; text-decoration:none; font-family:"IBM Plex Mono",monospace; }
   .watch-handle a:hover{ color:var(--teal); }
   .watch-handle .wh-role{ color:var(--text-faint); font-size:11px; }
-
-  .news-split{ display:grid; grid-template-columns:1.3fr 1fr; gap:20px; align-items:start; margin-top:4px; }
-  @media (max-width:900px){ .news-split{ grid-template-columns:1fr; } }
-  .news-col{ display:flex; flex-direction:column; gap:10px; }
-  .col-head{ display:flex; justify-content:space-between; align-items:baseline; font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--text-muted); font-weight:700; }
-  .col-head .hint{ font-size:11px; color:var(--text-faint); text-transform:none; letter-spacing:normal; font-weight:500; }
 
   footer.page-foot{
     border-top:1px solid var(--border); padding:22px 0 40px;
@@ -271,14 +219,12 @@
       </svg>
       <div class="brand-text">
         <div class="name">Jalal<em>OnChain</em></div>
-        <div class="tag">Whale Tracker &amp; On-Chain Learning</div>
+        <div class="tag">Crypto News, Prices &amp; On-Chain Intel</div>
       </div>
     </div>
     <div class="nav-links">
-      <a href="#feed">Whale feed</a>
-      <a href="#launches">Launches</a>
       <a href="#news">News</a>
-      <a href="#govt">Enforcement</a>
+      <a href="#launches">Launches</a>
       <a href="#learn">Learn</a>
       <a href="#subscribe">Subscribe</a>
       <div class="live-pill"><span class="live-dot live" id="liveDot"></span><span id="liveText">syncing&hellip;</span></div>
@@ -288,90 +234,38 @@
 
 <div class="wrap">
   <section class="hero">
-    <h1>Watch crypto whales <em>buy and sell</em> in real time &mdash; then learn what it means.</h1>
-    <p>JalalOnChain tracks large on-chain moves ($100K+) across Bitcoin, Ethereum and every major EVM chain, and pairs each sync with a short, plain-English piece of on-chain or off-chain knowledge &mdash; built for traders who want the signal and learners who want the context.</p>
+    <h1>Crypto <em>news, prices &amp; new launches</em> &mdash; plus the context to make sense of them.</h1>
+    <p>JalalOnChain brings together crypto market news, hack and enforcement alerts, live coin prices, and freshly launched tokens crossing $1M market cap &mdash; paired with a short daily on-chain or off-chain lesson for traders and learners alike.</p>
     <div class="hero-chains">
-      <span class="chain-badge">Bitcoin</span>
-      <span class="chain-badge">Ethereum</span>
-      <span class="chain-badge">BNB Chain</span>
-      <span class="chain-badge">Polygon</span>
-      <span class="chain-badge">Arbitrum</span>
-      <span class="chain-badge">Base</span>
-      <span class="chain-badge">Optimism</span>
-      <span class="chain-badge">Solana</span>
-      <span class="chain-badge">+ more</span>
+      <span class="chain-badge">Market News</span>
+      <span class="chain-badge">Hack &amp; Enforcement Alerts</span>
+      <span class="chain-badge">Live Prices</span>
+      <span class="chain-badge">New Token Launches</span>
+      <span class="chain-badge">Daily On-Chain Lesson</span>
     </div>
   </section>
+</div>
 
-  <section class="controls" id="feed">
-    <div class="field">
-      <label for="tokenFilter">Token</label>
-      <select id="tokenFilter"><option value="all">All tokens</option></select>
-    </div>
-    <div class="field">
-      <label for="chainFilter">Chain</label>
-      <select id="chainFilter"><option value="all">All chains</option></select>
-    </div>
-    <div class="field">
-      <label for="minAmount">Min. size (USD)</label>
-      <div style="display:flex; gap:8px; align-items:center;">
-        <input class="amt-input" id="minAmount" type="number" min="0" step="10000" value="100000">
-        <div class="chips" id="amountChips">
-          <button class="chip active" data-val="100000">100K</button>
-          <button class="chip" data-val="250000">250K</button>
-          <button class="chip" data-val="1000000">1M</button>
-          <button class="chip" data-val="5000000">5M</button>
-        </div>
-      </div>
-    </div>
-    <div class="field">
-      <label>Direction</label>
-      <div class="segmented" id="dirSeg">
-        <button class="active" data-val="all">All</button>
-        <button data-val="buy">Buys</button>
-        <button data-val="sell">Sells</button>
-        <button data-val="other">Other</button>
-      </div>
-    </div>
-    <button class="reset-btn" id="resetBtn">Reset filters</button>
-  </section>
+<div class="ticker-wrap">
+  <div class="ticker-track" id="tickerTrack">
+    <div class="ticker-item"><span class="t-sym">Loading prices&hellip;</span></div>
+  </div>
+</div>
 
+<div class="wrap">
   <div class="layout">
-    <section class="feed-col">
-      <div class="tiles">
-        <div class="card tile accent">
-          <div class="label">Volume in view</div>
-          <div class="value num" id="statVolume">$0</div>
-          <div class="sub" id="statVolumeSub">last 24h</div>
-        </div>
-        <div class="card tile">
-          <div class="label">Whale moves</div>
-          <div class="value num" id="statCount">0</div>
-          <div class="sub">matching filters</div>
-        </div>
-        <div class="card tile">
-          <div class="label">Biggest single move</div>
-          <div class="value num" id="statBiggest">&mdash;</div>
-          <div class="sub" id="statBiggestSub">&nbsp;</div>
-        </div>
-        <div class="card tile">
-          <div class="label">Most active token</div>
-          <div class="value num" id="statTopToken">&mdash;</div>
-          <div class="sub" id="statTopTokenSub">&nbsp;</div>
-        </div>
+    <section class="feed-col" id="news">
+      <div class="card watch-card">
+        <h4>Real-time hack &amp; investigation watch</h4>
+        <div class="watch-groups" id="watchGroups"></div>
       </div>
 
-      <div class="card chart-card">
-        <div class="chart-head"><h3>Volume by hour</h3><span class="hint">last 24h, filtered set</span></div>
-        <div class="chart-wrap">
-          <svg id="volChart" viewBox="0 0 720 130" preserveAspectRatio="none"></svg>
-          <div class="chart-tooltip" id="chartTip"></div>
-        </div>
+      <div class="feed-head-row">
+        <h3>Crypto news &amp; enforcement</h3>
+        <span class="feed-count" id="newsCount">0 items</span>
       </div>
-
       <div class="card feed-card">
-        <div class="feed-head"><h3>Live feed</h3><span class="feed-count" id="feedCount">0 transactions</span></div>
-        <div class="feed-list" id="feedList"><div class="empty-state">Loading whale data&hellip;</div></div>
+        <div class="feed-list" id="newsList"><div class="empty-state">Loading news&hellip;</div></div>
       </div>
     </section>
 
@@ -408,10 +302,6 @@
         </div>
         <div id="supportBody"></div>
       </div>
-
-      <div class="source-note">
-        Whale feed combines direct on-chain data (Etherscan, EVM chains) with public whale-alert reporting and refreshes hourly. Not financial advice &mdash; verify large moves independently before acting.
-      </div>
     </aside>
   </div>
 
@@ -423,36 +313,11 @@
     <div class="card">
       <div class="grid-cards" id="launchesGrid"><div class="empty-state">Loading new launches&hellip;</div></div>
     </div>
-    <div class="source-note">Tracks tokens that crossed $1M market cap after launching on pump.fun (Solana) and other platforms/chains indexed by DexScreener &mdash; including Robinhood&rsquo;s tokenized-asset chain where DexScreener has coverage. New listings carry very high risk; this is tracking, not an endorsement.</div>
-  </section>
-
-  <section class="section" id="news">
-    <div class="section-head">
-      <h2>Crypto news &amp; enforcement</h2>
-    </div>
-    <div class="card watch-card">
-      <h4>Real-time hack &amp; investigation watch</h4>
-      <div class="watch-groups" id="watchGroups"></div>
-    </div>
-    <div class="news-split">
-      <div class="news-col">
-        <div class="col-head">Crypto news &amp; hack alerts <span class="hint" id="newsCount">0 items</span></div>
-        <div class="card feed-card">
-          <div class="feed-list" id="newsList"><div class="empty-state">Loading news&hellip;</div></div>
-        </div>
-      </div>
-      <div class="news-col" id="govt">
-        <div class="col-head">Government &amp; regulatory actions <span class="hint" id="govtCount">0 items</span></div>
-        <div class="card feed-card">
-          <div class="feed-list" id="govtList"><div class="empty-state">Loading enforcement actions&hellip;</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="source-note">Crypto news &amp; hack alerts from CoinDesk, The Block, and posts from blockchain intelligence firms including Chainalysis, TRM Labs, Merkle Science and Elliptic. Government &amp; regulatory actions come directly from U.S. Dept. of Justice, U.S. SEC and OFAC (Treasury), filtered to crypto/blockchain relevance. Refreshes hourly.</div>
+    <div class="source-note">Tracks tokens that crossed $1M market cap on pump.fun (Solana) and other platforms/chains indexed by DexScreener &mdash; including tokens on Robinhood&rsquo;s own chain and Robinhood-branded tokens elsewhere. New listings carry very high risk; this is tracking, not an endorsement.</div>
   </section>
 
   <footer class="page-foot">
-    <span>JalalOnChain &middot; live whale tracker for traders &amp; learners</span>
+    <span>JalalOnChain &middot; crypto news, prices &amp; on-chain intelligence &mdash; not financial advice</span>
     <span id="footSync">Waiting for first sync&hellip;</span>
   </footer>
 </div>
@@ -460,10 +325,7 @@
 <script>
 (function(){
   "use strict";
-  var state = {
-    tx: [], knowledge: [], launches: [], news: [], watch: [], updatedAt: null,
-    filters: { token:"all", chain:"all", minAmount:100000, dir:"all" }
-  };
+  var state = { knowledge: [], launches: [], news: [], watch: [], prices: [], updatedAt: null };
 
   function fmtUsd(n){
     n = Number(n)||0;
@@ -471,6 +333,18 @@
     if (n >= 1e6) return "$"+(n/1e6).toFixed(2)+"M";
     if (n >= 1e3) return "$"+(n/1e3).toFixed(0)+"K";
     return "$"+n.toFixed(0);
+  }
+  function fmtPrice(n){
+    n = Number(n)||0;
+    if(n === 0) return "$0";
+    if(n >= 1000) return "$"+n.toLocaleString(undefined,{maximumFractionDigits:0});
+    if(n >= 1) return "$"+n.toFixed(2);
+    if(n >= 0.01) return "$"+n.toFixed(4);
+    return "$"+n.toFixed(8).replace(/0+$/,"").replace(/\.$/,"");
+  }
+  function fmtChg(n){
+    n = Number(n)||0;
+    return (n>=0?"+":"")+n.toFixed(2)+"%";
   }
   function timeAgo(iso){
     if(!iso) return "";
@@ -489,96 +363,6 @@
       return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
     });
   }
-  function dirClass(d){ if(d==="buy") return "dir-buy"; if(d==="sell") return "dir-sell"; if(d==="transfer") return "dir-transfer"; return "dir-other"; }
-  function dirLabel(d){ if(d==="buy") return "Buy"; if(d==="sell") return "Sell"; if(d==="transfer") return "Transfer"; return d ? d.charAt(0).toUpperCase()+d.slice(1) : "Move"; }
-
-  function populateSelect(sel, values, current){
-    var frag = "<option value=\"all\">All "+(sel.id==="tokenFilter"?"tokens":"chains")+"</option>";
-    values.forEach(function(v){ frag += "<option value=\""+esc(v)+"\""+(v===current?" selected":"")+">"+esc(v)+"</option>"; });
-    sel.innerHTML = frag;
-    sel.value = values.indexOf(current) >= 0 ? current : "all";
-  }
-  function refreshFilterOptions(){
-    var tokens = {}, chains = {};
-    state.tx.forEach(function(t){ if(t.token) tokens[t.token]=(tokens[t.token]||0)+1; if(t.chain) chains[t.chain]=(chains[t.chain]||0)+1; });
-    populateSelect(document.getElementById("tokenFilter"), Object.keys(tokens).sort(function(a,b){return tokens[b]-tokens[a];}), state.filters.token);
-    populateSelect(document.getElementById("chainFilter"), Object.keys(chains).sort(function(a,b){return chains[b]-chains[a];}), state.filters.chain);
-  }
-  function filteredTx(){
-    var f = state.filters;
-    return state.tx.filter(function(t){
-      if(f.token !== "all" && t.token !== f.token) return false;
-      if(f.chain !== "all" && t.chain !== f.chain) return false;
-      if((Number(t.amountUsd)||0) < f.minAmount) return false;
-      if(f.dir === "buy" && t.direction !== "buy") return false;
-      if(f.dir === "sell" && t.direction !== "sell") return false;
-      if(f.dir === "other" && (t.direction === "buy" || t.direction === "sell")) return false;
-      return true;
-    }).sort(function(a,b){ return new Date(b.timestamp||b.fetchedAt) - new Date(a.timestamp||a.fetchedAt); });
-  }
-  function renderStats(list){
-    var total=0, biggest=null, tokenCount={};
-    list.forEach(function(t){ var amt=Number(t.amountUsd)||0; total+=amt; if(!biggest||amt>biggest.amountUsd) biggest=t; if(t.token) tokenCount[t.token]=(tokenCount[t.token]||0)+1; });
-    document.getElementById("statVolume").textContent = fmtUsd(total);
-    document.getElementById("statCount").textContent = list.length;
-    if(biggest){ document.getElementById("statBiggest").textContent = fmtUsd(biggest.amountUsd); document.getElementById("statBiggestSub").textContent = biggest.token+" · "+dirLabel(biggest.direction); }
-    else { document.getElementById("statBiggest").textContent = "—"; document.getElementById("statBiggestSub").textContent=" "; }
-    var top = Object.keys(tokenCount).sort(function(a,b){return tokenCount[b]-tokenCount[a];})[0];
-    if(top){ document.getElementById("statTopToken").textContent = top; document.getElementById("statTopTokenSub").textContent = tokenCount[top]+" moves tracked"; }
-    else { document.getElementById("statTopToken").textContent = "—"; document.getElementById("statTopTokenSub").textContent=" "; }
-  }
-  function renderChart(list){
-    var svg = document.getElementById("volChart"), tip = document.getElementById("chartTip");
-    var now = Date.now(), buckets=12, bucketMs=2*60*60*1000;
-    var sums = new Array(buckets).fill(0);
-    list.forEach(function(t){
-      var ts = new Date(t.timestamp||t.fetchedAt).getTime();
-      if(isNaN(ts)) return;
-      var age = now-ts;
-      if(age<0 || age>buckets*bucketMs) return;
-      var idx = buckets-1-Math.floor(age/bucketMs);
-      if(idx>=0 && idx<buckets) sums[idx]+=Number(t.amountUsd)||0;
-    });
-    var max = Math.max.apply(null, sums.concat([1]));
-    var w=720,h=130,gap=6, bw=(w/buckets)-gap, svgns="http://www.w3.org/2000/svg";
-    while(svg.firstChild) svg.removeChild(svg.firstChild);
-    sums.forEach(function(v,i){
-      var bh=Math.max(2,(v/max)*(h-20)), x=i*(w/buckets)+gap/2, y=h-bh-14;
-      var rect=document.createElementNS(svgns,"rect");
-      rect.setAttribute("x",x); rect.setAttribute("y",y); rect.setAttribute("width",Math.max(2,bw)); rect.setAttribute("height",bh);
-      rect.setAttribute("rx",3); rect.setAttribute("class","bar");
-      rect.addEventListener("mouseenter", function(e){ showTip(e,v,i); });
-      rect.addEventListener("mousemove", function(e){ showTip(e,v,i); });
-      rect.addEventListener("mouseleave", function(){ tip.classList.remove("show"); });
-      svg.appendChild(rect);
-    });
-    [["24h ago",0],["now",w-24]].forEach(function(pair){
-      var t=document.createElementNS(svgns,"text"); t.setAttribute("x",pair[1]); t.setAttribute("y",h-1); t.setAttribute("class","axis-label"); t.textContent=pair[0]; svg.appendChild(t);
-    });
-    function showTip(e,v,i){
-      var hs=(buckets-i)*2, he=(buckets-i-1)*2;
-      tip.textContent = fmtUsd(v)+" · "+hs+"–"+he+"h ago";
-      var wrapRect = svg.parentElement.getBoundingClientRect();
-      tip.style.left = (e.clientX-wrapRect.left)+"px"; tip.style.top = (e.clientY-wrapRect.top)+"px";
-      tip.classList.add("show");
-    }
-  }
-  function renderFeed(list){
-    var el = document.getElementById("feedList");
-    document.getElementById("feedCount").textContent = list.length+(list.length===1?" transaction":" transactions");
-    if(!list.length){ el.innerHTML = "<div class=\"empty-state\">No whale moves match these filters yet. Try lowering the minimum size.</div>"; return; }
-    el.innerHTML = list.slice(0,150).map(function(t){
-      var link = t.sourceUrl ? "<a href=\""+esc(t.sourceUrl)+"\" target=\"_blank\" rel=\"noopener\">source</a>" : "";
-      return "<div class=\"row\">"+
-        "<div><span class=\"dir-badge "+dirClass(t.direction)+"\">"+esc(dirLabel(t.direction))+"</span></div>"+
-        "<div class=\"row-main\"><div class=\"token-line\"><span class=\"token\">"+esc(t.token||"?")+"</span>"+(t.chain?"<span class=\"chain\">"+esc(t.chain)+"</span>":"")+"</div>"+
-        "<div class=\"summary\">"+esc(t.summary||"")+(t.entity?" — "+esc(t.entity):"")+(link?" &middot; "+link:"")+"</div></div>"+
-        "<div class=\"row-amt\">"+fmtUsd(t.amountUsd)+"</div>"+
-        "<div class=\"row-time\">"+esc(timeAgo(t.timestamp||t.fetchedAt))+"</div>"+
-      "</div>";
-    }).join("");
-  }
-  function render(){ refreshFilterOptions(); var list = filteredTx(); renderStats(list); renderChart(list); renderFeed(list); }
 
   function renderKnowledge(){
     var docs = state.knowledge.slice().sort(function(a,b){ return b.id.localeCompare(a.id); });
@@ -621,18 +405,10 @@
   }
   function renderNews(){
     var all = state.news.slice().sort(function(a,b){ return new Date(b.publishedAt||b.fetchedAt) - new Date(a.publishedAt||a.fetchedAt); });
-    var marketNews = all.filter(function(n){ return n.category !== "enforcement"; });
-    var govtNews = all.filter(function(n){ return n.category === "enforcement"; });
-
-    document.getElementById("newsCount").textContent = marketNews.length+(marketNews.length===1?" item":" items");
-    var newsEl = document.getElementById("newsList");
-    newsEl.innerHTML = marketNews.length ? marketNews.slice(0,60).map(newsRowHtml).join("") :
+    document.getElementById("newsCount").textContent = all.length+(all.length===1?" item":" items");
+    var el = document.getElementById("newsList");
+    el.innerHTML = all.length ? all.slice(0,80).map(newsRowHtml).join("") :
       "<div class=\"empty-state\">No news synced yet &mdash; check back after the next sync.</div>";
-
-    document.getElementById("govtCount").textContent = govtNews.length+(govtNews.length===1?" item":" items");
-    var govtEl = document.getElementById("govtList");
-    govtEl.innerHTML = govtNews.length ? govtNews.slice(0,60).map(newsRowHtml).join("") :
-      "<div class=\"empty-state\">No crypto-relevant enforcement actions synced yet &mdash; check back after the next sync.</div>";
   }
 
   function renderWatch(){
@@ -645,6 +421,19 @@
         }).join("")+
       "</div>";
     }).join("");
+  }
+
+  function renderPrices(){
+    var track = document.getElementById("tickerTrack");
+    var list = state.prices || [];
+    if(!list.length){ track.innerHTML = "<div class=\"ticker-item\"><span class=\"t-sym\">Prices syncing&hellip;</span></div>"; return; }
+    function itemHtml(p){
+      var chg = Number(p.change24h);
+      var chgClass = chg>=0 ? "up" : "down";
+      return "<div class=\"ticker-item\"><span class=\"t-sym\">"+esc(p.symbol)+"</span><span class=\"t-price\">"+fmtPrice(p.price)+"</span><span class=\"t-chg "+chgClass+"\">"+fmtChg(chg)+"</span></div>";
+    }
+    var once = list.map(itemHtml).join("");
+    track.innerHTML = once + once; // duplicated for a seamless looping marquee
   }
 
   var SUPPORT_ADDRESSES = [
@@ -700,55 +489,28 @@
     else if(ageMin>75){ label="sync delayed · last update "+timeAgo(state.updatedAt); }
     dot.className = "live-dot "+cls;
     txt.innerHTML = label;
-    foot.textContent = "Data refreshes roughly hourly from on-chain sources and public whale-alert reporting.";
+    foot.textContent = "Data refreshes roughly hourly.";
   }
 
   function loadData(){
     var bust = "?t=" + Date.now();
     Promise.all([
-      fetch("./data/transactions.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/knowledge.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/launches.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/news.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
-      fetch("./data/twitter-watch.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
+      fetch("./data/twitter-watch.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/prices.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
     ]).then(function(results){
-      var txData = results[0], kData = results[1], launchData = results[2], newsData = results[3], watchData = results[4];
-      if(txData && txData.items){ state.tx = txData.items; state.updatedAt = txData.updatedAt || state.updatedAt; }
+      var kData = results[0], launchData = results[1], newsData = results[2], watchData = results[3], priceData = results[4];
       if(kData && kData.items){ state.knowledge = kData.items; }
       if(launchData && launchData.items){ state.launches = launchData.items; }
       if(newsData && newsData.items){ state.news = newsData.items; }
       if(watchData && watchData.groups){ state.watch = watchData.groups; }
-      render(); renderKnowledge(); renderLaunches(); renderNews(); renderWatch(); renderStatus();
+      if(priceData && priceData.items){ state.prices = priceData.items; }
+      state.updatedAt = (newsData && newsData.updatedAt) || (launchData && launchData.updatedAt) || (priceData && priceData.updatedAt) || state.updatedAt;
+      renderKnowledge(); renderLaunches(); renderNews(); renderWatch(); renderPrices(); renderStatus();
     });
   }
-
-  document.getElementById("tokenFilter").addEventListener("change", function(){ state.filters.token=this.value; render(); });
-  document.getElementById("chainFilter").addEventListener("change", function(){ state.filters.chain=this.value; render(); });
-  document.getElementById("minAmount").addEventListener("input", function(){
-    state.filters.minAmount = Number(this.value)||0;
-    document.querySelectorAll("#amountChips .chip").forEach(function(c){ c.classList.toggle("active", Number(c.dataset.val)===state.filters.minAmount); });
-    render();
-  });
-  document.getElementById("amountChips").addEventListener("click", function(e){
-    var btn = e.target.closest(".chip"); if(!btn) return;
-    document.querySelectorAll("#amountChips .chip").forEach(function(c){ c.classList.remove("active"); });
-    btn.classList.add("active");
-    document.getElementById("minAmount").value = btn.dataset.val;
-    state.filters.minAmount = Number(btn.dataset.val);
-    render();
-  });
-  document.getElementById("dirSeg").addEventListener("click", function(e){
-    var btn = e.target.closest("button"); if(!btn) return;
-    document.querySelectorAll("#dirSeg button").forEach(function(b){ b.classList.remove("active"); });
-    btn.classList.add("active"); state.filters.dir = btn.dataset.val; render();
-  });
-  document.getElementById("resetBtn").addEventListener("click", function(){
-    state.filters = { token:"all", chain:"all", minAmount:100000, dir:"all" };
-    document.getElementById("minAmount").value = 100000;
-    document.querySelectorAll("#amountChips .chip").forEach(function(c){ c.classList.toggle("active", c.dataset.val==="100000"); });
-    document.querySelectorAll("#dirSeg button").forEach(function(b){ b.classList.toggle("active", b.dataset.val==="all"); });
-    render();
-  });
 
   document.getElementById("subForm").addEventListener("submit", function(e){
     e.preventDefault();
@@ -782,7 +544,7 @@
     if(copyBtn){ copyToClipboard(copyBtn.dataset.copy, copyBtn); }
   });
 
-  render(); renderKnowledge(); renderLaunches(); renderNews(); renderWatch(); renderSupport(); renderStatus();
+  renderKnowledge(); renderLaunches(); renderNews(); renderWatch(); renderSupport(); renderPrices(); renderStatus();
   loadData();
   setInterval(loadData, 90000);
   setInterval(renderStatus, 30000);

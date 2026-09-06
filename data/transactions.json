@@ -1,0 +1,80 @@
+{
+  "updatedAt": "2026-09-06T13:38:54Z",
+  "items": [
+    {
+      "id": "tx-seed-1",
+      "token": "UNI",
+      "chain": "Ethereum",
+      "amountUsd": 1730000,
+      "amountToken": 244000,
+      "direction": "buy",
+      "entity": "Arthur Hayes",
+      "counterparty": "Flowdesk (OTC)",
+      "timestamp": "2026-09-06T11:47:10Z",
+      "fetchedAt": "2026-09-06T12:47:10Z",
+      "source": "Lookonchain",
+      "sourceUrl": "https://www.lookonchain.com/",
+      "summary": "Purchased 244,000 UNI via over-the-counter trading through Flowdesk"
+    },
+    {
+      "id": "tx-seed-2",
+      "token": "HYPE",
+      "chain": "Hyperliquid L1",
+      "amountUsd": 13050000,
+      "amountToken": null,
+      "direction": "buy",
+      "entity": "Wallet suspected linked to a16z",
+      "counterparty": "Hyperliquid (DEX)",
+      "timestamp": "2026-09-06T07:47:10Z",
+      "fetchedAt": "2026-09-06T12:47:10Z",
+      "source": "Lookonchain",
+      "sourceUrl": "https://www.lookonchain.com/",
+      "summary": "Sent 13.05M USDC to a Hyperliquid DEX address, building a HYPE position"
+    },
+    {
+      "id": "tx-seed-3",
+      "token": "BTC",
+      "chain": "Bitcoin",
+      "amountUsd": 28000000,
+      "amountToken": 350,
+      "direction": "transfer",
+      "entity": "7 dormant miner addresses (16.5 yrs)",
+      "counterparty": "",
+      "timestamp": "2026-09-06T06:47:10Z",
+      "fetchedAt": "2026-09-06T12:47:10Z",
+      "source": "Lookonchain",
+      "sourceUrl": "https://www.lookonchain.com/",
+      "summary": "350 BTC moved after sitting dormant for 16.5 years"
+    },
+    {
+      "id": "tx-seed-4",
+      "token": "HYPE",
+      "chain": "Hyperliquid L1",
+      "amountUsd": 15010000,
+      "amountToken": 174826,
+      "direction": "buy",
+      "entity": "Whale 0x6750",
+      "counterparty": "",
+      "timestamp": "2026-09-06T04:47:10Z",
+      "fetchedAt": "2026-09-06T12:47:10Z",
+      "source": "Lookonchain",
+      "sourceUrl": "https://www.lookonchain.com/",
+      "summary": "Purchased 174,826 HYPE and staked the entire position"
+    },
+    {
+      "id": "tx-seed-5",
+      "token": "HYPE",
+      "chain": "Hyperliquid L1",
+      "amountUsd": 829500,
+      "amountToken": 9730,
+      "direction": "burn",
+      "entity": "Hyperliquid (protocol)",
+      "counterparty": "",
+      "timestamp": "2026-09-06T00:47:10Z",
+      "fetchedAt": "2026-09-06T12:47:10Z",
+      "source": "Lookonchain",
+      "sourceUrl": "https://www.lookonchain.com/",
+      "summary": "Protocol burned 9,730 HYPE tokens"
+    }
+  ]
+}

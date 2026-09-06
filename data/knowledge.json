@@ -1,0 +1,12 @@
+{
+  "updatedAt": "2026-09-06T13:38:54Z",
+  "items": [
+    {
+      "id": "2026-09-06",
+      "title": "Why address clustering matters more than balances",
+      "body": "A single wallet's balance rarely tells the real story — most large holders spread funds across dozens of addresses to obscure size and intent. On-chain intelligence platforms use clustering heuristics (common-input-ownership, change-address detection, deposit-address fingerprinting) to link these addresses into one economic entity before flagging a 'whale.' That's why two wallets moving $60K each can be a single $120K whale move once clustered — and why raw explorer data alone under-counts real concentration.",
+      "tags": ["on-chain-forensics", "clustering", "compliance"],
+      "createdAt": "2026-09-06T12:47:10Z"
+    }
+  ]
+}

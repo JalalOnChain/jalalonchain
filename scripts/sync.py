@@ -13,7 +13,9 @@ for git itself — GitHub provides GITHUB_TOKEN automatically). Responsibilities
    tokens), and write data/launches.json.
 3. Pull a live top-N coin price snapshot from CoinGecko for the homepage
    price ticker, and write data/prices.json.
-4. Advance the daily knowledge briefing from a pre-written rotating pool.
+4. Pull newly-listed DeFi protocols/entities (by TVL) from DefiLlama, and
+   write data/defi.json.
+5. Advance the daily knowledge briefing from a pre-written rotating pool.
 
 Every step is defensive: a failing data source is skipped, never fatal —
 the workflow should always leave the repo in a valid, up-to-date state.
@@ -45,6 +47,7 @@ STATE_PATH = os.path.join(DATA_DIR, "knowledge-state.json")
 NEWS_PATH = os.path.join(DATA_DIR, "news.json")
 LAUNCHES_PATH = os.path.join(DATA_DIR, "launches.json")
 PRICES_PATH = os.path.join(DATA_DIR, "prices.json")
+DEFI_PATH = os.path.join(DATA_DIR, "defi.json")
 
 MAX_KNOWLEDGE = 120
 UA = "Mozilla/5.0 (compatible; JalalOnChainBot/1.0; +https://github.com/JalalOnChain/jalalonchain)"
@@ -126,6 +129,32 @@ MONTHS_RE = r"(January|February|March|April|May|June|July|August|September|Octob
 def is_crypto_relevant(text):
     low = (text or "").lower()
     return any(k in low for k in CRYPTO_KEYWORDS)
+
+
+TITLE_NORM_RE = re.compile(r"[^a-z0-9]+")
+
+
+def news_dedupe_key(item):
+    """Content-based key (source + normalized title), independent of id.
+
+    Older data written before ids were made deterministic can contain the
+    same headline stored multiple times under different ids — this key
+    lets a single pass collapse those regardless of when they were saved.
+    """
+    title_norm = TITLE_NORM_RE.sub(" ", (item.get("title") or "").lower()).strip()[:140]
+    return (item.get("source") or "", title_norm)
+
+
+def dedupe_news(items):
+    seen = set()
+    out = []
+    for it in items:
+        key = news_dedupe_key(it)
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(it)
+    return out
 
 
 def strip_html(s):
@@ -291,9 +320,11 @@ def sync_news():
 
     items = new_items + items
     items.sort(key=lambda n: n.get("publishedAt") or n.get("fetchedAt") or "", reverse=True)
+    before = len(items)
+    items = dedupe_news(items)
     items = items[:MAX_NEWS]
     save_json(NEWS_PATH, {"updatedAt": now_iso(), "items": items})
-    print(f"news: {len(new_items)} new, {len(items)} total")
+    print(f"news: {len(new_items)} new, {before - len(items)} duplicate(s) collapsed, {len(items)} total")
 
 
 # --- New token launches ($1M+ market cap, across platforms) ---------------
@@ -497,6 +528,69 @@ def sync_prices():
     print(f"prices: {len(items)} coins")
 
 
+# --- New DeFi protocols/entities (by TVL, recently listed) ----------------
+# DefiLlama's public protocols endpoint — no key needed. Each protocol has a
+# "listedAt" unix-seconds field when DefiLlama has recorded a listing date;
+# we surface the newest-listed ones above a small TVL floor so the feed
+# skips dead-on-arrival forks and shows things that actually gained traction.
+DEFILLAMA_PROTOCOLS_URL = "https://api.llama.fi/protocols"
+MAX_DEFI = 40
+DEFI_MIN_TVL = 100_000
+DEFI_MAX_AGE_DAYS = 90
+
+
+def fetch_new_defi_protocols():
+    out = []
+    try:
+        r = requests.get(DEFILLAMA_PROTOCOLS_URL, timeout=25, headers={"User-Agent": UA, "Accept": "application/json"})
+        protocols = r.json()
+        if not isinstance(protocols, list):
+            return out
+    except Exception:
+        traceback.print_exc()
+        return out
+
+    cutoff = datetime.now(timezone.utc) - timedelta(days=DEFI_MAX_AGE_DAYS)
+    for p in protocols:
+        try:
+            listed_at = p.get("listedAt")
+            if not listed_at:
+                continue
+            listed_dt = datetime.fromtimestamp(int(listed_at), tz=timezone.utc)
+            if listed_dt < cutoff:
+                continue
+            tvl = float(p.get("tvl") or 0)
+            if tvl < DEFI_MIN_TVL:
+                continue
+            slug = p.get("slug") or p.get("name")
+            uid = stable_id("defi", slug)
+            chains = p.get("chains") or ([p["chain"]] if p.get("chain") else [])
+            out.append({
+                "id": uid, "name": p.get("name") or "Unknown", "symbol": p.get("symbol") or "",
+                "category": p.get("category") or "", "chains": chains[:4],
+                "tvlUsd": round(tvl, 2), "change1d": p.get("change_1d"),
+                "listedAt": listed_dt.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "fetchedAt": now_iso(),
+                "link": p.get("url") or (f"https://defillama.com/protocol/{slug}" if slug else ""),
+            })
+        except Exception:
+            continue
+    return out
+
+
+def sync_defi():
+    fetched = fetch_new_defi_protocols()
+    if not fetched:
+        print("defi: fetch failed or returned nothing — keeping previous snapshot")
+        return
+    by_id = {}
+    for p in fetched:
+        by_id[p["id"]] = p  # de-dupe by protocol, latest wins
+    items = sorted(by_id.values(), key=lambda p: p.get("tvlUsd") or 0, reverse=True)[:MAX_DEFI]
+    save_json(DEFI_PATH, {"updatedAt": now_iso(), "items": items})
+    print(f"defi: {len(items)} newly-listed protocols")
+
+
 def sync_knowledge():
     knowledge = load_json(KNOWLEDGE_PATH, {"updatedAt": None, "items": []})
     pool = load_json(POOL_PATH, {"items": []}).get("items", [])
@@ -527,6 +621,7 @@ def main():
     sync_news()
     sync_launches()
     sync_prices()
+    sync_defi()
 
 
 if __name__ == "__main__":

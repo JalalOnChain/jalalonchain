@@ -12,6 +12,10 @@ how crypto and blockchain actually work.
 - `data/prices.json` — a live top-20 coin price snapshot (CoinGecko) for the homepage
   price ticker
 - `data/defi.json` — recently-listed DeFi protocols/entities by TVL (DefiLlama)
+- `data/hyperliquid.json` — large ($100K+) Hyperliquid perp positions and recent
+  large trades, sourced directly from Hyperliquid's own public API and leaderboard
+  (not a third-party wallet tracker); the tracked addresses are re-selected every
+  sync from Hyperliquid's current top accounts
 - `data/knowledge.json` — daily briefings, advanced one-per-day from `data/knowledge-pool.json`
 - `.github/workflows/sync.yml` — the hourly job that keeps everything current
 - `scripts/sync.py` — what that job actually runs

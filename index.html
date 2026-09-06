@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JalalOnChain — Crypto News, Prices &amp; New Tokens Monitor</title>
 <meta name="description" content="Crypto news, hack and enforcement alerts, live coin prices, and new tokens monitored once they cross $1M market cap — plus a daily on-chain knowledge briefing with clear, informative reads on how crypto and blockchain actually work.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Ccircle cx='19' cy='19' r='17.5' fill='%230A0F1A'/%3E%3Cpath d='M10 22c2.5 3.5 6 5.2 9.5 5.2 4 0 7.6-2.2 8.5-4.6-1.7 1-4 .9-5.4-.5-1-1-3-1-3.6.6-.4-1.7-2.2-2.6-3.8-1.9-1.3.6-1.7 1-5.2 1.2z' fill='%23F2A93B'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="./assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -56,6 +56,7 @@
   .topbar{ border-bottom:1px solid var(--border); }
   .topbar .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 20px; flex-wrap:wrap; }
   .brand{ display:flex; align-items:center; gap:10px; }
+  .brand-logo{ border-radius:8px; object-fit:cover; flex:none; }
   .brand-text{ display:flex; flex-direction:column; line-height:1.05; }
   .brand-text .name{ font-size:19px; font-weight:800; letter-spacing:-0.01em; }
   .brand-text .name em{ font-style:normal; color:var(--accent); }
@@ -172,6 +173,10 @@
   .launch-card .lc-meta{ display:flex; justify-content:space-between; align-items:center; margin-top:9px; font-size:11px; color:var(--text-muted); }
   .launch-card .lc-meta a{ color:var(--text-muted); }
   .platform-badge{ background:var(--chip-bg); border:1px solid var(--border); border-radius:6px; padding:2px 7px; font-size:10px; color:var(--text-muted); }
+  .side-long{ color:var(--good); }
+  .side-short{ color:var(--bad); }
+  .hl-pnl.up{ color:var(--good); }
+  .hl-pnl.down{ color:var(--bad); }
 
   .news-row{ padding:12px 18px; border-top:1px solid var(--border); }
   .news-row:first-child{ border-top:none; }
@@ -209,21 +214,17 @@
 <div class="topbar">
   <div class="wrap">
     <div class="brand">
-      <svg width="34" height="34" viewBox="0 0 38 38" fill="none">
-        <circle cx="19" cy="19" r="17.5" stroke="var(--accent)" stroke-width="1.4" opacity="0.35"/>
-        <circle cx="19" cy="19" r="11.5" stroke="var(--accent)" stroke-width="1.4" opacity="0.6"/>
-        <path d="M10 22c2.5 3.5 6 5.2 9.5 5.2 4 0 7.6-2.2 8.5-4.6-1.7 1-4 .9-5.4-.5-1-1-3-1-3.6.6-.4-1.7-2.2-2.6-3.8-1.9-1.3.6-1.7 1-5.2 1.2z" fill="var(--accent)"/>
-        <circle cx="23.5" cy="14.5" r="1.1" fill="var(--accent)"/>
-      </svg>
+      <img class="brand-logo" src="./assets/logo.png" alt="JalalOnChain logo" width="34" height="34">
       <div class="brand-text">
         <div class="name">Jalal<em>OnChain</em></div>
-        <div class="tag">News. Tokens. DeFi.</div>
+        <div class="tag">Beyond the transaction.</div>
       </div>
     </div>
     <div class="nav-links">
       <a href="#news">News</a>
       <a href="#launches">Launches</a>
       <a href="#defi">DeFi</a>
+      <a href="#hyperliquid">Whales</a>
       <a href="#learn">Learn</a>
       <a href="#subscribe">Subscribe</a>
       <div class="live-pill"><span class="live-dot live" id="liveDot"></span><span id="liveText">syncing&hellip;</span></div>
@@ -234,13 +235,14 @@
 <div class="wrap">
   <section class="hero">
     <h1>Crypto <em>news, prices &amp; new launches</em> &mdash; plus the context to make sense of them.</h1>
-    <p>JalalOnChain brings together crypto market news, hack and enforcement alerts, live coin prices, and freshly launched tokens crossing $1M market cap &mdash; paired with a short daily on-chain or off-chain lesson for traders and learners alike.</p>
+    <p>JalalOnChain brings together crypto market news, hack and enforcement alerts, live coin prices, and freshly launched tokens crossing $1M market cap &mdash; paired with a short daily on-chain or off-chain lesson, clear and informative reading on how crypto and blockchain actually work.</p>
     <div class="hero-chains">
       <span class="chain-badge">Market News</span>
       <span class="chain-badge">Hack &amp; Enforcement Alerts</span>
       <span class="chain-badge">Live Prices</span>
       <span class="chain-badge">New Tokens Monitor</span>
       <span class="chain-badge">New DeFi Protocols</span>
+      <span class="chain-badge">Hyperliquid Whale Activity</span>
       <span class="chain-badge">Daily On-Chain Lesson</span>
     </div>
   </section>
@@ -322,6 +324,31 @@
     <div class="source-note">Recently-listed DeFi protocols (by TVL) sourced from DefiLlama &mdash; new lending markets, DEXs, restaking and yield entities that crossed a minimum TVL floor. Tracking, not an endorsement or audit.</div>
   </section>
 
+  <section class="section" id="hyperliquid">
+    <div class="section-head">
+      <h2>Hyperliquid whale activity &middot; $100K+</h2>
+      <span class="hint" id="hlUpdated"></span>
+    </div>
+
+    <div class="feed-head-row">
+      <h3>Large open positions</h3>
+      <span class="feed-count" id="hlPosCount">0</span>
+    </div>
+    <div class="card">
+      <div class="grid-cards" id="hlPositionsGrid"><div class="empty-state">Loading positions&hellip;</div></div>
+    </div>
+
+    <div class="feed-head-row" style="margin-top:16px;">
+      <h3>Recent large trades</h3>
+      <span class="feed-count" id="hlActivityCount">0</span>
+    </div>
+    <div class="card feed-card">
+      <div class="feed-list" id="hlActivityList"><div class="empty-state">Loading activity&hellip;</div></div>
+    </div>
+
+    <div class="source-note">Sourced directly from Hyperliquid&rsquo;s own public API and leaderboard &mdash; not any third-party wallet tracker. Addresses are Hyperliquid&rsquo;s current top accounts by size, re-selected every sync, filtered to positions and trades of $100K or more. Tracking, not financial advice.</div>
+  </section>
+
   <footer class="page-foot">
     <div class="foot-contact">
       <span class="foot-contact-label">Reach me at</span>
@@ -344,7 +371,7 @@
 <script>
 (function(){
   "use strict";
-  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], updatedAt: null };
+  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], hlPositions: [], hlActivity: [], updatedAt: null };
 
   function fmtUsd(n){
     n = Number(n)||0;
@@ -427,6 +454,57 @@
         "<div class=\"lc-meta\"><span class=\"platform-badge\">"+esc(p.category||chains||"")+"</span>"+link+"</div>"+
       "</div>";
     }).join("");
+  }
+
+  function shortAddr(a){
+    a = a || "";
+    return a.length > 12 ? (a.slice(0,6)+"…"+a.slice(-4)) : a;
+  }
+
+  function renderHyperliquid(){
+    var updEl = document.getElementById("hlUpdated");
+    if(updEl) updEl.textContent = state.hlUpdatedAt ? ("synced "+timeAgo(state.hlUpdatedAt)) : "";
+
+    var positions = state.hlPositions.slice().sort(function(a,b){ return (Number(b.positionValueUsd)||0)-(Number(a.positionValueUsd)||0); });
+    document.getElementById("hlPosCount").textContent = positions.length+(positions.length===1?" position":" positions");
+    var posEl = document.getElementById("hlPositionsGrid");
+    if(!positions.length){
+      posEl.innerHTML = "<div class=\"empty-state\">No qualifying positions yet &mdash; check back after the next sync.</div>";
+    } else {
+      posEl.innerHTML = positions.slice(0,60).map(function(p){
+        var sideClass = p.side==="long" ? "side-long" : (p.side==="short" ? "side-short" : "");
+        var sideLabel = p.side==="spot" ? "SPOT" : (p.side||"").toUpperCase()+(p.leverage?" "+p.leverage+"x":"");
+        var pnlHtml = "";
+        if(p.unrealizedPnlUsd !== null && p.unrealizedPnlUsd !== undefined){
+          var pnlClass = Number(p.unrealizedPnlUsd) >= 0 ? "up" : "down";
+          pnlHtml = "<span class=\"platform-badge hl-pnl "+pnlClass+"\">"+(Number(p.unrealizedPnlUsd)>=0?"+":"")+fmtUsd(p.unrealizedPnlUsd)+" PnL</span>";
+        }
+        var link = p.link ? "<a href=\""+esc(p.link)+"\" target=\"_blank\" rel=\"noopener\">"+esc(shortAddr(p.address))+"</a>" : esc(shortAddr(p.address));
+        return "<div class=\"launch-card\">"+
+          "<div class=\"lc-top\"><span class=\"lc-name\">"+esc(p.coin||"")+"</span><span class=\"lc-sym "+sideClass+"\">"+esc(sideLabel)+"</span></div>"+
+          "<div class=\"lc-mc\">"+fmtUsd(p.positionValueUsd)+"</div>"+
+          "<div class=\"lc-meta\">"+pnlHtml+link+"</div>"+
+        "</div>";
+      }).join("");
+    }
+
+    var activity = state.hlActivity.slice().sort(function(a,b){ return new Date(b.time) - new Date(a.time); });
+    document.getElementById("hlActivityCount").textContent = activity.length+(activity.length===1?" trade":" trades");
+    var actEl = document.getElementById("hlActivityList");
+    if(!activity.length){
+      actEl.innerHTML = "<div class=\"empty-state\">No qualifying trades in the recent window &mdash; check back after the next sync.</div>";
+    } else {
+      actEl.innerHTML = activity.slice(0,60).map(function(a){
+        var dirLower = (a.dir||"").toLowerCase();
+        var catClass = dirLower.indexOf("long") !== -1 ? "cat-market-news" : (dirLower.indexOf("short") !== -1 ? "cat-enforcement" : "cat-market-news");
+        var link = a.link ? "<a href=\""+esc(a.link)+"\" target=\"_blank\" rel=\"noopener\">"+esc(shortAddr(a.address))+"</a>" : esc(shortAddr(a.address));
+        return "<div class=\"news-row\">"+
+          "<div class=\"n-top\"><span class=\"cat-badge "+catClass+"\">"+esc(a.dir||"Trade")+"</span><span class=\"n-source\">"+esc(a.coin||"")+"</span><span class=\"n-time\">"+esc(timeAgo(a.time))+"</span></div>"+
+          "<div class=\"n-title\">"+fmtUsd(a.notionalUsd)+" notional at $"+esc(a.price)+"</div>"+
+          "<div class=\"n-summary\">"+link+"</div>"+
+        "</div>";
+      }).join("");
+    }
   }
 
   function newsRowHtml(n){
@@ -522,16 +600,20 @@
       fetch("./data/launches.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/news.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/prices.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
-      fetch("./data/defi.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
+      fetch("./data/defi.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/hyperliquid.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
     ]).then(function(results){
-      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4];
+      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5];
       if(kData && kData.items){ state.knowledge = kData.items; }
       if(launchData && launchData.items){ state.launches = launchData.items; }
       if(newsData && newsData.items){ state.news = newsData.items; }
       if(priceData && priceData.items){ state.prices = priceData.items; }
       if(defiData && defiData.items){ state.defi = defiData.items; }
+      if(hlData && hlData.positions){ state.hlPositions = hlData.positions; }
+      if(hlData && hlData.activity){ state.hlActivity = hlData.activity; }
+      if(hlData && hlData.updatedAt){ state.hlUpdatedAt = hlData.updatedAt; }
       state.updatedAt = (newsData && newsData.updatedAt) || (launchData && launchData.updatedAt) || (priceData && priceData.updatedAt) || state.updatedAt;
-      renderKnowledge(); renderLaunches(); renderNews(); renderPrices(); renderDefi(); renderStatus();
+      renderKnowledge(); renderLaunches(); renderNews(); renderPrices(); renderDefi(); renderHyperliquid(); renderStatus();
     });
   }
 
@@ -567,7 +649,7 @@
     if(copyBtn){ copyToClipboard(copyBtn.dataset.copy, copyBtn); }
   });
 
-  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPrices(); renderDefi(); renderStatus();
+  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPrices(); renderDefi(); renderHyperliquid(); renderStatus();
   loadData();
   setInterval(loadData, 90000);
   setInterval(renderStatus, 30000);

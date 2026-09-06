@@ -107,7 +107,7 @@
   .empty-state{ padding:40px 18px; text-align:center; color:var(--text-muted); font-size:13.5px; }
 
   /* ---- knowledge / subscribe ---- */
-  .side{ position:sticky; top:20px; display:flex; flex-direction:column; gap:16px; }
+  .side{ display:flex; flex-direction:column; gap:16px; }
   .k-card{ padding:18px; }
   .k-eyebrow{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
   .k-eyebrow span{ font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--teal); font-weight:700; }
@@ -157,7 +157,7 @@
   .source-note{ font-size:11px; color:var(--text-faint); line-height:1.5; padding:2px 4px; }
   .source-note a{ color:var(--text-faint); }
 
-  /* ---- launches / news / watch sections ---- */
+  /* ---- launches / news sections ---- */
   .section{ padding:8px 0 4px; }
   .section-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px; flex-wrap:wrap; gap:6px; }
   .section-head h2{ font-size:15px; text-transform:uppercase; letter-spacing:.06em; color:var(--text); font-weight:800; }
@@ -186,16 +186,6 @@
   .news-row .n-title a:hover{ text-decoration:underline; }
   .news-row .n-summary{ font-size:12px; color:var(--text-muted); margin-top:4px; line-height:1.5; }
 
-  .watch-card{ padding:16px 18px; }
-  .watch-card h4{ font-size:12.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); font-weight:700; margin-bottom:12px; }
-  .watch-groups{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-  @media (max-width:640px){ .watch-groups{ grid-template-columns:1fr; } }
-  .watch-group h5{ font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; }
-  .watch-handle{ display:flex; align-items:center; gap:8px; padding:6px 0; font-size:12.5px; border-top:1px solid var(--border); }
-  .watch-handle:first-of-type{ border-top:none; }
-  .watch-handle a{ color:var(--text); font-weight:700; text-decoration:none; font-family:"IBM Plex Mono",monospace; }
-  .watch-handle a:hover{ color:var(--teal); }
-  .watch-handle .wh-role{ color:var(--text-faint); font-size:11px; }
 
   footer.page-foot{
     border-top:1px solid var(--border); padding:26px 0 40px;
@@ -227,7 +217,7 @@
       </svg>
       <div class="brand-text">
         <div class="name">Jalal<em>OnChain</em></div>
-        <div class="tag">Crypto News, Prices &amp; On-Chain Intel</div>
+        <div class="tag">News. Tokens. DeFi.</div>
       </div>
     </div>
     <div class="nav-links">
@@ -265,11 +255,6 @@
 <div class="wrap">
   <div class="layout">
     <section class="feed-col" id="news">
-      <div class="card watch-card">
-        <h4>Real-time hack &amp; investigation watch</h4>
-        <div class="watch-groups" id="watchGroups"></div>
-      </div>
-
       <div class="feed-head-row">
         <h3>Crypto news &amp; enforcement</h3>
         <span class="feed-count" id="newsCount">0 items</span>
@@ -359,7 +344,7 @@
 <script>
 (function(){
   "use strict";
-  var state = { knowledge: [], launches: [], news: [], watch: [], prices: [], defi: [], updatedAt: null };
+  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], updatedAt: null };
 
   function fmtUsd(n){
     n = Number(n)||0;
@@ -461,18 +446,6 @@
       "<div class=\"empty-state\">No news synced yet &mdash; check back after the next sync.</div>";
   }
 
-  function renderWatch(){
-    var el = document.getElementById("watchGroups");
-    if(!state.watch || !state.watch.length){ el.innerHTML=""; return; }
-    el.innerHTML = state.watch.map(function(g){
-      return "<div class=\"watch-group\"><h5>"+esc(g.group)+"</h5>"+
-        (g.accounts||[]).map(function(a){
-          return "<div class=\"watch-handle\"><a href=\"https://x.com/"+esc(a.handle)+"\" target=\"_blank\" rel=\"noopener\">@"+esc(a.handle)+"</a><span class=\"wh-role\">"+esc(a.role||"")+"</span></div>";
-        }).join("")+
-      "</div>";
-    }).join("");
-  }
-
   function renderPrices(){
     var track = document.getElementById("tickerTrack");
     var list = state.prices || [];
@@ -548,19 +521,17 @@
       fetch("./data/knowledge.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/launches.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/news.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
-      fetch("./data/twitter-watch.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/prices.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/defi.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
     ]).then(function(results){
-      var kData = results[0], launchData = results[1], newsData = results[2], watchData = results[3], priceData = results[4], defiData = results[5];
+      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4];
       if(kData && kData.items){ state.knowledge = kData.items; }
       if(launchData && launchData.items){ state.launches = launchData.items; }
       if(newsData && newsData.items){ state.news = newsData.items; }
-      if(watchData && watchData.groups){ state.watch = watchData.groups; }
       if(priceData && priceData.items){ state.prices = priceData.items; }
       if(defiData && defiData.items){ state.defi = defiData.items; }
       state.updatedAt = (newsData && newsData.updatedAt) || (launchData && launchData.updatedAt) || (priceData && priceData.updatedAt) || state.updatedAt;
-      renderKnowledge(); renderLaunches(); renderNews(); renderWatch(); renderPrices(); renderDefi(); renderStatus();
+      renderKnowledge(); renderLaunches(); renderNews(); renderPrices(); renderDefi(); renderStatus();
     });
   }
 
@@ -596,7 +567,7 @@
     if(copyBtn){ copyToClipboard(copyBtn.dataset.copy, copyBtn); }
   });
 
-  renderKnowledge(); renderLaunches(); renderNews(); renderWatch(); renderSupport(); renderPrices(); renderDefi(); renderStatus();
+  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPrices(); renderDefi(); renderStatus();
   loadData();
   setInterval(loadData, 90000);
   setInterval(renderStatus, 30000);

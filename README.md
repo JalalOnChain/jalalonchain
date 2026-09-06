@@ -11,10 +11,8 @@ knowledge briefing, built for traders and learners.
   across chains, including Robinhood's chain and Robinhood-branded tokens elsewhere)
 - `data/prices.json` — a live top-20 coin price snapshot (CoinGecko) for the homepage
   price ticker
+- `data/defi.json` — recently-listed DeFi protocols/entities by TVL (DefiLlama)
 - `data/knowledge.json` — daily briefings, advanced one-per-day from `data/knowledge-pool.json`
-- `data/twitter-watch.json` — hand-curated list of hack-alert and investigator X/Twitter
-  accounts (not live-synced; X's API doesn't allow free reading, so this is reviewed
-  manually instead)
 - `.github/workflows/sync.yml` — the hourly job that keeps everything current
 - `scripts/sync.py` — what that job actually runs
 

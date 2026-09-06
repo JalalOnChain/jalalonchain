@@ -198,7 +198,15 @@
   .watch-handle .wh-role{ color:var(--text-faint); font-size:11px; }
 
   footer.page-foot{
-    border-top:1px solid var(--border); padding:22px 0 40px;
+    border-top:1px solid var(--border); padding:26px 0 40px;
+    display:flex; flex-direction:column; gap:16px;
+  }
+  .foot-contact{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+  .foot-contact-label{ font-size:11.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.07em; }
+  .foot-contact-link{ display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:600; color:var(--text); text-decoration:none; font-family:"IBM Plex Mono",monospace; }
+  .foot-contact-link:hover{ color:var(--teal); }
+  .foot-contact-link svg{ width:15px; height:15px; flex:none; }
+  .foot-bottom{
     display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
     font-size:11.5px; color:var(--text-faint);
   }
@@ -225,6 +233,7 @@
     <div class="nav-links">
       <a href="#news">News</a>
       <a href="#launches">Launches</a>
+      <a href="#defi">DeFi</a>
       <a href="#learn">Learn</a>
       <a href="#subscribe">Subscribe</a>
       <div class="live-pill"><span class="live-dot live" id="liveDot"></span><span id="liveText">syncing&hellip;</span></div>
@@ -241,6 +250,7 @@
       <span class="chain-badge">Hack &amp; Enforcement Alerts</span>
       <span class="chain-badge">Live Prices</span>
       <span class="chain-badge">New Token Launches</span>
+      <span class="chain-badge">New DeFi Protocols</span>
       <span class="chain-badge">Daily On-Chain Lesson</span>
     </div>
   </section>
@@ -316,16 +326,40 @@
     <div class="source-note">Tracks tokens that crossed $1M market cap on pump.fun (Solana) and other platforms/chains indexed by DexScreener &mdash; including tokens on Robinhood&rsquo;s own chain and Robinhood-branded tokens elsewhere. New listings carry very high risk; this is tracking, not an endorsement.</div>
   </section>
 
+  <section class="section" id="defi">
+    <div class="section-head">
+      <h2>New DeFi protocols &amp; entities</h2>
+      <span class="hint" id="defiCount">0 tracked</span>
+    </div>
+    <div class="card">
+      <div class="grid-cards" id="defiGrid"><div class="empty-state">Loading new protocols&hellip;</div></div>
+    </div>
+    <div class="source-note">Recently-listed DeFi protocols (by TVL) sourced from DefiLlama &mdash; new lending markets, DEXs, restaking and yield entities that crossed a minimum TVL floor. Tracking, not an endorsement or audit.</div>
+  </section>
+
   <footer class="page-foot">
-    <span>JalalOnChain &middot; crypto news, prices &amp; on-chain intelligence &mdash; not financial advice</span>
-    <span id="footSync">Waiting for first sync&hellip;</span>
+    <div class="foot-contact">
+      <span class="foot-contact-label">Reach me at</span>
+      <a class="foot-contact-link" href="mailto:JalalOnChain@proton.me">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0-.621.504-1.125 1.125-1.125h17.25c.621 0 1.125.504 1.125 1.125v10.5c0 .621-.504 1.125-1.125 1.125H3.375A1.125 1.125 0 0 1 2.25 17.25V6.75Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m3 7 9 6 9-6"/></svg>
+        JalalOnChain@proton.me
+      </a>
+      <a class="foot-contact-link" href="https://x.com/JalalOnChain" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        @JalalOnChain
+      </a>
+    </div>
+    <div class="foot-bottom">
+      <span>JalalOnChain &middot; crypto news, prices &amp; on-chain intelligence &mdash; not financial advice</span>
+      <span id="footSync">Waiting for first sync&hellip;</span>
+    </div>
   </footer>
 </div>
 
 <script>
 (function(){
   "use strict";
-  var state = { knowledge: [], launches: [], news: [], watch: [], prices: [], updatedAt: null };
+  var state = { knowledge: [], launches: [], news: [], watch: [], prices: [], defi: [], updatedAt: null };
 
   function fmtUsd(n){
     n = Number(n)||0;
@@ -390,6 +424,22 @@
         "<div class=\"lc-top\"><span class=\"lc-name\">"+esc(t.name||"Unknown")+"</span><span class=\"lc-sym\">"+esc(t.symbol||"")+"</span></div>"+
         "<div class=\"lc-mc\">"+fmtUsd(t.marketCapUsd)+"</div>"+
         "<div class=\"lc-meta\"><span class=\"platform-badge\">"+esc(t.platform||t.chain||"")+"</span>"+link+"</div>"+
+      "</div>";
+    }).join("");
+  }
+
+  function renderDefi(){
+    var list = state.defi.slice().sort(function(a,b){ return (Number(b.tvlUsd)||0)-(Number(a.tvlUsd)||0); });
+    document.getElementById("defiCount").textContent = list.length+(list.length===1?" protocol":" protocols");
+    var el = document.getElementById("defiGrid");
+    if(!list.length){ el.innerHTML = "<div class=\"empty-state\">No newly-listed protocols yet &mdash; check back after the next sync.</div>"; return; }
+    el.innerHTML = list.slice(0,60).map(function(p){
+      var link = p.link ? "<a href=\""+esc(p.link)+"\" target=\"_blank\" rel=\"noopener\">view</a>" : "";
+      var chains = (p.chains||[]).slice(0,3).join(", ");
+      return "<div class=\"launch-card\">"+
+        "<div class=\"lc-top\"><span class=\"lc-name\">"+esc(p.name||"Unknown")+"</span><span class=\"lc-sym\">"+esc(p.symbol||"")+"</span></div>"+
+        "<div class=\"lc-mc\">"+fmtUsd(p.tvlUsd)+" TVL</div>"+
+        "<div class=\"lc-meta\"><span class=\"platform-badge\">"+esc(p.category||chains||"")+"</span>"+link+"</div>"+
       "</div>";
     }).join("");
   }
@@ -499,16 +549,18 @@
       fetch("./data/launches.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/news.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/twitter-watch.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
-      fetch("./data/prices.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
+      fetch("./data/prices.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/defi.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
     ]).then(function(results){
-      var kData = results[0], launchData = results[1], newsData = results[2], watchData = results[3], priceData = results[4];
+      var kData = results[0], launchData = results[1], newsData = results[2], watchData = results[3], priceData = results[4], defiData = results[5];
       if(kData && kData.items){ state.knowledge = kData.items; }
       if(launchData && launchData.items){ state.launches = launchData.items; }
       if(newsData && newsData.items){ state.news = newsData.items; }
       if(watchData && watchData.groups){ state.watch = watchData.groups; }
       if(priceData && priceData.items){ state.prices = priceData.items; }
+      if(defiData && defiData.items){ state.defi = defiData.items; }
       state.updatedAt = (newsData && newsData.updatedAt) || (launchData && launchData.updatedAt) || (priceData && priceData.updatedAt) || state.updatedAt;
-      renderKnowledge(); renderLaunches(); renderNews(); renderWatch(); renderPrices(); renderStatus();
+      renderKnowledge(); renderLaunches(); renderNews(); renderWatch(); renderPrices(); renderDefi(); renderStatus();
     });
   }
 
@@ -544,7 +596,7 @@
     if(copyBtn){ copyToClipboard(copyBtn.dataset.copy, copyBtn); }
   });
 
-  renderKnowledge(); renderLaunches(); renderNews(); renderWatch(); renderSupport(); renderPrices(); renderStatus();
+  renderKnowledge(); renderLaunches(); renderNews(); renderWatch(); renderSupport(); renderPrices(); renderDefi(); renderStatus();
   loadData();
   setInterval(loadData, 90000);
   setInterval(renderStatus, 30000);

@@ -178,6 +178,27 @@
   .sub-msg{ font-size:11.5px; color:var(--good); margin-top:8px; min-height:14px; }
   .sub-msg.err{ color:var(--bad); }
 
+  .support-card{ padding:20px 18px; }
+  .support-card h4{ font-size:15px; font-weight:800; margin-bottom:4px; }
+  .support-tagline{ font-size:12.5px; color:var(--text-muted); line-height:1.5; margin-bottom:14px; font-style:italic; }
+  .support-tabs{ display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-bottom:14px; }
+  .support-tab{ flex:1; background:var(--surface-2); border:none; color:var(--text-muted); font-size:12px; font-weight:600; padding:8px 10px; cursor:pointer; border-right:1px solid var(--border); font-family:inherit; }
+  .support-tab:last-child{ border-right:none; }
+  .support-tab.active{ background:var(--accent); color:#1a1204; }
+  .coin-pills{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+  .coin-pill{ background:var(--chip-bg); border:1px solid var(--border); color:var(--text-muted); border-radius:7px; padding:6px 12px; font-size:12px; font-weight:700; cursor:pointer; font-family:"IBM Plex Mono",monospace; }
+  .coin-pill:hover{ border-color:var(--teal); color:var(--text); }
+  .coin-pill.active{ background:var(--accent-soft); border-color:var(--accent); color:var(--accent-ink); }
+  .addr-box{ background:var(--surface-2); border:1px solid var(--border); border-radius:8px; padding:10px 12px; display:flex; align-items:center; gap:8px; }
+  .addr-box .addr-text{ flex:1; font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--text); word-break:break-all; }
+  .copy-btn{ background:var(--surface); border:1px solid var(--border); color:var(--text-muted); border-radius:6px; padding:5px 9px; font-size:11px; font-weight:600; cursor:pointer; white-space:nowrap; }
+  .copy-btn:hover{ border-color:var(--teal); color:var(--teal); }
+  .copy-btn.copied{ background:var(--good-soft); border-color:var(--good); color:var(--good); }
+  .addr-row{ display:flex; flex-direction:column; gap:6px; padding:10px 0; border-top:1px solid var(--border); }
+  .addr-row:first-child{ border-top:none; }
+  .addr-row .addr-label{ font-size:11.5px; font-weight:700; color:var(--text); }
+  .addr-row .addr-label .coin-sym{ color:var(--teal); font-family:"IBM Plex Mono",monospace; margin-right:6px; }
+
   .source-note{ font-size:11px; color:var(--text-faint); line-height:1.5; padding:2px 4px; }
   .source-note a{ color:var(--text-faint); }
 
@@ -221,6 +242,12 @@
   .watch-handle a{ color:var(--text); font-weight:700; text-decoration:none; font-family:"IBM Plex Mono",monospace; }
   .watch-handle a:hover{ color:var(--teal); }
   .watch-handle .wh-role{ color:var(--text-faint); font-size:11px; }
+
+  .news-split{ display:grid; grid-template-columns:1.3fr 1fr; gap:20px; align-items:start; margin-top:4px; }
+  @media (max-width:900px){ .news-split{ grid-template-columns:1fr; } }
+  .news-col{ display:flex; flex-direction:column; gap:10px; }
+  .col-head{ display:flex; justify-content:space-between; align-items:baseline; font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--text-muted); font-weight:700; }
+  .col-head .hint{ font-size:11px; color:var(--text-faint); text-transform:none; letter-spacing:normal; font-weight:500; }
 
   footer.page-foot{
     border-top:1px solid var(--border); padding:22px 0 40px;
@@ -372,8 +399,18 @@
         <div class="sub-msg" id="subMsg"></div>
       </div>
 
+      <div class="card support-card" id="support">
+        <h4>Every trace tells a story</h4>
+        <p class="support-tagline">The chain leaves clues. Your support helps me follow them.</p>
+        <div class="support-tabs" id="supportTabs">
+          <button class="support-tab active" data-mode="currency">By currency</button>
+          <button class="support-tab" data-mode="direct">Direct addresses</button>
+        </div>
+        <div id="supportBody"></div>
+      </div>
+
       <div class="source-note">
-        Whale feed combines direct on-chain data (Etherscan, EVM chains) with public whale-alert reporting (Lookonchain) and refreshes hourly. Not financial advice &mdash; verify large moves independently before acting.
+        Whale feed combines direct on-chain data (Etherscan, EVM chains) with public whale-alert reporting and refreshes hourly. Not financial advice &mdash; verify large moves independently before acting.
       </div>
     </aside>
   </div>
@@ -391,29 +428,27 @@
 
   <section class="section" id="news">
     <div class="section-head">
-      <h2>Crypto news &amp; hack alerts</h2>
-      <span class="hint" id="newsCount">0 items</span>
+      <h2>Crypto news &amp; enforcement</h2>
     </div>
     <div class="card watch-card">
       <h4>Real-time hack &amp; investigation watch</h4>
-      <p>These accounts aren&rsquo;t pulled automatically &mdash; X/Twitter&rsquo;s API no longer allows free live reading of tweets, so a bot-fed feed here would be unreliable. This is a hand-picked, manually reviewed list of accounts that reliably report crypto hacks/exploits and the independent investigators who trace the funds. Follow them directly for the fastest signal.</p>
       <div class="watch-groups" id="watchGroups"></div>
     </div>
-    <div class="card feed-card">
-      <div class="feed-list" id="newsList"><div class="empty-state">Loading news&hellip;</div></div>
+    <div class="news-split">
+      <div class="news-col">
+        <div class="col-head">Crypto news &amp; hack alerts <span class="hint" id="newsCount">0 items</span></div>
+        <div class="card feed-card">
+          <div class="feed-list" id="newsList"><div class="empty-state">Loading news&hellip;</div></div>
+        </div>
+      </div>
+      <div class="news-col" id="govt">
+        <div class="col-head">Government &amp; regulatory actions <span class="hint" id="govtCount">0 items</span></div>
+        <div class="card feed-card">
+          <div class="feed-list" id="govtList"><div class="empty-state">Loading enforcement actions&hellip;</div></div>
+        </div>
+      </div>
     </div>
-    <div class="source-note">Market &amp; hack news sourced from CoinDesk and The Block. Chainalysis and TRM Labs are intentionally excluded as sources. Refreshes hourly.</div>
-  </section>
-
-  <section class="section" id="govt">
-    <div class="section-head">
-      <h2>Government &amp; regulatory actions</h2>
-      <span class="hint" id="govtCount">0 items</span>
-    </div>
-    <div class="card feed-card">
-      <div class="feed-list" id="govtList"><div class="empty-state">Loading enforcement actions&hellip;</div></div>
-    </div>
-    <div class="source-note">Sourced directly from U.S. Dept. of Justice press releases, U.S. SEC litigation releases and OFAC (Treasury) sanctions actions &mdash; filtered to crypto/blockchain relevance. Chainalysis and TRM Labs are intentionally excluded as sources. Refreshes hourly.</div>
+    <div class="source-note">Crypto news &amp; hack alerts from CoinDesk, The Block, and posts from blockchain intelligence firms including Chainalysis, TRM Labs, Merkle Science and Elliptic. Government &amp; regulatory actions come directly from U.S. Dept. of Justice, U.S. SEC and OFAC (Treasury), filtered to crypto/blockchain relevance. Refreshes hourly.</div>
   </section>
 
   <footer class="page-foot">
@@ -612,6 +647,50 @@
     }).join("");
   }
 
+  var SUPPORT_ADDRESSES = [
+    {symbol:"BTC", name:"Bitcoin", address:"bc1q38sx46ccw2vha3rs46u76z0te4hzzpz00m5zxh"},
+    {symbol:"EVM", name:"Ethereum & EVM chains", address:"0x027362F7937652F46E56d84beA74a9db3ccE5DCD"},
+    {symbol:"SOL", name:"Solana", address:"GWWfWA5i2vgviRfC1v3FsUR3RNvyQ8PvqH5PP6Aq8miL"},
+    {symbol:"TRX", name:"Tron", address:"TDUQgihTSbcHBsg4oTsjCMoaHrMDaiH3cn"}
+  ];
+  var supportState = { mode:"currency", selected:"BTC" };
+
+  function fallbackCopy(text){
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); }catch(e){}
+    document.body.removeChild(ta);
+  }
+  function copyToClipboard(text, btn){
+    var old = btn.textContent;
+    function done(){ btn.textContent = "Copied"; btn.classList.add("copied"); setTimeout(function(){ btn.textContent = old; btn.classList.remove("copied"); }, 1500); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text); done(); });
+    } else { fallbackCopy(text); done(); }
+  }
+  function findCoin(sym){
+    for(var i=0;i<SUPPORT_ADDRESSES.length;i++){ if(SUPPORT_ADDRESSES[i].symbol===sym) return SUPPORT_ADDRESSES[i]; }
+    return SUPPORT_ADDRESSES[0];
+  }
+  function addrBoxHtml(addr){
+    return "<div class=\"addr-box\"><span class=\"addr-text\">"+esc(addr)+"</span><button class=\"copy-btn\" data-copy=\""+esc(addr)+"\">Copy</button></div>";
+  }
+  function renderSupport(){
+    var body = document.getElementById("supportBody");
+    if(supportState.mode === "currency"){
+      var pills = SUPPORT_ADDRESSES.map(function(c){
+        return "<button class=\"coin-pill"+(c.symbol===supportState.selected?" active":"")+"\" data-sym=\""+esc(c.symbol)+"\">"+esc(c.symbol)+"</button>";
+      }).join("");
+      var sel = findCoin(supportState.selected);
+      body.innerHTML = "<div class=\"coin-pills\">"+pills+"</div>"+addrBoxHtml(sel.address);
+    } else {
+      body.innerHTML = SUPPORT_ADDRESSES.map(function(c){
+        return "<div class=\"addr-row\"><div class=\"addr-label\"><span class=\"coin-sym\">"+esc(c.symbol)+"</span>"+esc(c.name)+"</div>"+addrBoxHtml(c.address)+"</div>";
+      }).join("");
+    }
+  }
+
   function renderStatus(){
     var dot = document.getElementById("liveDot"), txt = document.getElementById("liveText"), foot = document.getElementById("footSync");
     if(!state.updatedAt){ dot.className="live-dot"; txt.textContent="waiting for first sync"; foot.textContent="Waiting for first sync."; return; }
@@ -691,7 +770,19 @@
     }).catch(function(){ msg.textContent = "Something went wrong. Try again."; msg.className = "sub-msg err"; });
   });
 
-  render(); renderKnowledge(); renderLaunches(); renderNews(); renderWatch(); renderStatus();
+  document.getElementById("supportTabs").addEventListener("click", function(e){
+    var btn = e.target.closest(".support-tab"); if(!btn) return;
+    document.querySelectorAll("#supportTabs .support-tab").forEach(function(b){ b.classList.remove("active"); });
+    btn.classList.add("active"); supportState.mode = btn.dataset.mode; renderSupport();
+  });
+  document.getElementById("supportBody").addEventListener("click", function(e){
+    var pill = e.target.closest(".coin-pill");
+    if(pill){ supportState.selected = pill.dataset.sym; renderSupport(); return; }
+    var copyBtn = e.target.closest(".copy-btn");
+    if(copyBtn){ copyToClipboard(copyBtn.dataset.copy, copyBtn); }
+  });
+
+  render(); renderKnowledge(); renderLaunches(); renderNews(); renderWatch(); renderSupport(); renderStatus();
   loadData();
   setInterval(loadData, 90000);
   setInterval(renderStatus, 30000);

@@ -1,6 +1,16 @@
 {
-  "updatedAt": "2026-09-06T23:16:26Z",
+  "updatedAt": "2026-09-07T00:30:40Z",
   "items": [
+    {
+      "id": "2026-09-07",
+      "title": "Exchange inflows and outflows as a sentiment signal",
+      "body": "Large transfers INTO exchange wallets are often read as sell pressure (coins typically move to an exchange to be liquidated), while transfers OUT are read as accumulation or self-custody. It's a heuristic, not proof \u2014 OTC desks, custody rebalancing and cold-storage rotations all produce the same on-chain shape without any trading intent.",
+      "tags": [
+        "market-structure",
+        "exchange-flows"
+      ],
+      "createdAt": "2026-09-07T00:30:40Z"
+    },
     {
       "id": "2026-09-06",
       "title": "Why address clustering matters more than balances",

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-07T00:30:53Z",
+  "updatedAt": "2026-09-07T01:17:37Z",
   "items": [
     {
       "id": "pf-u1dQJSKk393KddEWzuErjDyU8BZaaZ9tYYNWowwpump",
@@ -336,6 +336,18 @@
       "fetchedAt": "2026-09-06T20:18:24Z",
       "link": "https://dexscreener.com/solana/hyxqcrheqkphxgkqqn4xqualzktjyxfgahbwxv6ckw9e",
       "address": "wylq66yopxzmqgd3yxhnpudhxs8woq5lhgw1dkwpump"
+    },
+    {
+      "id": "pf-FibqsCJxPViw2Bffq7mrCMvYXh2YirZthiNhXaEpump",
+      "name": "WOFI",
+      "symbol": "WOFI",
+      "chain": "Solana",
+      "platform": "pump.fun",
+      "marketCapUsd": 41132080.42,
+      "createdAt": "2026-09-07T01:04:03Z",
+      "fetchedAt": "2026-09-07T01:17:35Z",
+      "link": "https://pump.fun/FibqsCJxPViw2Bffq7mrCMvYXh2YirZthiNhXaEpump",
+      "address": "FibqsCJxPViw2Bffq7mrCMvYXh2YirZthiNhXaEpump"
     },
     {
       "id": "pf-AtTeVVaqxQPwRpvVwuKvkkHiFPiFJY91ZtmtKydTpump",
@@ -710,6 +722,30 @@
       "address": "XuPY7ChKVgDuUA3CwtJMqYd87Zk1EsrsUN4KWNwpump"
     },
     {
+      "id": "pf-kMcpXPWsyZCjpEDpBgwSr6xaCMZiotNmPp8PiKYpump",
+      "name": "Robinhood",
+      "symbol": "HOOD",
+      "chain": "Solana",
+      "platform": "pump.fun",
+      "marketCapUsd": 19562662.64,
+      "createdAt": "2026-09-06T21:42:37Z",
+      "fetchedAt": "2026-09-07T01:17:35Z",
+      "link": "https://pump.fun/kMcpXPWsyZCjpEDpBgwSr6xaCMZiotNmPp8PiKYpump",
+      "address": "kMcpXPWsyZCjpEDpBgwSr6xaCMZiotNmPp8PiKYpump"
+    },
+    {
+      "id": "ds-kmcpxpwsyzcjpedpbgwsr6xacmziotnmpp8pikypump",
+      "name": "Robinhood",
+      "symbol": "HOOD",
+      "chain": "Solana",
+      "platform": "DexScreener / Solana",
+      "marketCapUsd": 19323473.0,
+      "createdAt": null,
+      "fetchedAt": "2026-09-07T01:17:36Z",
+      "link": "https://dexscreener.com/solana/3jbpxscuhmxfxvqnrjabpw2btejsfftoskkdudxlr3rg",
+      "address": "kmcpxpwsyzcjpedpbgwsr6xacmziotnmpp8pikypump"
+    },
+    {
       "id": "pf-m8CRMg55wEudJft32JduUpYcCdfEozqu3P4kSg2pump",
       "name": "Pons",
       "symbol": "PONS",
@@ -924,42 +960,6 @@
       "fetchedAt": "2026-09-06T18:20:56Z",
       "link": "https://pump.fun/AmN3M1AvDgR7fZCyECbqJgYf2mGuqAY5anGz4BhHpump",
       "address": "AmN3M1AvDgR7fZCyECbqJgYf2mGuqAY5anGz4BhHpump"
-    },
-    {
-      "id": "pf-4gPT8GxxnKoyZHKpQoTnWeCZZ6cZNsNpYbpXNb1rpump",
-      "name": "WOFI",
-      "symbol": "WOFI",
-      "chain": "Solana",
-      "platform": "pump.fun",
-      "marketCapUsd": 16300730.84,
-      "createdAt": "2026-09-05T20:01:14Z",
-      "fetchedAt": "2026-09-06T21:16:41Z",
-      "link": "https://pump.fun/4gPT8GxxnKoyZHKpQoTnWeCZZ6cZNsNpYbpXNb1rpump",
-      "address": "4gPT8GxxnKoyZHKpQoTnWeCZZ6cZNsNpYbpXNb1rpump"
-    },
-    {
-      "id": "pf-pKChPAdPXeDgE64VYgYq8QyGcKKBL5ZryborgTEpump",
-      "name": "OpenAI",
-      "symbol": "OpenAI",
-      "chain": "Solana",
-      "platform": "pump.fun",
-      "marketCapUsd": 16265583.89,
-      "createdAt": "2026-09-06T21:41:09Z",
-      "fetchedAt": "2026-09-06T23:16:35Z",
-      "link": "https://pump.fun/pKChPAdPXeDgE64VYgYq8QyGcKKBL5ZryborgTEpump",
-      "address": "pKChPAdPXeDgE64VYgYq8QyGcKKBL5ZryborgTEpump"
-    },
-    {
-      "id": "pf-THa7JGaQ2GmjLPYQXY2Y57eY3bUoUXFCg3BnA2rpump",
-      "name": "MrBeast",
-      "symbol": "BEAST",
-      "chain": "Solana",
-      "platform": "pump.fun",
-      "marketCapUsd": 16070656.06,
-      "createdAt": "2026-09-06T23:21:10Z",
-      "fetchedAt": "2026-09-07T00:30:51Z",
-      "link": "https://pump.fun/THa7JGaQ2GmjLPYQXY2Y57eY3bUoUXFCg3BnA2rpump",
-      "address": "THa7JGaQ2GmjLPYQXY2Y57eY3bUoUXFCg3BnA2rpump"
     }
   ]
 }

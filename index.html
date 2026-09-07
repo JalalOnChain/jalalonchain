@@ -277,7 +277,15 @@
   <div class="layout">
     <section class="feed-col" id="news">
       <div class="feed-head-row">
-        <h3>Crypto news &amp; enforcement</h3>
+        <h3>Enforcement &amp; regulatory alerts</h3>
+        <span class="feed-count" id="enfCount">0 items</span>
+      </div>
+      <div class="card feed-card" id="enfCard">
+        <div class="feed-list" id="enfList"><div class="empty-state">Loading&hellip;</div></div>
+      </div>
+
+      <div class="feed-head-row">
+        <h3>Crypto news</h3>
         <span class="feed-count" id="newsCount">0 items</span>
       </div>
       <div class="card feed-card news-scroll-card">
@@ -584,6 +592,12 @@
   }
   function renderNews(){
     var all = state.news.slice().sort(function(a,b){ return new Date(b.publishedAt||b.fetchedAt) - new Date(a.publishedAt||a.fetchedAt); });
+
+    var enf = all.filter(function(n){ return n.category==="enforcement"; });
+    document.getElementById("enfCount").textContent = enf.length+(enf.length===1?" item":" items");
+    document.getElementById("enfList").innerHTML = enf.length ? enf.slice(0,8).map(newsRowHtml).join("") :
+      "<div class=\"empty-state\">No enforcement alerts synced yet &mdash; check back after the next sync.</div>";
+
     document.getElementById("newsCount").textContent = all.length+(all.length===1?" item":" items");
     var el = document.getElementById("newsList");
     el.innerHTML = all.length ? all.slice(0,80).map(newsRowHtml).join("") :

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JalalOnChain — Crypto News, Prices &amp; New Tokens Monitor</title>
-<meta name="description" content="Crypto news, hack and enforcement alerts, live coin prices, and new tokens monitored once they cross $1M market cap — plus a daily on-chain knowledge briefing with clear, informative reads on how crypto and blockchain actually work.">
+<meta name="description" content="Crypto news, enforcement alerts, live coin prices, and new tokens monitored once they cross $1M market cap — plus a daily on-chain knowledge briefing with clear, informative reads on how crypto and blockchain actually work.">
 <link rel="icon" type="image/png" href="./assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -119,10 +119,22 @@
   .k-tag{ font-size:10.5px; background:var(--teal-soft); color:var(--teal); padding:3px 8px; border-radius:5px; font-weight:600; }
   .k-hist{ padding:14px 18px 6px; }
   .k-hist h4{ font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); font-weight:600; margin-bottom:8px; }
-  .k-hist-item{ padding:9px 0; border-top:1px solid var(--border); }
+  .k-hist-item{ padding:9px 0; border-top:1px solid var(--border); cursor:pointer; border-radius:4px; }
   .k-hist-item:first-child{ border-top:none; }
+  .k-hist-item:hover .ht{ color:var(--teal); }
+  .k-hist-item.active .ht{ color:var(--teal); }
   .k-hist-item .ht{ font-size:12.5px; font-weight:600; margin-bottom:2px; }
   .k-hist-item .hd{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; }
+  .k-back-today{ font-size:11px; color:var(--teal); cursor:pointer; font-weight:600; text-decoration:underline; }
+  .mini-card{ padding:14px 16px; }
+  .mini-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; gap:8px; }
+  .mini-head h4{ font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); font-weight:700; }
+  .mini-more{ font-size:11px; color:var(--teal); text-decoration:none; font-weight:600; white-space:nowrap; }
+  .mini-more:hover{ text-decoration:underline; }
+  .mini-row{ display:flex; justify-content:space-between; align-items:center; gap:8px; padding:7px 0; border-top:1px solid var(--border); font-size:12.5px; }
+  .mini-row:first-child{ border-top:none; }
+  .mini-row .mn-name{ font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .mini-row .mn-val{ font-family:"IBM Plex Mono",monospace; color:var(--text-muted); font-size:11.5px; white-space:nowrap; flex:none; }
 
   .sub-card{ padding:20px 18px; background:linear-gradient(160deg, var(--accent-soft), var(--surface)); }
   .sub-card h4{ font-size:15px; font-weight:800; margin-bottom:6px; }
@@ -170,9 +182,12 @@
   .launch-card .lc-name{ font-weight:700; font-size:14px; }
   .launch-card .lc-sym{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; }
   .launch-card .lc-mc{ font-family:"IBM Plex Mono",monospace; font-weight:700; color:var(--good); font-size:16px; margin-top:8px; }
+  .launch-card .lc-addr{ font-family:"IBM Plex Mono",monospace; font-size:10.5px; color:var(--text-faint); margin-top:5px; }
   .launch-card .lc-meta{ display:flex; justify-content:space-between; align-items:center; margin-top:9px; font-size:11px; color:var(--text-muted); }
   .launch-card .lc-meta a{ color:var(--text-muted); }
+  .launch-card .lc-meta-right{ display:inline-flex; align-items:center; gap:6px; }
   .platform-badge{ background:var(--chip-bg); border:1px solid var(--border); border-radius:6px; padding:2px 7px; font-size:10px; color:var(--text-muted); }
+  .dup-warn{ background:var(--bad-soft); border-color:var(--bad); color:var(--bad); font-weight:600; cursor:help; }
   .side-long{ color:var(--good); }
   .side-short{ color:var(--bad); }
   .hl-pnl.up{ color:var(--good); }
@@ -234,11 +249,11 @@
 
 <div class="wrap">
   <section class="hero">
-    <h1>Crypto <em>news, prices &amp; new launches</em> &mdash; plus the context to make sense of them.</h1>
-    <p>JalalOnChain brings together crypto market news, hack and enforcement alerts, live coin prices, and freshly launched tokens crossing $1M market cap &mdash; paired with a short daily on-chain or off-chain lesson, clear and informative reading on how crypto and blockchain actually work.</p>
+    <h1>Crypto <em>news, new launches &amp; the good info</em> to actually make sense of it all.</h1>
+    <p>JalalOnChain brings together crypto market news, enforcement alerts, live coin prices, and freshly launched tokens crossing $1M market cap &mdash; paired with a short daily on-chain or off-chain lesson, clear and informative reading on how crypto and blockchain actually work.</p>
     <div class="hero-chains">
       <span class="chain-badge">Market News</span>
-      <span class="chain-badge">Hack &amp; Enforcement Alerts</span>
+      <span class="chain-badge">Enforcement Alerts</span>
       <span class="chain-badge">Live Prices</span>
       <span class="chain-badge">New Tokens Monitor</span>
       <span class="chain-badge">New DeFi Protocols</span>
@@ -268,14 +283,30 @@
 
     <aside class="side" id="learn">
       <div class="card k-card">
-        <div class="k-eyebrow"><span>Daily briefing</span><time id="kDate">&mdash;</time></div>
+        <div class="k-eyebrow"><span id="kEyebrowLabel">Daily briefing</span><time id="kDate">&mdash;</time></div>
         <div class="k-title" id="kTitle">Loading today&rsquo;s insight&hellip;</div>
         <div class="k-body" id="kBody"></div>
         <div class="k-tags" id="kTags"></div>
+        <div class="k-back-today" id="kBackToday" style="display:none;margin-top:10px;">&larr; back to today&rsquo;s briefing</div>
       </div>
       <div class="card k-hist">
         <h4>Past briefings</h4>
         <div id="kHistList"></div>
+      </div>
+
+      <div class="card mini-card" id="miniLaunches">
+        <div class="mini-head"><h4>New tokens monitor</h4><a href="#launches" class="mini-more">View all &rarr;</a></div>
+        <div id="miniLaunchesList"><div class="empty-state">Loading&hellip;</div></div>
+      </div>
+
+      <div class="card mini-card" id="miniDefi">
+        <div class="mini-head"><h4>New DeFi protocols</h4><a href="#defi" class="mini-more">View all &rarr;</a></div>
+        <div id="miniDefiList"><div class="empty-state">Loading&hellip;</div></div>
+      </div>
+
+      <div class="card mini-card" id="miniHl">
+        <div class="mini-head"><h4>Hyperliquid whale activity</h4><a href="#hyperliquid" class="mini-more">View all &rarr;</a></div>
+        <div id="miniHlList"><div class="empty-state">Loading&hellip;</div></div>
       </div>
 
       <div class="card sub-card" id="subscribe">
@@ -310,7 +341,7 @@
     <div class="card">
       <div class="grid-cards" id="launchesGrid"><div class="empty-state">Loading new launches&hellip;</div></div>
     </div>
-    <div class="source-note">Tracks tokens that crossed $1M market cap on pump.fun (Solana) and other platforms/chains indexed by DexScreener &mdash; including tokens on Robinhood&rsquo;s own chain and Robinhood-branded tokens elsewhere. New listings carry very high risk; this is tracking, not an endorsement.</div>
+    <div class="source-note">Tracks newly-launched tokens across chains once they cross $1M market cap &mdash; including tokens on Robinhood&rsquo;s own chain and Robinhood-branded tokens elsewhere. Copycat tokens that reuse a popular name/symbol on a different contract are common &mdash; a &ldquo;name reused&rdquo; tag means exactly that, so always check the contract address shown on the card, not just the name. New listings carry very high risk; this is tracking, not an endorsement.</div>
   </section>
 
   <section class="section" id="defi">
@@ -321,7 +352,7 @@
     <div class="card">
       <div class="grid-cards" id="defiGrid"><div class="empty-state">Loading new protocols&hellip;</div></div>
     </div>
-    <div class="source-note">Recently-listed DeFi protocols (by TVL) sourced from DefiLlama &mdash; new lending markets, DEXs, restaking and yield entities that crossed a minimum TVL floor. Tracking, not an endorsement or audit.</div>
+    <div class="source-note">Recently-listed DeFi protocols by TVL &mdash; new lending markets, DEXs, restaking and yield entities that crossed a minimum TVL floor. Tracking, not an endorsement or audit.</div>
   </section>
 
   <section class="section" id="hyperliquid">
@@ -346,7 +377,7 @@
       <div class="feed-list" id="hlActivityList"><div class="empty-state">Loading activity&hellip;</div></div>
     </div>
 
-    <div class="source-note">Sourced directly from Hyperliquid&rsquo;s own public API and leaderboard &mdash; not any third-party wallet tracker. Addresses are Hyperliquid&rsquo;s current top accounts by size, re-selected every sync, filtered to positions and trades of $100K or more. Tracking, not financial advice.</div>
+    <div class="source-note">Tracks Hyperliquid&rsquo;s current top accounts by size, re-selected every sync, filtered to positions and trades of $100K or more. Tracking, not financial advice.</div>
   </section>
 
   <footer class="page-foot">
@@ -410,32 +441,61 @@
     });
   }
 
+  function showKnowledgeDoc(doc, isToday){
+    if(!doc) return;
+    document.getElementById("kEyebrowLabel").textContent = isToday ? "Daily briefing" : "Past briefing";
+    document.getElementById("kDate").textContent = doc.id;
+    document.getElementById("kTitle").textContent = doc.title||"On-chain insight";
+    document.getElementById("kBody").textContent = doc.body||"";
+    document.getElementById("kTags").innerHTML = (doc.tags||[]).map(function(tg){ return "<span class=\"k-tag\">"+esc(tg)+"</span>"; }).join("");
+    document.getElementById("kBackToday").style.display = isToday ? "none" : "block";
+    var items = document.querySelectorAll("#kHistList .k-hist-item");
+    for(var i=0;i<items.length;i++){ items[i].classList.toggle("active", items[i].getAttribute("data-id")===doc.id); }
+  }
+
   function renderKnowledge(){
     var docs = state.knowledge.slice().sort(function(a,b){ return b.id.localeCompare(a.id); });
+    state.knowledgeDocs = docs;
     var today = docs[0];
-    if(today){
-      document.getElementById("kDate").textContent = today.id;
-      document.getElementById("kTitle").textContent = today.title||"On-chain insight";
-      document.getElementById("kBody").textContent = today.body||"";
-      document.getElementById("kTags").innerHTML = (today.tags||[]).map(function(tg){ return "<span class=\"k-tag\">"+esc(tg)+"</span>"; }).join("");
-    }
+    if(today) showKnowledgeDoc(today, true);
     var hist = docs.slice(1,8);
     document.getElementById("kHistList").innerHTML = hist.map(function(d){
-      return "<div class=\"k-hist-item\"><div class=\"ht\">"+esc(d.title||"")+"</div><div class=\"hd\">"+esc(d.id)+"</div></div>";
+      return "<div class=\"k-hist-item\" data-id=\""+esc(d.id)+"\"><div class=\"ht\">"+esc(d.title||"")+"</div><div class=\"hd\">"+esc(d.id)+"</div></div>";
     }).join("") || "<div class=\"hd\">More briefings appear here daily.</div>";
+  }
+
+  function renderMiniRows(id, rows){
+    var el = document.getElementById(id);
+    if(!el) return;
+    el.innerHTML = rows.length ? rows.map(function(r){
+      return "<div class=\"mini-row\"><span class=\"mn-name\">"+esc(r.name)+"</span><span class=\"mn-val\">"+esc(r.val)+"</span></div>";
+    }).join("") : "<div class=\"empty-state\" style=\"padding:10px 0;\">Nothing yet.</div>";
   }
 
   function renderLaunches(){
     var list = state.launches.slice().sort(function(a,b){ return (Number(b.marketCapUsd)||0)-(Number(a.marketCapUsd)||0); });
     document.getElementById("launchesCount").textContent = list.length+(list.length===1?" token":" tokens");
+    renderMiniRows("miniLaunchesList", list.slice(0,5).map(function(t){ return {name: t.name||t.symbol||"Unknown", val: fmtUsd(t.marketCapUsd)}; }));
     var el = document.getElementById("launchesGrid");
     if(!list.length){ el.innerHTML = "<div class=\"empty-state\">No qualifying launches yet &mdash; check back after the next sync.</div>"; return; }
+    // pump.fun/DexScreener are full of copycat tokens that reuse a popular name+symbol
+    // on a different contract — flag those so a repeated name isn't mistaken for a dup.
+    var nameCounts = {};
+    list.forEach(function(t){
+      var key = (t.name||"").trim().toLowerCase()+"|"+(t.symbol||"").trim().toLowerCase();
+      nameCounts[key] = (nameCounts[key]||0)+1;
+    });
     el.innerHTML = list.slice(0,60).map(function(t){
       var link = t.link ? "<a href=\""+esc(t.link)+"\" target=\"_blank\" rel=\"noopener\">view</a>" : "";
+      var key = (t.name||"").trim().toLowerCase()+"|"+(t.symbol||"").trim().toLowerCase();
+      var isDupName = nameCounts[key] > 1 && (t.name||"").trim() !== "";
+      var dupBadge = isDupName ? "<span class=\"platform-badge dup-warn\" title=\"Different contract than other tokens on this list using the same name/symbol — always verify the address before trading\">name reused</span>" : "";
+      var addrLine = t.address ? "<div class=\"lc-addr\" title=\""+esc(t.address)+"\">"+esc(shortAddr(t.address))+"</div>" : "";
       return "<div class=\"launch-card\">"+
         "<div class=\"lc-top\"><span class=\"lc-name\">"+esc(t.name||"Unknown")+"</span><span class=\"lc-sym\">"+esc(t.symbol||"")+"</span></div>"+
         "<div class=\"lc-mc\">"+fmtUsd(t.marketCapUsd)+"</div>"+
-        "<div class=\"lc-meta\"><span class=\"platform-badge\">"+esc(t.platform||t.chain||"")+"</span>"+link+"</div>"+
+        addrLine+
+        "<div class=\"lc-meta\"><span class=\"platform-badge\">"+esc(t.platform||t.chain||"")+"</span><span class=\"lc-meta-right\">"+dupBadge+link+"</span></div>"+
       "</div>";
     }).join("");
   }
@@ -443,6 +503,7 @@
   function renderDefi(){
     var list = state.defi.slice().sort(function(a,b){ return (Number(b.tvlUsd)||0)-(Number(a.tvlUsd)||0); });
     document.getElementById("defiCount").textContent = list.length+(list.length===1?" protocol":" protocols");
+    renderMiniRows("miniDefiList", list.slice(0,5).map(function(p){ return {name: p.name||p.symbol||"Unknown", val: fmtUsd(p.tvlUsd)}; }));
     var el = document.getElementById("defiGrid");
     if(!list.length){ el.innerHTML = "<div class=\"empty-state\">No newly-listed protocols yet &mdash; check back after the next sync.</div>"; return; }
     el.innerHTML = list.slice(0,60).map(function(p){
@@ -490,6 +551,7 @@
 
     var activity = state.hlActivity.slice().sort(function(a,b){ return new Date(b.time) - new Date(a.time); });
     document.getElementById("hlActivityCount").textContent = activity.length+(activity.length===1?" trade":" trades");
+    renderMiniRows("miniHlList", activity.slice(0,5).map(function(a){ return {name: (a.coin||"")+" "+(a.dir||"trade"), val: fmtUsd(a.notionalUsd)}; }));
     var actEl = document.getElementById("hlActivityList");
     if(!activity.length){
       actEl.innerHTML = "<div class=\"empty-state\">No qualifying trades in the recent window &mdash; check back after the next sync.</div>";
@@ -586,11 +648,11 @@
     if(!state.updatedAt){ dot.className="live-dot"; txt.textContent="waiting for first sync"; foot.textContent="Waiting for first sync."; return; }
     var ageMin = (Date.now() - new Date(state.updatedAt).getTime())/60000;
     var cls="live", label="<b>LIVE</b> · synced "+timeAgo(state.updatedAt);
-    if(ageMin>180){ cls=""; label="sync stalled · last update "+timeAgo(state.updatedAt); }
-    else if(ageMin>75){ label="sync delayed · last update "+timeAgo(state.updatedAt); }
+    if(ageMin>120){ cls=""; label="sync stalled · last update "+timeAgo(state.updatedAt); }
+    else if(ageMin>45){ label="sync delayed · last update "+timeAgo(state.updatedAt); }
     dot.className = "live-dot "+cls;
     txt.innerHTML = label;
-    foot.textContent = "Data refreshes roughly hourly.";
+    foot.textContent = "Data refreshes roughly every 30 minutes.";
   }
 
   function loadData(){
@@ -635,6 +697,17 @@
       if(data.success){ msg.textContent = "Subscribed — welcome aboard."; msg.className = "sub-msg"; form.reset(); }
       else { msg.textContent = "Something went wrong. Try again."; msg.className = "sub-msg err"; }
     }).catch(function(){ msg.textContent = "Something went wrong. Try again."; msg.className = "sub-msg err"; });
+  });
+
+  document.getElementById("kHistList").addEventListener("click", function(e){
+    var item = e.target.closest(".k-hist-item"); if(!item) return;
+    var id = item.getAttribute("data-id");
+    var doc = (state.knowledgeDocs||[]).find(function(d){ return d.id===id; });
+    if(doc) showKnowledgeDoc(doc, false);
+  });
+  document.getElementById("kBackToday").addEventListener("click", function(){
+    var docs = state.knowledgeDocs||[];
+    if(docs[0]) showKnowledgeDoc(docs[0], true);
   });
 
   document.getElementById("supportTabs").addEventListener("click", function(e){

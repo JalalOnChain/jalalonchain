@@ -5,19 +5,17 @@ plus a daily on-chain/off-chain knowledge briefing, with clear, informative read
 how crypto and blockchain actually work.
 
 - `index.html` — the site
-- `data/news.json` — crypto news (Decrypt) and U.S. government/regulatory enforcement
-  actions (DOJ, SEC, OFAC), refreshed hourly by the GitHub Action
-- `data/launches.json` — new tokens that crossed $1M market cap (pump.fun + DexScreener
-  across chains, including Robinhood's chain and Robinhood-branded tokens elsewhere)
-- `data/prices.json` — a live top-20 coin price snapshot (CoinGecko) for the homepage
-  price ticker
-- `data/defi.json` — recently-listed DeFi protocols/entities by TVL (DefiLlama)
+- `data/news.json` — crypto market news and U.S. government/regulatory enforcement
+  actions, refreshed every 30 minutes by the GitHub Action
+- `data/launches.json` — new tokens that crossed $1M market cap across chains,
+  including Robinhood's chain and Robinhood-branded tokens elsewhere
+- `data/prices.json` — a live top-20 coin price snapshot for the homepage price ticker
+- `data/defi.json` — recently-listed DeFi protocols/entities by TVL
 - `data/hyperliquid.json` — large ($100K+) Hyperliquid perp positions and recent
-  large trades, sourced directly from Hyperliquid's own public API and leaderboard
-  (not a third-party wallet tracker); the tracked addresses are re-selected every
-  sync from Hyperliquid's current top accounts
+  large trades; the tracked addresses are re-selected every sync from Hyperliquid's
+  current top accounts
 - `data/knowledge.json` — daily briefings, advanced one-per-day from `data/knowledge-pool.json`
-- `.github/workflows/sync.yml` — the hourly job that keeps everything current
+- `.github/workflows/sync.yml` — the job (every 30 minutes) that keeps everything current
 - `scripts/sync.py` — what that job actually runs
 
 Data is synced automatically. Do not hand-edit the `data/` files — they're overwritten

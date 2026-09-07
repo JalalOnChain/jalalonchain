@@ -103,6 +103,10 @@
   .feed-head-row h3{ font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); font-weight:700; }
 
   .feed-card{ padding:4px 0 8px; }
+  .news-scroll-card{ max-height:640px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
+  .news-scroll-card::-webkit-scrollbar{ width:8px; }
+  .news-scroll-card::-webkit-scrollbar-track{ background:transparent; }
+  .news-scroll-card::-webkit-scrollbar-thumb{ background:var(--border); border-radius:8px; }
   .feed-count{ font-size:12px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; }
   .feed-list{ display:flex; flex-direction:column; }
   .empty-state{ padding:40px 18px; text-align:center; color:var(--text-muted); font-size:13.5px; }
@@ -276,7 +280,7 @@
         <h3>Crypto news &amp; enforcement</h3>
         <span class="feed-count" id="newsCount">0 items</span>
       </div>
-      <div class="card feed-card">
+      <div class="card feed-card news-scroll-card">
         <div class="feed-list" id="newsList"><div class="empty-state">Loading news&hellip;</div></div>
       </div>
     </section>

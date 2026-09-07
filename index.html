@@ -103,10 +103,10 @@
   .feed-head-row h3{ font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); font-weight:700; }
 
   .feed-card{ padding:4px 0 8px; }
-  .news-scroll-card{ max-height:640px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
-  .news-scroll-card::-webkit-scrollbar{ width:8px; }
-  .news-scroll-card::-webkit-scrollbar-track{ background:transparent; }
-  .news-scroll-card::-webkit-scrollbar-thumb{ background:var(--border); border-radius:8px; }
+  .feed-scroll-card{ max-height:640px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
+  .feed-scroll-card::-webkit-scrollbar{ width:8px; }
+  .feed-scroll-card::-webkit-scrollbar-track{ background:transparent; }
+  .feed-scroll-card::-webkit-scrollbar-thumb{ background:var(--border); border-radius:8px; }
   .feed-count{ font-size:12px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; }
   .feed-list{ display:flex; flex-direction:column; }
   .empty-state{ padding:40px 18px; text-align:center; color:var(--text-muted); font-size:13.5px; }
@@ -288,8 +288,16 @@
         <h3>Crypto news</h3>
         <span class="feed-count" id="newsCount">0 items</span>
       </div>
-      <div class="card feed-card news-scroll-card">
+      <div class="card feed-card feed-scroll-card">
         <div class="feed-list" id="newsList"><div class="empty-state">Loading news&hellip;</div></div>
+      </div>
+
+      <div class="feed-head-row" id="hlTrades">
+        <h3>Recent large whale trades</h3>
+        <span class="feed-count" id="hlActivityCount">0</span>
+      </div>
+      <div class="card feed-card feed-scroll-card">
+        <div class="feed-list" id="hlActivityList"><div class="empty-state">Loading activity&hellip;</div></div>
       </div>
     </section>
 
@@ -317,7 +325,7 @@
       </div>
 
       <div class="card mini-card" id="miniHl">
-        <div class="mini-head"><h4>Hyperliquid whale activity</h4><a href="#hyperliquid" class="mini-more">View all &rarr;</a></div>
+        <div class="mini-head"><h4>Hyperliquid whale activity</h4><a href="#hlTrades" class="mini-more">View all &rarr;</a></div>
         <div id="miniHlList"><div class="empty-state">Loading&hellip;</div></div>
       </div>
 
@@ -381,15 +389,7 @@
       <div class="grid-cards" id="hlPositionsGrid"><div class="empty-state">Loading positions&hellip;</div></div>
     </div>
 
-    <div class="feed-head-row" style="margin-top:16px;">
-      <h3>Recent large trades</h3>
-      <span class="feed-count" id="hlActivityCount">0</span>
-    </div>
-    <div class="card feed-card">
-      <div class="feed-list" id="hlActivityList"><div class="empty-state">Loading activity&hellip;</div></div>
-    </div>
-
-    <div class="source-note">Tracks Hyperliquid&rsquo;s current top accounts by size, re-selected every sync, filtered to positions and trades of $100K or more. Tracking, not financial advice.</div>
+    <div class="source-note">Tracks Hyperliquid&rsquo;s current top accounts by size, re-selected every sync, filtered to positions and trades of $100K or more. Recent large trades now appear in the feed column near the top of the page. Tracking, not financial advice.</div>
   </section>
 
   <footer class="page-foot">

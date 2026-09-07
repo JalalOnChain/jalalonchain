@@ -249,6 +249,86 @@ def scrape_ofac(existing_ids):
     return items
 
 
+BLOCKBEATS_URL = "https://api.theblockbeats.news/v2/rss/newsflash"
+
+
+def parse_blockbeats_date(s):
+    d = parse_rss_date(s)
+    if d:
+        return d
+    try:
+        dt = datetime.strptime((s or "").strip(), "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
+        return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+    except Exception:
+        return None
+
+
+def fetch_blockbeats_news(existing_ids):
+    """BlockBeats' public newsflash feed, English. Their own docs describe this
+    endpoint as RSS/XML selected via a "language" header, but the same URL has
+    also been observed returning a JSON envelope instead — this sandbox can't
+    reach the host directly to confirm which one GitHub's runner will actually
+    see, so both response shapes are handled defensively. A parsing miss here
+    just means 0 BlockBeats items for this run, not a broken sync — every other
+    source is untouched either way."""
+    entries = []
+    try:
+        r = requests.get(BLOCKBEATS_URL, timeout=20, headers={
+            "User-Agent": UA, "language": "en",
+            "Accept": "application/rss+xml, application/xml, text/xml, application/json",
+        })
+        ctype = (r.headers.get("content-type") or "").lower()
+        if "json" in ctype:
+            data = r.json()
+            rows = data.get("data") if isinstance(data, dict) else data
+            if isinstance(rows, dict):
+                rows = rows.get("list") or rows.get("items") or []
+            for row in (rows or []):
+                if not isinstance(row, dict):
+                    continue
+                title = (row.get("title") or "").strip()
+                if not title:
+                    continue
+                entries.append({
+                    "title": title,
+                    "link": row.get("link") or row.get("url") or "",
+                    "pubDate": row.get("create_time") or row.get("pub_time") or row.get("published_at") or "",
+                    "description": strip_html(row.get("content") or row.get("description") or "")[:400],
+                })
+        else:
+            import xml.etree.ElementTree as ET
+            root = ET.fromstring(r.content)
+            for item in root.iter("item"):
+                def get(tag):
+                    el = item.find(tag)
+                    return el.text if el is not None and el.text else ""
+                title = get("title").strip()
+                if not title:
+                    continue
+                entries.append({
+                    "title": title, "link": get("link").strip(),
+                    "pubDate": get("pubDate").strip(),
+                    "description": strip_html(get("description"))[:400],
+                })
+    except Exception:
+        traceback.print_exc()
+
+    items = []
+    for e in entries:
+        uid = stable_id("news", "BlockBeats", e["title"][:120])
+        if uid in existing_ids:
+            continue
+        items.append({
+            "id": uid, "title": e["title"], "source": "BlockBeats",
+            "category": "market-news", "link": e["link"],
+            "publishedAt": parse_blockbeats_date(e["pubDate"]) or now_iso(),
+            "fetchedAt": now_iso(), "summary": e["description"][:280],
+        })
+        if len(items) >= MAX_PER_SOURCE_PER_RUN:
+            break
+    return items
+
+
 def sync_news():
     current = load_json(NEWS_PATH, {"updatedAt": None, "items": []})
     items = current.get("items", [])
@@ -288,6 +368,11 @@ def sync_news():
         time.sleep(0.3)
 
     try:
+        new_items += fetch_blockbeats_news(existing_ids | {n["id"] for n in new_items})
+    except Exception:
+        traceback.print_exc()
+
+    try:
         new_items += scrape_ofac(existing_ids | {n["id"] for n in new_items})
     except Exception:
         traceback.print_exc()
@@ -302,10 +387,19 @@ def sync_news():
 
 
 # --- New token launches ($1M+ market cap, across platforms) ---------------
+# Note: crossing $1M once doesn't mean staying there — pump.fun tokens in
+# particular routinely crash back to near-zero within hours. Earlier versions
+# of this script only ever ADDED items and never revisited them, so a coin
+# that peaked at $1M+ and then collapsed kept showing its stale peak value
+# forever. sync_launches() now refreshes (or drops) every already-saved item
+# every run, in addition to discovering new ones.
 MAX_LAUNCHES = 80
 LAUNCH_MIN_USD = 1_000_000
 LAUNCH_MAX_AGE_DAYS = 30
+DELIST_BELOW_USD = 300_000   # confirmed current cap below this -> drop it (well under the $1M entry bar, so it doesn't flicker in/out right at the boundary)
+LAUNCH_STALE_MAX_DAYS = 14   # hard cap for items we couldn't actively re-confirm (e.g. no chainId on record)
 PUMPFUN_URL = "https://frontend-api-v3.pump.fun/coins?offset=0&limit=50&sort=market_cap&order=DESC&includeNsfw=false"
+PUMPFUN_COIN_URL = "https://frontend-api-v3.pump.fun/coins/{mint}"
 DEXSCREENER_PROFILES_URL = "https://api.dexscreener.com/token-profiles/latest/v1"
 DEXSCREENER_PAIR_URL = "https://api.dexscreener.com/tokens/v1/{chain}/{addresses}"
 DEXSCREENER_SEARCH_URL = "https://api.dexscreener.com/latest/dex/search?q={query}"
@@ -314,6 +408,97 @@ DEXSCREENER_SEARCH_URL = "https://api.dexscreener.com/latest/dex/search?q={query
 # offerings, which are easy to miss since they don't always show up as
 # freshly "submitted profiles".
 DEXSCREENER_SEARCH_QUERIES = ["robinhood"]
+
+
+def refresh_pumpfun_items(items):
+    """Re-check each saved pump.fun token's current market cap. Confirmed
+    crashes (or a 404 — the coin's gone) get dropped; a request that just
+    fails (timeout, etc) leaves the old record untouched rather than guessing."""
+    kept = []
+    dropped = 0
+    for it in items:
+        mint = it.get("address")
+        if not mint:
+            kept.append(it)
+            continue
+        try:
+            r = requests.get(PUMPFUN_COIN_URL.format(mint=mint), timeout=15, headers={"User-Agent": UA})
+            if r.status_code == 404:
+                dropped += 1
+                time.sleep(0.1)
+                continue
+            data = r.json()
+            mc = float(data.get("usd_market_cap") or data.get("market_cap_usd") or 0)
+            if mc <= 0:
+                kept.append(it)  # couldn't confirm a live figure — keep the old value
+            elif mc < DELIST_BELOW_USD:
+                dropped += 1
+            else:
+                it = dict(it)
+                it["marketCapUsd"] = round(mc, 2)
+                it["fetchedAt"] = now_iso()
+                kept.append(it)
+        except Exception:
+            kept.append(it)
+        time.sleep(0.1)
+    if dropped:
+        print(f"launches: {dropped} pump.fun token(s) dropped (crashed below ${DELIST_BELOW_USD:,})")
+    return kept
+
+
+def refresh_dexscreener_items(items):
+    """Re-check each saved DexScreener-sourced token's current market cap,
+    batched by chain. Confirmed crashes get dropped; anything DexScreener
+    didn't answer for this run (network hiccup, or genuinely delisted) keeps
+    its last-known record — the staleness cutoff in sync_launches() clears
+    it out if that persists for too long."""
+    by_chain = {}
+    kept = []
+    for it in items:
+        chain, addr = it.get("chainId"), it.get("address")
+        if chain and addr:
+            by_chain.setdefault(chain, {})[addr] = it
+        else:
+            kept.append(it)  # no chainId on record (older item) — can't batch-refresh this one
+
+    crashed = 0
+    for chain, by_addr in by_chain.items():
+        addrs = list(by_addr.keys())
+        confirmed = set()
+        for i in range(0, len(addrs), 20):
+            batch = addrs[i:i + 20]
+            url = DEXSCREENER_PAIR_URL.format(chain=chain, addresses=",".join(batch))
+            try:
+                r = requests.get(url, timeout=20, headers={"User-Agent": UA})
+                pairs = r.json()
+                if not isinstance(pairs, list):
+                    continue
+            except Exception:
+                continue  # request failed — leave these addresses unconfirmed, not dropped
+            for pr in pairs:
+                try:
+                    base = pr.get("baseToken") or {}
+                    addr = (base.get("address") or "").lower()
+                    if addr not in by_addr:
+                        continue
+                    confirmed.add(addr)
+                    mc = float(pr.get("marketCap") or pr.get("fdv") or 0)
+                    if mc < DELIST_BELOW_USD:
+                        crashed += 1
+                        continue  # confirmed crash — drop it
+                    it = dict(by_addr[addr])
+                    it["marketCapUsd"] = round(mc, 2)
+                    it["fetchedAt"] = now_iso()
+                    kept.append(it)
+                except Exception:
+                    continue
+            time.sleep(0.2)
+        for addr, it in by_addr.items():
+            if addr not in confirmed:
+                kept.append(it)  # unconfirmed this run — keep as-is, let the age cutoff handle it eventually
+    if crashed:
+        print(f"launches: {crashed} DexScreener token(s) dropped (crashed below ${DELIST_BELOW_USD:,})")
+    return kept
 
 
 def fetch_pumpfun_launches(existing_ids):
@@ -368,7 +553,7 @@ def _pairs_to_launch_items(pairs, existing_ids, seen_addr):
             chain = pr.get("chainId") or ""
             out.append({
                 "id": uid, "name": base.get("name") or base.get("symbol") or "Unknown",
-                "symbol": base.get("symbol") or "", "chain": chain_label(chain),
+                "symbol": base.get("symbol") or "", "chain": chain_label(chain), "chainId": chain,
                 "platform": "DexScreener / " + chain_label(chain),
                 "marketCapUsd": round(mc, 2), "createdAt": None,
                 "fetchedAt": now_iso(), "link": pr.get("url") or "", "address": addr,
@@ -435,8 +620,39 @@ def fetch_dexscreener_search(query, existing_ids):
 def sync_launches():
     current = load_json(LAUNCHES_PATH, {"updatedAt": None, "items": []})
     items = current.get("items", [])
-    existing_ids = {l.get("id") for l in items}
 
+    # Re-check every already-saved item before adding anything new — a coin
+    # that crossed $1M once and then crashed shouldn't keep showing its stale
+    # peak value forever (see the module comment above LAUNCH_MIN_USD).
+    pf_items, ds_items, other_items = [], [], []
+    for l in items:
+        lid = str(l.get("id") or "")
+        if lid.startswith("pf-"):
+            pf_items.append(l)
+        elif lid.startswith("ds-"):
+            ds_items.append(l)
+        else:
+            other_items.append(l)
+    try:
+        pf_items = refresh_pumpfun_items(pf_items)
+    except Exception:
+        traceback.print_exc()
+    try:
+        ds_items = refresh_dexscreener_items(ds_items)
+    except Exception:
+        traceback.print_exc()
+    items = pf_items + ds_items + other_items
+
+    # Safety-net cutoff for anything we haven't been able to actively
+    # re-confirm in a long time (e.g. an older DexScreener item saved before
+    # chainId was recorded, so it can't be batch-refreshed).
+    stale_cutoff = (datetime.now(timezone.utc) - timedelta(days=LAUNCH_STALE_MAX_DAYS)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    before_stale = len(items)
+    items = [l for l in items if (l.get("fetchedAt") or "") >= stale_cutoff]
+    if before_stale - len(items):
+        print(f"launches: {before_stale - len(items)} item(s) dropped for staleness (unconfirmed {LAUNCH_STALE_MAX_DAYS}+ days)")
+
+    existing_ids = {l.get("id") for l in items}
     new_items = []
     try:
         new_items += fetch_pumpfun_launches(existing_ids)

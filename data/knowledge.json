@@ -1,6 +1,16 @@
 {
-  "updatedAt": "2026-09-07T23:17:45Z",
+  "updatedAt": "2026-09-08T00:30:05Z",
   "items": [
+    {
+      "id": "2026-09-08",
+      "title": "What actually happens when you 'swap' on a DEX",
+      "body": "A decentralized exchange swap doesn't match a buyer to a seller directly \u2014 it trades against a liquidity pool using an automated market maker formula (like Uniswap's constant-product x*y=k). Your trade size relative to pool depth determines your price impact, which is why a $500K swap on a shallow pool can move price far more than the same swap on a deep one.",
+      "tags": [
+        "defi",
+        "amm"
+      ],
+      "createdAt": "2026-09-08T00:30:05Z"
+    },
     {
       "id": "2026-09-07",
       "title": "Exchange inflows and outflows as a sentiment signal",

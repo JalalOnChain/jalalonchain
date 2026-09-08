@@ -6,7 +6,7 @@ how crypto and blockchain actually work.
 
 - `index.html` — the site
 - `data/news.json` — crypto market news and U.S. government/regulatory enforcement
-  actions, refreshed every 30 minutes by the GitHub Action
+  actions, refreshed hourly by the GitHub Action
 - `data/launches.json` — new tokens that crossed $1M market cap across chains,
   including Robinhood's chain and Robinhood-branded tokens elsewhere
 - `data/prices.json` — a live top-20 coin price snapshot for the homepage price ticker
@@ -15,7 +15,7 @@ how crypto and blockchain actually work.
   large trades; the tracked addresses are re-selected every sync from Hyperliquid's
   current top accounts
 - `data/knowledge.json` — daily briefings, advanced one-per-day from `data/knowledge-pool.json`
-- `.github/workflows/sync.yml` — the job (every 30 minutes) that keeps everything current
+- `.github/workflows/sync.yml` — the hourly job that keeps everything current
 - `scripts/sync.py` — what that job actually runs
 
 Data is synced automatically. Do not hand-edit the `data/` files — they're overwritten

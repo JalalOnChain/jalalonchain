@@ -666,11 +666,11 @@
     if(!state.updatedAt){ dot.className="live-dot"; txt.textContent="waiting for first sync"; foot.textContent="Waiting for first sync."; return; }
     var ageMin = (Date.now() - new Date(state.updatedAt).getTime())/60000;
     var cls="live", label="<b>LIVE</b> · synced "+timeAgo(state.updatedAt);
-    if(ageMin>120){ cls=""; label="sync stalled · last update "+timeAgo(state.updatedAt); }
-    else if(ageMin>45){ label="sync delayed · last update "+timeAgo(state.updatedAt); }
+    if(ageMin>180){ cls=""; label="sync stalled · last update "+timeAgo(state.updatedAt); }
+    else if(ageMin>75){ label="sync delayed · last update "+timeAgo(state.updatedAt); }
     dot.className = "live-dot "+cls;
     txt.innerHTML = label;
-    foot.textContent = "Data refreshes roughly every 30 minutes.";
+    foot.textContent = "Data refreshes roughly hourly.";
   }
 
   function loadData(){

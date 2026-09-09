@@ -264,11 +264,21 @@ def fetch_rss(url):
 OFAC_MAX_DAYS_CHECKED = 6  # cap on per-day detail-page fetches per sync run
 
 
+
+# ofac.treasury.gov appears to be pickier than DOJ/SEC/etc about non-browser
+# traffic — using a real browser UA here (instead of the shared bot UA every
+# other source uses fine) to rule that out as the reason OFAC has produced
+# zero items so far.
+OFAC_UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+           "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36")
+
+
 def scrape_ofac(existing_ids):
     entries = []
     try:
         from bs4 import BeautifulSoup
-        r = requests.get(OFAC_URL, timeout=20, headers={"User-Agent": UA})
+        r = requests.get(OFAC_URL, timeout=20, headers={"User-Agent": OFAC_UA, "Accept": "text/html"})
+        print(f"ofac: listing fetch status={r.status_code}, {len(r.text)} bytes")
         soup = BeautifulSoup(r.text, "html.parser")
         text = soup.get_text("\n")
         lines = [l.strip() for l in text.split("\n") if l.strip()]
@@ -283,6 +293,7 @@ def scrape_ofac(existing_ids):
                 i += 2
             else:
                 i += 1
+        print(f"ofac: {len(entries)} dated entries parsed from listing page")
     except Exception:
         traceback.print_exc()
 
@@ -326,7 +337,8 @@ def scrape_ofac(existing_ids):
         body_text = ""
         if slug:
             try:
-                dr = requests.get(detail_url, timeout=20, headers={"User-Agent": UA})
+                dr = requests.get(detail_url, timeout=20, headers={"User-Agent": OFAC_UA, "Accept": "text/html"})
+                print(f"ofac: detail fetch for {date_str} status={dr.status_code}, {len(dr.text)} bytes")
                 from bs4 import BeautifulSoup as _BS
                 body_text = _BS(dr.text, "html.parser").get_text(" ")
             except Exception:
@@ -334,6 +346,7 @@ def scrape_ofac(existing_ids):
             time.sleep(0.2)
 
         relevant = is_crypto_relevant(body_text) if body_text else any(is_crypto_relevant(t) for t in titles)
+        print(f"ofac: {date_str} relevant={relevant}")
         if not relevant:
             continue
 

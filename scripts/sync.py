@@ -112,11 +112,28 @@ CHAIN_LABELS = {
 # moderate frequency, and it covers non-crypto tech stories too (it's a
 # broader tech-and-crypto outlet), so filter=True keeps only the
 # crypto/blockchain-relevant articles from it.
+#
+# Enforcement coverage beyond the U.S.: OFSI (UK Treasury's sanctions arm),
+# the NCA (UK's national law-enforcement agency), the FCA (UK financial
+# regulator), Europol (EU-wide seizures/takedowns) and the DFSA (Dubai's
+# financial regulator) all publish real RSS/Atom feeds and are filtered the
+# same way as DOJ/SEC (title+description checked against CRYPTO_KEYWORDS,
+# since most of what these agencies publish isn't crypto-related). OFSI's
+# feed is Atom, not RSS, hence "format": "atom" below. Checked but not wired
+# in — no clean feed exists, only ad-hoc HTML scraping like OFAC below would
+# work: UAE's own sanctions body (EOCN, blocked by robots.txt), FinCEN (RSS
+# feed no longer live), Interpol (no official feed), and IRS-CI (crypto-heavy
+# seizure press releases, but only monthly HTML listing pages).
 MAX_NEWS = 150
 MAX_PER_SOURCE_PER_RUN = 4  # anti-spam cap: at most this many new items per source per sync
 NEWS_RSS_SOURCES = [
     {"url": "https://www.justice.gov/news/rss?type=press_release&m=1", "source": "U.S. Dept. of Justice", "category": "enforcement", "filter": True},
     {"url": "https://www.sec.gov/enforcement-litigation/litigation-releases/rss", "source": "U.S. SEC Litigation", "category": "enforcement", "filter": True},
+    {"url": "https://www.gov.uk/search/news-and-communications.atom?organisations%5B%5D=office-of-financial-sanctions-implementation", "source": "OFSI (UK Treasury)", "category": "enforcement", "filter": True, "format": "atom"},
+    {"url": "https://nationalcrimeagency.gov.uk/news?format=feed&type=rss", "source": "UK National Crime Agency", "category": "enforcement", "filter": True},
+    {"url": "https://www.fca.org.uk/news/rss.xml", "source": "UK FCA", "category": "enforcement", "filter": True},
+    {"url": "https://www.europol.europa.eu/cms/api/rss/news", "source": "Europol", "category": "enforcement", "filter": True},
+    {"url": "https://www.dfsa.ae/rss", "source": "DFSA (Dubai)", "category": "enforcement", "filter": True},
     {"url": "https://decrypt.co/feed", "source": "Decrypt", "category": "market-news", "filter": True},
 ]
 REMOVED_NEWS_SOURCES = {"Chainalysis", "TRM Labs", "Merkle Science", "Elliptic", "The Block", "CoinDesk"}
@@ -181,6 +198,45 @@ def parse_rss_date(s):
         return None
 
 
+def parse_iso_date(s):
+    """Atom feeds (e.g. gov.uk's) use ISO 8601 dates instead of RSS's RFC 822."""
+    try:
+        dt = datetime.fromisoformat((s or "").strip().replace("Z", "+00:00"))
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    except Exception:
+        return None
+
+
+ATOM_NS = "{http://www.w3.org/2005/Atom}"
+
+
+def fetch_atom(url):
+    out = []
+    try:
+        import xml.etree.ElementTree as ET
+        r = requests.get(url, timeout=20, headers={
+            "User-Agent": UA, "Accept": "application/atom+xml, application/xml, text/xml",
+        })
+        root = ET.fromstring(r.content)
+        for entry in root.iter(f"{ATOM_NS}entry"):
+            def get(tag):
+                el = entry.find(f"{ATOM_NS}{tag}")
+                return el.text if el is not None and el.text else ""
+            title = get("title").strip()
+            if not title:
+                continue
+            link_el = entry.find(f"{ATOM_NS}link")
+            link = (link_el.get("href") or "").strip() if link_el is not None else ""
+            published = (get("published") or get("updated")).strip()
+            desc = strip_html(get("summary") or get("content"))[:400]
+            out.append({"title": title, "link": link, "pubDate": published, "description": desc})
+    except Exception:
+        traceback.print_exc()
+    return out
+
+
 def fetch_rss(url):
     import xml.etree.ElementTree as ET
     out = []
@@ -205,6 +261,9 @@ def fetch_rss(url):
     return out
 
 
+OFAC_MAX_DAYS_CHECKED = 6  # cap on per-day detail-page fetches per sync run
+
+
 def scrape_ofac(existing_ids):
     entries = []
     try:
@@ -227,22 +286,63 @@ def scrape_ofac(existing_ids):
     except Exception:
         traceback.print_exc()
 
-    items = []
+    # OFAC's own RSS feed was retired in Feb 2025, so this listing page (bare
+    # date + headline, no body text) is all we get without visiting each
+    # action. Checking the headline alone misses most real crypto-relevant
+    # actions: designation titles almost never say "crypto" even when the
+    # body lists dozens of "Digital Currency Address" wallet entries. Each
+    # date's own detail page (ofac.treasury.gov/recent-actions/<YYYYMMDD>)
+    # bundles every action announced that day, so group by date and check the
+    # full page text instead of just the headline.
+    by_date = {}
+    order = []
     for entry in entries[:20]:
-        if not is_crypto_relevant(entry["title"]):
-            continue
-        uid = stable_id("ofac", entry["title"][:100])
-        if uid in existing_ids:
-            continue
+        d = entry["date"]
+        if d not in by_date:
+            by_date[d] = []
+            order.append(d)
+        by_date[d].append(entry["title"])
+
+    items = []
+    checked = 0
+    for date_str in order:
+        titles = by_date[date_str]
         try:
-            dt = datetime.strptime(entry["date"], "%B %d, %Y").replace(tzinfo=timezone.utc)
+            dt = datetime.strptime(date_str, "%B %d, %Y").replace(tzinfo=timezone.utc)
             iso = dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+            slug = dt.strftime("%Y%m%d")
         except Exception:
             iso = now_iso()
+            slug = None
+
+        uid = stable_id("ofac", date_str, titles[0][:100])
+        if uid in existing_ids:
+            continue  # already have this date on file; no need to re-fetch it
+        if checked >= OFAC_MAX_DAYS_CHECKED:
+            continue  # cap detail-page fetches per run; catches up over later syncs
+        checked += 1
+
+        detail_url = f"{OFAC_URL}/{slug}" if slug else OFAC_URL
+        body_text = ""
+        if slug:
+            try:
+                dr = requests.get(detail_url, timeout=20, headers={"User-Agent": UA})
+                from bs4 import BeautifulSoup as _BS
+                body_text = _BS(dr.text, "html.parser").get_text(" ")
+            except Exception:
+                traceback.print_exc()
+            time.sleep(0.2)
+
+        relevant = is_crypto_relevant(body_text) if body_text else any(is_crypto_relevant(t) for t in titles)
+        if not relevant:
+            continue
+
+        display_title = titles[0] if len(titles) == 1 else f"{titles[0]} (+{len(titles) - 1} more that day)"
+        summary = re.sub(r"\s+", " ", body_text).strip()[:280] if body_text else "Sanctions action listed on OFAC's recent actions page."
         items.append({
-            "id": uid, "title": entry["title"], "source": "OFAC (U.S. Treasury)",
-            "category": "enforcement", "link": OFAC_URL, "publishedAt": iso,
-            "fetchedAt": now_iso(), "summary": "Sanctions action listed on OFAC's recent actions page.",
+            "id": uid, "title": display_title, "source": "OFAC (U.S. Treasury)",
+            "category": "enforcement", "link": detail_url, "publishedAt": iso,
+            "fetchedAt": now_iso(), "summary": summary,
         })
         if len(items) >= MAX_PER_SOURCE_PER_RUN:
             break
@@ -343,8 +443,9 @@ def sync_news():
     new_items = []
 
     for cfg in NEWS_RSS_SOURCES:
+        is_atom = cfg.get("format") == "atom"
         try:
-            entries = fetch_rss(cfg["url"])
+            entries = fetch_atom(cfg["url"]) if is_atom else fetch_rss(cfg["url"])
         except Exception:
             traceback.print_exc()
             entries = []
@@ -358,10 +459,11 @@ def sync_news():
             uid = stable_id("news", cfg["source"], e["title"][:120])
             if uid in existing_ids or uid in {n["id"] for n in new_items}:
                 continue
+            published = parse_iso_date(e["pubDate"]) if is_atom else parse_rss_date(e["pubDate"])
             new_items.append({
                 "id": uid, "title": e["title"], "source": cfg["source"],
                 "category": cfg["category"], "link": e["link"],
-                "publishedAt": parse_rss_date(e["pubDate"]) or now_iso(),
+                "publishedAt": published or now_iso(),
                 "fetchedAt": now_iso(), "summary": e["description"][:280],
             })
             added_for_source += 1
@@ -796,6 +898,14 @@ HL_MAX_POSITIONS = 60
 HL_MAX_ACTIVITY = 60
 HL_FILL_LOOKBACK_HOURS = 6  # only report trades from roughly the last sync window
 HL_STABLES = {"USDC", "USDT0", "USDH", "USDE"}
+# Known market-maker / aggregator / order-routing addresses to exclude from
+# the whale tracker. These post large size as part of routine automated
+# market-making or swap routing, not organic "whale" conviction — showing
+# them alongside real large accounts is misleading, not informative.
+# Add more addresses here (lowercase) as they're identified.
+HL_EXCLUDED_ADDRESSES = {
+    "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00",  # Wintermute
+}
 
 
 def hl_info(payload):
@@ -817,6 +927,8 @@ def fetch_hl_top_addresses(n):
     for row in rows:
         try:
             addr = row.get("ethAddress")
+            if addr and addr.lower() in HL_EXCLUDED_ADDRESSES:
+                continue
             av = float(row.get("accountValue") or 0)
             if addr:
                 ranked.append((av, addr))

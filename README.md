@@ -1,8 +1,9 @@
 # JalalOnChain
 
-Crypto news, live prices, and new tokens monitored once they cross $1M+ market cap —
-plus a daily on-chain/off-chain knowledge briefing, with clear, informative reads on
-how crypto and blockchain actually work.
+New tokens tracked once they cross $1M+ market cap, newly-listed DeFi protocols, large
+Hyperliquid trades and open positions, live coin prices, crypto news, and enforcement
+alerts — plus a daily on-chain/off-chain knowledge briefing, with clear, informative
+reads on how crypto and blockchain actually work.
 
 - `index.html` — the site
 - `data/news.json` — crypto market news and U.S. government/regulatory enforcement

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-09T10:21:04Z",
+  "updatedAt": "2026-09-09T10:23:49Z",
   "positions": [
     {
       "id": "hlpos-9bc7362f0576",
@@ -7,12 +7,12 @@
       "coin": "ETH",
       "side": "short",
       "size": 95614.8739,
-      "positionValueUsd": 238205335.35,
+      "positionValueUsd": 238170913.99,
       "entryPx": "2262.99",
-      "unrealizedPnlUsd": -21829511.58,
+      "unrealizedPnlUsd": -21795090.23,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:33Z",
+      "fetchedAt": "2026-09-09T10:23:19Z",
       "link": "https://hypurrscan.io/address/0x5b5d51203a0f9079f8aeb098a6523a13f298c060"
     },
     {
@@ -21,12 +21,12 @@
       "coin": "BTC",
       "side": "short",
       "size": 2024.77564,
-      "positionValueUsd": 160052440.02,
+      "positionValueUsd": 160062563.89,
       "entryPx": "72155.2",
-      "unrealizedPnlUsd": -13954161.55,
+      "unrealizedPnlUsd": -13964285.42,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:33Z",
+      "fetchedAt": "2026-09-09T10:23:19Z",
       "link": "https://hypurrscan.io/address/0x5b5d51203a0f9079f8aeb098a6523a13f298c060"
     },
     {
@@ -34,13 +34,13 @@
       "address": "0x5b5d51203a0f9079f8aeb098a6523a13f298c060",
       "coin": "USDC-equiv",
       "side": "spot",
-      "size": 126504812.96,
-      "positionValueUsd": 126504812.96,
+      "size": 126453725.57,
+      "positionValueUsd": 126453725.57,
       "entryPx": null,
       "unrealizedPnlUsd": null,
       "leverage": null,
       "kind": "spot",
-      "fetchedAt": "2026-09-09T10:20:33Z",
+      "fetchedAt": "2026-09-09T10:23:19Z",
       "link": "https://hypurrscan.io/address/0x5b5d51203a0f9079f8aeb098a6523a13f298c060"
     },
     {
@@ -49,12 +49,12 @@
       "coin": "ETH",
       "side": "short",
       "size": 46423.3603,
-      "positionValueUsd": 115654517.52,
+      "positionValueUsd": 115637805.11,
       "entryPx": "2154.61",
-      "unrealizedPnlUsd": -15630097.83,
+      "unrealizedPnlUsd": -15613385.42,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:37Z",
+      "fetchedAt": "2026-09-09T10:23:22Z",
       "link": "https://hypurrscan.io/address/0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36"
     },
     {
@@ -62,13 +62,13 @@
       "address": "0x7fdafde5cfb5465924316eced2d3715494c517d1",
       "coin": "ETH",
       "side": "short",
-      "size": 33964.1427,
-      "positionValueUsd": 84649851.78,
+      "size": 33964.2026,
+      "positionValueUsd": 84581053.73,
       "entryPx": "2191.13",
-      "unrealizedPnlUsd": -10229933.41,
+      "unrealizedPnlUsd": -10160986.06,
       "leverage": 15,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:21:01Z",
+      "fetchedAt": "2026-09-09T10:23:44Z",
       "link": "https://hypurrscan.io/address/0x7fdafde5cfb5465924316eced2d3715494c517d1"
     },
     {
@@ -77,12 +77,12 @@
       "coin": "SOL",
       "side": "short",
       "size": 782477.36,
-      "positionValueUsd": 81236799.52,
+      "positionValueUsd": 81244624.29,
       "entryPx": "94.0205",
-      "unrealizedPnlUsd": -7667869.99,
+      "unrealizedPnlUsd": -7675694.76,
       "leverage": 10,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:33Z",
+      "fetchedAt": "2026-09-09T10:23:19Z",
       "link": "https://hypurrscan.io/address/0x5b5d51203a0f9079f8aeb098a6523a13f298c060"
     },
     {
@@ -90,13 +90,13 @@
       "address": "0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36",
       "coin": "USDC-equiv",
       "side": "spot",
-      "size": 75550933.59,
-      "positionValueUsd": 75550933.59,
+      "size": 75591507.01,
+      "positionValueUsd": 75591507.01,
       "entryPx": null,
       "unrealizedPnlUsd": null,
       "leverage": null,
       "kind": "spot",
-      "fetchedAt": "2026-09-09T10:20:38Z",
+      "fetchedAt": "2026-09-09T10:23:22Z",
       "link": "https://hypurrscan.io/address/0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36"
     },
     {
@@ -104,13 +104,13 @@
       "address": "0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36",
       "coin": "HYPE",
       "side": "short",
-      "size": 869430.01,
-      "positionValueUsd": 74636219.21,
+      "size": 869196.71,
+      "positionValueUsd": 74608890.32,
       "entryPx": "65.2217",
-      "unrealizedPnlUsd": -17930441.65,
+      "unrealizedPnlUsd": -17918329.0,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:37Z",
+      "fetchedAt": "2026-09-09T10:23:22Z",
       "link": "https://hypurrscan.io/address/0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36"
     },
     {
@@ -124,7 +124,7 @@
       "unrealizedPnlUsd": -12250762.5,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:37Z",
+      "fetchedAt": "2026-09-09T10:23:22Z",
       "link": "https://hypurrscan.io/address/0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36"
     },
     {
@@ -132,13 +132,13 @@
       "address": "0x5b5d51203a0f9079f8aeb098a6523a13f298c060",
       "coin": "HYPE",
       "side": "short",
-      "size": 850187.09,
-      "positionValueUsd": 72976659.06,
+      "size": 849953.19,
+      "positionValueUsd": 72957091.99,
       "entryPx": "68.7114",
-      "unrealizedPnlUsd": -14559089.74,
+      "unrealizedPnlUsd": -14555594.27,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:33Z",
+      "fetchedAt": "2026-09-09T10:23:19Z",
       "link": "https://hypurrscan.io/address/0x5b5d51203a0f9079f8aeb098a6523a13f298c060"
     },
     {
@@ -146,13 +146,13 @@
       "address": "0x92ea19eceb7a8de0f50978a1583a5d8b018050e9",
       "coin": "USDC-equiv",
       "side": "spot",
-      "size": 61227862.42,
-      "positionValueUsd": 61227862.42,
+      "size": 61378556.44,
+      "positionValueUsd": 61378556.44,
       "entryPx": null,
       "unrealizedPnlUsd": null,
       "leverage": null,
       "kind": "spot",
-      "fetchedAt": "2026-09-09T10:21:04Z",
+      "fetchedAt": "2026-09-09T10:23:48Z",
       "link": "https://hypurrscan.io/address/0x92ea19eceb7a8de0f50978a1583a5d8b018050e9"
     },
     {
@@ -161,12 +161,12 @@
       "coin": "ZEC",
       "side": "short",
       "size": 32759.57,
-      "positionValueUsd": 40736525.3,
+      "positionValueUsd": 40592383.19,
       "entryPx": "576.2998",
-      "unrealizedPnlUsd": -21857189.83,
+      "unrealizedPnlUsd": -21713047.72,
       "leverage": 3,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:21:04Z",
+      "fetchedAt": "2026-09-09T10:23:48Z",
       "link": "https://hypurrscan.io/address/0x92ea19eceb7a8de0f50978a1583a5d8b018050e9"
     },
     {
@@ -175,12 +175,12 @@
       "coin": "HYPE",
       "side": "short",
       "size": 454491.11,
-      "positionValueUsd": 39016243.83,
+      "positionValueUsd": 39008517.48,
       "entryPx": "53.9653",
-      "unrealizedPnlUsd": -14489485.74,
+      "unrealizedPnlUsd": -14481759.4,
       "leverage": 3,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:39Z",
+      "fetchedAt": "2026-09-09T10:23:24Z",
       "link": "https://hypurrscan.io/address/0x8def9f50456c6c4e37fa5d3d57f108ed23992dae"
     },
     {
@@ -188,13 +188,13 @@
       "address": "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00",
       "coin": "ETH",
       "side": "short",
-      "size": 14209.7485,
-      "positionValueUsd": 35412114.24,
+      "size": 14209.3126,
+      "positionValueUsd": 35391134.89,
       "entryPx": "2494.58",
-      "unrealizedPnlUsd": 35324.34,
+      "unrealizedPnlUsd": 55215.78,
       "leverage": 15,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -208,7 +208,7 @@
       "unrealizedPnlUsd": -4434401.51,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:37Z",
+      "fetchedAt": "2026-09-09T10:23:22Z",
       "link": "https://hypurrscan.io/address/0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36"
     },
     {
@@ -216,13 +216,13 @@
       "address": "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae",
       "coin": "USDC-equiv",
       "side": "spot",
-      "size": 26940243.64,
-      "positionValueUsd": 26940243.64,
+      "size": 26947969.99,
+      "positionValueUsd": 26947969.99,
       "entryPx": null,
       "unrealizedPnlUsd": null,
       "leverage": null,
       "kind": "spot",
-      "fetchedAt": "2026-09-09T10:20:39Z",
+      "fetchedAt": "2026-09-09T10:23:25Z",
       "link": "https://hypurrscan.io/address/0x8def9f50456c6c4e37fa5d3d57f108ed23992dae"
     },
     {
@@ -231,12 +231,12 @@
       "coin": "XRP",
       "side": "short",
       "size": 17879413.0,
-      "positionValueUsd": 25422737.34,
+      "positionValueUsd": 25440616.76,
       "entryPx": "1.47542",
-      "unrealizedPnlUsd": 956916.14,
+      "unrealizedPnlUsd": 939036.73,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:33Z",
+      "fetchedAt": "2026-09-09T10:23:19Z",
       "link": "https://hypurrscan.io/address/0x5b5d51203a0f9079f8aeb098a6523a13f298c060"
     },
     {
@@ -244,13 +244,13 @@
       "address": "0x7fdafde5cfb5465924316eced2d3715494c517d1",
       "coin": "ZEC",
       "side": "short",
-      "size": 17191.84,
-      "positionValueUsd": 21378053.04,
-      "entryPx": "1083.3227",
-      "unrealizedPnlUsd": -2753742.49,
+      "size": 17272.95,
+      "positionValueUsd": 21399457.75,
+      "entryPx": "1084.0669",
+      "unrealizedPnlUsd": -2674423.42,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:21:01Z",
+      "fetchedAt": "2026-09-09T10:23:44Z",
       "link": "https://hypurrscan.io/address/0x7fdafde5cfb5465924316eced2d3715494c517d1"
     },
     {
@@ -259,27 +259,13 @@
       "coin": "PUMP",
       "side": "short",
       "size": 3563583367.0,
-      "positionValueUsd": 16018307.23,
+      "positionValueUsd": 16082451.74,
       "entryPx": "0.004607",
-      "unrealizedPnlUsd": 402126.54,
+      "unrealizedPnlUsd": 337982.04,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:33Z",
+      "fetchedAt": "2026-09-09T10:23:19Z",
       "link": "https://hypurrscan.io/address/0x5b5d51203a0f9079f8aeb098a6523a13f298c060"
-    },
-    {
-      "id": "hlpos-8a082910b90e",
-      "address": "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00",
-      "coin": "BTC",
-      "side": "long",
-      "size": 161.20501,
-      "positionValueUsd": 12746318.94,
-      "entryPx": "79206.1",
-      "unrealizedPnlUsd": -22115.04,
-      "leverage": 20,
-      "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
-      "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
       "id": "hlpos-4e524875983f",
@@ -287,26 +273,40 @@
       "coin": "ETH",
       "side": "short",
       "size": 5099.0402,
-      "positionValueUsd": 12706298.27,
+      "positionValueUsd": 12700179.43,
       "entryPx": "2489.86",
-      "unrealizedPnlUsd": -10380.9,
+      "unrealizedPnlUsd": -4262.05,
       "leverage": 20,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:42Z",
+      "fetchedAt": "2026-09-09T10:23:27Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
+    },
+    {
+      "id": "hlpos-8a082910b90e",
+      "address": "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00",
+      "coin": "BTC",
+      "side": "long",
+      "size": 159.01081,
+      "positionValueUsd": 12570440.57,
+      "entryPx": "79206.1",
+      "unrealizedPnlUsd": -24194.43,
+      "leverage": 20,
+      "kind": "perp",
+      "fetchedAt": "2026-09-09T10:23:29Z",
+      "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
       "id": "hlpos-68213460a79c",
       "address": "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00",
       "coin": "USDC-equiv",
       "side": "spot",
-      "size": 11510062.11,
-      "positionValueUsd": 11510062.11,
+      "size": 11476679.74,
+      "positionValueUsd": 11476679.74,
       "entryPx": null,
       "unrealizedPnlUsd": null,
       "leverage": null,
       "kind": "spot",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -314,13 +314,13 @@
       "address": "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00",
       "coin": "SOL",
       "side": "short",
-      "size": 102087.48,
-      "positionValueUsd": 10601784.8,
+      "size": 102161.8,
+      "positionValueUsd": 10605007.81,
       "entryPx": "103.8562",
-      "unrealizedPnlUsd": 640.45,
+      "unrealizedPnlUsd": 5133.92,
       "leverage": 20,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -329,12 +329,12 @@
       "coin": "SOL",
       "side": "short",
       "size": 99854.22,
-      "positionValueUsd": 10370559.73,
+      "positionValueUsd": 10363869.49,
       "entryPx": "102.5577",
-      "unrealizedPnlUsd": -129733.4,
+      "unrealizedPnlUsd": -123043.17,
       "leverage": 20,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:21:01Z",
+      "fetchedAt": "2026-09-09T10:23:44Z",
       "link": "https://hypurrscan.io/address/0x7fdafde5cfb5465924316eced2d3715494c517d1"
     },
     {
@@ -343,12 +343,12 @@
       "coin": "LIT",
       "side": "short",
       "size": 1923765.0,
-      "positionValueUsd": 9920663.73,
+      "positionValueUsd": 9883583.16,
       "entryPx": "3.278751",
-      "unrealizedPnlUsd": -3613115.41,
+      "unrealizedPnlUsd": -3576034.84,
       "leverage": 3,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:21:01Z",
+      "fetchedAt": "2026-09-09T10:23:44Z",
       "link": "https://hypurrscan.io/address/0x7fdafde5cfb5465924316eced2d3715494c517d1"
     },
     {
@@ -356,13 +356,13 @@
       "address": "0x7fdafde5cfb5465924316eced2d3715494c517d1",
       "coin": "HYPE",
       "side": "short",
-      "size": 102564.79,
-      "positionValueUsd": 8805802.61,
+      "size": 102531.41,
+      "positionValueUsd": 8799655.73,
       "entryPx": "85.9562",
-      "unrealizedPnlUsd": 10281.77,
+      "unrealizedPnlUsd": 13559.43,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:21:01Z",
+      "fetchedAt": "2026-09-09T10:23:44Z",
       "link": "https://hypurrscan.io/address/0x7fdafde5cfb5465924316eced2d3715494c517d1"
     },
     {
@@ -370,13 +370,13 @@
       "address": "0xfc667adba8d4837586078f4fdcdc29804337ca06",
       "coin": "XRP",
       "side": "short",
-      "size": 6096295.0,
-      "positionValueUsd": 8670150.75,
-      "entryPx": "1.412927",
-      "unrealizedPnlUsd": -56527.06,
+      "size": 6109639.0,
+      "positionValueUsd": 8692183.41,
+      "entryPx": "1.412949",
+      "unrealizedPnlUsd": -59571.2,
       "leverage": 20,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:42Z",
+      "fetchedAt": "2026-09-09T10:23:27Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -385,12 +385,12 @@
       "coin": "DOGE",
       "side": "short",
       "size": 82998221.0,
-      "positionValueUsd": 7513994.94,
+      "positionValueUsd": 7529017.62,
       "entryPx": "0.088347",
-      "unrealizedPnlUsd": -181275.7,
+      "unrealizedPnlUsd": -196298.38,
       "leverage": 10,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -398,13 +398,13 @@
       "address": "0xe867fbdad3291530e41530301ecb77693850c78e",
       "coin": "USDC-equiv",
       "side": "spot",
-      "size": 6145552.19,
-      "positionValueUsd": 6145552.19,
+      "size": 6145553.11,
+      "positionValueUsd": 6145553.11,
       "entryPx": null,
       "unrealizedPnlUsd": null,
       "leverage": null,
       "kind": "spot",
-      "fetchedAt": "2026-09-09T10:20:50Z",
+      "fetchedAt": "2026-09-09T10:23:32Z",
       "link": "https://hypurrscan.io/address/0xe867fbdad3291530e41530301ecb77693850c78e"
     },
     {
@@ -412,13 +412,13 @@
       "address": "0x856c35038594767646266bc7fd68dc26480e910d",
       "coin": "USDC-equiv",
       "side": "spot",
-      "size": 5530542.14,
-      "positionValueUsd": 5530542.14,
+      "size": 5537631.43,
+      "positionValueUsd": 5537631.43,
       "entryPx": null,
       "unrealizedPnlUsd": null,
       "leverage": null,
       "kind": "spot",
-      "fetchedAt": "2026-09-09T10:20:55Z",
+      "fetchedAt": "2026-09-09T10:23:38Z",
       "link": "https://hypurrscan.io/address/0x856c35038594767646266bc7fd68dc26480e910d"
     },
     {
@@ -426,13 +426,13 @@
       "address": "0x7fdafde5cfb5465924316eced2d3715494c517d1",
       "coin": "BTC",
       "side": "short",
-      "size": 66.60878,
-      "positionValueUsd": 5266822.84,
-      "entryPx": "79166.1",
-      "unrealizedPnlUsd": 6338.93,
+      "size": 67.90583,
+      "positionValueUsd": 5368023.77,
+      "entryPx": "79164.5",
+      "unrealizedPnlUsd": 7708.72,
       "leverage": 20,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:21:01Z",
+      "fetchedAt": "2026-09-09T10:23:44Z",
       "link": "https://hypurrscan.io/address/0x7fdafde5cfb5465924316eced2d3715494c517d1"
     },
     {
@@ -440,13 +440,13 @@
       "address": "0x7fdafde5cfb5465924316eced2d3715494c517d1",
       "coin": "DOGE",
       "side": "short",
-      "size": 57211926.0,
-      "positionValueUsd": 5179338.45,
+      "size": 57212614.0,
+      "positionValueUsd": 5189126.88,
       "entryPx": "0.089259",
-      "unrealizedPnlUsd": -72656.62,
+      "unrealizedPnlUsd": -82377.25,
       "leverage": 10,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:21:01Z",
+      "fetchedAt": "2026-09-09T10:23:44Z",
       "link": "https://hypurrscan.io/address/0x7fdafde5cfb5465924316eced2d3715494c517d1"
     },
     {
@@ -454,13 +454,13 @@
       "address": "0x7fdafde5cfb5465924316eced2d3715494c517d1",
       "coin": "XMR",
       "side": "short",
-      "size": 8856.886,
-      "positionValueUsd": 4401075.22,
-      "entryPx": "507.883",
-      "unrealizedPnlUsd": 97190.75,
+      "size": 8859.416,
+      "positionValueUsd": 4402607.05,
+      "entryPx": "507.88",
+      "unrealizedPnlUsd": 96914.19,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:21:01Z",
+      "fetchedAt": "2026-09-09T10:23:44Z",
       "link": "https://hypurrscan.io/address/0x7fdafde5cfb5465924316eced2d3715494c517d1"
     },
     {
@@ -468,13 +468,13 @@
       "address": "0x7fdafde5cfb5465924316eced2d3715494c517d1",
       "coin": "PUMP",
       "side": "short",
-      "size": 941869364.0,
-      "positionValueUsd": 4251598.31,
+      "size": 942239221.0,
+      "positionValueUsd": 4253267.84,
       "entryPx": "0.004629",
-      "unrealizedPnlUsd": 108552.38,
+      "unrealizedPnlUsd": 108552.3,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:21:01Z",
+      "fetchedAt": "2026-09-09T10:23:44Z",
       "link": "https://hypurrscan.io/address/0x7fdafde5cfb5465924316eced2d3715494c517d1"
     },
     {
@@ -482,13 +482,13 @@
       "address": "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00",
       "coin": "PUMP",
       "side": "short",
-      "size": 903443560.0,
-      "positionValueUsd": 4067302.91,
+      "size": 903454251.0,
+      "positionValueUsd": 4077289.03,
       "entryPx": "0.004247",
-      "unrealizedPnlUsd": -230302.51,
+      "unrealizedPnlUsd": -240227.86,
       "leverage": 3,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -497,12 +497,12 @@
       "coin": "FARTCOIN",
       "side": "short",
       "size": 23636252.1,
-      "positionValueUsd": 3955054.06,
+      "positionValueUsd": 3962144.94,
       "entryPx": "0.20186",
-      "unrealizedPnlUsd": 816188.01,
+      "unrealizedPnlUsd": 809097.14,
       "leverage": 3,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:33Z",
+      "fetchedAt": "2026-09-09T10:23:19Z",
       "link": "https://hypurrscan.io/address/0x5b5d51203a0f9079f8aeb098a6523a13f298c060"
     },
     {
@@ -511,12 +511,12 @@
       "coin": "XRP",
       "side": "short",
       "size": 2748232.0,
-      "positionValueUsd": 3910184.49,
+      "positionValueUsd": 3909634.84,
       "entryPx": "1.418072",
-      "unrealizedPnlUsd": -12992.22,
+      "unrealizedPnlUsd": -12442.58,
       "leverage": 10,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -525,12 +525,12 @@
       "coin": "XRP",
       "side": "short",
       "size": 2670244.0,
-      "positionValueUsd": 3797086.97,
+      "positionValueUsd": 3799490.19,
       "entryPx": "1.43589",
-      "unrealizedPnlUsd": 37092.35,
+      "unrealizedPnlUsd": 34689.13,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:37Z",
+      "fetchedAt": "2026-09-09T10:23:22Z",
       "link": "https://hypurrscan.io/address/0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36"
     },
     {
@@ -539,13 +539,27 @@
       "coin": "FARTCOIN",
       "side": "short",
       "size": 21991185.2,
-      "positionValueUsd": 3680444.76,
+      "positionValueUsd": 3686382.38,
       "entryPx": "0.17721",
-      "unrealizedPnlUsd": 216772.02,
+      "unrealizedPnlUsd": 210834.4,
       "leverage": 3,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:37Z",
+      "fetchedAt": "2026-09-09T10:23:22Z",
       "link": "https://hypurrscan.io/address/0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36"
+    },
+    {
+      "id": "hlpos-7007be2086d8",
+      "address": "0xfc667adba8d4837586078f4fdcdc29804337ca06",
+      "coin": "BTC",
+      "side": "short",
+      "size": 44.32186,
+      "positionValueUsd": 3503820.32,
+      "entryPx": "79169.1",
+      "unrealizedPnlUsd": 5104.48,
+      "leverage": 20,
+      "kind": "perp",
+      "fetchedAt": "2026-09-09T10:23:27Z",
+      "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
       "id": "hlpos-743b7f8a92d4",
@@ -553,27 +567,13 @@
       "coin": "XRP",
       "side": "short",
       "size": 2447671.0,
-      "positionValueUsd": 3482308.87,
+      "positionValueUsd": 3481567.23,
       "entryPx": "1.339666",
-      "unrealizedPnlUsd": -203245.97,
+      "unrealizedPnlUsd": -202504.32,
       "leverage": 20,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:21:01Z",
+      "fetchedAt": "2026-09-09T10:23:44Z",
       "link": "https://hypurrscan.io/address/0x7fdafde5cfb5465924316eced2d3715494c517d1"
-    },
-    {
-      "id": "hlpos-7007be2086d8",
-      "address": "0xfc667adba8d4837586078f4fdcdc29804337ca06",
-      "coin": "BTC",
-      "side": "short",
-      "size": 43.82123,
-      "positionValueUsd": 3464462.62,
-      "entryPx": "79170.1",
-      "unrealizedPnlUsd": 4872.37,
-      "leverage": 20,
-      "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:42Z",
-      "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
       "id": "hlpos-e28d0e2f83a7",
@@ -581,12 +581,12 @@
       "coin": "WLD",
       "side": "short",
       "size": 7291856.5,
-      "positionValueUsd": 3244876.14,
+      "positionValueUsd": 3233355.01,
       "entryPx": "0.39956",
-      "unrealizedPnlUsd": -331307.11,
+      "unrealizedPnlUsd": -319785.98,
       "leverage": 10,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:21:01Z",
+      "fetchedAt": "2026-09-09T10:23:44Z",
       "link": "https://hypurrscan.io/address/0x7fdafde5cfb5465924316eced2d3715494c517d1"
     },
     {
@@ -595,12 +595,12 @@
       "coin": "HYPE",
       "side": "short",
       "size": 37234.46,
-      "positionValueUsd": 3196407.11,
+      "positionValueUsd": 3195722.0,
       "entryPx": "84.8837",
-      "unrealizedPnlUsd": -35807.99,
+      "unrealizedPnlUsd": -35122.87,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:42Z",
+      "fetchedAt": "2026-09-09T10:23:27Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -608,13 +608,13 @@
       "address": "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00",
       "coin": "SUI",
       "side": "short",
-      "size": 3706627.2,
-      "positionValueUsd": 3007965.04,
+      "size": 3700416.7,
+      "positionValueUsd": 2997818.58,
       "entryPx": "0.79914",
-      "unrealizedPnlUsd": -45837.81,
+      "unrealizedPnlUsd": -40639.81,
       "leverage": 10,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -622,13 +622,13 @@
       "address": "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00",
       "coin": "VVV",
       "side": "short",
-      "size": 105128.59,
-      "positionValueUsd": 2768319.62,
-      "entryPx": "25.1199",
-      "unrealizedPnlUsd": -127491.62,
+      "size": 105297.87,
+      "positionValueUsd": 2756803.53,
+      "entryPx": "25.1218",
+      "unrealizedPnlUsd": -111521.83,
       "leverage": 3,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -637,12 +637,12 @@
       "coin": "HYPE",
       "side": "short",
       "size": 29971.58,
-      "positionValueUsd": 2572970.23,
+      "positionValueUsd": 2571981.17,
       "entryPx": "84.723",
-      "unrealizedPnlUsd": -33687.61,
+      "unrealizedPnlUsd": -32698.55,
       "leverage": 3,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -651,12 +651,12 @@
       "coin": "XPL",
       "side": "short",
       "size": 21482521.0,
-      "positionValueUsd": 2061913.85,
+      "positionValueUsd": 2059679.67,
       "entryPx": "0.09499",
-      "unrealizedPnlUsd": -21273.97,
+      "unrealizedPnlUsd": -19039.79,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:55Z",
+      "fetchedAt": "2026-09-09T10:23:38Z",
       "link": "https://hypurrscan.io/address/0x856c35038594767646266bc7fd68dc26480e910d"
     },
     {
@@ -664,13 +664,13 @@
       "address": "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00",
       "coin": "ZEC",
       "side": "short",
-      "size": 1556.83,
-      "positionValueUsd": 1935139.69,
+      "size": 1553.59,
+      "positionValueUsd": 1924898.01,
       "entryPx": "1225.8117",
-      "unrealizedPnlUsd": -26759.22,
+      "unrealizedPnlUsd": -20489.17,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -678,13 +678,13 @@
       "address": "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00",
       "coin": "XPL",
       "side": "short",
-      "size": 19854181.0,
-      "positionValueUsd": 1905842.54,
+      "size": 19848867.0,
+      "positionValueUsd": 1903645.29,
       "entryPx": "0.094878",
-      "unrealizedPnlUsd": -22098.44,
+      "unrealizedPnlUsd": -20405.37,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -693,12 +693,12 @@
       "coin": "INJ",
       "side": "short",
       "size": 300868.1,
-      "positionValueUsd": 1877116.08,
+      "positionValueUsd": 1877567.38,
       "entryPx": "5.6137",
-      "unrealizedPnlUsd": -188130.85,
+      "unrealizedPnlUsd": -188582.15,
       "leverage": 3,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:33Z",
+      "fetchedAt": "2026-09-09T10:23:19Z",
       "link": "https://hypurrscan.io/address/0x5b5d51203a0f9079f8aeb098a6523a13f298c060"
     },
     {
@@ -707,12 +707,12 @@
       "coin": "LINK",
       "side": "short",
       "size": 153183.5,
-      "positionValueUsd": 1848005.74,
+      "positionValueUsd": 1843103.87,
       "entryPx": "11.62563",
-      "unrealizedPnlUsd": -67150.69,
+      "unrealizedPnlUsd": -62248.82,
       "leverage": 10,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -721,12 +721,12 @@
       "coin": "PUMP",
       "side": "short",
       "size": 406437397.0,
-      "positionValueUsd": 1826936.1,
+      "positionValueUsd": 1834251.97,
       "entryPx": "0.002818",
-      "unrealizedPnlUsd": -681436.31,
+      "unrealizedPnlUsd": -688752.19,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:37Z",
+      "fetchedAt": "2026-09-09T10:23:22Z",
       "link": "https://hypurrscan.io/address/0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36"
     },
     {
@@ -734,13 +734,13 @@
       "address": "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00",
       "coin": "ASTER",
       "side": "short",
-      "size": 2339300.0,
-      "positionValueUsd": 1762802.91,
+      "size": 2338637.0,
+      "positionValueUsd": 1761110.59,
       "entryPx": "0.732376",
-      "unrealizedPnlUsd": -49553.88,
+      "unrealizedPnlUsd": -48347.13,
       "leverage": 3,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -749,12 +749,12 @@
       "coin": "MON",
       "side": "short",
       "size": 60101476.0,
-      "positionValueUsd": 1575620.29,
+      "positionValueUsd": 1574538.47,
       "entryPx": "0.028157",
-      "unrealizedPnlUsd": 116692.56,
+      "unrealizedPnlUsd": 117774.38,
       "leverage": 3,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -763,12 +763,12 @@
       "coin": "BNB",
       "side": "short",
       "size": 2024.695,
-      "positionValueUsd": 1520485.2,
+      "positionValueUsd": 1519250.14,
       "entryPx": "747.499",
-      "unrealizedPnlUsd": -7026.49,
+      "unrealizedPnlUsd": -5791.42,
       "leverage": 5,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -777,12 +777,12 @@
       "coin": "XPL",
       "side": "short",
       "size": 14749747.0,
-      "positionValueUsd": 1416683.7,
+      "positionValueUsd": 1414766.23,
       "entryPx": "0.095479",
-      "unrealizedPnlUsd": -8389.16,
+      "unrealizedPnlUsd": -6471.7,
       "leverage": 3,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:33Z",
+      "fetchedAt": "2026-09-09T10:23:19Z",
       "link": "https://hypurrscan.io/address/0x5b5d51203a0f9079f8aeb098a6523a13f298c060"
     },
     {
@@ -791,12 +791,12 @@
       "coin": "NEAR",
       "side": "short",
       "size": 546482.6,
-      "positionValueUsd": 1356807.0,
+      "positionValueUsd": 1352325.84,
       "entryPx": "1.985",
-      "unrealizedPnlUsd": -272038.61,
+      "unrealizedPnlUsd": -267557.45,
       "leverage": 10,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:21:01Z",
+      "fetchedAt": "2026-09-09T10:23:44Z",
       "link": "https://hypurrscan.io/address/0x7fdafde5cfb5465924316eced2d3715494c517d1"
     },
     {
@@ -805,12 +805,12 @@
       "coin": "LTC",
       "side": "short",
       "size": 21427.44,
-      "positionValueUsd": 1158024.57,
+      "positionValueUsd": 1158667.39,
       "entryPx": "54.0117",
-      "unrealizedPnlUsd": -690.37,
+      "unrealizedPnlUsd": -1333.19,
       "leverage": 10,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:46Z",
+      "fetchedAt": "2026-09-09T10:23:29Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -819,12 +819,12 @@
       "coin": "BNB",
       "side": "short",
       "size": 1500.095,
-      "positionValueUsd": 1126361.33,
+      "positionValueUsd": 1125686.29,
       "entryPx": "758.429",
-      "unrealizedPnlUsd": 11355.16,
+      "unrealizedPnlUsd": 12030.2,
       "leverage": 10,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:21:01Z",
+      "fetchedAt": "2026-09-09T10:23:44Z",
       "link": "https://hypurrscan.io/address/0x7fdafde5cfb5465924316eced2d3715494c517d1"
     },
     {
@@ -833,16 +833,29 @@
       "coin": "SOL",
       "side": "short",
       "size": 9822.24,
-      "positionValueUsd": 1019941.4,
+      "positionValueUsd": 1019704.69,
       "entryPx": "103.7145",
-      "unrealizedPnlUsd": -1231.91,
+      "unrealizedPnlUsd": -995.19,
       "leverage": 20,
       "kind": "perp",
-      "fetchedAt": "2026-09-09T10:20:42Z",
+      "fetchedAt": "2026-09-09T10:23:27Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     }
   ],
   "activity": [
+    {
+      "id": "hlfill-0x29c10cb0541b50cf2b3a04440507bd0202500095ef1e6fa1cd89b803131f2ab9",
+      "address": "0xf5d81a135f756ca16544e53c20fc20643ec3ad53",
+      "coin": "BTC",
+      "dir": "Open Short",
+      "size": 1.37013,
+      "price": 79051.0,
+      "notionalUsd": 108310.15,
+      "closedPnlUsd": 0.0,
+      "time": "2026-09-09T10:23:00Z",
+      "fetchedAt": "2026-09-09T10:23:43Z",
+      "link": "https://hypurrscan.io/address/0xf5d81a135f756ca16544e53c20fc20643ec3ad53"
+    },
     {
       "id": "hlfill-0x07dcc0d3209069b30956044404f8d70202490101bb938885aba56c25df94439d",
       "address": "0xfc667adba8d4837586078f4fdcdc29804337ca06",
@@ -853,7 +866,7 @@
       "notionalUsd": 105418.65,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:18:29Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -866,7 +879,7 @@
       "notionalUsd": 131007.15,
       "closedPnlUsd": 225.55,
       "time": "2026-09-09T10:17:55Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -879,7 +892,7 @@
       "notionalUsd": 101142.11,
       "closedPnlUsd": 62.17,
       "time": "2026-09-09T10:16:22Z",
-      "fetchedAt": "2026-09-09T10:21:00Z",
+      "fetchedAt": "2026-09-09T10:23:43Z",
       "link": "https://hypurrscan.io/address/0xf5d81a135f756ca16544e53c20fc20643ec3ad53"
     },
     {
@@ -892,7 +905,7 @@
       "notionalUsd": 134626.43,
       "closedPnlUsd": 218.01,
       "time": "2026-09-09T10:12:34Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -905,7 +918,7 @@
       "notionalUsd": 106154.25,
       "closedPnlUsd": -46.64,
       "time": "2026-09-09T10:12:23Z",
-      "fetchedAt": "2026-09-09T10:21:00Z",
+      "fetchedAt": "2026-09-09T10:23:43Z",
       "link": "https://hypurrscan.io/address/0xf5d81a135f756ca16544e53c20fc20643ec3ad53"
     },
     {
@@ -918,7 +931,7 @@
       "notionalUsd": 109376.69,
       "closedPnlUsd": -85.42,
       "time": "2026-09-09T10:11:51Z",
-      "fetchedAt": "2026-09-09T10:21:00Z",
+      "fetchedAt": "2026-09-09T10:23:43Z",
       "link": "https://hypurrscan.io/address/0xf5d81a135f756ca16544e53c20fc20643ec3ad53"
     },
     {
@@ -931,7 +944,7 @@
       "notionalUsd": 150024.46,
       "closedPnlUsd": -403.19,
       "time": "2026-09-09T10:10:35Z",
-      "fetchedAt": "2026-09-09T10:20:48Z",
+      "fetchedAt": "2026-09-09T10:23:30Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -944,7 +957,7 @@
       "notionalUsd": 150022.94,
       "closedPnlUsd": -454.61,
       "time": "2026-09-09T10:10:27Z",
-      "fetchedAt": "2026-09-09T10:20:48Z",
+      "fetchedAt": "2026-09-09T10:23:30Z",
       "link": "https://hypurrscan.io/address/0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
     },
     {
@@ -957,7 +970,7 @@
       "notionalUsd": 597272.13,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:09:30Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -970,7 +983,7 @@
       "notionalUsd": 199089.73,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:08:56Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -983,7 +996,7 @@
       "notionalUsd": 597272.13,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:08:56Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -996,7 +1009,7 @@
       "notionalUsd": 199089.73,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:08:55Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1009,7 +1022,7 @@
       "notionalUsd": 995457.47,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:08:55Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1022,7 +1035,7 @@
       "notionalUsd": 199089.73,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:08:54Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1035,7 +1048,7 @@
       "notionalUsd": 597272.13,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:08:54Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1048,7 +1061,7 @@
       "notionalUsd": 597272.13,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:08:53Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1061,7 +1074,7 @@
       "notionalUsd": 199089.73,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:08:53Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1074,7 +1087,7 @@
       "notionalUsd": 128765.08,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:08:23Z",
-      "fetchedAt": "2026-09-09T10:21:00Z",
+      "fetchedAt": "2026-09-09T10:23:43Z",
       "link": "https://hypurrscan.io/address/0xf5d81a135f756ca16544e53c20fc20643ec3ad53"
     },
     {
@@ -1087,7 +1100,7 @@
       "notionalUsd": 995457.47,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:07:38Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1100,7 +1113,7 @@
       "notionalUsd": 199089.73,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:07:38Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1113,7 +1126,7 @@
       "notionalUsd": 995457.47,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:07:37Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1126,7 +1139,7 @@
       "notionalUsd": 199089.73,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:07:37Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1139,7 +1152,7 @@
       "notionalUsd": 199089.73,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:07:36Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1152,7 +1165,7 @@
       "notionalUsd": 597272.13,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:07:36Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1165,7 +1178,7 @@
       "notionalUsd": 597272.13,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T10:07:35Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1178,20 +1191,7 @@
       "notionalUsd": 100716.93,
       "closedPnlUsd": 10.58,
       "time": "2026-09-09T10:07:23Z",
-      "fetchedAt": "2026-09-09T10:21:00Z",
-      "link": "https://hypurrscan.io/address/0xf5d81a135f756ca16544e53c20fc20643ec3ad53"
-    },
-    {
-      "id": "hlfill-0x69a0832ca81cf5c36b1a044404cca5020b080012431014950d692e7f6710cfae",
-      "address": "0xf5d81a135f756ca16544e53c20fc20643ec3ad53",
-      "coin": "BTC",
-      "dir": "Close Short",
-      "size": 1.33189,
-      "price": 79010.0,
-      "notionalUsd": 105232.63,
-      "closedPnlUsd": -20.91,
-      "time": "2026-09-09T10:04:53Z",
-      "fetchedAt": "2026-09-09T10:21:00Z",
+      "fetchedAt": "2026-09-09T10:23:43Z",
       "link": "https://hypurrscan.io/address/0xf5d81a135f756ca16544e53c20fc20643ec3ad53"
     },
     {
@@ -1204,7 +1204,7 @@
       "notionalUsd": 398925.14,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T09:53:56Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1217,7 +1217,7 @@
       "notionalUsd": 199458.74,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T09:53:56Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1230,7 +1230,7 @@
       "notionalUsd": 199492.59,
       "closedPnlUsd": 403.89,
       "time": "2026-09-09T09:48:47Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1243,7 +1243,7 @@
       "notionalUsd": 139277.07,
       "closedPnlUsd": 543.05,
       "time": "2026-09-09T09:48:28Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1256,7 +1256,7 @@
       "notionalUsd": 127142.72,
       "closedPnlUsd": 495.73,
       "time": "2026-09-09T09:48:01Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     },
     {
@@ -1269,7 +1269,7 @@
       "notionalUsd": 158012.0,
       "closedPnlUsd": 0.0,
       "time": "2026-09-09T09:46:33Z",
-      "fetchedAt": "2026-09-09T10:20:45Z",
+      "fetchedAt": "2026-09-09T10:23:28Z",
       "link": "https://hypurrscan.io/address/0xfc667adba8d4837586078f4fdcdc29804337ca06"
     }
   ]

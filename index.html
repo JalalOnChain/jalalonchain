@@ -280,7 +280,7 @@
         <h3>Enforcement &amp; regulatory alerts</h3>
         <span class="feed-count" id="enfCount">0 items</span>
       </div>
-      <div class="card feed-card" id="enfCard">
+      <div class="card feed-card feed-scroll-card" id="enfCard">
         <div class="feed-list" id="enfList"><div class="empty-state">Loading&hellip;</div></div>
       </div>
 
@@ -595,12 +595,15 @@
 
     var enf = all.filter(function(n){ return n.category==="enforcement"; });
     document.getElementById("enfCount").textContent = enf.length+(enf.length===1?" item":" items");
-    document.getElementById("enfList").innerHTML = enf.length ? enf.slice(0,8).map(newsRowHtml).join("") :
+    document.getElementById("enfList").innerHTML = enf.length ? enf.slice(0,60).map(newsRowHtml).join("") :
       "<div class=\"empty-state\">No enforcement alerts synced yet &mdash; check back after the next sync.</div>";
 
-    document.getElementById("newsCount").textContent = all.length+(all.length===1?" item":" items");
+    // Crypto news is market-news only now — enforcement has its own scrollable
+    // panel above, so it's no longer duplicated into this list too.
+    var newsOnly = all.filter(function(n){ return n.category!=="enforcement"; });
+    document.getElementById("newsCount").textContent = newsOnly.length+(newsOnly.length===1?" item":" items");
     var el = document.getElementById("newsList");
-    el.innerHTML = all.length ? all.slice(0,80).map(newsRowHtml).join("") :
+    el.innerHTML = newsOnly.length ? newsOnly.slice(0,80).map(newsRowHtml).join("") :
       "<div class=\"empty-state\">No news synced yet &mdash; check back after the next sync.</div>";
   }
 

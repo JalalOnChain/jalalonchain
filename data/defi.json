@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-10T13:21:33Z",
+  "updatedAt": "2026-09-10T14:18:48Z",
   "items": [
     {
       "id": "defi-18d0db18a5b7",
@@ -9,10 +9,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 712186649.4,
-      "change1d": 0.1371737979957004,
+      "tvlUsd": 702069357.18,
+      "change1d": -2.06436863402611,
       "listedAt": "2026-07-06T18:13:42Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://robinhood.com/us/en/chain/"
     },
     {
@@ -23,10 +23,10 @@
       "chains": [
         "Anubis"
       ],
-      "tvlUsd": 368648707.6,
-      "change1d": 0.11566263377760322,
+      "tvlUsd": 368596039.14,
+      "change1d": 0.10630288870667925,
       "listedAt": "2026-06-30T22:35:37Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://defillama.com/protocol/rocketswap-anubis"
     },
     {
@@ -37,10 +37,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 135761785.1,
+      "tvlUsd": 135763917.1,
       "change1d": null,
       "listedAt": "2026-09-10T00:48:33Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://app.theo.xyz/"
     },
     {
@@ -54,7 +54,7 @@
       "tvlUsd": 110743559.11,
       "change1d": -2.490911495622157,
       "listedAt": "2026-08-27T19:03:37Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://defillama.com/protocol/phase-delegation"
     },
     {
@@ -65,25 +65,11 @@
       "chains": [
         "Monad"
       ],
-      "tvlUsd": 105188004.96,
-      "change1d": 0.0170843260075344,
+      "tvlUsd": 105184833.24,
+      "change1d": 0.014068529896931636,
       "listedAt": "2026-07-24T00:47:55Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://defillama.com/protocol/valos"
-    },
-    {
-      "id": "defi-a69ed093069b",
-      "name": "Wise Token",
-      "symbol": "WISE",
-      "category": "Yield",
-      "chains": [
-        "Ethereum"
-      ],
-      "tvlUsd": 69899287.45,
-      "change1d": -1.0767098631983885,
-      "listedAt": "2026-08-18T19:27:37Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
-      "link": "https://app.wisetoken.com/"
     },
     {
       "id": "defi-874dd7b88875",
@@ -94,11 +80,25 @@
         "Bitcoin",
         "Ethereum"
       ],
-      "tvlUsd": 69577468.52,
-      "change1d": -0.8446456926567691,
+      "tvlUsd": 69102248.23,
+      "change1d": -2.092041218833714,
       "listedAt": "2026-08-18T01:48:11Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://niza.io/"
+    },
+    {
+      "id": "defi-a69ed093069b",
+      "name": "Wise Token",
+      "symbol": "WISE",
+      "category": "Yield",
+      "chains": [
+        "Ethereum"
+      ],
+      "tvlUsd": 68740963.21,
+      "change1d": -3.785815571375622,
+      "listedAt": "2026-08-18T19:27:37Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
+      "link": "https://app.wisetoken.com/"
     },
     {
       "id": "defi-b4a1c0d2233c",
@@ -111,7 +111,7 @@
       "tvlUsd": 67212805.58,
       "change1d": 0.11048832444929246,
       "listedAt": "2026-06-24T04:32:35Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://tori.finance/"
     },
     {
@@ -125,7 +125,7 @@
       "tvlUsd": 66734185.28,
       "change1d": 0.03529628151748909,
       "listedAt": "2026-08-20T22:09:11Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://axis.to"
     },
     {
@@ -136,10 +136,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 66208482.56,
-      "change1d": 0.7878125474562552,
+      "tvlUsd": 66191633.24,
+      "change1d": 0.047647607752736576,
       "listedAt": "2026-06-30T00:12:05Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://www.circle.com/gateway"
     },
     {
@@ -150,10 +150,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 65866442.55,
-      "change1d": 0.7782803633753446,
+      "tvlUsd": 65816191.47,
+      "change1d": -0.14309404076273324,
       "listedAt": "2026-06-25T19:24:37Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://www.circle.com/xreserve"
     },
     {
@@ -170,7 +170,7 @@
       "tvlUsd": 51833889.86,
       "change1d": -0.0014243353516576462,
       "listedAt": "2026-07-31T04:49:07Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://defillama.com/protocol/azverse-perps"
     },
     {
@@ -185,7 +185,7 @@
       "tvlUsd": 31796038.95,
       "change1d": 0.0071180552459395585,
       "listedAt": "2026-07-15T21:54:17Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://www.y10k.capital/"
     },
     {
@@ -196,10 +196,10 @@
       "chains": [
         "BOT Chain"
       ],
-      "tvlUsd": 31235902.23,
-      "change1d": 1.5956699597848143,
+      "tvlUsd": 31146996.89,
+      "change1d": 1.0108569926050421,
       "listedAt": "2026-08-24T20:46:23Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://dex.botchain.ai/"
     },
     {
@@ -210,10 +210,10 @@
       "chains": [
         "Bittensor"
       ],
-      "tvlUsd": 28012083.09,
-      "change1d": -3.0604659444196045,
+      "tvlUsd": 27655228.61,
+      "change1d": -4.295408275443336,
       "listedAt": "2026-06-16T23:25:47Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://bittensor.com"
     },
     {
@@ -224,10 +224,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 24285201.2,
-      "change1d": -0.24849512785833383,
+      "tvlUsd": 24282516.91,
+      "change1d": -0.26591889606685015,
       "listedAt": "2026-09-03T18:17:47Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://www.waterline.build"
     },
     {
@@ -241,7 +241,7 @@
       "tvlUsd": 23540075.53,
       "change1d": -1.6114853133346543,
       "listedAt": "2026-09-03T04:51:25Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://gammaresearch.xyz/"
     },
     {
@@ -252,10 +252,10 @@
       "chains": [
         "Robinhood Chain"
       ],
-      "tvlUsd": 22849209.49,
-      "change1d": 1.492617906949917,
+      "tvlUsd": 22931442.52,
+      "change1d": 1.737791971542734,
       "listedAt": "2026-07-10T17:10:27Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://arcus.xyz/"
     },
     {
@@ -266,10 +266,10 @@
       "chains": [
         "Solana"
       ],
-      "tvlUsd": 19620329.78,
-      "change1d": -0.729511328793734,
+      "tvlUsd": 19498633.12,
+      "change1d": -1.6660163780907737,
       "listedAt": "2026-08-26T18:59:07Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://defillama.com/protocol/bisonfi"
     },
     {
@@ -280,10 +280,10 @@
       "chains": [
         "Stellar"
       ],
-      "tvlUsd": 17727538.99,
-      "change1d": -39.478350752761585,
+      "tvlUsd": 17579613.2,
+      "change1d": -40.25347880804464,
       "listedAt": "2026-08-14T18:56:13Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://stellardefihub.com/"
     },
     {
@@ -297,7 +297,7 @@
       "tvlUsd": 17209060.57,
       "change1d": 7.0206917979901675,
       "listedAt": "2026-08-26T01:26:59Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://www.fables.fi/"
     },
     {
@@ -312,7 +312,7 @@
       "tvlUsd": 14621275.17,
       "change1d": -0.0055851705779161875,
       "listedAt": "2026-09-04T18:22:41Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://pangolins.io/"
     },
     {
@@ -324,11 +324,25 @@
         "Ethereum",
         "Base"
       ],
-      "tvlUsd": 13410118.04,
-      "change1d": 20.377097424039263,
+      "tvlUsd": 13410408.51,
+      "change1d": 20.275905772410027,
       "listedAt": "2026-09-03T18:17:57Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://app.morpho.org/curator/bitwise"
+    },
+    {
+      "id": "defi-b6e4226735de",
+      "name": "Tessera V",
+      "symbol": "-",
+      "category": "Dexs",
+      "chains": [
+        "Solana"
+      ],
+      "tvlUsd": 13232743.2,
+      "change1d": 8.5296509318203,
+      "listedAt": "2026-08-29T00:54:41Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
+      "link": "https://defillama.com/protocol/tessera-v"
     },
     {
       "id": "defi-a985678aa995",
@@ -339,10 +353,10 @@
         "Arbitrum",
         "Robinhood Chain"
       ],
-      "tvlUsd": 13242147.79,
-      "change1d": -0.7107689793305383,
+      "tvlUsd": 13168005.06,
+      "change1d": -1.573457446519697,
       "listedAt": "2026-06-25T02:57:17Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://t3tris.finance/"
     },
     {
@@ -353,25 +367,11 @@
       "chains": [
         "Base"
       ],
-      "tvlUsd": 12712508.26,
-      "change1d": -1.06687998739568,
+      "tvlUsd": 12545553.25,
+      "change1d": -3.2113748697335467,
       "listedAt": "2026-08-19T20:59:47Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://syntetika.io/"
-    },
-    {
-      "id": "defi-8e280399b3b0",
-      "name": "Pharaoh DLMM",
-      "symbol": "PHAR",
-      "category": "Dexs",
-      "chains": [
-        "Avalanche"
-      ],
-      "tvlUsd": 12564963.32,
-      "change1d": 22.365321358180196,
-      "listedAt": "2026-06-16T04:30:24Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
-      "link": "https://www.phar.gg/"
     },
     {
       "id": "defi-b7122d4cd03b",
@@ -383,11 +383,25 @@
         "Base",
         "Ethereum"
       ],
-      "tvlUsd": 12448349.72,
-      "change1d": 0.5223835147286877,
+      "tvlUsd": 12325470.19,
+      "change1d": -0.9457922690209273,
       "listedAt": "2026-07-24T01:11:53Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://evm.unitas.so/xgld"
+    },
+    {
+      "id": "defi-8e280399b3b0",
+      "name": "Pharaoh DLMM",
+      "symbol": "PHAR",
+      "category": "Dexs",
+      "chains": [
+        "Avalanche"
+      ],
+      "tvlUsd": 12272057.82,
+      "change1d": 18.992660486498508,
+      "listedAt": "2026-06-16T04:30:24Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
+      "link": "https://www.phar.gg/"
     },
     {
       "id": "defi-3a65e0fabe1a",
@@ -400,7 +414,7 @@
       "tvlUsd": 12225917.74,
       "change1d": null,
       "listedAt": "2026-07-18T18:05:19Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://app.afx.xyz/trade"
     },
     {
@@ -412,25 +426,11 @@
         "Ethereum",
         "Monad"
       ],
-      "tvlUsd": 12104006.52,
-      "change1d": 0.026807093828921325,
+      "tvlUsd": 12102044.74,
+      "change1d": 0.013105509887950006,
       "listedAt": "2026-08-03T21:19:15Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://defillama.com/protocol/agua"
-    },
-    {
-      "id": "defi-b6e4226735de",
-      "name": "Tessera V",
-      "symbol": "-",
-      "category": "Dexs",
-      "chains": [
-        "Solana"
-      ],
-      "tvlUsd": 12058935.28,
-      "change1d": -2.24486696364049,
-      "listedAt": "2026-08-29T00:54:41Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
-      "link": "https://defillama.com/protocol/tessera-v"
     },
     {
       "id": "defi-3c5c0f3fb282",
@@ -443,22 +443,8 @@
       "tvlUsd": 11208797.06,
       "change1d": -0.048486845151145985,
       "listedAt": "2026-07-28T19:15:01Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://jup.ag/?ref=f6y1ryr2snn3"
-    },
-    {
-      "id": "defi-4cf705a18b19",
-      "name": "Monarq",
-      "symbol": "-",
-      "category": "Risk Curators",
-      "chains": [
-        "Flare"
-      ],
-      "tvlUsd": 10613524.54,
-      "change1d": -3.154804943777606,
-      "listedAt": "2026-09-08T03:32:39Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
-      "link": "https://www.monarq-am.com/"
     },
     {
       "id": "defi-bbeba8610a37",
@@ -468,11 +454,25 @@
       "chains": [
         "Solana"
       ],
-      "tvlUsd": 10263867.48,
-      "change1d": 10.266501192811589,
+      "tvlUsd": 10869020.17,
+      "change1d": 16.681346418839965,
       "listedAt": "2026-07-15T17:39:19Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://www.exponent.finance/"
+    },
+    {
+      "id": "defi-4cf705a18b19",
+      "name": "Monarq",
+      "symbol": "-",
+      "category": "Risk Curators",
+      "chains": [
+        "Flare"
+      ],
+      "tvlUsd": 10507254.82,
+      "change1d": -4.73053084908635,
+      "listedAt": "2026-09-08T03:32:39Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
+      "link": "https://www.monarq-am.com/"
     },
     {
       "id": "defi-8b85dba10e08",
@@ -482,10 +482,10 @@
       "chains": [
         "Solana"
       ],
-      "tvlUsd": 9904553.18,
-      "change1d": -0.9076460299211533,
+      "tvlUsd": 9825034.39,
+      "change1d": -2.0820792047259147,
       "listedAt": "2026-06-17T17:17:02Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://www.exponent.finance/"
     },
     {
@@ -496,10 +496,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 9365147.16,
-      "change1d": -0.0017342916395222119,
+      "tvlUsd": 9359806.15,
+      "change1d": -0.07081751457388918,
       "listedAt": "2026-09-05T00:25:49Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://dialectic.com/"
     },
     {
@@ -510,10 +510,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 9275970.97,
-      "change1d": -5.044240612078312,
+      "tvlUsd": 9275544.6,
+      "change1d": -5.044132775449384,
       "listedAt": "2026-09-03T17:07:23Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://www.nara.io"
     },
     {
@@ -525,10 +525,10 @@
         "Bitcoin",
         "Ethereum"
       ],
-      "tvlUsd": 8396921.72,
-      "change1d": -0.05494775694164389,
+      "tvlUsd": 8278361.98,
+      "change1d": -2.3492532179522243,
       "listedAt": "2026-07-29T15:16:51Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://app.subfrost.io/"
     },
     {
@@ -539,10 +539,10 @@
       "chains": [
         "RISE"
       ],
-      "tvlUsd": 8056721.34,
-      "change1d": -0.0727016003861678,
+      "tvlUsd": 8041304.71,
+      "change1d": -0.24521886423676165,
       "listedAt": "2026-08-21T17:47:27Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://icarus.finance"
     },
     {
@@ -553,10 +553,10 @@
       "chains": [
         "Robinhood Chain"
       ],
-      "tvlUsd": 8025058.61,
-      "change1d": -2.7394470649910545,
+      "tvlUsd": 7740995.41,
+      "change1d": -6.390004691987102,
       "listedAt": "2026-07-18T18:37:37Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://up33.xyz/"
     },
     {
@@ -570,7 +570,7 @@
       "tvlUsd": 7192007.2,
       "change1d": -0.17875012333202278,
       "listedAt": "2026-08-31T18:58:14Z",
-      "fetchedAt": "2026-09-10T13:21:32Z",
+      "fetchedAt": "2026-09-10T14:18:48Z",
       "link": "https://www.hertzflow.xyz/"
     }
   ]

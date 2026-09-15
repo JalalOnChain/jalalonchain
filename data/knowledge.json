@@ -1,6 +1,16 @@
 {
-  "updatedAt": "2026-09-14T23:19:23Z",
+  "updatedAt": "2026-09-15T00:27:27Z",
   "items": [
+    {
+      "id": "2026-09-15",
+      "title": "Why 'total value locked' can mislead",
+      "body": "TVL counts assets deposited into a protocol, but the same capital can be double- or triple-counted when it's re-deposited across composable protocols (e.g., a token that's staked, then the staking receipt is deposited elsewhere as collateral). Comparing raw TVL across protocols without accounting for this loop overstates real economic activity.",
+      "tags": [
+        "defi",
+        "tokenomics"
+      ],
+      "createdAt": "2026-09-15T00:27:27Z"
+    },
     {
       "id": "2026-09-14",
       "title": "Cold, hot, and warm wallets aren't just about temperature",

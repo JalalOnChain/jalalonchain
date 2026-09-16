@@ -210,6 +210,16 @@
   .news-row .n-title a:hover{ text-decoration:underline; }
   .news-row .n-summary{ font-size:12px; color:var(--text-muted); margin-top:4px; line-height:1.5; }
 
+  .chain-row{ display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 18px; border-top:1px solid var(--border); font-size:12.5px; }
+  .chain-row:first-child{ border-top:none; }
+  .chain-row .ch-left{ display:flex; align-items:center; gap:8px; min-width:0; }
+  .cat-l1{ background:var(--teal-soft); color:var(--teal); }
+  .cat-l2{ background:var(--accent-soft); color:var(--accent-ink); }
+  .chain-row .ch-name{ font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .chain-row .ch-name a{ color:var(--text); text-decoration:none; }
+  .chain-row .ch-name a:hover{ text-decoration:underline; }
+  .chain-row .ch-meta{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; white-space:nowrap; flex:none; }
+
 
   footer.page-foot{
     border-top:1px solid var(--border); padding:26px 0 40px;
@@ -292,12 +302,12 @@
         <div class="feed-list" id="newsList"><div class="empty-state">Loading news&hellip;</div></div>
       </div>
 
-      <div class="feed-head-row" id="hlTrades">
-        <h3>Recent large whale trades</h3>
-        <span class="feed-count" id="hlActivityCount">0</span>
+      <div class="feed-head-row">
+        <h3>New chains</h3>
+        <span class="feed-count" id="chainsCount">0 tracked</span>
       </div>
-      <div class="card feed-card feed-scroll-card">
-        <div class="feed-list" id="hlActivityList"><div class="empty-state">Loading activity&hellip;</div></div>
+      <div class="card feed-card" id="chainsCard">
+        <div class="feed-list" id="chainsList"><div class="empty-state">Loading&hellip;</div></div>
       </div>
     </section>
 
@@ -389,7 +399,18 @@
       <div class="grid-cards" id="hlPositionsGrid"><div class="empty-state">Loading positions&hellip;</div></div>
     </div>
 
-    <div class="source-note">Tracks Hyperliquid&rsquo;s current top accounts by size, re-selected every sync, filtered to positions and trades of $100K or more. Recent large trades now appear in the feed column near the top of the page. Tracking, not financial advice.</div>
+    <div class="source-note">Tracks Hyperliquid&rsquo;s current top accounts by size, re-selected every sync, filtered to positions and trades of $100K or more. Recent large trades appear further down this page. Tracking, not financial advice.</div>
+  </section>
+
+  <section class="section" id="hlTradesSection">
+    <div class="feed-head-row" id="hlTrades">
+      <h3>Recent large whale trades</h3>
+      <span class="feed-count" id="hlActivityCount">0</span>
+    </div>
+    <div class="card feed-card feed-scroll-card">
+      <div class="feed-list" id="hlActivityList"><div class="empty-state">Loading activity&hellip;</div></div>
+    </div>
+    <div class="source-note">Individual large ($100K+) fills from Hyperliquid&rsquo;s current top accounts by size, most recent first. Tracking, not financial advice.</div>
   </section>
 
   <footer class="page-foot">
@@ -414,7 +435,7 @@
 <script>
 (function(){
   "use strict";
-  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], hlPositions: [], hlActivity: [], updatedAt: null };
+  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], chains: [], hlPositions: [], hlActivity: [], updatedAt: null };
 
   function fmtUsd(n){
     n = Number(n)||0;
@@ -451,6 +472,12 @@
     return String(s==null?"":s).replace(/[&<>"']/g, function(c){
       return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
     });
+  }
+  function fmtDate(ymd){
+    if(!ymd) return "";
+    var d = new Date(ymd+"T00:00:00Z");
+    if(isNaN(d.getTime())) return ymd;
+    return d.toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric", timeZone:"UTC" });
   }
 
   function showKnowledgeDoc(doc, isToday){
@@ -607,6 +634,22 @@
       "<div class=\"empty-state\">No news synced yet &mdash; check back after the next sync.</div>";
   }
 
+  function chainRowHtml(c){
+    var typeClass = c.type==="L1" ? "cat-l1" : "cat-l2";
+    var nameHtml = c.link ? "<a href=\""+esc(c.link)+"\" target=\"_blank\" rel=\"noopener\">"+esc(c.name)+"</a>" : esc(c.name);
+    return "<div class=\"chain-row\">"+
+      "<div class=\"ch-left\"><span class=\"cat-badge "+typeClass+"\">"+esc(c.type||"")+"</span><span class=\"ch-name\">"+nameHtml+"</span></div>"+
+      "<span class=\"ch-meta\">ID "+esc(c.chainId)+" &middot; "+esc(fmtDate(c.launchDate))+"</span>"+
+    "</div>";
+  }
+  function renderChains(){
+    var list = (state.chains||[]).slice().sort(function(a,b){ return new Date(b.launchDate||0) - new Date(a.launchDate||0); });
+    document.getElementById("chainsCount").textContent = list.length+(list.length===1?" chain":" chains");
+    var el = document.getElementById("chainsList");
+    el.innerHTML = list.length ? list.map(chainRowHtml).join("") :
+      "<div class=\"empty-state\">No new chains tracked yet.</div>";
+  }
+
   function renderPrices(){
     var track = document.getElementById("tickerTrack");
     var list = state.prices || [];
@@ -684,19 +727,21 @@
       fetch("./data/news.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/prices.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/defi.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
-      fetch("./data/hyperliquid.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
+      fetch("./data/hyperliquid.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/chains.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
     ]).then(function(results){
-      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5];
+      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5], chainsData = results[6];
       if(kData && kData.items){ state.knowledge = kData.items; }
       if(launchData && launchData.items){ state.launches = launchData.items; }
       if(newsData && newsData.items){ state.news = newsData.items; }
       if(priceData && priceData.items){ state.prices = priceData.items; }
       if(defiData && defiData.items){ state.defi = defiData.items; }
+      if(chainsData && chainsData.items){ state.chains = chainsData.items; }
       if(hlData && hlData.positions){ state.hlPositions = hlData.positions; }
       if(hlData && hlData.activity){ state.hlActivity = hlData.activity; }
       if(hlData && hlData.updatedAt){ state.hlUpdatedAt = hlData.updatedAt; }
       state.updatedAt = (newsData && newsData.updatedAt) || (launchData && launchData.updatedAt) || (priceData && priceData.updatedAt) || state.updatedAt;
-      renderKnowledge(); renderLaunches(); renderNews(); renderPrices(); renderDefi(); renderHyperliquid(); renderStatus();
+      renderKnowledge(); renderLaunches(); renderNews(); renderPrices(); renderDefi(); renderChains(); renderHyperliquid(); renderStatus();
     });
   }
 

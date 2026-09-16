@@ -1,0 +1,76 @@
+{
+  "_note": "Hand-curated, not touched by scripts/sync.py's automatic hourly sync — there's no free API that reliably reports true L1/L2 mainnet launch dates and chain IDs, so this list is compiled and updated manually. Ask to have it refreshed when a new chain launches.",
+  "updatedAt": "2026-09-16T00:00:00Z",
+  "items": [
+    {
+      "id": "arc",
+      "name": "Arc",
+      "type": "L1",
+      "parent": "Built by Circle",
+      "chainId": 1243,
+      "launchDate": "2026-09-16",
+      "link": "https://www.arc.io/",
+      "note": "Stablecoin-native L1 from Circle; gas paid in USDC."
+    },
+    {
+      "id": "robinhood-chain",
+      "name": "Robinhood Chain",
+      "type": "L2",
+      "parent": "Arbitrum Orbit",
+      "chainId": 4663,
+      "launchDate": "2026-07-01",
+      "link": "https://docs.robinhood.com/chain/",
+      "note": "Robinhood's own chain for tokenized stocks and on-chain trading."
+    },
+    {
+      "id": "monad",
+      "name": "Monad",
+      "type": "L1",
+      "parent": "EVM-compatible",
+      "chainId": 143,
+      "launchDate": "2025-11-24",
+      "link": "https://www.monad.xyz/",
+      "note": "High-throughput parallel-EVM L1, MON token."
+    },
+    {
+      "id": "plasma",
+      "name": "Plasma",
+      "type": "L1",
+      "parent": "EVM-compatible",
+      "chainId": 9745,
+      "launchDate": "2025-09-25",
+      "link": "https://www.plasma.to/",
+      "note": "Stablecoin-focused L1 backed by Tether/Bitfinex, XPL token."
+    },
+    {
+      "id": "hyperevm",
+      "name": "HyperEVM",
+      "type": "L1",
+      "parent": "Hyperliquid",
+      "chainId": 999,
+      "launchDate": "2025-02-18",
+      "link": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/hyperevm",
+      "note": "Hyperliquid's general-purpose EVM execution layer."
+    },
+    {
+      "id": "megaeth",
+      "name": "MegaETH",
+      "type": "L2",
+      "parent": "Ethereum rollup",
+      "chainId": 4326,
+      "launchDate": "2025-02-09",
+      "link": "https://www.megaeth.com/",
+      "note": "Real-time Ethereum rollup targeting very high throughput/low latency."
+    },
+    {
+      "id": "berachain",
+      "name": "Berachain",
+      "type": "L1",
+      "parent": "EVM-compatible",
+      "chainId": 80094,
+      "launchDate": "2025-02-06",
+      "link": "https://www.berachain.com/",
+      "note": "Proof-of-Liquidity L1, BERA token."
+    }
+  ]
+}

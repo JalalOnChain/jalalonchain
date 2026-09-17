@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JalalOnChain — The Crypto Information Hub</title>
-<meta name="description" content="Crypto news, enforcement alerts, live coin prices, and new tokens monitored once they cross $1M market cap — plus a daily on-chain knowledge briefing with clear, informative reads on how crypto and blockchain actually work.">
+<meta name="description" content="Live crypto news, enforcement alerts, new token and DeFi listings, and Hyperliquid whale activity in one hub — plus a daily plain-English lesson on how crypto actually works.">
 <link rel="icon" type="image/png" href="./assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +15,8 @@
     --text:#131B2B; --text-muted:#5C6B84; --text-faint:#93A1B8;
     --accent:#B4700F; --accent-ink:#7A4B08; --accent-soft:#FBEBD4;
     --teal:#0E8E89; --teal-soft:#DEF3F1;
+    --violet:#6D4CE0; --violet-soft:#EDE8FD; --violet-ink:#4A32A8;
+    --blue2:#1D6FE0; --blue2-soft:#E1EDFC; --blue2-ink:#154F9F;
     --good:#0F9D66; --good-soft:#DFF5EA; --bad:#D93A44; --bad-soft:#FBE2E3;
     --shadow:rgba(20,30,48,0.10); --chip-bg:#EEF1F6;
     color-scheme: light;
@@ -25,6 +27,8 @@
       --text:#E8ECF5; --text-muted:#93A2BC; --text-faint:#5C6B84;
       --accent:#F2A93B; --accent-ink:#FFD48A; --accent-soft:#3A2A10;
       --teal:#41CFC9; --teal-soft:#0F2C2A;
+      --violet:#B79CFF; --violet-soft:#2B2350; --violet-ink:#D9CBFF;
+      --blue2:#6FA8FF; --blue2-soft:#122A4D; --blue2-ink:#BFDCFF;
       --good:#3FDB9A; --good-soft:#0E2A21; --bad:#FF6470; --bad-soft:#3A1418;
       --shadow:rgba(0,0,0,0.45); --chip-bg:#182238;
       color-scheme: dark;
@@ -35,6 +39,8 @@
     --text:#E8ECF5; --text-muted:#93A2BC; --text-faint:#5C6B84;
     --accent:#F2A93B; --accent-ink:#FFD48A; --accent-soft:#3A2A10;
     --teal:#41CFC9; --teal-soft:#0F2C2A;
+    --violet:#B79CFF; --violet-soft:#2B2350; --violet-ink:#D9CBFF;
+    --blue2:#6FA8FF; --blue2-soft:#122A4D; --blue2-ink:#BFDCFF;
     --good:#3FDB9A; --good-soft:#0E2A21; --bad:#FF6470; --bad-soft:#3A1418;
     --shadow:rgba(0,0,0,0.45); --chip-bg:#182238;
     color-scheme: dark;
@@ -61,8 +67,8 @@
   .brand-text .name{ font-size:19px; font-weight:800; letter-spacing:-0.01em; }
   .brand-text .name em{ font-style:normal; color:var(--accent); }
   .brand-text .tag{ font-size:10.5px; color:var(--text-muted); letter-spacing:.06em; text-transform:uppercase; margin-top:1px; }
-  .nav-links{ display:flex; align-items:center; gap:18px; font-size:13px; color:var(--text-muted); }
-  .nav-links a{ color:var(--text-muted); text-decoration:none; }
+  .nav-links{ display:flex; align-items:center; gap:16px; font-size:13px; color:var(--text-muted); flex-wrap:wrap; }
+  .nav-links a{ color:var(--text-muted); text-decoration:none; font-weight:600; }
   .nav-links a:hover{ color:var(--text); }
   .live-pill{
     display:flex; align-items:center; gap:7px; background:var(--surface); border:1px solid var(--border);
@@ -73,15 +79,35 @@
   @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.45; } }
 
   /* ---- hero ---- */
-  .hero{ padding:40px 0 24px; }
-  .hero h1{ font-size:clamp(28px,4vw,40px); font-weight:800; letter-spacing:-0.02em; max-width:720px; }
+  .hero{
+    margin-top:22px; padding:38px 28px 30px; border-radius:22px;
+    background:linear-gradient(135deg, var(--accent-soft) 0%, var(--teal-soft) 70%, transparent 100%);
+  }
+  .hero h1{ font-size:clamp(28px,4vw,42px); font-weight:800; letter-spacing:-0.02em; max-width:760px; }
   .hero h1 em{ font-style:normal; color:var(--accent-ink); }
-  .hero p{ max-width:640px; color:var(--text-muted); font-size:15.5px; line-height:1.6; margin-top:12px; }
-  .hero-chains{ display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
-  .chain-badge{ font-size:11.5px; font-weight:600; background:var(--chip-bg); border:1px solid var(--border); color:var(--text-muted); padding:5px 10px; border-radius:999px; }
+  .hero-eyebrow{ font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--accent-ink); font-weight:700; margin-top:16px; }
+  .hero p{ max-width:660px; color:var(--text-muted); font-size:15.5px; line-height:1.6; margin-top:8px; }
+  .hero p a{ color:var(--accent-ink); text-decoration:none; }
+  .hero p a:hover{ text-decoration:underline; }
+
+  .hub-tabs{ display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; }
+  .hub-tab{
+    --tab-color:var(--teal);
+    display:inline-flex; align-items:center; gap:8px; border:1.5px solid var(--border); background:var(--surface);
+    color:var(--text-muted); font-weight:700; font-size:13.5px; padding:10px 18px; border-radius:999px;
+    cursor:pointer; transition:background .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease;
+  }
+  .hub-tab .tab-dot{ width:7px; height:7px; border-radius:50%; background:var(--tab-color); flex:none; }
+  .hub-tab:hover{ border-color:var(--tab-color); color:var(--text); }
+  .hub-tab.active{ background:var(--tab-color); border-color:var(--tab-color); color:#fff; box-shadow:0 6px 16px -6px var(--tab-color); }
+  .hub-tab.active .tab-dot{ background:#fff; }
+  .hub-tab[data-tab="news"]{ --tab-color:var(--teal); }
+  .hub-tab[data-tab="enforcement"]{ --tab-color:var(--bad); }
+  .hub-tab[data-tab="protocols"]{ --tab-color:var(--violet); }
+  .hub-tab[data-tab="whales"]{ --tab-color:var(--blue2); }
 
   /* ---- price ticker ---- */
-  .ticker-wrap{ border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--surface); overflow:hidden; position:relative; }
+  .ticker-wrap{ border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--surface); overflow:hidden; position:relative; margin-top:24px; }
   .ticker-track{ display:flex; width:max-content; animation:ticker-scroll 55s linear infinite; }
   .ticker-track:hover{ animation-play-state:paused; }
   @media (prefers-reduced-motion: reduce){ .ticker-track{ animation:none; overflow-x:auto; } }
@@ -93,8 +119,17 @@
   .ticker-item .t-chg.up{ color:var(--good); }
   .ticker-item .t-chg.down{ color:var(--bad); }
 
+  .pulse-bar{ display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; padding:14px 0 6px; font-size:12.5px; color:var(--text-muted); }
+  .pulse-item b{ font-weight:800; }
+  .pulse-sep{ color:var(--text-faint); }
+  .pulse-fg-fear{ color:var(--bad); }
+  .pulse-fg-greed{ color:var(--good); }
+  .pulse-fg-neutral{ color:var(--accent-ink); }
+  .pulse-up{ color:var(--good); }
+  .pulse-down{ color:var(--bad); }
+
   /* ---- layout ---- */
-  .layout{ display:grid; grid-template-columns: 1fr 340px; gap:20px; align-items:start; padding:28px 0 40px; }
+  .layout{ display:grid; grid-template-columns: 1fr 340px; gap:20px; align-items:start; padding:8px 0 40px; }
   @media (max-width:900px){ .layout{ grid-template-columns:1fr; } }
   .card{ background:var(--surface); border:1px solid var(--border); border-radius:14px; box-shadow:0 1px 2px var(--shadow); }
 
@@ -110,6 +145,21 @@
   .feed-count{ font-size:12px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; }
   .feed-list{ display:flex; flex-direction:column; }
   .empty-state{ padding:40px 18px; text-align:center; color:var(--text-muted); font-size:13.5px; }
+
+  /* ---- hub (tabbed feeds) ---- */
+  .hub-section{ padding:22px 0 6px; }
+  .hub-pane{ display:none; }
+  .hub-pane.active{ display:block; animation:fade-in .18s ease; }
+  @keyframes fade-in{ from{ opacity:0; } to{ opacity:1; } }
+
+  /* ---- ad slots ---- */
+  .ad-slot{
+    border:1.5px dashed var(--border); border-radius:14px; color:var(--text-faint); font-size:11.5px;
+    letter-spacing:.06em; text-transform:uppercase; font-weight:700; background:var(--surface-2);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+  }
+  .ad-leaderboard{ min-height:86px; margin:22px 0; }
+  .ad-rect{ min-height:250px; }
 
   /* ---- knowledge / subscribe ---- */
   .side{ display:flex; flex-direction:column; gap:16px; }
@@ -130,15 +180,6 @@
   .k-hist-item .ht{ font-size:12.5px; font-weight:600; margin-bottom:2px; }
   .k-hist-item .hd{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; }
   .k-back-today{ font-size:11px; color:var(--teal); cursor:pointer; font-weight:600; text-decoration:underline; }
-  .mini-card{ padding:14px 16px; }
-  .mini-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; gap:8px; }
-  .mini-head h4{ font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); font-weight:700; }
-  .mini-more{ font-size:11px; color:var(--teal); text-decoration:none; font-weight:600; white-space:nowrap; }
-  .mini-more:hover{ text-decoration:underline; }
-  .mini-row{ display:flex; justify-content:space-between; align-items:center; gap:8px; padding:7px 0; border-top:1px solid var(--border); font-size:12.5px; }
-  .mini-row:first-child{ border-top:none; }
-  .mini-row .mn-name{ font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .mini-row .mn-val{ font-family:"IBM Plex Mono",monospace; color:var(--text-muted); font-size:11.5px; white-space:nowrap; flex:none; }
 
   .sub-card{ padding:20px 18px; background:linear-gradient(160deg, var(--accent-soft), var(--surface)); }
   .sub-card h4{ font-size:15px; font-weight:800; margin-bottom:6px; }
@@ -203,7 +244,6 @@
   .cat-badge{ font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 7px; border-radius:5px; white-space:nowrap; }
   .cat-enforcement{ background:var(--bad-soft); color:var(--bad); }
   .cat-market-news{ background:var(--teal-soft); color:var(--teal); }
-  .n-source{ font-size:11px; color:var(--text-faint); }
   .n-time{ font-size:11px; color:var(--text-faint); margin-left:auto; font-family:"IBM Plex Mono",monospace; }
   .news-row .n-title{ font-size:13.5px; font-weight:600; line-height:1.4; }
   .news-row .n-title a{ color:var(--text); text-decoration:none; }
@@ -219,24 +259,25 @@
   .chain-row .ch-name a{ color:var(--text); text-decoration:none; }
   .chain-row .ch-name a:hover{ text-decoration:underline; }
   .chain-row .ch-meta{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; white-space:nowrap; flex:none; }
-  .market-take{ padding:12px 18px; font-size:12.5px; line-height:1.65; color:var(--text-muted); }
-  .market-take a{ color:var(--accent-ink); text-decoration:none; }
-  .market-take a:hover{ text-decoration:underline; }
-
 
   footer.page-foot{
-    border-top:1px solid var(--border); padding:26px 0 40px;
-    display:flex; flex-direction:column; gap:16px;
+    border-top:1px solid var(--border); padding:6px 0 40px;
+    display:flex; flex-direction:column; gap:6px;
   }
-  .foot-contact{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+  .foot-support{ display:flex; flex-direction:column; gap:12px; padding:26px 0 22px; border-bottom:1px solid var(--border); }
+  .foot-support-head{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+  .foot-support-head h4{ font-size:14px; font-weight:800; }
+  .foot-support-tagline{ font-size:12px; color:var(--text-faint); font-style:italic; }
+  .foot-contact{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; padding-top:20px; }
   .foot-contact-label{ font-size:11.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.07em; }
   .foot-contact-link{ display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:600; color:var(--text); text-decoration:none; font-family:"IBM Plex Mono",monospace; }
   .foot-contact-link:hover{ color:var(--teal); }
   .foot-contact-link svg{ width:15px; height:15px; flex:none; }
   .foot-bottom{
-    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-top:14px;
     font-size:11.5px; color:var(--text-faint);
   }
+  .foot-credit{ font-size:10.5px; color:var(--text-faint); opacity:.8; }
   ::-webkit-scrollbar{ width:8px; height:8px; }
   ::-webkit-scrollbar-thumb{ background:var(--border); border-radius:4px; }
 </style>
@@ -253,10 +294,11 @@
       </div>
     </div>
     <div class="nav-links">
-      <a href="#news">News</a>
-      <a href="#launches">Launches</a>
-      <a href="#defi">DeFi</a>
-      <a href="#hyperliquid">Whales</a>
+      <a href="#hub" class="nav-tab-link" data-tab="news">News</a>
+      <a href="#hub" class="nav-tab-link" data-tab="enforcement">Enforcement</a>
+      <a href="#hub" class="nav-tab-link" data-tab="protocols">Protocols</a>
+      <a href="#hub" class="nav-tab-link" data-tab="whales">Whales</a>
+      <a href="#tokens">Tokens</a>
       <a href="#learn">Learn</a>
       <a href="#subscribe">Subscribe</a>
       <div class="live-pill"><span class="live-dot live" id="liveDot"></span><span id="liveText">syncing&hellip;</span></div>
@@ -267,15 +309,57 @@
 <div class="wrap">
   <section class="hero">
     <h1>The <em>Crypto Information Hub</em></h1>
-    <p>JalalOnChain brings together crypto market news, enforcement alerts, live coin prices, new tokens tracked once they cross $1M market cap, large Hyperliquid trades and open positions, and newly-listed DeFi protocols &mdash; paired with a short daily on-chain or off-chain lesson, clear and informative reading on how crypto and blockchain actually work.</p>
-    <div class="hero-chains">
-      <span class="chain-badge">Market News</span>
-      <span class="chain-badge">Enforcement Alerts</span>
-      <span class="chain-badge">Live Prices</span>
-      <span class="chain-badge">New Tokens Monitor</span>
-      <span class="chain-badge">New DeFi Protocols</span>
-      <span class="chain-badge">Hyperliquid Whale Activity</span>
-      <span class="chain-badge">Daily On-Chain Lesson</span>
+    <div class="hero-eyebrow" id="heroTakeDate">Today&rsquo;s take</div>
+    <p id="heroTake">Loading today&rsquo;s take&hellip;</p>
+    <div class="hub-tabs" id="hubTabs">
+      <button class="hub-tab active" data-tab="news"><span class="tab-dot"></span>News</button>
+      <button class="hub-tab" data-tab="enforcement"><span class="tab-dot"></span>Enforcement Alerts</button>
+      <button class="hub-tab" data-tab="protocols"><span class="tab-dot"></span>New Protocols &amp; Entities</button>
+      <button class="hub-tab" data-tab="whales"><span class="tab-dot"></span>Whale Activity</button>
+    </div>
+  </section>
+
+  <section class="hub-section" id="hub">
+    <div class="hub-pane active" data-pane="news" id="news">
+      <div class="feed-head-row">
+        <h3>Crypto news</h3>
+        <span class="feed-count" id="newsCount">0 items</span>
+      </div>
+      <div class="card feed-card feed-scroll-card">
+        <div class="feed-list" id="newsList"><div class="empty-state">Loading news&hellip;</div></div>
+      </div>
+    </div>
+
+    <div class="hub-pane" data-pane="enforcement" id="enforcement">
+      <div class="feed-head-row">
+        <h3>Enforcement &amp; regulatory alerts</h3>
+        <span class="feed-count" id="enfCount">0 items</span>
+      </div>
+      <div class="card feed-card feed-scroll-card" id="enfCard">
+        <div class="feed-list" id="enfList"><div class="empty-state">Loading&hellip;</div></div>
+      </div>
+    </div>
+
+    <div class="hub-pane" data-pane="protocols" id="defi">
+      <div class="section-head">
+        <h2>New DeFi protocols &amp; entities</h2>
+        <span class="hint" id="defiCount">0 tracked</span>
+      </div>
+      <div class="card">
+        <div class="grid-cards" id="defiGrid"><div class="empty-state">Loading new protocols&hellip;</div></div>
+      </div>
+      <div class="source-note">Recently-listed DeFi protocols by TVL &mdash; new lending markets, DEXs, restaking and yield entities that crossed a minimum TVL floor. Tracking, not an endorsement or audit.</div>
+    </div>
+
+    <div class="hub-pane" data-pane="whales" id="hyperliquid">
+      <div class="section-head">
+        <h2>Hyperliquid whale activity &middot; $100K+ positions</h2>
+        <span class="hint"><span class="feed-count" id="hlPosCount">0</span> &middot; <span id="hlUpdated"></span></span>
+      </div>
+      <div class="card">
+        <div class="grid-cards" id="hlPositionsGrid"><div class="empty-state">Loading positions&hellip;</div></div>
+      </div>
+      <div class="source-note">Tracks Hyperliquid&rsquo;s current top accounts by size, re-selected every sync, filtered to positions of $100K or more. Tracking, not financial advice.</div>
     </div>
   </section>
 </div>
@@ -287,32 +371,29 @@
 </div>
 
 <div class="wrap">
+  <div class="pulse-bar" id="pulseBar">
+    <span class="pulse-item" id="pulseFg">Sentiment: &mdash;</span>
+    <span class="pulse-sep">&middot;</span>
+    <span class="pulse-item" id="pulseGain">Top gainer: &mdash;</span>
+    <span class="pulse-sep">&middot;</span>
+    <span class="pulse-item" id="pulseLose">Top loser: &mdash;</span>
+  </div>
+
+  <div class="ad-slot ad-leaderboard">Advertise here</div>
+
+  <section class="section" id="tokens">
+    <div class="section-head">
+      <h2>New tokens monitor &middot; $1M+ market cap</h2>
+      <span class="hint" id="launchesCount">0 tracked</span>
+    </div>
+    <div class="card">
+      <div class="grid-cards" id="launchesGrid"><div class="empty-state">Loading tokens&hellip;</div></div>
+    </div>
+    <div class="source-note">Tracks newly-launched tokens across chains once they cross $1M market cap &mdash; including tokens on Robinhood&rsquo;s own chain and Robinhood-branded tokens elsewhere. Copycat tokens that reuse a popular name/symbol on a different contract are common &mdash; a &ldquo;name reused&rdquo; tag means exactly that, so always check the contract address shown on the card, not just the name. New listings carry very high risk; this is tracking, not an endorsement.</div>
+  </section>
+
   <div class="layout">
-    <section class="feed-col" id="news">
-      <div class="feed-head-row">
-        <h3>Enforcement &amp; regulatory alerts</h3>
-        <span class="feed-count" id="enfCount">0 items</span>
-      </div>
-      <div class="card feed-card feed-scroll-card" id="enfCard">
-        <div class="feed-list" id="enfList"><div class="empty-state">Loading&hellip;</div></div>
-      </div>
-
-      <div class="feed-head-row">
-        <h3>Crypto news</h3>
-        <span class="feed-count" id="newsCount">0 items</span>
-      </div>
-      <div class="card feed-card feed-scroll-card">
-        <div class="feed-list" id="newsList"><div class="empty-state">Loading news&hellip;</div></div>
-      </div>
-
-      <div class="feed-head-row">
-        <h3>Market take</h3>
-        <span class="feed-count" id="takeDate">&mdash;</span>
-      </div>
-      <div class="card feed-card" id="takeCard">
-        <div class="market-take" id="takeBody"><div class="empty-state">Loading&hellip;</div></div>
-      </div>
-
+    <div class="feed-col">
       <div class="feed-head-row">
         <h3>New chains</h3>
         <span class="feed-count" id="chainsCount">0 tracked</span>
@@ -320,10 +401,8 @@
       <div class="card feed-card" id="chainsCard">
         <div class="feed-list" id="chainsList"><div class="empty-state">Loading&hellip;</div></div>
       </div>
-    </section>
 
-    <aside class="side" id="learn">
-      <div class="card k-card">
+      <div class="card k-card" id="learn">
         <div class="k-eyebrow"><span id="kEyebrowLabel">Daily briefing</span><time id="kDate">&mdash;</time></div>
         <div class="k-title" id="kTitle">Loading today&rsquo;s insight&hellip;</div>
         <div class="k-body" id="kBody"></div>
@@ -334,22 +413,9 @@
         <h4>Past briefings</h4>
         <div id="kHistList"></div>
       </div>
+    </div>
 
-      <div class="card mini-card" id="miniLaunches">
-        <div class="mini-head"><h4>New tokens monitor</h4><a href="#launches" class="mini-more">View all &rarr;</a></div>
-        <div id="miniLaunchesList"><div class="empty-state">Loading&hellip;</div></div>
-      </div>
-
-      <div class="card mini-card" id="miniDefi">
-        <div class="mini-head"><h4>New DeFi protocols</h4><a href="#defi" class="mini-more">View all &rarr;</a></div>
-        <div id="miniDefiList"><div class="empty-state">Loading&hellip;</div></div>
-      </div>
-
-      <div class="card mini-card" id="miniHl">
-        <div class="mini-head"><h4>Hyperliquid whale activity</h4><a href="#hlTrades" class="mini-more">View all &rarr;</a></div>
-        <div id="miniHlList"><div class="empty-state">Loading&hellip;</div></div>
-      </div>
-
+    <aside class="side">
       <div class="card sub-card" id="subscribe">
         <h4>Get the daily briefing by email</h4>
         <p>One short on-chain or off-chain lesson a day &mdash; no noise, no price calls. Unsubscribe any time.</p>
@@ -362,69 +428,25 @@
         <div class="sub-msg" id="subMsg"></div>
       </div>
 
-      <div class="card support-card" id="support">
+      <div class="ad-slot ad-rect">Advertise here</div>
+    </aside>
+  </div>
+
+  <footer class="page-foot">
+    <div class="foot-support" id="support">
+      <div class="foot-support-head">
         <h4>Every trace tells a story</h4>
-        <p class="support-tagline">The chain leaves clues. Your support helps me follow them.</p>
+        <span class="foot-support-tagline">The chain leaves clues. Your support helps me follow them.</span>
+      </div>
+      <div class="card support-card">
         <div class="support-tabs" id="supportTabs">
           <button class="support-tab active" data-mode="currency">By currency</button>
           <button class="support-tab" data-mode="direct">Direct addresses</button>
         </div>
         <div id="supportBody"></div>
       </div>
-    </aside>
-  </div>
-
-  <section class="section" id="launches">
-    <div class="section-head">
-      <h2>New tokens monitor &middot; $1M+ market cap</h2>
-      <span class="hint" id="launchesCount">0 tracked</span>
-    </div>
-    <div class="card">
-      <div class="grid-cards" id="launchesGrid"><div class="empty-state">Loading tokens&hellip;</div></div>
-    </div>
-    <div class="source-note">Tracks newly-launched tokens across chains once they cross $1M market cap &mdash; including tokens on Robinhood&rsquo;s own chain and Robinhood-branded tokens elsewhere. Copycat tokens that reuse a popular name/symbol on a different contract are common &mdash; a &ldquo;name reused&rdquo; tag means exactly that, so always check the contract address shown on the card, not just the name. New listings carry very high risk; this is tracking, not an endorsement.</div>
-  </section>
-
-  <section class="section" id="defi">
-    <div class="section-head">
-      <h2>New DeFi protocols &amp; entities</h2>
-      <span class="hint" id="defiCount">0 tracked</span>
-    </div>
-    <div class="card">
-      <div class="grid-cards" id="defiGrid"><div class="empty-state">Loading new protocols&hellip;</div></div>
-    </div>
-    <div class="source-note">Recently-listed DeFi protocols by TVL &mdash; new lending markets, DEXs, restaking and yield entities that crossed a minimum TVL floor. Tracking, not an endorsement or audit.</div>
-  </section>
-
-  <section class="section" id="hyperliquid">
-    <div class="section-head">
-      <h2>Hyperliquid whale activity &middot; $100K+</h2>
-      <span class="hint" id="hlUpdated"></span>
     </div>
 
-    <div class="feed-head-row">
-      <h3>Large open positions</h3>
-      <span class="feed-count" id="hlPosCount">0</span>
-    </div>
-    <div class="card">
-      <div class="grid-cards" id="hlPositionsGrid"><div class="empty-state">Loading positions&hellip;</div></div>
-    </div>
-
-    <div class="source-note">Tracks Hyperliquid&rsquo;s current top accounts by size, re-selected every sync, filtered to positions and trades of $100K or more. Recent large trades appear further down this page. Tracking, not financial advice.</div>
-  </section>
-
-  <section class="section" id="hlTradesSection">
-    <div class="feed-head-row" id="hlTrades">
-      <h3>Recent large whale trades</h3>
-      <span class="feed-count" id="hlActivityCount">0</span>
-    </div>
-    <div class="card feed-card feed-scroll-card">
-      <div class="feed-list" id="hlActivityList"><div class="empty-state">Loading activity&hellip;</div></div>
-    </div>
-    <div class="source-note">Individual large ($100K+) fills from Hyperliquid&rsquo;s current top accounts by size, most recent first. Tracking, not financial advice.</div>
-  </section>
-
-  <footer class="page-foot">
     <div class="foot-contact">
       <span class="foot-contact-label">Reach me at</span>
       <a class="foot-contact-link" href="mailto:JalalOnChain@proton.me">
@@ -440,13 +462,14 @@
       <span>JalalOnChain &middot; crypto news, prices &amp; on-chain intelligence &mdash; not financial advice</span>
       <span id="footSync">Waiting for first sync&hellip;</span>
     </div>
+    <div class="foot-credit">Live price data and protocol TVL are pulled from public, no-key market-data APIs. Individual articles link straight to their original publisher.</div>
   </footer>
 </div>
 
 <script>
 (function(){
   "use strict";
-  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], chains: [], marketTake: null, hlPositions: [], hlActivity: [], updatedAt: null };
+  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], chains: [], marketTake: null, hlPositions: [], sentiment: null, updatedAt: null };
 
   function fmtUsd(n){
     n = Number(n)||0;
@@ -491,6 +514,18 @@
     return d.toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric", timeZone:"UTC" });
   }
 
+  function setHubTab(tab){
+    document.querySelectorAll(".hub-tab").forEach(function(b){ b.classList.toggle("active", b.dataset.tab===tab); });
+    document.querySelectorAll(".hub-pane").forEach(function(p){ p.classList.toggle("active", p.dataset.pane===tab); });
+  }
+  document.getElementById("hubTabs").addEventListener("click", function(e){
+    var btn = e.target.closest(".hub-tab"); if(!btn) return;
+    setHubTab(btn.dataset.tab);
+  });
+  document.querySelectorAll(".nav-tab-link").forEach(function(a){
+    a.addEventListener("click", function(){ setHubTab(a.dataset.tab); });
+  });
+
   function showKnowledgeDoc(doc, isToday){
     if(!doc) return;
     document.getElementById("kEyebrowLabel").textContent = isToday ? "Daily briefing" : "Past briefing";
@@ -514,18 +549,15 @@
     }).join("") || "<div class=\"hd\">More briefings appear here daily.</div>";
   }
 
-  function renderMiniRows(id, rows){
-    var el = document.getElementById(id);
-    if(!el) return;
-    el.innerHTML = rows.length ? rows.map(function(r){
-      return "<div class=\"mini-row\"><span class=\"mn-name\">"+esc(r.name)+"</span><span class=\"mn-val\">"+esc(r.val)+"</span></div>";
-    }).join("") : "<div class=\"empty-state\" style=\"padding:10px 0;\">Nothing yet.</div>";
+  var GRID_CAP = 12;
+  function capLabel(n, singular, plural){
+    var label = n+(n===1?" "+singular:" "+plural);
+    return n>GRID_CAP ? ("top "+GRID_CAP+" of "+label) : label;
   }
 
   function renderLaunches(){
     var list = state.launches.slice().sort(function(a,b){ return (Number(b.marketCapUsd)||0)-(Number(a.marketCapUsd)||0); });
-    document.getElementById("launchesCount").textContent = list.length+(list.length===1?" token":" tokens");
-    renderMiniRows("miniLaunchesList", list.slice(0,5).map(function(t){ return {name: t.name||t.symbol||"Unknown", val: fmtUsd(t.marketCapUsd)}; }));
+    document.getElementById("launchesCount").textContent = capLabel(list.length, "token", "tokens");
     var el = document.getElementById("launchesGrid");
     if(!list.length){ el.innerHTML = "<div class=\"empty-state\">No qualifying launches yet &mdash; check back after the next sync.</div>"; return; }
     // pump.fun/DexScreener are full of copycat tokens that reuse a popular name+symbol
@@ -535,7 +567,7 @@
       var key = (t.name||"").trim().toLowerCase()+"|"+(t.symbol||"").trim().toLowerCase();
       nameCounts[key] = (nameCounts[key]||0)+1;
     });
-    el.innerHTML = list.slice(0,60).map(function(t){
+    el.innerHTML = list.slice(0,GRID_CAP).map(function(t){
       var link = t.link ? "<a href=\""+esc(t.link)+"\" target=\"_blank\" rel=\"noopener\">view</a>" : "";
       var key = (t.name||"").trim().toLowerCase()+"|"+(t.symbol||"").trim().toLowerCase();
       var isDupName = nameCounts[key] > 1 && (t.name||"").trim() !== "";
@@ -552,11 +584,10 @@
 
   function renderDefi(){
     var list = state.defi.slice().sort(function(a,b){ return (Number(b.tvlUsd)||0)-(Number(a.tvlUsd)||0); });
-    document.getElementById("defiCount").textContent = list.length+(list.length===1?" protocol":" protocols");
-    renderMiniRows("miniDefiList", list.slice(0,5).map(function(p){ return {name: p.name||p.symbol||"Unknown", val: fmtUsd(p.tvlUsd)}; }));
+    document.getElementById("defiCount").textContent = capLabel(list.length, "protocol", "protocols");
     var el = document.getElementById("defiGrid");
     if(!list.length){ el.innerHTML = "<div class=\"empty-state\">No newly-listed protocols yet &mdash; check back after the next sync.</div>"; return; }
-    el.innerHTML = list.slice(0,60).map(function(p){
+    el.innerHTML = list.slice(0,GRID_CAP).map(function(p){
       var link = p.link ? "<a href=\""+esc(p.link)+"\" target=\"_blank\" rel=\"noopener\">view</a>" : "";
       var chains = (p.chains||[]).slice(0,3).join(", ");
       return "<div class=\"launch-card\">"+
@@ -577,12 +608,12 @@
     if(updEl) updEl.textContent = state.hlUpdatedAt ? ("synced "+timeAgo(state.hlUpdatedAt)) : "";
 
     var positions = state.hlPositions.slice().sort(function(a,b){ return (Number(b.positionValueUsd)||0)-(Number(a.positionValueUsd)||0); });
-    document.getElementById("hlPosCount").textContent = positions.length+(positions.length===1?" position":" positions");
+    document.getElementById("hlPosCount").textContent = capLabel(positions.length, "position", "positions");
     var posEl = document.getElementById("hlPositionsGrid");
     if(!positions.length){
       posEl.innerHTML = "<div class=\"empty-state\">No qualifying positions yet &mdash; check back after the next sync.</div>";
     } else {
-      posEl.innerHTML = positions.slice(0,60).map(function(p){
+      posEl.innerHTML = positions.slice(0,GRID_CAP).map(function(p){
         var sideClass = p.side==="long" ? "side-long" : (p.side==="short" ? "side-short" : "");
         var sideLabel = p.side==="spot" ? "SPOT" : (p.side||"").toUpperCase()+(p.leverage?" "+p.leverage+"x":"");
         var pnlHtml = "";
@@ -598,32 +629,13 @@
         "</div>";
       }).join("");
     }
-
-    var activity = state.hlActivity.slice().sort(function(a,b){ return new Date(b.time) - new Date(a.time); });
-    document.getElementById("hlActivityCount").textContent = activity.length+(activity.length===1?" trade":" trades");
-    renderMiniRows("miniHlList", activity.slice(0,5).map(function(a){ return {name: (a.coin||"")+" "+(a.dir||"trade"), val: fmtUsd(a.notionalUsd)}; }));
-    var actEl = document.getElementById("hlActivityList");
-    if(!activity.length){
-      actEl.innerHTML = "<div class=\"empty-state\">No qualifying trades in the recent window &mdash; check back after the next sync.</div>";
-    } else {
-      actEl.innerHTML = activity.slice(0,60).map(function(a){
-        var dirLower = (a.dir||"").toLowerCase();
-        var catClass = dirLower.indexOf("long") !== -1 ? "cat-market-news" : (dirLower.indexOf("short") !== -1 ? "cat-enforcement" : "cat-market-news");
-        var link = a.link ? "<a href=\""+esc(a.link)+"\" target=\"_blank\" rel=\"noopener\">"+esc(shortAddr(a.address))+"</a>" : esc(shortAddr(a.address));
-        return "<div class=\"news-row\">"+
-          "<div class=\"n-top\"><span class=\"cat-badge "+catClass+"\">"+esc(a.dir||"Trade")+"</span><span class=\"n-source\">"+esc(a.coin||"")+"</span><span class=\"n-time\">"+esc(timeAgo(a.time))+"</span></div>"+
-          "<div class=\"n-title\">"+fmtUsd(a.notionalUsd)+" notional at $"+esc(a.price)+"</div>"+
-          "<div class=\"n-summary\">"+link+"</div>"+
-        "</div>";
-      }).join("");
-    }
   }
 
   function newsRowHtml(n){
     var catClass = n.category==="enforcement" ? "cat-enforcement" : "cat-market-news";
     var catLabel = n.category==="enforcement" ? "Enforcement" : "News";
     return "<div class=\"news-row\">"+
-      "<div class=\"n-top\"><span class=\"cat-badge "+catClass+"\">"+catLabel+"</span><span class=\"n-source\">"+esc(n.source||"")+"</span><span class=\"n-time\">"+esc(timeAgo(n.publishedAt||n.fetchedAt))+"</span></div>"+
+      "<div class=\"n-top\"><span class=\"cat-badge "+catClass+"\">"+catLabel+"</span><span class=\"n-time\">"+esc(timeAgo(n.publishedAt||n.fetchedAt))+"</span></div>"+
       "<div class=\"n-title\">"+(n.link?"<a href=\""+esc(n.link)+"\" target=\"_blank\" rel=\"noopener\">"+esc(n.title)+"</a>":esc(n.title))+"</div>"+
       (n.summary?"<div class=\"n-summary\">"+esc(n.summary)+"</div>":"")+
     "</div>";
@@ -636,8 +648,8 @@
     document.getElementById("enfList").innerHTML = enf.length ? enf.slice(0,60).map(newsRowHtml).join("") :
       "<div class=\"empty-state\">No enforcement alerts synced yet &mdash; check back after the next sync.</div>";
 
-    // Crypto news is market-news only now — enforcement has its own scrollable
-    // panel above, so it's no longer duplicated into this list too.
+    // Crypto news is market-news only now — enforcement has its own tab, so it's
+    // no longer duplicated into this list too.
     var newsOnly = all.filter(function(n){ return n.category!=="enforcement"; });
     document.getElementById("newsCount").textContent = newsOnly.length+(newsOnly.length===1?" item":" items");
     var el = document.getElementById("newsList");
@@ -663,15 +675,37 @@
 
   function renderMarketTake(){
     var take = state.marketTake;
-    var dateEl = document.getElementById("takeDate");
-    var body = document.getElementById("takeBody");
+    var dateEl = document.getElementById("heroTakeDate");
+    var body = document.getElementById("heroTake");
     if(!take || !(take.html || take.text)){
-      dateEl.textContent = "—";
-      body.innerHTML = "<div class=\"empty-state\">Check back after the next sync.</div>";
+      dateEl.textContent = "Today's take";
+      body.innerHTML = "Your always-on feed for what's actually moving in crypto: breaking market news, government enforcement and sanctions actions, freshly-launched tokens and DeFi protocols, and large Hyperliquid whale positions &mdash; tracked hour by hour.";
       return;
     }
-    dateEl.textContent = fmtDate(take.date) || "—";
+    dateEl.textContent = "Today's take · " + (fmtDate(take.date) || "");
     body.innerHTML = take.html || esc(take.text);
+  }
+
+  function renderPulse(){
+    var fg = state.sentiment;
+    var fgEl = document.getElementById("pulseFg");
+    if(fg && typeof fg.value === "number" && !isNaN(fg.value)){
+      var cls = fg.value>=55 ? "pulse-fg-greed" : (fg.value<=45 ? "pulse-fg-fear" : "pulse-fg-neutral");
+      fgEl.innerHTML = "Sentiment: <b class=\""+cls+"\">"+esc(fg.label||"")+" ("+fg.value+")</b>";
+    } else {
+      fgEl.textContent = "Sentiment: —";
+    }
+    var gainEl = document.getElementById("pulseGain"), loseEl = document.getElementById("pulseLose");
+    var list = (state.prices||[]).filter(function(p){ return p.change24h!==null && p.change24h!==undefined && !isNaN(Number(p.change24h)); });
+    if(list.length){
+      var sorted = list.slice().sort(function(a,b){ return Number(b.change24h)-Number(a.change24h); });
+      var top = sorted[0], bottom = sorted[sorted.length-1];
+      gainEl.innerHTML = "Top gainer: <b class=\"pulse-up\">"+esc(top.symbol)+" "+fmtChg(Number(top.change24h))+"</b>";
+      loseEl.innerHTML = "Top loser: <b class=\"pulse-down\">"+esc(bottom.symbol)+" "+fmtChg(Number(bottom.change24h))+"</b>";
+    } else {
+      gainEl.textContent = "Top gainer: —";
+      loseEl.textContent = "Top loser: —";
+    }
   }
 
   function renderPrices(){
@@ -753,9 +787,10 @@
       fetch("./data/defi.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/hyperliquid.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/chains.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
-      fetch("./data/market_take.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
+      fetch("./data/market_take.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/sentiment.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
     ]).then(function(results){
-      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5], chainsData = results[6], takeData = results[7];
+      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5], chainsData = results[6], takeData = results[7], sentimentData = results[8];
       if(kData && kData.items){ state.knowledge = kData.items; }
       if(launchData && launchData.items){ state.launches = launchData.items; }
       if(newsData && newsData.items){ state.news = newsData.items; }
@@ -763,11 +798,11 @@
       if(defiData && defiData.items){ state.defi = defiData.items; }
       if(chainsData && chainsData.items){ state.chains = chainsData.items; }
       if(takeData){ state.marketTake = takeData; }
+      if(sentimentData){ state.sentiment = sentimentData; }
       if(hlData && hlData.positions){ state.hlPositions = hlData.positions; }
-      if(hlData && hlData.activity){ state.hlActivity = hlData.activity; }
       if(hlData && hlData.updatedAt){ state.hlUpdatedAt = hlData.updatedAt; }
       state.updatedAt = (newsData && newsData.updatedAt) || (launchData && launchData.updatedAt) || (priceData && priceData.updatedAt) || state.updatedAt;
-      renderKnowledge(); renderLaunches(); renderNews(); renderPrices(); renderDefi(); renderChains(); renderMarketTake(); renderHyperliquid(); renderStatus();
+      renderKnowledge(); renderLaunches(); renderNews(); renderPrices(); renderDefi(); renderChains(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderStatus();
     });
   }
 
@@ -814,7 +849,7 @@
     if(copyBtn){ copyToClipboard(copyBtn.dataset.copy, copyBtn); }
   });
 
-  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPrices(); renderDefi(); renderHyperliquid(); renderStatus();
+  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPrices(); renderDefi(); renderChains(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderStatus();
   loadData();
   setInterval(loadData, 90000);
   setInterval(renderStatus, 30000);

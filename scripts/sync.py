@@ -54,6 +54,7 @@ PRICES_PATH = os.path.join(DATA_DIR, "prices.json")
 DEFI_PATH = os.path.join(DATA_DIR, "defi.json")
 HYPERLIQUID_PATH = os.path.join(DATA_DIR, "hyperliquid.json")
 SENTIMENT_PATH = os.path.join(DATA_DIR, "sentiment.json")
+DOMINANCE_PATH = os.path.join(DATA_DIR, "dominance.json")
 
 MAX_KNOWLEDGE = 120
 UA = "Mozilla/5.0 (compatible; JalalOnChainBot/1.0; +https://github.com/JalalOnChain/jalalonchain)"
@@ -793,10 +794,14 @@ def sync_launches():
     print(f"launches: {len(new_items)} new, {len(items)} total")
 
 
-# --- Live coin price ticker (top coins by market cap) ---------------------
+# --- Live coin prices (top coins by market cap) ----------------------------
+# CoinGecko's free /coins/markets endpoint returns price, 24h change, 24h
+# volume and market cap in a single no-key call — pulling 100 rows instead of
+# 20 costs nothing extra (still one request) and gives the site's Live Prices
+# table and the top-gainer/loser stat a much wider, more meaningful pool.
 COINGECKO_MARKETS_URL = (
     "https://api.coingecko.com/api/v3/coins/markets"
-    "?vs_currency=usd&order=market_cap_desc&per_page=20&page=1"
+    "?vs_currency=usd&order=market_cap_desc&per_page=100&page=1"
     "&sparkline=false&price_change_percentage=24h"
 )
 
@@ -815,6 +820,8 @@ def fetch_prices():
                     "name": c.get("name") or "",
                     "price": c.get("current_price"),
                     "change24h": c.get("price_change_percentage_24h"),
+                    "volume24h": c.get("total_volume"),
+                    "marketCapUsd": c.get("market_cap"),
                     "marketCapRank": c.get("market_cap_rank"),
                 })
             except Exception:
@@ -866,6 +873,41 @@ def sync_sentiment():
         return
     save_json(SENTIMENT_PATH, item)
     print(f"sentiment: {item['value']} ({item['label']})")
+
+
+# --- Market dominance (top 5 coins by share of total crypto market cap) ---
+# CoinGecko's free /global endpoint already computes each coin's dominance
+# percentage across the WHOLE market (not just our top-100 snapshot), so we
+# use its numbers directly rather than re-deriving a skewed figure ourselves.
+COINGECKO_GLOBAL_URL = "https://api.coingecko.com/api/v3/global"
+DOMINANCE_TOP_N = 5
+
+
+def fetch_dominance():
+    try:
+        r = requests.get(COINGECKO_GLOBAL_URL, timeout=20, headers={"User-Agent": UA, "Accept": "application/json"})
+        payload = r.json().get("data") or {}
+        pct = payload.get("market_cap_percentage") or {}
+        rows = sorted(pct.items(), key=lambda kv: kv[1] or 0, reverse=True)[:DOMINANCE_TOP_N]
+        items = [{"symbol": sym.upper(), "pct": round(val, 2)} for sym, val in rows]
+        total_mc = (payload.get("total_market_cap") or {}).get("usd")
+        return {
+            "updatedAt": now_iso(),
+            "totalMarketCapUsd": total_mc,
+            "items": items,
+        }
+    except Exception:
+        traceback.print_exc()
+        return None
+
+
+def sync_dominance():
+    result = fetch_dominance()
+    if not result or not result.get("items"):
+        print("dominance: fetch failed — keeping previous snapshot")
+        return
+    save_json(DOMINANCE_PATH, result)
+    print(f"dominance: top {len(result['items'])} — " + ", ".join(f"{i['symbol']} {i['pct']}%" for i in result["items"]))
 
 
 # --- New DeFi protocols/entities (by TVL, recently listed) ----------------
@@ -1122,6 +1164,7 @@ def main():
     sync_defi()
     sync_hyperliquid()
     sync_sentiment()
+    sync_dominance()
 
 
 if __name__ == "__main__":

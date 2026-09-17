@@ -219,6 +219,9 @@
   .chain-row .ch-name a{ color:var(--text); text-decoration:none; }
   .chain-row .ch-name a:hover{ text-decoration:underline; }
   .chain-row .ch-meta{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; white-space:nowrap; flex:none; }
+  .market-take{ padding:12px 18px; font-size:12.5px; line-height:1.65; color:var(--text-muted); }
+  .market-take a{ color:var(--accent-ink); text-decoration:none; }
+  .market-take a:hover{ text-decoration:underline; }
 
 
   footer.page-foot{
@@ -300,6 +303,14 @@
       </div>
       <div class="card feed-card feed-scroll-card">
         <div class="feed-list" id="newsList"><div class="empty-state">Loading news&hellip;</div></div>
+      </div>
+
+      <div class="feed-head-row">
+        <h3>Market take</h3>
+        <span class="feed-count" id="takeDate">&mdash;</span>
+      </div>
+      <div class="card feed-card" id="takeCard">
+        <div class="market-take" id="takeBody"><div class="empty-state">Loading&hellip;</div></div>
       </div>
 
       <div class="feed-head-row">
@@ -435,7 +446,7 @@
 <script>
 (function(){
   "use strict";
-  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], chains: [], hlPositions: [], hlActivity: [], updatedAt: null };
+  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], chains: [], marketTake: null, hlPositions: [], hlActivity: [], updatedAt: null };
 
   function fmtUsd(n){
     n = Number(n)||0;
@@ -650,6 +661,19 @@
       "<div class=\"empty-state\">No new chains tracked yet.</div>";
   }
 
+  function renderMarketTake(){
+    var take = state.marketTake;
+    var dateEl = document.getElementById("takeDate");
+    var body = document.getElementById("takeBody");
+    if(!take || !(take.html || take.text)){
+      dateEl.textContent = "—";
+      body.innerHTML = "<div class=\"empty-state\">Check back after the next sync.</div>";
+      return;
+    }
+    dateEl.textContent = fmtDate(take.date) || "—";
+    body.innerHTML = take.html || esc(take.text);
+  }
+
   function renderPrices(){
     var track = document.getElementById("tickerTrack");
     var list = state.prices || [];
@@ -728,20 +752,22 @@
       fetch("./data/prices.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/defi.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/hyperliquid.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
-      fetch("./data/chains.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
+      fetch("./data/chains.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/market_take.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
     ]).then(function(results){
-      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5], chainsData = results[6];
+      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5], chainsData = results[6], takeData = results[7];
       if(kData && kData.items){ state.knowledge = kData.items; }
       if(launchData && launchData.items){ state.launches = launchData.items; }
       if(newsData && newsData.items){ state.news = newsData.items; }
       if(priceData && priceData.items){ state.prices = priceData.items; }
       if(defiData && defiData.items){ state.defi = defiData.items; }
       if(chainsData && chainsData.items){ state.chains = chainsData.items; }
+      if(takeData){ state.marketTake = takeData; }
       if(hlData && hlData.positions){ state.hlPositions = hlData.positions; }
       if(hlData && hlData.activity){ state.hlActivity = hlData.activity; }
       if(hlData && hlData.updatedAt){ state.hlUpdatedAt = hlData.updatedAt; }
       state.updatedAt = (newsData && newsData.updatedAt) || (launchData && launchData.updatedAt) || (priceData && priceData.updatedAt) || state.updatedAt;
-      renderKnowledge(); renderLaunches(); renderNews(); renderPrices(); renderDefi(); renderChains(); renderHyperliquid(); renderStatus();
+      renderKnowledge(); renderLaunches(); renderNews(); renderPrices(); renderDefi(); renderChains(); renderMarketTake(); renderHyperliquid(); renderStatus();
     });
   }
 

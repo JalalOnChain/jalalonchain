@@ -53,6 +53,7 @@ LAUNCHES_PATH = os.path.join(DATA_DIR, "launches.json")
 PRICES_PATH = os.path.join(DATA_DIR, "prices.json")
 DEFI_PATH = os.path.join(DATA_DIR, "defi.json")
 HYPERLIQUID_PATH = os.path.join(DATA_DIR, "hyperliquid.json")
+SENTIMENT_PATH = os.path.join(DATA_DIR, "sentiment.json")
 
 MAX_KNOWLEDGE = 120
 UA = "Mozilla/5.0 (compatible; JalalOnChainBot/1.0; +https://github.com/JalalOnChain/jalalonchain)"
@@ -833,6 +834,40 @@ def sync_prices():
     print(f"prices: {len(items)} coins")
 
 
+# --- Crypto Fear & Greed Index ---------------------------------------------
+# alternative.me's free, no-key, public-use index — a single 0-100 sentiment
+# reading refreshed roughly daily on their end. Small, cheap to poll hourly.
+FEAR_GREED_URL = "https://api.alternative.me/fng/?limit=1&format=json"
+
+
+def fetch_fear_greed():
+    try:
+        r = requests.get(FEAR_GREED_URL, timeout=15, headers={"User-Agent": UA, "Accept": "application/json"})
+        data = r.json()
+        rows = data.get("data") or []
+        if not rows:
+            return None
+        row = rows[0]
+        value = int(row.get("value"))
+        return {
+            "value": value,
+            "label": row.get("value_classification") or "",
+            "updatedAt": now_iso(),
+        }
+    except Exception:
+        traceback.print_exc()
+        return None
+
+
+def sync_sentiment():
+    item = fetch_fear_greed()
+    if not item:
+        print("sentiment: fetch failed — keeping previous snapshot")
+        return
+    save_json(SENTIMENT_PATH, item)
+    print(f"sentiment: {item['value']} ({item['label']})")
+
+
 # --- New DeFi protocols/entities (by TVL, recently listed) ----------------
 # DefiLlama's public protocols endpoint — no key needed. Each protocol has a
 # "listedAt" unix-seconds field when DefiLlama has recorded a listing date;
@@ -1086,6 +1121,7 @@ def main():
     sync_prices()
     sync_defi()
     sync_hyperliquid()
+    sync_sentiment()
 
 
 if __name__ == "__main__":

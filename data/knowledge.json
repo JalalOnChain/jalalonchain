@@ -1,6 +1,16 @@
 {
-  "updatedAt": "2026-09-16T23:19:54Z",
+  "updatedAt": "2026-09-17T00:25:14Z",
   "items": [
+    {
+      "id": "2026-09-17",
+      "title": "Proof of work vs proof of stake, the one-line version",
+      "body": "Proof of work secures a chain by making block production expensive (computation, hardware, electricity); proof of stake secures it by making dishonest block production expensive (staked capital that gets slashed). Both aim for the same property \u2014 costly to attack \u2014 through different resources being put at risk.",
+      "tags": [
+        "consensus",
+        "fundamentals"
+      ],
+      "createdAt": "2026-09-17T00:25:14Z"
+    },
     {
       "id": "2026-09-16",
       "title": "What makes a blockchain bridge a favorite exploit target",

@@ -183,7 +183,7 @@
   .k-eyebrow span{ font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--teal); font-weight:700; }
   .k-eyebrow time{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; }
   .k-title{ font-size:16.5px; font-weight:700; line-height:1.3; margin-bottom:8px; }
-  .k-body{ font-size:13.5px; line-height:1.55; color:var(--text-muted); margin-bottom:12px; }
+  .k-body{ font-size:15.5px; line-height:1.6; color:var(--text); margin-bottom:12px; }
   .k-tags{ display:flex; gap:6px; flex-wrap:wrap; }
   .k-tag{ font-size:10.5px; background:var(--teal-soft); color:var(--teal); padding:3px 8px; border-radius:5px; font-weight:600; }
   .k-hist{ padding:14px 18px 6px; }
@@ -349,28 +349,6 @@
     </div>
   </section>
 
-  <section class="section" id="tokens">
-    <div class="section-head">
-      <h2>New tokens monitor &middot; $1M+ market cap</h2>
-      <span class="hint" id="launchesCount">0 tracked</span>
-    </div>
-    <div class="card">
-      <div class="grid-cards" id="launchesGrid"><div class="empty-state">Loading tokens&hellip;</div></div>
-    </div>
-    <div class="source-note">Tracks newly-launched tokens across chains once they cross $1M market cap &mdash; including tokens on Robinhood&rsquo;s own chain and Robinhood-branded tokens elsewhere. Copycat tokens that reuse a popular name/symbol on a different contract are common &mdash; a &ldquo;name reused&rdquo; tag means exactly that, so always check the contract address shown on the card, not just the name. New listings carry very high risk; this is tracking, not an endorsement.</div>
-  </section>
-
-  <section class="section" id="defi">
-    <div class="section-head">
-      <h2>New DeFi protocols &amp; entities</h2>
-      <span class="hint" id="defiCount">0 tracked</span>
-    </div>
-    <div class="card">
-      <div class="grid-cards" id="defiGrid"><div class="empty-state">Loading new protocols&hellip;</div></div>
-    </div>
-    <div class="source-note">Recently-listed DeFi protocols by TVL &mdash; new lending markets, DEXs, restaking and yield entities that crossed a minimum TVL floor. Tracking, not an endorsement or audit.</div>
-  </section>
-
   <section class="hub-section" id="hub">
     <div class="hub-tabs" id="hubTabs">
       <button class="hub-tab active" data-tab="news"><span class="tab-dot"></span>News</button>
@@ -456,6 +434,28 @@
         <div class="feed-list" id="chainsList"><div class="empty-state">Loading&hellip;</div></div>
       </div>
     </div>
+  </section>
+
+  <section class="section" id="tokens">
+    <div class="section-head">
+      <h2>New tokens monitor &middot; $1M+ market cap</h2>
+      <span class="hint" id="launchesCount">0 tracked</span>
+    </div>
+    <div class="card">
+      <div class="grid-cards" id="launchesGrid"><div class="empty-state">Loading tokens&hellip;</div></div>
+    </div>
+    <div class="source-note">Tracks newly-launched tokens across chains once they cross $1M market cap. Copycat tokens that reuse a popular name/symbol on a different contract are common &mdash; a &ldquo;name reused&rdquo; tag means exactly that, so always check the contract address shown on the card, not just the name. New listings carry very high risk; this is tracking, not an endorsement.</div>
+  </section>
+
+  <section class="section" id="defi">
+    <div class="section-head">
+      <h2>New DeFi protocols &amp; entities</h2>
+      <span class="hint" id="defiCount">0 tracked</span>
+    </div>
+    <div class="card">
+      <div class="grid-cards" id="defiGrid"><div class="empty-state">Loading new protocols&hellip;</div></div>
+    </div>
+    <div class="source-note">Recently-listed DeFi protocols by TVL &mdash; new lending markets, DEXs, restaking and yield entities that crossed a minimum TVL floor. Tracking, not an endorsement or audit.</div>
   </section>
 
   <div class="ad-slot ad-leaderboard">AD</div>

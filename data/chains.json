@@ -1,6 +1,6 @@
 {
   "_note": "Hand-curated, not touched by scripts/sync.py's automatic hourly sync — there's no free API that reliably reports true L1/L2 mainnet launch dates and chain IDs, so this list is compiled and updated manually. Ask to have it refreshed when a new chain launches.",
-  "updatedAt": "2026-09-16T00:00:00Z",
+  "updatedAt": "2026-09-19T00:00:00Z",
   "items": [
     {
       "id": "arc",
@@ -43,6 +43,16 @@
       "note": "Stablecoin-focused L1 backed by Tether/Bitfinex, XPL token."
     },
     {
+      "id": "hemi",
+      "name": "Hemi",
+      "type": "L2",
+      "parent": "Bitcoin & Ethereum L2",
+      "chainId": 43111,
+      "launchDate": "2025-03-12",
+      "link": "https://hemi.xyz/",
+      "note": "Modular L2 unifying Bitcoin and Ethereum security into one EVM-compatible network."
+    },
+    {
       "id": "hyperevm",
       "name": "HyperEVM",
       "type": "L1",
@@ -51,6 +61,16 @@
       "launchDate": "2025-02-18",
       "link": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/hyperevm",
       "note": "Hyperliquid's general-purpose EVM execution layer."
+    },
+    {
+      "id": "story-protocol",
+      "name": "Story Protocol",
+      "type": "L1",
+      "parent": "EVM-compatible",
+      "chainId": 1514,
+      "launchDate": "2025-02-13",
+      "link": "https://www.story.foundation/",
+      "note": "L1 built for registering, licensing and monetizing intellectual property on-chain, IP token."
     },
     {
       "id": "megaeth",

@@ -59,7 +59,7 @@
   .wrap{ max-width:1180px; margin:0 auto; padding:0 20px; }
 
   /* ---- top nav ---- */
-  .topbar{ border-bottom:1px solid var(--border); }
+  .topbar{ border-bottom:1px solid var(--border); position:sticky; top:0; z-index:50; background:var(--bg); box-shadow:0 2px 10px var(--shadow); }
   .topbar .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 20px; flex-wrap:wrap; }
   .brand{ display:flex; align-items:center; gap:10px; }
   .brand-logo{ border-radius:8px; object-fit:cover; flex:none; }
@@ -127,6 +127,28 @@
   .pulse-fg-neutral{ color:var(--accent-ink); }
   .pulse-up{ color:var(--good); }
   .pulse-down{ color:var(--bad); }
+
+  /* ---- dominance + live prices ---- */
+  .dominance-row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:2px 0 16px; }
+  .dom-label{ font-weight:700; color:var(--text-faint); text-transform:uppercase; letter-spacing:.06em; font-size:11px; }
+  .dom-chip{ display:inline-flex; align-items:center; gap:5px; background:var(--chip-bg); border:1px solid var(--border); border-radius:999px; padding:4px 10px; font-weight:700; font-size:12px; font-family:"IBM Plex Mono",monospace; }
+  .dom-chip .dom-pct{ color:var(--accent-ink); }
+
+  .price-search-row{ display:flex; gap:8px; padding:14px 18px; border-bottom:1px solid var(--border); }
+  .price-search-row input{ flex:1; background:var(--surface-2); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:9px 12px; font-size:13px; font-family:inherit; min-width:0; }
+  .price-search-btn{ background:var(--teal); color:#fff; border:none; border-radius:8px; padding:9px 16px; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; }
+  .price-search-btn:hover{ filter:brightness(1.08); }
+  .price-search-result:empty{ display:none; }
+  .price-table-scroll{ max-height:460px; overflow-y:auto; }
+  .price-table-head, .price-row{ display:grid; grid-template-columns:2fr 1fr 1fr 1fr 1.3fr; gap:8px; align-items:center; padding:9px 18px; }
+  .price-table-head{ position:sticky; top:0; background:var(--surface); border-bottom:1px solid var(--border); font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--text-faint); font-weight:700; z-index:1; }
+  .pt-sort{ cursor:pointer; user-select:none; }
+  .pt-sort:hover{ color:var(--text); }
+  .pt-sort.active{ color:var(--teal); }
+  .price-row{ border-top:1px solid var(--border); font-size:12.5px; }
+  .price-row .pt-name{ font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .price-row .pt-name .pt-sym{ color:var(--text-faint); font-weight:600; font-family:"IBM Plex Mono",monospace; font-size:11px; }
+  .price-row .pt-num{ font-family:"IBM Plex Mono",monospace; }
 
   /* ---- layout ---- */
   .layout{ display:grid; grid-template-columns: 1fr 340px; gap:20px; align-items:start; padding:8px 0 40px; }
@@ -221,7 +243,7 @@
   .section-head h2{ font-size:15px; text-transform:uppercase; letter-spacing:.06em; color:var(--text); font-weight:800; }
   .section-head .hint{ font-size:11.5px; color:var(--text-faint); }
 
-  .grid-cards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; padding:16px; }
+  .grid-cards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; padding:16px; align-content:start; max-height:620px; overflow-y:auto; }
   .launch-card{ background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
   .launch-card .lc-top{ display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
   .launch-card .lc-name{ font-weight:700; font-size:14px; }
@@ -299,6 +321,7 @@
       <a href="#hub" class="nav-tab-link" data-tab="protocols">Protocols</a>
       <a href="#hub" class="nav-tab-link" data-tab="whales">Whales</a>
       <a href="#tokens">Tokens</a>
+      <a href="#prices">Prices</a>
       <a href="#learn">Learn</a>
       <a href="#subscribe">Subscribe</a>
       <div class="live-pill"><span class="live-dot live" id="liveDot"></span><span id="liveText">syncing&hellip;</span></div>
@@ -379,7 +402,7 @@
     <span class="pulse-item" id="pulseLose">Top loser: &mdash;</span>
   </div>
 
-  <div class="ad-slot ad-leaderboard">Advertise here</div>
+  <div class="ad-slot ad-leaderboard">AD</div>
 
   <section class="section" id="tokens">
     <div class="section-head">
@@ -390,6 +413,35 @@
       <div class="grid-cards" id="launchesGrid"><div class="empty-state">Loading tokens&hellip;</div></div>
     </div>
     <div class="source-note">Tracks newly-launched tokens across chains once they cross $1M market cap &mdash; including tokens on Robinhood&rsquo;s own chain and Robinhood-branded tokens elsewhere. Copycat tokens that reuse a popular name/symbol on a different contract are common &mdash; a &ldquo;name reused&rdquo; tag means exactly that, so always check the contract address shown on the card, not just the name. New listings carry very high risk; this is tracking, not an endorsement.</div>
+  </section>
+
+  <section class="section" id="prices">
+    <div class="section-head">
+      <h2>Live prices</h2>
+      <span class="hint" id="pricesCount">0 coins</span>
+    </div>
+    <div class="dominance-row">
+      <span class="dom-label">Dominance</span>
+      <span id="dominanceList">&mdash;</span>
+    </div>
+    <div class="card">
+      <div class="price-search-row">
+        <input type="text" id="priceSearchInput" placeholder="Search any coin &mdash; e.g. bitcoin, sol, pepe">
+        <button class="price-search-btn" id="priceSearchBtn" type="button">Search</button>
+      </div>
+      <div class="price-search-result" id="priceSearchResult"></div>
+      <div class="price-table-scroll">
+        <div class="price-table-head" id="priceTableHead">
+          <span class="pt-col">Coin</span>
+          <span class="pt-col pt-sort" data-sort="price">Price<span class="arrow"></span></span>
+          <span class="pt-col pt-sort" data-sort="change24h">24h %<span class="arrow"></span></span>
+          <span class="pt-col pt-sort" data-sort="volume24h">24h Vol<span class="arrow"></span></span>
+          <span class="pt-col pt-sort" data-sort="marketCapUsd">Market Cap<span class="arrow"></span></span>
+        </div>
+        <div id="priceTable"><div class="empty-state">Loading prices&hellip;</div></div>
+      </div>
+    </div>
+    <div class="source-note">Top 100 coins by market cap, refreshed hourly &mdash; click a column to sort. Search looks up any coin&rsquo;s live price directly, even ones outside this list.</div>
   </section>
 
   <div class="layout">
@@ -428,7 +480,7 @@
         <div class="sub-msg" id="subMsg"></div>
       </div>
 
-      <div class="ad-slot ad-rect">Advertise here</div>
+      <div class="ad-slot ad-rect">AD</div>
     </aside>
   </div>
 
@@ -448,7 +500,6 @@
     </div>
 
     <div class="foot-contact">
-      <span class="foot-contact-label">Reach me at</span>
       <a class="foot-contact-link" href="mailto:JalalOnChain@proton.me">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0-.621.504-1.125 1.125-1.125h17.25c.621 0 1.125.504 1.125 1.125v10.5c0 .621-.504 1.125-1.125 1.125H3.375A1.125 1.125 0 0 1 2.25 17.25V6.75Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m3 7 9 6 9-6"/></svg>
         JalalOnChain@proton.me
@@ -459,7 +510,7 @@
       </a>
     </div>
     <div class="foot-bottom">
-      <span>JalalOnChain &middot; crypto news, prices &amp; on-chain intelligence &mdash; not financial advice</span>
+      <span>JalalOnChain &middot; crypto news, enforcement alerts, live prices, token &amp; DeFi launches, whale activity and daily market takes &mdash; not financial advice</span>
       <span id="footSync">Waiting for first sync&hellip;</span>
     </div>
     <div class="foot-credit">Live price data and protocol TVL are pulled from public, no-key market-data APIs. Individual articles link straight to their original publisher.</div>
@@ -469,7 +520,9 @@
 <script>
 (function(){
   "use strict";
-  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], chains: [], marketTake: null, hlPositions: [], sentiment: null, updatedAt: null };
+  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], chains: [], marketTake: null, hlPositions: [], sentiment: null, dominance: null, updatedAt: null };
+  var priceSortState = { field: null, dir: -1 };
+  var priceFilterQuery = "";
 
   function fmtUsd(n){
     n = Number(n)||0;
@@ -549,15 +602,9 @@
     }).join("") || "<div class=\"hd\">More briefings appear here daily.</div>";
   }
 
-  var GRID_CAP = 12;
-  function capLabel(n, singular, plural){
-    var label = n+(n===1?" "+singular:" "+plural);
-    return n>GRID_CAP ? ("top "+GRID_CAP+" of "+label) : label;
-  }
-
   function renderLaunches(){
     var list = state.launches.slice().sort(function(a,b){ return (Number(b.marketCapUsd)||0)-(Number(a.marketCapUsd)||0); });
-    document.getElementById("launchesCount").textContent = capLabel(list.length, "token", "tokens");
+    document.getElementById("launchesCount").textContent = list.length+(list.length===1?" token":" tokens");
     var el = document.getElementById("launchesGrid");
     if(!list.length){ el.innerHTML = "<div class=\"empty-state\">No qualifying launches yet &mdash; check back after the next sync.</div>"; return; }
     // pump.fun/DexScreener are full of copycat tokens that reuse a popular name+symbol
@@ -567,7 +614,7 @@
       var key = (t.name||"").trim().toLowerCase()+"|"+(t.symbol||"").trim().toLowerCase();
       nameCounts[key] = (nameCounts[key]||0)+1;
     });
-    el.innerHTML = list.slice(0,GRID_CAP).map(function(t){
+    el.innerHTML = list.map(function(t){
       var link = t.link ? "<a href=\""+esc(t.link)+"\" target=\"_blank\" rel=\"noopener\">view</a>" : "";
       var key = (t.name||"").trim().toLowerCase()+"|"+(t.symbol||"").trim().toLowerCase();
       var isDupName = nameCounts[key] > 1 && (t.name||"").trim() !== "";
@@ -584,10 +631,10 @@
 
   function renderDefi(){
     var list = state.defi.slice().sort(function(a,b){ return (Number(b.tvlUsd)||0)-(Number(a.tvlUsd)||0); });
-    document.getElementById("defiCount").textContent = capLabel(list.length, "protocol", "protocols");
+    document.getElementById("defiCount").textContent = list.length+(list.length===1?" protocol":" protocols");
     var el = document.getElementById("defiGrid");
     if(!list.length){ el.innerHTML = "<div class=\"empty-state\">No newly-listed protocols yet &mdash; check back after the next sync.</div>"; return; }
-    el.innerHTML = list.slice(0,GRID_CAP).map(function(p){
+    el.innerHTML = list.map(function(p){
       var link = p.link ? "<a href=\""+esc(p.link)+"\" target=\"_blank\" rel=\"noopener\">view</a>" : "";
       var chains = (p.chains||[]).slice(0,3).join(", ");
       return "<div class=\"launch-card\">"+
@@ -608,12 +655,12 @@
     if(updEl) updEl.textContent = state.hlUpdatedAt ? ("synced "+timeAgo(state.hlUpdatedAt)) : "";
 
     var positions = state.hlPositions.slice().sort(function(a,b){ return (Number(b.positionValueUsd)||0)-(Number(a.positionValueUsd)||0); });
-    document.getElementById("hlPosCount").textContent = capLabel(positions.length, "position", "positions");
+    document.getElementById("hlPosCount").textContent = positions.length+(positions.length===1?" position":" positions");
     var posEl = document.getElementById("hlPositionsGrid");
     if(!positions.length){
       posEl.innerHTML = "<div class=\"empty-state\">No qualifying positions yet &mdash; check back after the next sync.</div>";
     } else {
-      posEl.innerHTML = positions.slice(0,GRID_CAP).map(function(p){
+      posEl.innerHTML = positions.map(function(p){
         var sideClass = p.side==="long" ? "side-long" : (p.side==="short" ? "side-short" : "");
         var sideLabel = p.side==="spot" ? "SPOT" : (p.side||"").toUpperCase()+(p.leverage?" "+p.leverage+"x":"");
         var pnlHtml = "";
@@ -708,9 +755,128 @@
     }
   }
 
+  function renderDominance(){
+    var dom = state.dominance;
+    var el = document.getElementById("dominanceList");
+    var items = (dom && dom.items) || [];
+    if(!items.length){ el.textContent = "—"; return; }
+    el.innerHTML = items.map(function(d){
+      return "<span class=\"dom-chip\">"+esc(d.symbol)+" <span class=\"dom-pct\">"+Number(d.pct).toFixed(1)+"%</span></span>";
+    }).join(" ");
+  }
+
+  function sortedPrices(){
+    var list = (state.prices||[]).slice();
+    var f = priceSortState.field, dir = priceSortState.dir;
+    if(!f){
+      list.sort(function(a,b){ return (Number(a.marketCapRank)||9999)-(Number(b.marketCapRank)||9999); });
+    } else {
+      list.sort(function(a,b){
+        var av = Number(a[f])||0, bv = Number(b[f])||0;
+        return dir === 1 ? av-bv : bv-av;
+      });
+    }
+    return list;
+  }
+
+  function priceRowHtml(p){
+    var chgClass = Number(p.change24h)>=0 ? "up" : "down";
+    return "<div class=\"price-row\">"+
+      "<span class=\"pt-name\">"+esc(p.name||p.symbol)+" <span class=\"pt-sym\">"+esc(p.symbol)+"</span></span>"+
+      "<span class=\"pt-num\">"+fmtPrice(p.price)+"</span>"+
+      "<span class=\"pt-num t-chg "+chgClass+"\">"+fmtChg(Number(p.change24h))+"</span>"+
+      "<span class=\"pt-num\">"+fmtUsd(p.volume24h)+"</span>"+
+      "<span class=\"pt-num\">"+fmtUsd(p.marketCapUsd)+"</span>"+
+    "</div>";
+  }
+
+  function renderPriceTable(){
+    var list = sortedPrices();
+    document.getElementById("pricesCount").textContent = list.length+(list.length===1?" coin":" coins");
+    var q = priceFilterQuery.trim().toLowerCase();
+    var filtered = q ? list.filter(function(p){
+      return (p.symbol||"").toLowerCase().indexOf(q)!==-1 || (p.name||"").toLowerCase().indexOf(q)!==-1;
+    }) : list;
+    var el = document.getElementById("priceTable");
+    el.innerHTML = filtered.length ? filtered.map(priceRowHtml).join("") :
+      "<div class=\"empty-state\">No matching coins in the top 100 &mdash; try Search for a live lookup.</div>";
+    document.querySelectorAll("#priceTableHead .pt-sort").forEach(function(c){
+      var isActive = c.dataset.sort === priceSortState.field;
+      c.classList.toggle("active", isActive);
+      var arrow = c.querySelector(".arrow");
+      if(arrow) arrow.textContent = isActive ? (priceSortState.dir===1?" ▲":" ▼") : "";
+    });
+  }
+
+  function clearSearchResult(){ document.getElementById("priceSearchResult").innerHTML = ""; }
+
+  function liveLookupCard(c){
+    var chgClass = Number(c.change24h)>=0 ? "up" : "down";
+    return "<div class=\"launch-card\">"+
+      "<div class=\"lc-top\"><span class=\"lc-name\">"+esc(c.name)+"</span><span class=\"platform-badge\">live lookup</span></div>"+
+      "<div class=\"lc-mc\">"+fmtPrice(c.price)+"</div>"+
+      "<div class=\"lc-meta\"><span class=\"t-chg "+chgClass+"\">"+fmtChg(Number(c.change24h))+"</span>"+(c.marketCapUsd?("<span>"+fmtUsd(c.marketCapUsd)+" mkt cap</span>"):"")+"</div>"+
+    "</div>";
+  }
+
+  function doPriceSearch(){
+    var q = document.getElementById("priceSearchInput").value.trim();
+    priceFilterQuery = q;
+    renderPriceTable();
+    if(!q){ clearSearchResult(); return; }
+    var qLower = q.toLowerCase();
+    var localHit = (state.prices||[]).some(function(p){
+      return (p.symbol||"").toLowerCase()===qLower || (p.name||"").toLowerCase().indexOf(qLower)!==-1;
+    });
+    if(localHit){ clearSearchResult(); return; }
+    document.getElementById("priceSearchResult").innerHTML = "<div class=\"empty-state\" style=\"padding:14px 0;\">Searching&hellip;</div>";
+    fetch("https://api.coingecko.com/api/v3/search?query="+encodeURIComponent(q))
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(data){
+        var coins = (data && data.coins) || [];
+        if(!coins.length){
+          document.getElementById("priceSearchResult").innerHTML = "<div class=\"empty-state\" style=\"padding:14px 0;\">No coin found for &ldquo;"+esc(q)+"&rdquo;.</div>";
+          return null;
+        }
+        return { id: coins[0].id, name: coins[0].name };
+      })
+      .then(function(hit){
+        if(!hit) return;
+        return fetch("https://api.coingecko.com/api/v3/simple/price?ids="+encodeURIComponent(hit.id)+"&vs_currencies=usd&include_24hr_change=true&include_market_cap=true")
+          .then(function(r){ return r.ok ? r.json() : null; })
+          .then(function(data){
+            var row = data && data[hit.id];
+            if(!row){
+              document.getElementById("priceSearchResult").innerHTML = "<div class=\"empty-state\" style=\"padding:14px 0;\">Couldn&rsquo;t load live data for that coin &mdash; try again shortly.</div>";
+              return;
+            }
+            document.getElementById("priceSearchResult").innerHTML = liveLookupCard({
+              name: hit.name, price: row.usd, change24h: row.usd_24h_change, marketCapUsd: row.usd_market_cap
+            });
+          });
+      })
+      .catch(function(){
+        document.getElementById("priceSearchResult").innerHTML = "<div class=\"empty-state\" style=\"padding:14px 0;\">Live lookup failed &mdash; try again in a moment.</div>";
+      });
+  }
+
+  document.getElementById("priceSearchBtn").addEventListener("click", doPriceSearch);
+  document.getElementById("priceSearchInput").addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); doPriceSearch(); } });
+  document.getElementById("priceSearchInput").addEventListener("input", function(e){ priceFilterQuery = e.target.value; renderPriceTable(); clearSearchResult(); });
+  document.getElementById("priceTableHead").addEventListener("click", function(e){
+    var col = e.target.closest(".pt-sort"); if(!col) return;
+    var field = col.dataset.sort;
+    if(priceSortState.field === field){ priceSortState.dir *= -1; }
+    else { priceSortState.field = field; priceSortState.dir = -1; }
+    renderPriceTable();
+  });
+
   function renderPrices(){
     var track = document.getElementById("tickerTrack");
-    var list = state.prices || [];
+    // The ticker is a quick-glance marquee, not the full list — keep it to the
+    // top 15 by market cap so it stays smooth; the Live Prices table below
+    // shows the full top-100 with search and sorting.
+    var list = (state.prices || []).slice(0,15);
     if(!list.length){ track.innerHTML = "<div class=\"ticker-item\"><span class=\"t-sym\">Prices syncing&hellip;</span></div>"; return; }
     function itemHtml(p){
       var chg = Number(p.change24h);
@@ -788,9 +954,10 @@
       fetch("./data/hyperliquid.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/chains.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/market_take.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
-      fetch("./data/sentiment.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
+      fetch("./data/sentiment.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/dominance.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
     ]).then(function(results){
-      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5], chainsData = results[6], takeData = results[7], sentimentData = results[8];
+      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5], chainsData = results[6], takeData = results[7], sentimentData = results[8], dominanceData = results[9];
       if(kData && kData.items){ state.knowledge = kData.items; }
       if(launchData && launchData.items){ state.launches = launchData.items; }
       if(newsData && newsData.items){ state.news = newsData.items; }
@@ -799,10 +966,11 @@
       if(chainsData && chainsData.items){ state.chains = chainsData.items; }
       if(takeData){ state.marketTake = takeData; }
       if(sentimentData){ state.sentiment = sentimentData; }
+      if(dominanceData){ state.dominance = dominanceData; }
       if(hlData && hlData.positions){ state.hlPositions = hlData.positions; }
       if(hlData && hlData.updatedAt){ state.hlUpdatedAt = hlData.updatedAt; }
       state.updatedAt = (newsData && newsData.updatedAt) || (launchData && launchData.updatedAt) || (priceData && priceData.updatedAt) || state.updatedAt;
-      renderKnowledge(); renderLaunches(); renderNews(); renderPrices(); renderDefi(); renderChains(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderStatus();
+      renderKnowledge(); renderLaunches(); renderNews(); renderPrices(); renderPriceTable(); renderDefi(); renderChains(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
     });
   }
 
@@ -849,7 +1017,7 @@
     if(copyBtn){ copyToClipboard(copyBtn.dataset.copy, copyBtn); }
   });
 
-  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPrices(); renderDefi(); renderChains(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderStatus();
+  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPrices(); renderPriceTable(); renderDefi(); renderChains(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
   loadData();
   setInterval(loadData, 90000);
   setInterval(renderStatus, 30000);

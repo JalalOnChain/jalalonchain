@@ -90,11 +90,6 @@
   .hero p a{ color:var(--accent-ink); text-decoration:none; }
   .hero p a:hover{ text-decoration:underline; }
 
-  .hero-grid{ display:grid; grid-template-columns:1fr 320px; gap:22px; align-items:start; margin-top:16px; }
-  .hero-grid .hero-eyebrow{ margin-top:0; }
-  @media (max-width:820px){ .hero-grid{ grid-template-columns:1fr; } }
-  .hero-brief{ background:var(--surface); }
-
   .hub-tabs{ display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; }
   .hub-tab{
     --tab-color:var(--teal);
@@ -109,7 +104,6 @@
   .hub-tab[data-tab="news"]{ --tab-color:var(--teal); }
   .hub-tab[data-tab="enforcement"]{ --tab-color:var(--bad); }
   .hub-tab[data-tab="whales"]{ --tab-color:var(--blue2); }
-  .hub-tab[data-tab="prices"]{ --tab-color:var(--violet); }
   .hub-tab[data-tab="chains"]{ --tab-color:var(--accent); }
 
   .pulse-bar{ display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; padding:2px 0 14px; font-size:12.5px; color:var(--text-muted); }
@@ -316,8 +310,8 @@
       <a href="#hub" class="nav-tab-link" data-tab="news">News</a>
       <a href="#hub" class="nav-tab-link" data-tab="enforcement">Enforcement</a>
       <a href="#hub" class="nav-tab-link" data-tab="whales">Whales</a>
-      <a href="#hub" class="nav-tab-link" data-tab="prices">Prices</a>
       <a href="#hub" class="nav-tab-link" data-tab="chains">Chains</a>
+      <a href="#prices">Prices</a>
       <a href="#tokens">Tokens</a>
       <a href="#defi">DeFi</a>
       <a href="#learn">Learn</a>
@@ -330,23 +324,66 @@
 <div class="wrap">
   <section class="hero">
     <h1>The <em>Crypto Information Hub</em></h1>
-    <div class="hero-grid">
-      <div class="hero-take">
-        <div class="hero-eyebrow" id="heroTakeDate">Today&rsquo;s take</div>
-        <p id="heroTake">Loading today&rsquo;s take&hellip;</p>
+    <div class="hero-eyebrow" id="heroTakeDate">Today&rsquo;s take</div>
+    <p id="heroTake">Loading today&rsquo;s take&hellip;</p>
+  </section>
+
+  <section class="section" id="prices">
+    <div class="section-head">
+      <h2>Live prices</h2>
+      <span class="hint" id="pricesCount">0 coins</span>
+    </div>
+    <div class="pulse-bar" id="pulseBar">
+      <span class="pulse-item" id="pulseFg">Sentiment: &mdash;</span>
+      <span class="pulse-sep">&middot;</span>
+      <span class="pulse-item" id="pulseGain">Top gainer: &mdash;</span>
+      <span class="pulse-sep">&middot;</span>
+      <span class="pulse-item" id="pulseLose">Top loser: &mdash;</span>
+    </div>
+    <div class="dominance-row">
+      <span class="dom-label">Dominance</span>
+      <span id="dominanceList">&mdash;</span>
+    </div>
+    <div class="card">
+      <div class="price-search-row">
+        <input type="text" id="priceSearchInput" placeholder="Search any coin &mdash; e.g. bitcoin, sol, pepe">
+        <button class="price-search-btn" id="priceSearchBtn" type="button">Search</button>
       </div>
-      <div class="card k-card hero-brief" id="learn">
-        <div class="k-eyebrow"><span id="kEyebrowLabel">Daily briefing</span><time id="kDate">&mdash;</time></div>
-        <div class="k-title" id="kTitle">Loading today&rsquo;s insight&hellip;</div>
-        <div class="k-body" id="kBody"></div>
-        <div class="k-tags" id="kTags"></div>
-        <div class="k-back-today" id="kBackToday" style="display:none;margin-top:10px;">&larr; back to today&rsquo;s briefing</div>
-        <div class="k-hist-nested">
-          <h4>Past briefings</h4>
-          <div class="k-hist-scroll" id="kHistList"></div>
+      <div class="price-search-result" id="priceSearchResult"></div>
+      <div class="price-table-scroll">
+        <div class="price-table-head" id="priceTableHead">
+          <span class="pt-col">Coin</span>
+          <span class="pt-col pt-sort" data-sort="price">Price<span class="arrow"></span></span>
+          <span class="pt-col pt-sort" data-sort="change24h">24h %<span class="arrow"></span></span>
+          <span class="pt-col pt-sort" data-sort="volume24h">24h Vol<span class="arrow"></span></span>
+          <span class="pt-col pt-sort" data-sort="marketCapUsd">Market Cap<span class="arrow"></span></span>
         </div>
+        <div id="priceTable"><div class="empty-state">Loading prices&hellip;</div></div>
       </div>
     </div>
+    <div class="source-note">Top 100 coins by market cap, refreshed hourly &mdash; click a column to sort. Search looks up any coin&rsquo;s live price directly, even ones outside this list.</div>
+  </section>
+
+  <section class="section" id="tokens">
+    <div class="section-head">
+      <h2>New tokens monitor &middot; $1M+ market cap</h2>
+      <span class="hint" id="launchesCount">0 tracked</span>
+    </div>
+    <div class="card">
+      <div class="grid-cards" id="launchesGrid"><div class="empty-state">Loading tokens&hellip;</div></div>
+    </div>
+    <div class="source-note">Tracks newly-launched tokens across chains once they cross $1M market cap. Copycat tokens that reuse a popular name/symbol on a different contract are common &mdash; a &ldquo;name reused&rdquo; tag means exactly that, so always check the contract address shown on the card, not just the name. New listings carry very high risk; this is tracking, not an endorsement.</div>
+  </section>
+
+  <section class="section" id="defi">
+    <div class="section-head">
+      <h2>New DeFi protocols &amp; entities</h2>
+      <span class="hint" id="defiCount">0 tracked</span>
+    </div>
+    <div class="card">
+      <div class="grid-cards" id="defiGrid"><div class="empty-state">Loading new protocols&hellip;</div></div>
+    </div>
+    <div class="source-note">Recently-listed DeFi protocols by TVL &mdash; new lending markets, DEXs, restaking and yield entities that crossed a minimum TVL floor. Tracking, not an endorsement or audit.</div>
   </section>
 
   <section class="hub-section" id="hub">
@@ -354,7 +391,6 @@
       <button class="hub-tab active" data-tab="news"><span class="tab-dot"></span>News</button>
       <button class="hub-tab" data-tab="enforcement"><span class="tab-dot"></span>Enforcement Alerts</button>
       <button class="hub-tab" data-tab="whales"><span class="tab-dot"></span>Whale Activity</button>
-      <button class="hub-tab" data-tab="prices"><span class="tab-dot"></span>Live Prices</button>
       <button class="hub-tab" data-tab="chains"><span class="tab-dot"></span>New Chains</button>
     </div>
 
@@ -389,42 +425,6 @@
       <div class="source-note">Tracks Hyperliquid&rsquo;s current top accounts by size, re-selected every sync, filtered to positions of $100K or more. Tracking, not financial advice.</div>
     </div>
 
-    <div class="hub-pane" data-pane="prices" id="prices">
-      <div class="section-head">
-        <h2>Live prices</h2>
-        <span class="hint" id="pricesCount">0 coins</span>
-      </div>
-      <div class="pulse-bar" id="pulseBar">
-        <span class="pulse-item" id="pulseFg">Sentiment: &mdash;</span>
-        <span class="pulse-sep">&middot;</span>
-        <span class="pulse-item" id="pulseGain">Top gainer: &mdash;</span>
-        <span class="pulse-sep">&middot;</span>
-        <span class="pulse-item" id="pulseLose">Top loser: &mdash;</span>
-      </div>
-      <div class="dominance-row">
-        <span class="dom-label">Dominance</span>
-        <span id="dominanceList">&mdash;</span>
-      </div>
-      <div class="card">
-        <div class="price-search-row">
-          <input type="text" id="priceSearchInput" placeholder="Search any coin &mdash; e.g. bitcoin, sol, pepe">
-          <button class="price-search-btn" id="priceSearchBtn" type="button">Search</button>
-        </div>
-        <div class="price-search-result" id="priceSearchResult"></div>
-        <div class="price-table-scroll">
-          <div class="price-table-head" id="priceTableHead">
-            <span class="pt-col">Coin</span>
-            <span class="pt-col pt-sort" data-sort="price">Price<span class="arrow"></span></span>
-            <span class="pt-col pt-sort" data-sort="change24h">24h %<span class="arrow"></span></span>
-            <span class="pt-col pt-sort" data-sort="volume24h">24h Vol<span class="arrow"></span></span>
-            <span class="pt-col pt-sort" data-sort="marketCapUsd">Market Cap<span class="arrow"></span></span>
-          </div>
-          <div id="priceTable"><div class="empty-state">Loading prices&hellip;</div></div>
-        </div>
-      </div>
-      <div class="source-note">Top 100 coins by market cap, refreshed hourly &mdash; click a column to sort. Search looks up any coin&rsquo;s live price directly, even ones outside this list.</div>
-    </div>
-
     <div class="hub-pane" data-pane="chains" id="chains">
       <div class="feed-head-row">
         <h3>New chains</h3>
@@ -436,44 +436,38 @@
     </div>
   </section>
 
-  <section class="section" id="tokens">
-    <div class="section-head">
-      <h2>New tokens monitor &middot; $1M+ market cap</h2>
-      <span class="hint" id="launchesCount">0 tracked</span>
-    </div>
-    <div class="card">
-      <div class="grid-cards" id="launchesGrid"><div class="empty-state">Loading tokens&hellip;</div></div>
-    </div>
-    <div class="source-note">Tracks newly-launched tokens across chains once they cross $1M market cap. Copycat tokens that reuse a popular name/symbol on a different contract are common &mdash; a &ldquo;name reused&rdquo; tag means exactly that, so always check the contract address shown on the card, not just the name. New listings carry very high risk; this is tracking, not an endorsement.</div>
-  </section>
-
-  <section class="section" id="defi">
-    <div class="section-head">
-      <h2>New DeFi protocols &amp; entities</h2>
-      <span class="hint" id="defiCount">0 tracked</span>
-    </div>
-    <div class="card">
-      <div class="grid-cards" id="defiGrid"><div class="empty-state">Loading new protocols&hellip;</div></div>
-    </div>
-    <div class="source-note">Recently-listed DeFi protocols by TVL &mdash; new lending markets, DEXs, restaking and yield entities that crossed a minimum TVL floor. Tracking, not an endorsement or audit.</div>
-  </section>
-
   <div class="ad-slot ad-leaderboard">AD</div>
 
   <div class="layout">
-    <div class="card sub-card" id="subscribe">
-      <h4>Get the daily briefing by email</h4>
-      <p>One short on-chain or off-chain lesson a day &mdash; no noise, no price calls. Unsubscribe any time.</p>
-      <form class="sub-form" id="subForm">
-        <input type="email" id="subEmail" placeholder="you@email.com" required>
-        <input type="hidden" name="access_key" value="PENDING_WEB3FORMS_KEY">
-        <input type="hidden" name="subject" value="New JalalOnChain subscriber">
-        <button class="sub-btn" type="submit">Subscribe</button>
-      </form>
-      <div class="sub-msg" id="subMsg"></div>
+    <div class="feed-col">
+      <div class="card k-card" id="learn">
+        <div class="k-eyebrow"><span id="kEyebrowLabel">Daily briefing</span><time id="kDate">&mdash;</time></div>
+        <div class="k-title" id="kTitle">Loading today&rsquo;s insight&hellip;</div>
+        <div class="k-body" id="kBody"></div>
+        <div class="k-tags" id="kTags"></div>
+        <div class="k-back-today" id="kBackToday" style="display:none;margin-top:10px;">&larr; back to today&rsquo;s briefing</div>
+        <div class="k-hist-nested">
+          <h4>Past briefings</h4>
+          <div class="k-hist-scroll" id="kHistList"></div>
+        </div>
+      </div>
     </div>
 
-    <div class="ad-slot ad-rect">AD</div>
+    <aside class="side">
+      <div class="card sub-card" id="subscribe">
+        <h4>Get the daily briefing by email</h4>
+        <p>One short on-chain or off-chain lesson a day &mdash; no noise, no price calls. Unsubscribe any time.</p>
+        <form class="sub-form" id="subForm">
+          <input type="email" id="subEmail" placeholder="you@email.com" required>
+          <input type="hidden" name="access_key" value="PENDING_WEB3FORMS_KEY">
+          <input type="hidden" name="subject" value="New JalalOnChain subscriber">
+          <button class="sub-btn" type="submit">Subscribe</button>
+        </form>
+        <div class="sub-msg" id="subMsg"></div>
+      </div>
+
+      <div class="ad-slot ad-rect">AD</div>
+    </aside>
   </div>
 
   <footer class="page-foot">

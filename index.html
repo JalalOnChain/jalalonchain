@@ -108,23 +108,11 @@
   .hub-tab.active .tab-dot{ background:#fff; }
   .hub-tab[data-tab="news"]{ --tab-color:var(--teal); }
   .hub-tab[data-tab="enforcement"]{ --tab-color:var(--bad); }
-  .hub-tab[data-tab="protocols"]{ --tab-color:var(--violet); }
   .hub-tab[data-tab="whales"]{ --tab-color:var(--blue2); }
+  .hub-tab[data-tab="prices"]{ --tab-color:var(--violet); }
+  .hub-tab[data-tab="chains"]{ --tab-color:var(--accent); }
 
-  /* ---- price ticker ---- */
-  .ticker-wrap{ border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--surface); overflow:hidden; position:relative; margin-top:24px; }
-  .ticker-track{ display:flex; width:max-content; animation:ticker-scroll 55s linear infinite; }
-  .ticker-track:hover{ animation-play-state:paused; }
-  @media (prefers-reduced-motion: reduce){ .ticker-track{ animation:none; overflow-x:auto; } }
-  @keyframes ticker-scroll{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
-  .ticker-item{ display:flex; align-items:center; gap:8px; padding:11px 22px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; white-space:nowrap; border-right:1px solid var(--border); }
-  .ticker-item .t-sym{ font-weight:700; color:var(--text); }
-  .ticker-item .t-price{ color:var(--text-muted); }
-  .ticker-item .t-chg{ font-weight:600; }
-  .ticker-item .t-chg.up{ color:var(--good); }
-  .ticker-item .t-chg.down{ color:var(--bad); }
-
-  .pulse-bar{ display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; padding:14px 0 6px; font-size:12.5px; color:var(--text-muted); }
+  .pulse-bar{ display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; padding:2px 0 14px; font-size:12.5px; color:var(--text-muted); }
   .pulse-item b{ font-weight:800; }
   .pulse-sep{ color:var(--text-faint); }
   .pulse-fg-fear{ color:var(--bad); }
@@ -207,6 +195,9 @@
   .k-hist-item .ht{ font-size:12.5px; font-weight:600; margin-bottom:2px; }
   .k-hist-item .hd{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; }
   .k-back-today{ font-size:11px; color:var(--teal); cursor:pointer; font-weight:600; text-decoration:underline; }
+  .k-hist-nested{ margin-top:14px; padding-top:12px; border-top:1px solid var(--border); }
+  .k-hist-nested h4{ font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); font-weight:600; margin-bottom:8px; }
+  .k-hist-scroll{ max-height:150px; overflow-y:auto; }
 
   .sub-card{ padding:20px 18px; background:linear-gradient(160deg, var(--accent-soft), var(--surface)); }
   .sub-card h4{ font-size:15px; font-weight:800; margin-bottom:6px; }
@@ -324,10 +315,11 @@
     <div class="nav-links">
       <a href="#hub" class="nav-tab-link" data-tab="news">News</a>
       <a href="#hub" class="nav-tab-link" data-tab="enforcement">Enforcement</a>
-      <a href="#hub" class="nav-tab-link" data-tab="protocols">Protocols</a>
       <a href="#hub" class="nav-tab-link" data-tab="whales">Whales</a>
+      <a href="#hub" class="nav-tab-link" data-tab="prices">Prices</a>
+      <a href="#hub" class="nav-tab-link" data-tab="chains">Chains</a>
       <a href="#tokens">Tokens</a>
-      <a href="#prices">Prices</a>
+      <a href="#defi">DeFi</a>
       <a href="#learn">Learn</a>
       <a href="#subscribe">Subscribe</a>
       <div class="live-pill"><span class="live-dot live" id="liveDot"></span><span id="liveText">syncing&hellip;</span></div>
@@ -336,35 +328,6 @@
 </div>
 
 <div class="wrap">
-  <section class="section" id="prices">
-    <div class="section-head">
-      <h2>Live prices</h2>
-      <span class="hint" id="pricesCount">0 coins</span>
-    </div>
-    <div class="dominance-row">
-      <span class="dom-label">Dominance</span>
-      <span id="dominanceList">&mdash;</span>
-    </div>
-    <div class="card">
-      <div class="price-search-row">
-        <input type="text" id="priceSearchInput" placeholder="Search any coin &mdash; e.g. bitcoin, sol, pepe">
-        <button class="price-search-btn" id="priceSearchBtn" type="button">Search</button>
-      </div>
-      <div class="price-search-result" id="priceSearchResult"></div>
-      <div class="price-table-scroll">
-        <div class="price-table-head" id="priceTableHead">
-          <span class="pt-col">Coin</span>
-          <span class="pt-col pt-sort" data-sort="price">Price<span class="arrow"></span></span>
-          <span class="pt-col pt-sort" data-sort="change24h">24h %<span class="arrow"></span></span>
-          <span class="pt-col pt-sort" data-sort="volume24h">24h Vol<span class="arrow"></span></span>
-          <span class="pt-col pt-sort" data-sort="marketCapUsd">Market Cap<span class="arrow"></span></span>
-        </div>
-        <div id="priceTable"><div class="empty-state">Loading prices&hellip;</div></div>
-      </div>
-    </div>
-    <div class="source-note">Top 100 coins by market cap, refreshed hourly &mdash; click a column to sort. Search looks up any coin&rsquo;s live price directly, even ones outside this list.</div>
-  </section>
-
   <section class="hero">
     <h1>The <em>Crypto Information Hub</em></h1>
     <div class="hero-grid">
@@ -378,17 +341,45 @@
         <div class="k-body" id="kBody"></div>
         <div class="k-tags" id="kTags"></div>
         <div class="k-back-today" id="kBackToday" style="display:none;margin-top:10px;">&larr; back to today&rsquo;s briefing</div>
+        <div class="k-hist-nested">
+          <h4>Past briefings</h4>
+          <div class="k-hist-scroll" id="kHistList"></div>
+        </div>
       </div>
-    </div>
-    <div class="hub-tabs" id="hubTabs">
-      <button class="hub-tab active" data-tab="news"><span class="tab-dot"></span>News</button>
-      <button class="hub-tab" data-tab="enforcement"><span class="tab-dot"></span>Enforcement Alerts</button>
-      <button class="hub-tab" data-tab="protocols"><span class="tab-dot"></span>New Protocols &amp; Entities</button>
-      <button class="hub-tab" data-tab="whales"><span class="tab-dot"></span>Whale Activity</button>
     </div>
   </section>
 
+  <section class="section" id="tokens">
+    <div class="section-head">
+      <h2>New tokens monitor &middot; $1M+ market cap</h2>
+      <span class="hint" id="launchesCount">0 tracked</span>
+    </div>
+    <div class="card">
+      <div class="grid-cards" id="launchesGrid"><div class="empty-state">Loading tokens&hellip;</div></div>
+    </div>
+    <div class="source-note">Tracks newly-launched tokens across chains once they cross $1M market cap &mdash; including tokens on Robinhood&rsquo;s own chain and Robinhood-branded tokens elsewhere. Copycat tokens that reuse a popular name/symbol on a different contract are common &mdash; a &ldquo;name reused&rdquo; tag means exactly that, so always check the contract address shown on the card, not just the name. New listings carry very high risk; this is tracking, not an endorsement.</div>
+  </section>
+
+  <section class="section" id="defi">
+    <div class="section-head">
+      <h2>New DeFi protocols &amp; entities</h2>
+      <span class="hint" id="defiCount">0 tracked</span>
+    </div>
+    <div class="card">
+      <div class="grid-cards" id="defiGrid"><div class="empty-state">Loading new protocols&hellip;</div></div>
+    </div>
+    <div class="source-note">Recently-listed DeFi protocols by TVL &mdash; new lending markets, DEXs, restaking and yield entities that crossed a minimum TVL floor. Tracking, not an endorsement or audit.</div>
+  </section>
+
   <section class="hub-section" id="hub">
+    <div class="hub-tabs" id="hubTabs">
+      <button class="hub-tab active" data-tab="news"><span class="tab-dot"></span>News</button>
+      <button class="hub-tab" data-tab="enforcement"><span class="tab-dot"></span>Enforcement Alerts</button>
+      <button class="hub-tab" data-tab="whales"><span class="tab-dot"></span>Whale Activity</button>
+      <button class="hub-tab" data-tab="prices"><span class="tab-dot"></span>Live Prices</button>
+      <button class="hub-tab" data-tab="chains"><span class="tab-dot"></span>New Chains</button>
+    </div>
+
     <div class="hub-pane active" data-pane="news" id="news">
       <div class="feed-head-row">
         <h3>Crypto news</h3>
@@ -409,17 +400,6 @@
       </div>
     </div>
 
-    <div class="hub-pane" data-pane="protocols" id="defi">
-      <div class="section-head">
-        <h2>New DeFi protocols &amp; entities</h2>
-        <span class="hint" id="defiCount">0 tracked</span>
-      </div>
-      <div class="card">
-        <div class="grid-cards" id="defiGrid"><div class="empty-state">Loading new protocols&hellip;</div></div>
-      </div>
-      <div class="source-note">Recently-listed DeFi protocols by TVL &mdash; new lending markets, DEXs, restaking and yield entities that crossed a minimum TVL floor. Tracking, not an endorsement or audit.</div>
-    </div>
-
     <div class="hub-pane" data-pane="whales" id="hyperliquid">
       <div class="section-head">
         <h2>Hyperliquid whale activity &middot; $100K+ positions</h2>
@@ -430,39 +410,44 @@
       </div>
       <div class="source-note">Tracks Hyperliquid&rsquo;s current top accounts by size, re-selected every sync, filtered to positions of $100K or more. Tracking, not financial advice.</div>
     </div>
-  </section>
-</div>
 
-<div class="ticker-wrap">
-  <div class="ticker-track" id="tickerTrack">
-    <div class="ticker-item"><span class="t-sym">Loading prices&hellip;</span></div>
-  </div>
-</div>
-
-<div class="wrap">
-  <div class="pulse-bar" id="pulseBar">
-    <span class="pulse-item" id="pulseFg">Sentiment: &mdash;</span>
-    <span class="pulse-sep">&middot;</span>
-    <span class="pulse-item" id="pulseGain">Top gainer: &mdash;</span>
-    <span class="pulse-sep">&middot;</span>
-    <span class="pulse-item" id="pulseLose">Top loser: &mdash;</span>
-  </div>
-
-  <div class="ad-slot ad-leaderboard">AD</div>
-
-  <section class="section" id="tokens">
-    <div class="section-head">
-      <h2>New tokens monitor &middot; $1M+ market cap</h2>
-      <span class="hint" id="launchesCount">0 tracked</span>
+    <div class="hub-pane" data-pane="prices" id="prices">
+      <div class="section-head">
+        <h2>Live prices</h2>
+        <span class="hint" id="pricesCount">0 coins</span>
+      </div>
+      <div class="pulse-bar" id="pulseBar">
+        <span class="pulse-item" id="pulseFg">Sentiment: &mdash;</span>
+        <span class="pulse-sep">&middot;</span>
+        <span class="pulse-item" id="pulseGain">Top gainer: &mdash;</span>
+        <span class="pulse-sep">&middot;</span>
+        <span class="pulse-item" id="pulseLose">Top loser: &mdash;</span>
+      </div>
+      <div class="dominance-row">
+        <span class="dom-label">Dominance</span>
+        <span id="dominanceList">&mdash;</span>
+      </div>
+      <div class="card">
+        <div class="price-search-row">
+          <input type="text" id="priceSearchInput" placeholder="Search any coin &mdash; e.g. bitcoin, sol, pepe">
+          <button class="price-search-btn" id="priceSearchBtn" type="button">Search</button>
+        </div>
+        <div class="price-search-result" id="priceSearchResult"></div>
+        <div class="price-table-scroll">
+          <div class="price-table-head" id="priceTableHead">
+            <span class="pt-col">Coin</span>
+            <span class="pt-col pt-sort" data-sort="price">Price<span class="arrow"></span></span>
+            <span class="pt-col pt-sort" data-sort="change24h">24h %<span class="arrow"></span></span>
+            <span class="pt-col pt-sort" data-sort="volume24h">24h Vol<span class="arrow"></span></span>
+            <span class="pt-col pt-sort" data-sort="marketCapUsd">Market Cap<span class="arrow"></span></span>
+          </div>
+          <div id="priceTable"><div class="empty-state">Loading prices&hellip;</div></div>
+        </div>
+      </div>
+      <div class="source-note">Top 100 coins by market cap, refreshed hourly &mdash; click a column to sort. Search looks up any coin&rsquo;s live price directly, even ones outside this list.</div>
     </div>
-    <div class="card">
-      <div class="grid-cards" id="launchesGrid"><div class="empty-state">Loading tokens&hellip;</div></div>
-    </div>
-    <div class="source-note">Tracks newly-launched tokens across chains once they cross $1M market cap &mdash; including tokens on Robinhood&rsquo;s own chain and Robinhood-branded tokens elsewhere. Copycat tokens that reuse a popular name/symbol on a different contract are common &mdash; a &ldquo;name reused&rdquo; tag means exactly that, so always check the contract address shown on the card, not just the name. New listings carry very high risk; this is tracking, not an endorsement.</div>
-  </section>
 
-  <div class="layout">
-    <div class="feed-col">
+    <div class="hub-pane" data-pane="chains" id="chains">
       <div class="feed-head-row">
         <h3>New chains</h3>
         <span class="feed-count" id="chainsCount">0 tracked</span>
@@ -470,28 +455,25 @@
       <div class="card feed-card" id="chainsCard">
         <div class="feed-list" id="chainsList"><div class="empty-state">Loading&hellip;</div></div>
       </div>
+    </div>
+  </section>
 
-      <div class="card k-hist">
-        <h4>Past briefings</h4>
-        <div id="kHistList"></div>
-      </div>
+  <div class="ad-slot ad-leaderboard">AD</div>
+
+  <div class="layout">
+    <div class="card sub-card" id="subscribe">
+      <h4>Get the daily briefing by email</h4>
+      <p>One short on-chain or off-chain lesson a day &mdash; no noise, no price calls. Unsubscribe any time.</p>
+      <form class="sub-form" id="subForm">
+        <input type="email" id="subEmail" placeholder="you@email.com" required>
+        <input type="hidden" name="access_key" value="PENDING_WEB3FORMS_KEY">
+        <input type="hidden" name="subject" value="New JalalOnChain subscriber">
+        <button class="sub-btn" type="submit">Subscribe</button>
+      </form>
+      <div class="sub-msg" id="subMsg"></div>
     </div>
 
-    <aside class="side">
-      <div class="card sub-card" id="subscribe">
-        <h4>Get the daily briefing by email</h4>
-        <p>One short on-chain or off-chain lesson a day &mdash; no noise, no price calls. Unsubscribe any time.</p>
-        <form class="sub-form" id="subForm">
-          <input type="email" id="subEmail" placeholder="you@email.com" required>
-          <input type="hidden" name="access_key" value="PENDING_WEB3FORMS_KEY">
-          <input type="hidden" name="subject" value="New JalalOnChain subscriber">
-          <button class="sub-btn" type="submit">Subscribe</button>
-        </form>
-        <div class="sub-msg" id="subMsg"></div>
-      </div>
-
-      <div class="ad-slot ad-rect">AD</div>
-    </aside>
+    <div class="ad-slot ad-rect">AD</div>
   </div>
 
   <footer class="page-foot">
@@ -880,22 +862,6 @@
     renderPriceTable();
   });
 
-  function renderPrices(){
-    var track = document.getElementById("tickerTrack");
-    // The ticker is a quick-glance marquee, not the full list — keep it to the
-    // top 15 by market cap so it stays smooth; the Live Prices table below
-    // shows the full top-100 with search and sorting.
-    var list = (state.prices || []).slice(0,15);
-    if(!list.length){ track.innerHTML = "<div class=\"ticker-item\"><span class=\"t-sym\">Prices syncing&hellip;</span></div>"; return; }
-    function itemHtml(p){
-      var chg = Number(p.change24h);
-      var chgClass = chg>=0 ? "up" : "down";
-      return "<div class=\"ticker-item\"><span class=\"t-sym\">"+esc(p.symbol)+"</span><span class=\"t-price\">"+fmtPrice(p.price)+"</span><span class=\"t-chg "+chgClass+"\">"+fmtChg(chg)+"</span></div>";
-    }
-    var once = list.map(itemHtml).join("");
-    track.innerHTML = once + once; // duplicated for a seamless looping marquee
-  }
-
   var SUPPORT_ADDRESSES = [
     {symbol:"BTC", name:"Bitcoin", address:"bc1q38sx46ccw2vha3rs46u76z0te4hzzpz00m5zxh"},
     {symbol:"EVM", name:"Ethereum & EVM chains", address:"0x027362F7937652F46E56d84beA74a9db3ccE5DCD"},
@@ -979,7 +945,7 @@
       if(hlData && hlData.positions){ state.hlPositions = hlData.positions; }
       if(hlData && hlData.updatedAt){ state.hlUpdatedAt = hlData.updatedAt; }
       state.updatedAt = (newsData && newsData.updatedAt) || (launchData && launchData.updatedAt) || (priceData && priceData.updatedAt) || state.updatedAt;
-      renderKnowledge(); renderLaunches(); renderNews(); renderPrices(); renderPriceTable(); renderDefi(); renderChains(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
+      renderKnowledge(); renderLaunches(); renderNews(); renderPriceTable(); renderDefi(); renderChains(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
     });
   }
 
@@ -1026,7 +992,7 @@
     if(copyBtn){ copyToClipboard(copyBtn.dataset.copy, copyBtn); }
   });
 
-  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPrices(); renderPriceTable(); renderDefi(); renderChains(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
+  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPriceTable(); renderDefi(); renderChains(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
   loadData();
   setInterval(loadData, 90000);
   setInterval(renderStatus, 30000);

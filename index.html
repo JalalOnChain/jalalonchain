@@ -328,6 +328,56 @@
     <p id="heroTake">Loading today&rsquo;s take&hellip;</p>
   </section>
 
+  <section class="hub-section" id="hub">
+    <div class="hub-tabs" id="hubTabs">
+      <button class="hub-tab active" data-tab="news"><span class="tab-dot"></span>News</button>
+      <button class="hub-tab" data-tab="enforcement"><span class="tab-dot"></span>Enforcement Alerts</button>
+      <button class="hub-tab" data-tab="whales"><span class="tab-dot"></span>Whale Activity</button>
+      <button class="hub-tab" data-tab="chains"><span class="tab-dot"></span>New Chains</button>
+    </div>
+
+    <div class="hub-pane active" data-pane="news" id="news">
+      <div class="feed-head-row">
+        <h3>Crypto news</h3>
+        <span class="feed-count" id="newsCount">0 items</span>
+      </div>
+      <div class="card feed-card feed-scroll-card">
+        <div class="feed-list" id="newsList"><div class="empty-state">Loading news&hellip;</div></div>
+      </div>
+    </div>
+
+    <div class="hub-pane" data-pane="enforcement" id="enforcement">
+      <div class="feed-head-row">
+        <h3>Enforcement &amp; regulatory alerts</h3>
+        <span class="feed-count" id="enfCount">0 items</span>
+      </div>
+      <div class="card feed-card feed-scroll-card" id="enfCard">
+        <div class="feed-list" id="enfList"><div class="empty-state">Loading&hellip;</div></div>
+      </div>
+    </div>
+
+    <div class="hub-pane" data-pane="whales" id="hyperliquid">
+      <div class="section-head">
+        <h2>Hyperliquid whale activity &middot; $100K+ positions</h2>
+        <span class="hint"><span class="feed-count" id="hlPosCount">0</span> &middot; <span id="hlUpdated"></span></span>
+      </div>
+      <div class="card">
+        <div class="grid-cards" id="hlPositionsGrid"><div class="empty-state">Loading positions&hellip;</div></div>
+      </div>
+      <div class="source-note">Tracks Hyperliquid&rsquo;s current top accounts by size, re-selected every sync, filtered to positions of $100K or more. Tracking, not financial advice.</div>
+    </div>
+
+    <div class="hub-pane" data-pane="chains" id="chains">
+      <div class="feed-head-row">
+        <h3>New chains</h3>
+        <span class="feed-count" id="chainsCount">0 tracked</span>
+      </div>
+      <div class="card feed-card" id="chainsCard">
+        <div class="feed-list" id="chainsList"><div class="empty-state">Loading&hellip;</div></div>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="prices">
     <div class="section-head">
       <h2>Live prices</h2>
@@ -384,56 +434,6 @@
       <div class="grid-cards" id="defiGrid"><div class="empty-state">Loading new protocols&hellip;</div></div>
     </div>
     <div class="source-note">Recently-listed DeFi protocols by TVL &mdash; new lending markets, DEXs, restaking and yield entities that crossed a minimum TVL floor. Tracking, not an endorsement or audit.</div>
-  </section>
-
-  <section class="hub-section" id="hub">
-    <div class="hub-tabs" id="hubTabs">
-      <button class="hub-tab active" data-tab="news"><span class="tab-dot"></span>News</button>
-      <button class="hub-tab" data-tab="enforcement"><span class="tab-dot"></span>Enforcement Alerts</button>
-      <button class="hub-tab" data-tab="whales"><span class="tab-dot"></span>Whale Activity</button>
-      <button class="hub-tab" data-tab="chains"><span class="tab-dot"></span>New Chains</button>
-    </div>
-
-    <div class="hub-pane active" data-pane="news" id="news">
-      <div class="feed-head-row">
-        <h3>Crypto news</h3>
-        <span class="feed-count" id="newsCount">0 items</span>
-      </div>
-      <div class="card feed-card feed-scroll-card">
-        <div class="feed-list" id="newsList"><div class="empty-state">Loading news&hellip;</div></div>
-      </div>
-    </div>
-
-    <div class="hub-pane" data-pane="enforcement" id="enforcement">
-      <div class="feed-head-row">
-        <h3>Enforcement &amp; regulatory alerts</h3>
-        <span class="feed-count" id="enfCount">0 items</span>
-      </div>
-      <div class="card feed-card feed-scroll-card" id="enfCard">
-        <div class="feed-list" id="enfList"><div class="empty-state">Loading&hellip;</div></div>
-      </div>
-    </div>
-
-    <div class="hub-pane" data-pane="whales" id="hyperliquid">
-      <div class="section-head">
-        <h2>Hyperliquid whale activity &middot; $100K+ positions</h2>
-        <span class="hint"><span class="feed-count" id="hlPosCount">0</span> &middot; <span id="hlUpdated"></span></span>
-      </div>
-      <div class="card">
-        <div class="grid-cards" id="hlPositionsGrid"><div class="empty-state">Loading positions&hellip;</div></div>
-      </div>
-      <div class="source-note">Tracks Hyperliquid&rsquo;s current top accounts by size, re-selected every sync, filtered to positions of $100K or more. Tracking, not financial advice.</div>
-    </div>
-
-    <div class="hub-pane" data-pane="chains" id="chains">
-      <div class="feed-head-row">
-        <h3>New chains</h3>
-        <span class="feed-count" id="chainsCount">0 tracked</span>
-      </div>
-      <div class="card feed-card" id="chainsCard">
-        <div class="feed-list" id="chainsList"><div class="empty-state">Loading&hellip;</div></div>
-      </div>
-    </div>
   </section>
 
   <div class="ad-slot ad-leaderboard">AD</div>

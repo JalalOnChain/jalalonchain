@@ -1,42 +1,24 @@
 # JalalOnChain
 
-New tokens tracked once they cross $1M+ market cap, newly-listed DeFi protocols, large
-Hyperliquid trades and open positions, live coin prices, crypto news, and enforcement
-alerts — plus a daily on-chain/off-chain knowledge briefing, with clear, informative
-reads on how crypto and blockchain actually work.
+**[jalalonchain.com](https://jalalonchain.com)** — a live crypto information hub in one place: real-time prices, breaking news, regulatory enforcement alerts, large whale activity, newly launched tokens, DeFi protocols, blockchains, and exchanges — plus a daily plain-language briefing on what's actually moving in crypto.
 
-- `index.html` — the site
-- `data/news.json` — crypto market news and U.S. government/regulatory enforcement
-  actions, refreshed hourly by the GitHub Action
-- `data/launches.json` — new tokens that crossed $1M market cap across chains,
-  including Robinhood's chain and Robinhood-branded tokens elsewhere
-- `data/prices.json` — a live top-20 coin price snapshot for the homepage price ticker
-- `data/defi.json` — recently-listed DeFi protocols/entities by TVL
-- `data/hyperliquid.json` — large ($100K+) Hyperliquid perp positions and recent
-  large trades; the tracked addresses are re-selected every sync from Hyperliquid's
-  current top accounts
-- `data/knowledge.json` — daily briefings, advanced one-per-day from `data/knowledge-pool.json`
-- `.github/workflows/sync.yml` — the hourly job that keeps everything current
-- `scripts/sync.py` — what that job actually runs
+## What's on the site
 
-Data is synced automatically. Do not hand-edit the `data/` files — they're overwritten
-on every sync.
+- **Live Prices** — real-time coin prices, 24h change, and market dominance
+- **Tokens Monitor** — newly launched tokens once they cross a market-cap threshold
+- **DeFi** — recently listed DeFi protocols by TVL
+- **News** — breaking crypto market news
+- **Enforcement Alerts** — regulatory and government enforcement actions
+- **Whale Activity** — large tracked on-chain positions
+- **New Chains** — newly launched blockchains (L1s/L2s), hand-verified
+- **New VASPs** — newly launched or newly licensed crypto exchanges, custodians, and similar platforms, hand-verified
+- **Daily Briefing** — a short write-up of what's moving in crypto, refreshed through the day
 
-## One-time setup (do this once after uploading)
+## Notes for maintainers
 
-1. **Turn on GitHub Pages**:
-   Settings → Pages → Build and deployment → Source: "Deploy from a branch" →
-   Branch: `main`, folder: `/ (root)` → Save.
-   Your site goes live at `https://<your-username>.github.io/jalalonchain/`.
+- Data on this site refreshes automatically throughout the day. The files under `data/` are generated — don't hand-edit them, changes will be overwritten on the next refresh.
+- This repository is public. Please don't commit API keys, credentials, or other sensitive configuration to it.
 
-2. **Make sure Actions can push**: Settings → Actions → General → Workflow permissions →
-   "Read and write permissions" → Save. (The workflow also requests this itself; only
-   change this if the first sync run fails with a permissions error.)
+---
 
-3. Optional: trigger the first sync immediately instead of waiting for the top of the
-   hour — Actions tab → "Sync site data" → Run workflow.
-
-## Adding a custom domain later
-
-Settings → Pages → Custom domain → enter your domain → Save, then add the DNS records
-GitHub shows you at your domain registrar. No code changes needed.
+Questions, feedback, or spotted something stale? See the Support section on the site.

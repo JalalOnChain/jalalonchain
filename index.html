@@ -267,6 +267,11 @@
   .chain-row .ch-left{ display:flex; align-items:center; gap:8px; min-width:0; }
   .cat-l1{ background:var(--teal-soft); color:var(--teal); }
   .cat-l2{ background:var(--accent-soft); color:var(--accent-ink); }
+  .cat-vasp{ background:var(--violet-soft); color:var(--violet-ink); }
+  .vasp-row{ padding:10px 18px; border-top:1px solid var(--border); font-size:12.5px; }
+  .vasp-row:first-child{ border-top:none; }
+  .vasp-row .row-top{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .vasp-sub{ margin-top:4px; font-size:11px; color:var(--text-faint); }
   .chain-row .ch-name{ font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .chain-row .ch-name a{ color:var(--text); text-decoration:none; }
   .chain-row .ch-name a:hover{ text-decoration:underline; }
@@ -334,6 +339,7 @@
       <button class="hub-tab" data-tab="enforcement"><span class="tab-dot"></span>Enforcement Alerts</button>
       <button class="hub-tab" data-tab="whales"><span class="tab-dot"></span>Whale Activity</button>
       <button class="hub-tab" data-tab="chains"><span class="tab-dot"></span>New Chains</button>
+      <button class="hub-tab" data-tab="vasps"><span class="tab-dot"></span>New VASPs</button>
     </div>
 
     <div class="hub-pane active" data-pane="news" id="news">
@@ -375,6 +381,17 @@
       <div class="card feed-card" id="chainsCard">
         <div class="feed-list" id="chainsList"><div class="empty-state">Loading&hellip;</div></div>
       </div>
+    </div>
+
+    <div class="hub-pane" data-pane="vasps" id="vasps">
+      <div class="feed-head-row">
+        <h3>New VASPs</h3>
+        <span class="feed-count" id="vaspsCount">0 tracked</span>
+      </div>
+      <div class="card feed-card" id="vaspsCard">
+        <div class="feed-list" id="vaspsList"><div class="empty-state">Loading&hellip;</div></div>
+      </div>
+      <div class="source-note">Newly launched or newly licensed virtual asset service providers &mdash; exchanges, custodians, and similar platforms &mdash; tracked from 2025 onward. Hand-verified against regulator notices and primary sources; not a live feed.</div>
     </div>
   </section>
 
@@ -505,7 +522,7 @@
 <script>
 (function(){
   "use strict";
-  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], chains: [], marketTake: null, hlPositions: [], sentiment: null, dominance: null, updatedAt: null };
+  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], chains: [], vasps: [], marketTake: null, hlPositions: [], sentiment: null, dominance: null, updatedAt: null };
   var priceSortState = { field: null, dir: -1 };
   var priceFilterQuery = "";
 
@@ -703,6 +720,24 @@
     var el = document.getElementById("chainsList");
     el.innerHTML = list.length ? list.map(chainRowHtml).join("") :
       "<div class=\"empty-state\">No new chains tracked yet.</div>";
+  }
+
+  function vaspRowHtml(v){
+    var nameHtml = v.link ? "<a href=\""+esc(v.link)+"\" target=\"_blank\" rel=\"noopener\">"+esc(v.name)+"</a>" : esc(v.name);
+    var tokens = (v.tokensSupported===null || v.tokensSupported===undefined || v.tokensSupported==="") ? "—" : esc(v.tokensSupported);
+    var hq = v.headquarters ? esc(v.headquarters) : "HQ not disclosed";
+    return "<div class=\"vasp-row\">"+
+      "<div class=\"row-top\"><div class=\"ch-left\"><span class=\"cat-badge cat-vasp\">VASP</span><span class=\"ch-name\">"+nameHtml+"</span></div>"+
+      "<span class=\"ch-meta\">"+esc(fmtDate(v.launchDate))+"</span></div>"+
+      "<div class=\"vasp-sub\">"+esc(v.primaryBusiness||"")+" &middot; "+hq+" &middot; Tokens supported: "+tokens+"</div>"+
+    "</div>";
+  }
+  function renderVasps(){
+    var list = (state.vasps||[]).slice().sort(function(a,b){ return new Date(b.launchDate||0) - new Date(a.launchDate||0); });
+    document.getElementById("vaspsCount").textContent = list.length+(list.length===1?" VASP":" VASPs");
+    var el = document.getElementById("vaspsList");
+    el.innerHTML = list.length ? list.map(vaspRowHtml).join("") :
+      "<div class=\"empty-state\">No new VASPs tracked yet.</div>";
   }
 
   function renderMarketTake(){
@@ -922,24 +957,26 @@
       fetch("./data/defi.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/hyperliquid.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/chains.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/vasps.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/market_take.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/sentiment.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/dominance.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
     ]).then(function(results){
-      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5], chainsData = results[6], takeData = results[7], sentimentData = results[8], dominanceData = results[9];
+      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5], chainsData = results[6], vaspsData = results[7], takeData = results[8], sentimentData = results[9], dominanceData = results[10];
       if(kData && kData.items){ state.knowledge = kData.items; }
       if(launchData && launchData.items){ state.launches = launchData.items; }
       if(newsData && newsData.items){ state.news = newsData.items; }
       if(priceData && priceData.items){ state.prices = priceData.items; }
       if(defiData && defiData.items){ state.defi = defiData.items; }
       if(chainsData && chainsData.items){ state.chains = chainsData.items; }
+      if(vaspsData && vaspsData.items){ state.vasps = vaspsData.items; }
       if(takeData){ state.marketTake = takeData; }
       if(sentimentData){ state.sentiment = sentimentData; }
       if(dominanceData){ state.dominance = dominanceData; }
       if(hlData && hlData.positions){ state.hlPositions = hlData.positions; }
       if(hlData && hlData.updatedAt){ state.hlUpdatedAt = hlData.updatedAt; }
       state.updatedAt = (newsData && newsData.updatedAt) || (launchData && launchData.updatedAt) || (priceData && priceData.updatedAt) || state.updatedAt;
-      renderKnowledge(); renderLaunches(); renderNews(); renderPriceTable(); renderDefi(); renderChains(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
+      renderKnowledge(); renderLaunches(); renderNews(); renderPriceTable(); renderDefi(); renderChains(); renderVasps(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
     });
   }
 
@@ -986,7 +1023,7 @@
     if(copyBtn){ copyToClipboard(copyBtn.dataset.copy, copyBtn); }
   });
 
-  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPriceTable(); renderDefi(); renderChains(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
+  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPriceTable(); renderDefi(); renderChains(); renderVasps(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
   loadData();
   setInterval(loadData, 90000);
   setInterval(renderStatus, 30000);

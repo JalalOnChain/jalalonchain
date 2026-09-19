@@ -1,0 +1,46 @@
+{
+  "_note": "Hand-curated, not touched by scripts/sync.py's automatic hourly sync — there's no free API or registry that reliably tracks new Virtual Asset Service Provider (VASP) launches the way price feeds work, so this list is compiled and verified manually against primary sources (regulator announcements, official press releases, reputable crypto press). Scope: notable VASPs (exchanges, custodians, licensed platforms) that verifiably launched or were newly licensed from 2025 onward and are currently live. A candidate is left out entirely rather than guessed at if its launch date, HQ, or basic facts can't be confidently verified. Ask to have it refreshed when a new VASP launches or you spot one.",
+  "updatedAt": "2026-09-19T00:00:00Z",
+  "items": [
+    {
+      "id": "aster",
+      "name": "Aster",
+      "primaryBusiness": "Decentralized crypto exchange — perpetual futures & spot derivatives trading",
+      "headquarters": "Hong Kong",
+      "tokensSupported": null,
+      "launchDate": "2025-03-31",
+      "link": "https://www.asterdex.com/en",
+      "note": "Rebrand of Astherus into Aster on Mar 31, 2025; backed by YZi Labs (formerly Binance Labs). Native ASTER token launched Sept 2025. Exact tokens-supported count not publicly disclosed."
+    },
+    {
+      "id": "panthertrade",
+      "name": "PantherTrade",
+      "primaryBusiness": "SFC-licensed virtual asset exchange — spot trading",
+      "headquarters": "Hong Kong",
+      "tokensSupported": null,
+      "launchDate": "2025-01-27",
+      "link": "https://cointelegraph.com/news/hong-kong-sfc-crypto-licenses-panthertrade-yax",
+      "note": "One of the first two operating licenses Hong Kong's SFC issued in 2025. Hong Kong currently caps retail trading at a small set of major tokens platform-wide; exchange-specific count not disclosed."
+    },
+    {
+      "id": "yax",
+      "name": "YAX",
+      "primaryBusiness": "SFC-licensed virtual asset exchange — spot trading",
+      "headquarters": "Hong Kong",
+      "tokensSupported": null,
+      "launchDate": "2025-01-27",
+      "link": "https://cointelegraph.com/news/hong-kong-sfc-crypto-licenses-panthertrade-yax",
+      "note": "Licensed alongside PantherTrade as Hong Kong's first SFC operating licenses of 2025."
+    },
+    {
+      "id": "digital-ascension-group",
+      "name": "Digital Ascension Group",
+      "primaryBusiness": "Institutional crypto custody & digital-asset wealth management",
+      "headquarters": "Dallas, Texas, USA",
+      "tokensSupported": null,
+      "launchDate": "2025-12-08",
+      "link": "https://www.globenewswire.com/news-release/2025/12/08/3201781/0/en/digital-ascension-group-launches-institutional-crypto-custody-offering-that-meets-five-essential-security-standards.html",
+      "note": "Custody offering delivered via SEC-registered advisory arm Digital Wealth Partners, in partnership with Anchorage Digital (OCC-chartered). Targets HNW investors (min. 50,000 XRP or $500K in digital assets)."
+    }
+  ]
+}

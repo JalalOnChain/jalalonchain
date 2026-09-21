@@ -1,5 +1,5 @@
 {
-  "_note": "Hand-curated, not touched by scripts/sync.py's automatic hourly sync. Scope: notable centralized crypto exchanges founded across crypto's history that are believed to still be operating and accepting new users as of this list's update date. Given the size of this list (70+ entries spanning many jurisdictions), founding years and HQ locations for smaller regional exchanges reflect the best publicly available information rather than individually re-verified primary-source checks the way data/vasps.json's small, tightly-scoped list is — flag any inaccuracy and it'll be corrected. Every entry links directly to the exchange's own site.",
+  "_note": "Hand-curated, not touched by scripts/sync.py's automatic hourly sync. Scope: notable centralized crypto exchanges spanning crypto's history that are believed to still be operating and accepting new users as of this list's update date, including newly-launched/newly-licensed platforms. Given the size of this list (75+ entries spanning many jurisdictions), founding years and HQ locations for smaller regional exchanges reflect the best publicly available information rather than individually re-verified primary-source checks. Flag any inaccuracy and it'll be corrected. Every entry links directly to the exchange's own site.",
   "updatedAt": "2026-09-21T00:00:00Z",
   "items": [
     {
@@ -601,6 +601,38 @@
       "headquarters": "San Francisco, USA",
       "founded": 2020,
       "link": "https://river.com"
+    },
+    {
+      "id": "aster",
+      "name": "Aster",
+      "primaryBusiness": "Decentralized crypto exchange — perpetual futures & spot derivatives trading",
+      "headquarters": "Hong Kong",
+      "founded": 2025,
+      "link": "https://www.asterdex.com/en"
+    },
+    {
+      "id": "panthertrade",
+      "name": "PantherTrade",
+      "primaryBusiness": "SFC-licensed virtual asset exchange — spot trading",
+      "headquarters": "Hong Kong",
+      "founded": 2025,
+      "link": "https://www.panthertrade.com/en/about"
+    },
+    {
+      "id": "yax",
+      "name": "YAX",
+      "primaryBusiness": "SFC-licensed virtual asset exchange — spot trading",
+      "headquarters": "Hong Kong",
+      "founded": 2025,
+      "link": "https://www.yax.hk/"
+    },
+    {
+      "id": "laser-digital-japan",
+      "name": "Laser Digital Japan",
+      "primaryBusiness": "Licensed crypto exchange — wholesale liquidity & institutional digital-asset trading",
+      "headquarters": "Japan",
+      "founded": 2026,
+      "link": "https://www.laserdigital.com/"
     }
   ]
 }

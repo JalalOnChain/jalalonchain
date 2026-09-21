@@ -215,12 +215,16 @@
   .k-tag{ font-size:10.5px; background:var(--teal-soft); color:var(--teal); padding:3px 8px; border-radius:5px; font-weight:600; }
   .k-hist{ padding:14px 18px 6px; }
   .k-hist h4{ font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); font-weight:600; margin-bottom:8px; }
-  .k-hist-item{ padding:9px 0; border-top:1px solid var(--border); cursor:pointer; border-radius:4px; }
+  .k-hist-item{ display:block; padding:9px 0; border-top:1px solid var(--border); cursor:pointer; border-radius:4px; color:inherit; text-decoration:none; }
   .k-hist-item:first-child{ border-top:none; }
   .k-hist-item:hover .ht{ color:var(--teal); }
   .k-hist-item.active .ht{ color:var(--teal); }
   .k-hist-item .ht{ font-size:12.5px; font-weight:600; margin-bottom:2px; }
   .k-hist-item .hd{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; }
+  .k-hist-more{ display:block; margin-top:10px; font-size:11.5px; font-weight:600; color:var(--teal); text-decoration:none; }
+  .k-hist-more:hover{ text-decoration:underline; }
+  .k-eyebrow time a{ color:inherit; text-decoration:none; }
+  .k-eyebrow time a:hover{ text-decoration:underline; }
   .k-back-today{ font-size:11px; color:var(--teal); cursor:pointer; font-weight:600; text-decoration:underline; }
   .k-hist-nested{ margin-top:14px; padding-top:12px; border-top:1px solid var(--border); }
   .k-hist-nested h4{ font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); font-weight:600; margin-bottom:8px; }
@@ -617,7 +621,7 @@
   function showKnowledgeDoc(doc, isToday){
     if(!doc) return;
     document.getElementById("kEyebrowLabel").textContent = isToday ? "Daily briefing" : "Past briefing";
-    document.getElementById("kDate").textContent = doc.id;
+    document.getElementById("kDate").innerHTML = "<a href=\"/learn/"+esc(doc.id)+"/\">"+esc(doc.id)+"</a>";
     document.getElementById("kTitle").textContent = doc.title||"On-chain insight";
     document.getElementById("kBody").textContent = doc.body||"";
     document.getElementById("kTags").innerHTML = (doc.tags||[]).map(function(tg){ return "<span class=\"k-tag\">"+esc(tg)+"</span>"; }).join("");
@@ -632,9 +636,9 @@
     var today = docs[0];
     if(today) showKnowledgeDoc(today, true);
     var hist = docs.slice(1,8);
-    document.getElementById("kHistList").innerHTML = hist.map(function(d){
-      return "<div class=\"k-hist-item\" data-id=\""+esc(d.id)+"\"><div class=\"ht\">"+esc(d.title||"")+"</div><div class=\"hd\">"+esc(d.id)+"</div></div>";
-    }).join("") || "<div class=\"hd\">More briefings appear here daily.</div>";
+    document.getElementById("kHistList").innerHTML = (hist.map(function(d){
+      return "<a class=\"k-hist-item\" href=\"/learn/"+esc(d.id)+"/\" data-id=\""+esc(d.id)+"\"><div class=\"ht\">"+esc(d.title||"")+"</div><div class=\"hd\">"+esc(d.id)+"</div></a>";
+    }).join("") || "<div class=\"hd\">More briefings appear here daily.</div>") + "<a class=\"k-hist-more\" href=\"/learn/\">View all briefings &rarr;</a>";
   }
 
   function renderLaunches(){
@@ -1035,6 +1039,8 @@
 
   document.getElementById("kHistList").addEventListener("click", function(e){
     var item = e.target.closest(".k-hist-item"); if(!item) return;
+    if(e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+    e.preventDefault();
     var id = item.getAttribute("data-id");
     var doc = (state.knowledgeDocs||[]).find(function(d){ return d.id===id; });
     if(doc) showKnowledgeDoc(doc, false);

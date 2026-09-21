@@ -55,6 +55,9 @@ DEFI_PATH = os.path.join(DATA_DIR, "defi.json")
 HYPERLIQUID_PATH = os.path.join(DATA_DIR, "hyperliquid.json")
 SENTIMENT_PATH = os.path.join(DATA_DIR, "sentiment.json")
 DOMINANCE_PATH = os.path.join(DATA_DIR, "dominance.json")
+LEARN_DIR = os.path.join(ROOT, "learn")
+SITEMAP_PATH = os.path.join(ROOT, "sitemap.xml")
+SITE_URL = "https://jalalonchain.com"
 
 MAX_KNOWLEDGE = 120
 UA = "Mozilla/5.0 (compatible; JalalOnChainBot/1.0; +https://github.com/JalalOnChain/jalalonchain)"
@@ -1131,6 +1134,247 @@ def sync_hyperliquid():
     print(f"hyperliquid: {len(addresses)} addresses scanned, {len(positions)} positions, {len(activity)} large trades")
 
 
+def html_escape(s):
+    return (str(s if s is not None else "")
+            .replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+            .replace('"', "&quot;").replace("'", "&#39;"))
+
+
+LEARN_PAGE_TMPL = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>%(title)s</title>
+<meta name="description" content="%(description)s">
+<link rel="canonical" href="%(canonical)s">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#131B2B">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="JalalOnChain">
+<meta property="og:url" content="%(canonical)s">
+<meta property="og:title" content="%(title)s">
+<meta property="og:description" content="%(description)s">
+<meta property="og:image" content="%(site)s/assets/logo.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@JalalOnChain">
+<meta name="twitter:title" content="%(title)s">
+<meta name="twitter:description" content="%(description)s">
+<meta name="twitter:image" content="%(site)s/assets/logo.png">
+<link rel="icon" type="image/png" href="%(site)s/assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<script type="application/ld+json">
+%(jsonld)s
+</script>
+<style>
+  :root{ --bg:#F4F6F9; --surface:#FFFFFF; --border:#DCE3EC; --text:#131B2B; --text-muted:#5C6B84; --text-faint:#93A1B8; --accent:#B4700F; --accent-soft:#FBEBD4; --teal:#0E8E89; --teal-soft:#DEF3F1; color-scheme: light; }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){ --bg:#0B1220; --surface:#121B2E; --border:#233047; --text:#E7ECF5; --text-muted:#93A1B8; --text-faint:#5C6B84; --accent:#E3A857; --accent-soft:#2A2011; --teal:#3FD1C9; --teal-soft:#0E2B29; color-scheme: dark; }
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",system-ui,sans-serif; line-height:1.6; }
+  .wrap{ max-width:680px; margin:0 auto; padding:28px 20px 60px; }
+  a{ color:var(--teal); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+  header.site{ display:flex; align-items:center; gap:10px; margin-bottom:28px; text-decoration:none; color:inherit; }
+  header.site img{ width:36px; height:36px; border-radius:8px; }
+  header.site .name{ font-weight:800; font-size:18px; color:var(--text); }
+  header.site .name em{ font-style:normal; color:var(--accent); }
+  .eyebrow{ font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--teal); font-weight:700; font-family:"IBM Plex Mono",monospace; margin-bottom:8px; }
+  h1{ font-size:28px; line-height:1.3; margin:0 0 10px; }
+  .date{ color:var(--text-faint); font-size:12px; font-family:"IBM Plex Mono",monospace; margin-bottom:18px; }
+  .body{ font-size:16.5px; color:var(--text); white-space:pre-line; }
+  .tags{ margin-top:22px; display:flex; gap:8px; flex-wrap:wrap; }
+  .tag{ font-size:11px; background:var(--teal-soft); color:var(--teal); padding:4px 10px; border-radius:99px; font-weight:600; }
+  .nav-links{ display:flex; justify-content:space-between; margin-top:36px; padding-top:20px; border-top:1px solid var(--border); font-size:13.5px; gap:12px; flex-wrap:wrap; }
+  .back-home{ display:inline-block; margin-top:28px; font-size:13.5px; color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="%(site)s/">
+    <header class="site">
+      <img src="%(site)s/assets/logo.png" alt="JalalOnChain logo">
+      <span class="name">Jalal<em>OnChain</em></span>
+    </header>
+  </a>
+  <div class="eyebrow">Daily crypto briefing</div>
+  <h1>%(title_html)s</h1>
+  <div class="date">%(date_display)s</div>
+  <p class="body">%(body_html)s</p>
+  <div class="tags">%(tags_html)s</div>
+  <div class="nav-links">
+    <span>%(newer_link)s</span>
+    <span>%(older_link)s</span>
+  </div>
+  <a class="back-home" href="%(site)s/learn/">&larr; All briefings</a>
+</div>
+</body>
+</html>
+"""
+
+
+def fmt_learn_date(ymd):
+    try:
+        d = datetime.strptime(ymd, "%Y-%m-%d")
+        return d.strftime("%B %-d, %Y")
+    except Exception:
+        return ymd
+
+
+def sync_learn_pages():
+    """Give every daily knowledge briefing its own permanent, indexable page
+    (data/knowledge.json is otherwise only ever rendered client-side, so
+    without this Google has no URL to associate with that content)."""
+    knowledge = load_json(KNOWLEDGE_PATH, {"items": []})
+    items = sorted(knowledge.get("items", []), key=lambda it: it.get("id", ""), reverse=True)
+    if not items:
+        return []
+
+    os.makedirs(LEARN_DIR, exist_ok=True)
+
+    for i, entry in enumerate(items):
+        eid = entry.get("id", "")
+        if not eid:
+            continue
+        title = entry.get("title", "").strip()
+        body = entry.get("body", "").strip()
+        tags = entry.get("tags", []) or []
+        description = body if len(body) <= 300 else (body[:297].rsplit(" ", 1)[0] + "...")
+        canonical = SITE_URL + "/learn/" + eid + "/"
+
+        newer = items[i - 1] if i > 0 else None
+        older = items[i + 1] if i + 1 < len(items) else None
+        newer_link = ('<a href="' + SITE_URL + "/learn/" + newer["id"] + '/">&larr; Newer: '
+                       + html_escape(newer.get("title", "")) + "</a>") if newer else ""
+        older_link = ('<a href="' + SITE_URL + "/learn/" + older["id"] + '/">Older: '
+                       + html_escape(older.get("title", "")) + " &rarr;</a>") if older else ""
+
+        jsonld = json.dumps({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": title,
+            "datePublished": entry.get("createdAt") or (eid + "T00:00:00Z"),
+            "dateModified": entry.get("createdAt") or (eid + "T00:00:00Z"),
+            "author": {"@type": "Organization", "name": "JalalOnChain", "url": SITE_URL + "/"},
+            "publisher": {"@type": "Organization", "name": "JalalOnChain",
+                          "logo": {"@type": "ImageObject", "url": SITE_URL + "/assets/logo.png"}},
+            "mainEntityOfPage": canonical,
+            "description": description,
+        }, ensure_ascii=False)
+
+        page = LEARN_PAGE_TMPL % {
+            "title": html_escape(title + " — JalalOnChain"),
+            "description": html_escape(description),
+            "canonical": canonical,
+            "site": SITE_URL,
+            "jsonld": jsonld,
+            "title_html": html_escape(title),
+            "date_display": fmt_learn_date(eid),
+            "body_html": html_escape(body),
+            "tags_html": "".join('<span class="tag">' + html_escape(t) + "</span>" for t in tags),
+            "newer_link": newer_link,
+            "older_link": older_link,
+        }
+        page_dir = os.path.join(LEARN_DIR, eid)
+        os.makedirs(page_dir, exist_ok=True)
+        with open(os.path.join(page_dir, "index.html"), "w", encoding="utf-8") as f:
+            f.write(page)
+
+    rows = "\n".join(
+        '<li><a href="/learn/' + it["id"] + '/"><span class="t">' + html_escape(it.get("title", ""))
+        + '</span><span class="d">' + it["id"] + "</span></a></li>"
+        for it in items
+    )
+    archive_jsonld = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Crypto briefings archive — JalalOnChain",
+        "url": SITE_URL + "/learn/",
+    }, ensure_ascii=False)
+    archive_tmpl = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily crypto briefings archive — JalalOnChain</title>
+<meta name="description" content="Every past daily plain-English crypto briefing from JalalOnChain, in one archive.">
+<link rel="canonical" href="%(site)s/learn/">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#131B2B">
+<link rel="icon" type="image/png" href="%(site)s/assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<script type="application/ld+json">
+%(jsonld)s
+</script>
+<style>
+  :root{ --bg:#F4F6F9; --surface:#FFFFFF; --border:#DCE3EC; --text:#131B2B; --text-muted:#5C6B84; --text-faint:#93A1B8; --accent:#B4700F; --teal:#0E8E89; color-scheme: light; }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){ --bg:#0B1220; --surface:#121B2E; --border:#233047; --text:#E7ECF5; --text-muted:#93A1B8; --text-faint:#5C6B84; --accent:#E3A857; --teal:#3FD1C9; color-scheme: dark; }
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",system-ui,sans-serif; }
+  .wrap{ max-width:680px; margin:0 auto; padding:28px 20px 60px; }
+  a{ color:var(--teal); text-decoration:none; }
+  header.site{ display:flex; align-items:center; gap:10px; margin-bottom:28px; text-decoration:none; color:inherit; }
+  header.site img{ width:36px; height:36px; border-radius:8px; }
+  header.site .name{ font-weight:800; font-size:18px; color:var(--text); }
+  header.site .name em{ font-style:normal; color:var(--accent); }
+  h1{ font-size:22px; margin:0 0 20px; }
+  ul{ list-style:none; margin:0; padding:0; }
+  li{ border-top:1px solid var(--border); }
+  li:first-child{ border-top:none; }
+  li a{ display:flex; justify-content:space-between; gap:12px; padding:13px 0; color:var(--text); }
+  li a:hover .t{ color:var(--teal); }
+  li .d{ color:var(--text-faint); font-size:12px; font-family:"IBM Plex Mono",monospace; flex:none; padding-top:1px; }
+  li .t{ font-size:14.5px; font-weight:600; }
+  .back-home{ display:inline-block; margin-top:28px; font-size:13.5px; color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="%(site)s/">
+    <header class="site">
+      <img src="%(site)s/assets/logo.png" alt="JalalOnChain logo">
+      <span class="name">Jalal<em>OnChain</em></span>
+    </header>
+  </a>
+  <h1>All daily briefings</h1>
+  <ul>
+%(rows)s
+  </ul>
+  <a class="back-home" href="%(site)s/">&larr; Back to JalalOnChain</a>
+</div>
+</body>
+</html>
+"""
+    archive = archive_tmpl % {"site": SITE_URL, "jsonld": archive_jsonld, "rows": rows}
+    with open(os.path.join(LEARN_DIR, "index.html"), "w", encoding="utf-8") as f:
+        f.write(archive)
+
+    return items
+
+
+def sync_sitemap(learn_items):
+    urls = [(SITE_URL + "/", "hourly", "1.0"), (SITE_URL + "/learn/", "daily", "0.6")]
+    for it in learn_items:
+        urls.append((SITE_URL + "/learn/" + it["id"] + "/", "monthly", "0.5"))
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    body = "\n".join(
+        "  <url>\n    <loc>" + loc + "</loc>\n    <lastmod>" + today + "</lastmod>\n    <changefreq>"
+        + freq + "</changefreq>\n    <priority>" + pri + "</priority>\n  </url>"
+        for loc, freq, pri in urls
+    )
+    xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + body + "\n</urlset>\n")
+    with open(SITEMAP_PATH, "w", encoding="utf-8") as f:
+        f.write(xml)
+
+
 def sync_knowledge():
     knowledge = load_json(KNOWLEDGE_PATH, {"updatedAt": None, "items": []})
     pool = load_json(POOL_PATH, {"items": []}).get("items", [])
@@ -1158,6 +1402,8 @@ def sync_knowledge():
 def main():
     os.makedirs(DATA_DIR, exist_ok=True)
     sync_knowledge()
+    learn_items = sync_learn_pages()
+    sync_sitemap(learn_items)
     sync_news()
     sync_launches()
     sync_prices()

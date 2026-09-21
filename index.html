@@ -138,6 +138,9 @@
   .hub-tab[data-tab="enforcement"]{ --tab-color:var(--bad); }
   .hub-tab[data-tab="whales"]{ --tab-color:var(--blue2); }
   .hub-tab[data-tab="chains"]{ --tab-color:var(--accent); }
+  .hub-tab[data-tab="vasps"]{ --tab-color:var(--violet); }
+  .hub-tab[data-tab="exchanges"]{ --tab-color:var(--good); }
+  .hub-tab[data-tab="closed"]{ --tab-color:var(--bad); }
 
   .pulse-bar{ display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; padding:2px 0 14px; font-size:12.5px; color:var(--text-muted); }
   .pulse-item b{ font-weight:800; }
@@ -305,9 +308,16 @@
   .cat-l1{ background:var(--teal-soft); color:var(--teal); }
   .cat-l2{ background:var(--accent-soft); color:var(--accent-ink); }
   .cat-vasp{ background:var(--violet-soft); color:var(--violet-ink); }
+  .cat-exchange{ background:var(--good-soft); color:var(--good); }
+  .cat-closed{ background:var(--bad-soft); color:var(--bad); }
   .vasp-row{ padding:10px 18px; border-top:1px solid var(--border); font-size:12.5px; }
   .vasp-row:first-child{ border-top:none; }
   .vasp-row .row-top{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .vasp-row .ch-left{ display:flex; align-items:center; gap:8px; min-width:0; }
+  .vasp-row .ch-name{ font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .vasp-row .ch-name a{ color:var(--text); text-decoration:none; }
+  .vasp-row .ch-name a:hover{ text-decoration:underline; }
+  .vasp-row .ch-meta{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; white-space:nowrap; flex:none; }
   .vasp-sub{ margin-top:4px; font-size:11px; color:var(--text-faint); }
   .chain-row .ch-name{ font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .chain-row .ch-name a{ color:var(--text); text-decoration:none; }
@@ -377,6 +387,8 @@
       <button class="hub-tab" data-tab="whales"><span class="tab-dot"></span>Whale Activity</button>
       <button class="hub-tab" data-tab="chains"><span class="tab-dot"></span>New Chains</button>
       <button class="hub-tab" data-tab="vasps"><span class="tab-dot"></span>New VASPs</button>
+      <button class="hub-tab" data-tab="exchanges"><span class="tab-dot"></span>Exchanges</button>
+      <button class="hub-tab" data-tab="closed"><span class="tab-dot"></span>Closed Exchanges</button>
     </div>
 
     <div class="hub-pane active" data-pane="news" id="news">
@@ -429,6 +441,28 @@
         <div class="feed-list" id="vaspsList"><div class="empty-state">Loading&hellip;</div></div>
       </div>
       <div class="source-note">Newly launched or newly licensed virtual asset service providers &mdash; exchanges, custodians, and similar platforms &mdash; tracked from 2025 onward. Hand-verified against regulator notices and primary sources; not a live feed.</div>
+    </div>
+
+    <div class="hub-pane" data-pane="exchanges" id="exchanges">
+      <div class="feed-head-row">
+        <h3>Exchanges</h3>
+        <span class="feed-count" id="exchangesCount">0 tracked</span>
+      </div>
+      <div class="card feed-card feed-scroll-card" id="exchangesCard">
+        <div class="feed-list" id="exchangesList"><div class="empty-state">Loading&hellip;</div></div>
+      </div>
+      <div class="source-note">Established, currently-active centralized crypto exchanges spanning crypto&rsquo;s history &mdash; each name links directly to the exchange&rsquo;s own site. Hand-curated; not a live feed.</div>
+    </div>
+
+    <div class="hub-pane" data-pane="closed" id="closed">
+      <div class="feed-head-row">
+        <h3>Closed exchanges</h3>
+        <span class="feed-count" id="closedCount">0 tracked</span>
+      </div>
+      <div class="card feed-card feed-scroll-card" id="closedCard">
+        <div class="feed-list" id="closedList"><div class="empty-state">Loading&hellip;</div></div>
+      </div>
+      <div class="source-note">Notable crypto exchanges that have permanently shut down, been seized, or ceased operations. Kept for historical reference. Hand-curated; not a live feed.</div>
     </div>
   </section>
 
@@ -559,7 +593,7 @@
 <script>
 (function(){
   "use strict";
-  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], chains: [], vasps: [], marketTake: null, hlPositions: [], sentiment: null, dominance: null, updatedAt: null };
+  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], chains: [], vasps: [], exchanges: [], closedExchanges: [], marketTake: null, hlPositions: [], sentiment: null, dominance: null, updatedAt: null };
   var priceSortState = { field: null, dir: -1 };
   var priceFilterQuery = "";
 
@@ -775,6 +809,43 @@
     var el = document.getElementById("vaspsList");
     el.innerHTML = list.length ? list.map(vaspRowHtml).join("") :
       "<div class=\"empty-state\">No new VASPs tracked yet.</div>";
+  }
+
+  function exchangeRowHtml(v){
+    var nameHtml = v.link ? "<a href=\""+esc(v.link)+"\" target=\"_blank\" rel=\"noopener\">"+esc(v.name)+"</a>" : esc(v.name);
+    var hq = v.headquarters ? esc(v.headquarters) : "HQ not disclosed";
+    var founded = v.founded ? esc(v.founded) : "—";
+    return "<div class=\"vasp-row\">"+
+      "<div class=\"row-top\"><div class=\"ch-left\"><span class=\"cat-badge cat-exchange\">Exchange</span><span class=\"ch-name\">"+nameHtml+"</span></div>"+
+      "<span class=\"ch-meta\">Est. "+founded+"</span></div>"+
+      "<div class=\"vasp-sub\">"+esc(v.primaryBusiness||"")+" &middot; "+hq+"</div>"+
+    "</div>";
+  }
+  function renderExchanges(){
+    var list = (state.exchanges||[]).slice().sort(function(a,b){ return (a.founded||9999) - (b.founded||9999); });
+    document.getElementById("exchangesCount").textContent = list.length+(list.length===1?" exchange":" exchanges");
+    var el = document.getElementById("exchangesList");
+    el.innerHTML = list.length ? list.map(exchangeRowHtml).join("") :
+      "<div class=\"empty-state\">No exchanges tracked yet.</div>";
+  }
+
+  function closedExchangeRowHtml(v){
+    var nameHtml = v.link ? "<a href=\""+esc(v.link)+"\" target=\"_blank\" rel=\"noopener\">"+esc(v.name)+"</a>" : esc(v.name);
+    var hq = v.headquarters ? esc(v.headquarters) : "HQ not disclosed";
+    var years = v.activeYears ? esc(v.activeYears) : "—";
+    return "<div class=\"vasp-row\">"+
+      "<div class=\"row-top\"><div class=\"ch-left\"><span class=\"cat-badge cat-closed\">Closed</span><span class=\"ch-name\">"+nameHtml+"</span></div>"+
+      "<span class=\"ch-meta\">"+years+"</span></div>"+
+      "<div class=\"vasp-sub\">"+esc(v.primaryBusiness||"")+" &middot; "+hq+"</div>"+
+      "<div class=\"vasp-sub\">"+esc(v.closedReason||"")+"</div>"+
+    "</div>";
+  }
+  function renderClosedExchanges(){
+    var list = (state.closedExchanges||[]).slice().sort(function(a,b){ return (a.name||"").localeCompare(b.name||""); });
+    document.getElementById("closedCount").textContent = list.length+(list.length===1?" exchange":" exchanges");
+    var el = document.getElementById("closedList");
+    el.innerHTML = list.length ? list.map(closedExchangeRowHtml).join("") :
+      "<div class=\"empty-state\">No closed exchanges tracked yet.</div>";
   }
 
   function renderMarketTake(){
@@ -995,11 +1066,13 @@
       fetch("./data/hyperliquid.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/chains.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/vasps.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/exchanges.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/closed-exchanges.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/market_take.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/sentiment.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/dominance.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
     ]).then(function(results){
-      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5], chainsData = results[6], vaspsData = results[7], takeData = results[8], sentimentData = results[9], dominanceData = results[10];
+      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5], chainsData = results[6], vaspsData = results[7], exchangesData = results[8], closedData = results[9], takeData = results[10], sentimentData = results[11], dominanceData = results[12];
       if(kData && kData.items){ state.knowledge = kData.items; }
       if(launchData && launchData.items){ state.launches = launchData.items; }
       if(newsData && newsData.items){ state.news = newsData.items; }
@@ -1007,13 +1080,15 @@
       if(defiData && defiData.items){ state.defi = defiData.items; }
       if(chainsData && chainsData.items){ state.chains = chainsData.items; }
       if(vaspsData && vaspsData.items){ state.vasps = vaspsData.items; }
+      if(exchangesData && exchangesData.items){ state.exchanges = exchangesData.items; }
+      if(closedData && closedData.items){ state.closedExchanges = closedData.items; }
       if(takeData){ state.marketTake = takeData; }
       if(sentimentData){ state.sentiment = sentimentData; }
       if(dominanceData){ state.dominance = dominanceData; }
       if(hlData && hlData.positions){ state.hlPositions = hlData.positions; }
       if(hlData && hlData.updatedAt){ state.hlUpdatedAt = hlData.updatedAt; }
       state.updatedAt = (newsData && newsData.updatedAt) || (launchData && launchData.updatedAt) || (priceData && priceData.updatedAt) || state.updatedAt;
-      renderKnowledge(); renderLaunches(); renderNews(); renderPriceTable(); renderDefi(); renderChains(); renderVasps(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
+      renderKnowledge(); renderLaunches(); renderNews(); renderPriceTable(); renderDefi(); renderChains(); renderVasps(); renderExchanges(); renderClosedExchanges(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
     });
   }
 
@@ -1062,7 +1137,7 @@
     if(copyBtn){ copyToClipboard(copyBtn.dataset.copy, copyBtn); }
   });
 
-  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPriceTable(); renderDefi(); renderChains(); renderVasps(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
+  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPriceTable(); renderDefi(); renderChains(); renderVasps(); renderExchanges(); renderClosedExchanges(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
   loadData();
   setInterval(loadData, 90000);
   setInterval(renderStatus, 30000);

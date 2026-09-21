@@ -1,5 +1,5 @@
 {
-  "_note": "Hand-curated, not touched by scripts/sync.py's automatic hourly sync. Scope: notable centralized crypto exchanges spanning crypto's history that are believed to still be operating and accepting new users as of this list's update date, including newly-launched/newly-licensed platforms. Given the size of this list (75+ entries spanning many jurisdictions), founding years and HQ locations for smaller regional exchanges reflect the best publicly available information rather than individually re-verified primary-source checks. Flag any inaccuracy and it'll be corrected. Every entry links directly to the exchange's own site.",
+  "_note": "Hand-curated, not touched by scripts/sync.py's automatic hourly sync. Scope: notable centralized and decentralized crypto exchanges spanning crypto's history that are believed to still be operating and accepting new users as of this list's update date, including newly-launched/newly-licensed platforms. For decentralized exchanges, the \"headquarters\" field lists the blockchain(s) it runs on rather than a physical location, since DEXs are run by smart contracts rather than a company office. Given the size of this list, founding years and details for smaller/newer platforms reflect the best publicly available information rather than individually re-verified primary-source checks. Flag any inaccuracy and it'll be corrected. Every entry links directly to the exchange's own site or app.",
   "updatedAt": "2026-09-21T00:00:00Z",
   "items": [
     {
@@ -633,6 +633,158 @@
       "headquarters": "Japan",
       "founded": 2026,
       "link": "https://www.laserdigital.com/"
+    },
+    {
+      "id": "hyperliquid",
+      "name": "Hyperliquid",
+      "primaryBusiness": "Decentralized exchange — perpetuals & spot trading on its own L1 blockchain",
+      "headquarters": "Hyperliquid L1 (own chain)",
+      "founded": 2022,
+      "link": "https://app.hyperliquid.xyz"
+    },
+    {
+      "id": "uniswap",
+      "name": "Uniswap",
+      "primaryBusiness": "Decentralized exchange — automated market maker (AMM) spot trading",
+      "headquarters": "Ethereum (multi-chain)",
+      "founded": 2018,
+      "link": "https://app.uniswap.org"
+    },
+    {
+      "id": "dydx",
+      "name": "dYdX",
+      "primaryBusiness": "Decentralized exchange — perpetuals trading on its own Cosmos appchain (dYdX Chain)",
+      "headquarters": "dYdX Chain (Cosmos)",
+      "founded": 2017,
+      "link": "https://dydx.trade"
+    },
+    {
+      "id": "gmx",
+      "name": "GMX",
+      "primaryBusiness": "Decentralized exchange — perpetuals & spot trading",
+      "headquarters": "Arbitrum & Avalanche",
+      "founded": 2021,
+      "link": "https://app.gmx.io"
+    },
+    {
+      "id": "pancakeswap",
+      "name": "PancakeSwap",
+      "primaryBusiness": "Decentralized exchange — AMM spot & perpetuals trading",
+      "headquarters": "BNB Chain (multi-chain)",
+      "founded": 2020,
+      "link": "https://pancakeswap.finance"
+    },
+    {
+      "id": "curve",
+      "name": "Curve Finance",
+      "primaryBusiness": "Decentralized exchange — AMM for stablecoins & pegged assets",
+      "headquarters": "Ethereum (multi-chain)",
+      "founded": 2020,
+      "link": "https://curve.fi"
+    },
+    {
+      "id": "sushiswap",
+      "name": "SushiSwap",
+      "primaryBusiness": "Decentralized exchange — AMM spot trading",
+      "headquarters": "Ethereum (multi-chain)",
+      "founded": 2020,
+      "link": "https://www.sushi.com"
+    },
+    {
+      "id": "raydium",
+      "name": "Raydium",
+      "primaryBusiness": "Decentralized exchange — AMM & central limit order book trading",
+      "headquarters": "Solana",
+      "founded": 2021,
+      "link": "https://raydium.io"
+    },
+    {
+      "id": "jupiter",
+      "name": "Jupiter",
+      "primaryBusiness": "Decentralized exchange aggregator & perpetuals trading",
+      "headquarters": "Solana",
+      "founded": 2021,
+      "link": "https://jup.ag"
+    },
+    {
+      "id": "balancer",
+      "name": "Balancer",
+      "primaryBusiness": "Decentralized exchange — programmable AMM liquidity pools",
+      "headquarters": "Ethereum (multi-chain)",
+      "founded": 2020,
+      "link": "https://balancer.fi"
+    },
+    {
+      "id": "1inch",
+      "name": "1inch",
+      "primaryBusiness": "Decentralized exchange aggregator — best-price routing across DEXs",
+      "headquarters": "Ethereum (multi-chain)",
+      "founded": 2019,
+      "link": "https://1inch.io"
+    },
+    {
+      "id": "orca",
+      "name": "Orca",
+      "primaryBusiness": "Decentralized exchange — concentrated-liquidity AMM",
+      "headquarters": "Solana",
+      "founded": 2021,
+      "link": "https://www.orca.so"
+    },
+    {
+      "id": "aerodrome",
+      "name": "Aerodrome Finance",
+      "primaryBusiness": "Decentralized exchange — AMM spot trading",
+      "headquarters": "Base",
+      "founded": 2023,
+      "link": "https://aerodrome.finance"
+    },
+    {
+      "id": "vertex",
+      "name": "Vertex Protocol",
+      "primaryBusiness": "Decentralized exchange — hybrid orderbook/AMM spot & perpetuals",
+      "headquarters": "Arbitrum",
+      "founded": 2023,
+      "link": "https://vertexprotocol.com"
+    },
+    {
+      "id": "drift",
+      "name": "Drift Protocol",
+      "primaryBusiness": "Decentralized exchange — perpetuals trading",
+      "headquarters": "Solana",
+      "founded": 2021,
+      "link": "https://drift.trade"
+    },
+    {
+      "id": "traderjoe",
+      "name": "LFJ (Trader Joe)",
+      "primaryBusiness": "Decentralized exchange — AMM spot trading",
+      "headquarters": "Avalanche (multi-chain)",
+      "founded": 2021,
+      "link": "https://lfj.gg"
+    },
+    {
+      "id": "osmosis",
+      "name": "Osmosis",
+      "primaryBusiness": "Decentralized exchange — AMM spot trading",
+      "headquarters": "Cosmos",
+      "founded": 2021,
+      "link": "https://app.osmosis.zone"
+    },
+    {
+      "id": "synthetix",
+      "name": "Synthetix",
+      "primaryBusiness": "Decentralized derivatives & synthetic-asset protocol",
+      "headquarters": "Ethereum / Optimism",
+      "founded": 2018,
+      "link": "https://synthetix.io"
+    },
+    {
+      "id": "perpetual-protocol",
+      "name": "Perpetual Protocol",
+      "primaryBusiness": "Decentralized exchange — perpetuals trading",
+      "headquarters": "Optimism",
+      "founded": 2020,
+      "link": "https://perp.com"
     }
   ]
 }

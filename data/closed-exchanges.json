@@ -1,0 +1,141 @@
+{
+  "_note": "Hand-curated. Scope: notable crypto exchanges that have permanently shut down, been seized, or ceased operations, spanning crypto's history. Included for historical reference — links point to reference/news sources, not trading platforms.",
+  "updatedAt": "2026-09-21T00:00:00Z",
+  "items": [
+    {
+      "id": "mtgox",
+      "name": "Mt. Gox",
+      "primaryBusiness": "Was once the world's largest bitcoin exchange, handling the majority of global BTC trades",
+      "headquarters": "Tokyo, Japan",
+      "activeYears": "2010–2014",
+      "closedReason": "Collapsed after roughly 850,000 BTC were lost or stolen; filed for bankruptcy in Feb 2014. The largest exchange collapse in crypto history at the time.",
+      "link": "https://en.wikipedia.org/wiki/Mt._Gox"
+    },
+    {
+      "id": "ftx",
+      "name": "FTX",
+      "primaryBusiness": "Was a major centralized exchange offering spot & derivatives trading",
+      "headquarters": "Nassau, Bahamas",
+      "activeYears": "2019–2022",
+      "closedReason": "Collapsed in Nov 2022 after revelations it had misused customer funds; founder Sam Bankman-Fried was later convicted of fraud.",
+      "link": "https://en.wikipedia.org/wiki/FTX"
+    },
+    {
+      "id": "quadrigacx",
+      "name": "QuadrigaCX",
+      "primaryBusiness": "Was Canada's largest crypto exchange",
+      "headquarters": "Vancouver, Canada",
+      "activeYears": "2013–2019",
+      "closedReason": "Collapsed in 2019 after founder Gerald Cotten died holding sole access to the exchange's cold-storage keys, leaving ~$190M CAD in customer funds inaccessible.",
+      "link": "https://en.wikipedia.org/wiki/Quadriga_Fintech_Solutions"
+    },
+    {
+      "id": "cryptopia",
+      "name": "Cryptopia",
+      "primaryBusiness": "Was a New Zealand-based crypto exchange",
+      "headquarters": "Christchurch, New Zealand",
+      "activeYears": "2014–2019",
+      "closedReason": "Hacked for an estimated $16M+ in Jan 2019; placed into liquidation later that year.",
+      "link": "https://en.wikipedia.org/wiki/Cryptopia"
+    },
+    {
+      "id": "btce",
+      "name": "BTC-e",
+      "primaryBusiness": "Was one of the earliest major international crypto exchanges",
+      "headquarters": "Russia / international (unregistered)",
+      "activeYears": "2011–2017",
+      "closedReason": "Seized by US law enforcement in 2017 over alleged money-laundering; operator Alexander Vinnik was later arrested and convicted.",
+      "link": "https://en.wikipedia.org/wiki/BTC-e"
+    },
+    {
+      "id": "bittrex",
+      "name": "Bittrex",
+      "primaryBusiness": "Was a major US-founded crypto exchange",
+      "headquarters": "Seattle, USA (Bittrex Global: Bermuda)",
+      "activeYears": "2014–2024",
+      "closedReason": "Bittrex's US arm shut down in April 2023 amid SEC action; the international Bittrex Global entity wound down operations in Dec 2024.",
+      "link": "https://en.wikipedia.org/wiki/Bittrex"
+    },
+    {
+      "id": "liquid",
+      "name": "Liquid (QUOINE)",
+      "primaryBusiness": "Was a Japan-founded crypto exchange acquired by FTX in 2022",
+      "headquarters": "Tokyo, Japan / Singapore",
+      "activeYears": "2014–2022",
+      "closedReason": "Halted withdrawals and collapsed alongside parent company FTX in Nov 2022.",
+      "link": "https://en.wikipedia.org/wiki/FTX#Liquid"
+    },
+    {
+      "id": "dmmbitcoin",
+      "name": "DMM Bitcoin",
+      "primaryBusiness": "Was a licensed Japanese crypto exchange",
+      "headquarters": "Tokyo, Japan",
+      "activeYears": "2018–2024",
+      "closedReason": "Shut down in Dec 2024 after a ¥48 billion ($305M) hack; remaining customer accounts were transferred to SBI VC Trade.",
+      "link": "https://www.coindesk.com/business/2024/12/02/japanese-crypto-exchange-dmm-bitcoin-to-shut-down-after-305-m-hack"
+    },
+    {
+      "id": "localbitcoins",
+      "name": "LocalBitcoins",
+      "primaryBusiness": "Was a pioneering peer-to-peer bitcoin marketplace",
+      "headquarters": "Helsinki, Finland",
+      "activeYears": "2012–2023",
+      "closedReason": "Shut down in Feb 2023 citing a prolonged bear market and falling trading volumes.",
+      "link": "https://en.wikipedia.org/wiki/LocalBitcoins"
+    },
+    {
+      "id": "paxful",
+      "name": "Paxful",
+      "primaryBusiness": "Was a major peer-to-peer crypto marketplace",
+      "headquarters": "Wilmington, USA",
+      "activeYears": "2015–2023",
+      "closedReason": "Shut down in Nov 2023 following a co-founder dispute and regulatory pressure.",
+      "link": "https://en.wikipedia.org/wiki/Paxful"
+    },
+    {
+      "id": "bitfront",
+      "name": "Bitfront",
+      "primaryBusiness": "Was a crypto exchange operated by LINE (Naver)",
+      "headquarters": "Singapore",
+      "activeYears": "2020–2023",
+      "closedReason": "Wound down in 2023 as parent company LY Corporation exited the exchange business.",
+      "link": "https://www.bitfront.com"
+    },
+    {
+      "id": "aax",
+      "name": "AAX",
+      "primaryBusiness": "Was a Hong Kong/Malta-based crypto exchange",
+      "headquarters": "Hong Kong / Malta",
+      "activeYears": "2019–2022",
+      "closedReason": "Froze withdrawals and collapsed in late 2022 after its major shareholder diverted client funds.",
+      "link": "https://en.wikipedia.org/wiki/AAX_(cryptocurrency_exchange)"
+    },
+    {
+      "id": "coinflex",
+      "name": "CoinFLEX",
+      "primaryBusiness": "Was a Seychelles-based derivatives exchange",
+      "headquarters": "Seychelles",
+      "activeYears": "2019–2022",
+      "closedReason": "Suspended withdrawals and collapsed in June 2022 after a large counterparty default.",
+      "link": "https://en.wikipedia.org/wiki/CoinFLEX"
+    },
+    {
+      "id": "voyager",
+      "name": "Voyager Digital",
+      "primaryBusiness": "Was a US crypto brokerage and trading platform",
+      "headquarters": "New Jersey, USA",
+      "activeYears": "2018–2022",
+      "closedReason": "Filed for bankruptcy in July 2022 after its loans to Three Arrows Capital went unpaid.",
+      "link": "https://en.wikipedia.org/wiki/Voyager_Digital"
+    },
+    {
+      "id": "bitcoinde",
+      "name": "Bitcoin.de",
+      "primaryBusiness": "Was one of Germany's oldest bitcoin marketplaces",
+      "headquarters": "Germany",
+      "activeYears": "2011–2026",
+      "closedReason": "Announced a phased shutdown of retail trading, winding down through 2026.",
+      "link": "https://www.bitcoin.de"
+    }
+  ]
+}

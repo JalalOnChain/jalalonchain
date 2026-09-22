@@ -1,6 +1,15 @@
 {
-  "updatedAt": "2026-09-21T23:17:47Z",
+  "updatedAt": "2026-09-22T00:25:03Z",
   "items": [
+    {
+      "id": "2026-09-22",
+      "title": "What 'slashing' actually punishes in proof-of-stake",
+      "body": "Slashing isn't a general performance penalty \u2014 it specifically targets provably dishonest or duplicated behavior (double-signing, equivocation) that could let a validator attack consensus. Simple downtime or being offline is typically punished separately and far more leniently than an actual safety violation.",
+      "tags": [
+        "consensus"
+      ],
+      "createdAt": "2026-09-22T00:25:03Z"
+    },
     {
       "id": "2026-09-21",
       "title": "Why a single large sell doesn't equal a market top",

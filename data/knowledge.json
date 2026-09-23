@@ -1,6 +1,16 @@
 {
-  "updatedAt": "2026-09-22T23:16:31Z",
+  "updatedAt": "2026-09-23T00:24:06Z",
   "items": [
+    {
+      "id": "2026-09-23",
+      "title": "Why exchange 'proof of reserves' isn't proof of solvency",
+      "body": "A Merkle-tree proof of reserves can show an exchange holds certain assets at a point in time, but it says nothing about liabilities \u2014 what it owes customers. An exchange can hold real reserves and still be insolvent if what it owes exceeds what it holds; proof of reserves without proof of liabilities is half the picture.",
+      "tags": [
+        "custody",
+        "compliance"
+      ],
+      "createdAt": "2026-09-23T00:24:06Z"
+    },
     {
       "id": "2026-09-22",
       "title": "What 'slashing' actually punishes in proof-of-stake",

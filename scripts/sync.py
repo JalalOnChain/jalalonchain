@@ -1183,6 +1183,14 @@ LEARN_PAGE_TMPL = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CVTJPLDH93"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CVTJPLDH93');
+</script>
 <title>%(title)s</title>
 <meta name="description" content="%(description)s">
 <link rel="canonical" href="%(canonical)s">
@@ -1361,6 +1369,14 @@ def sync_learn_pages():
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CVTJPLDH93"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CVTJPLDH93');
+</script>
 <title>Daily crypto briefings archive — JalalOnChain</title>
 <meta name="description" content="Every past daily plain-English crypto briefing from JalalOnChain, in one archive.">
 <link rel="canonical" href="%(site)s/learn/">

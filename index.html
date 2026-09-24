@@ -374,8 +374,7 @@
 <div class="wrap">
   <section class="hero">
     <h1>The <em>Crypto Information Hub</em></h1>
-    <div class="hero-eyebrow" id="heroTakeDate">Today&rsquo;s take</div>
-    <p id="heroTake">Loading today&rsquo;s take&hellip;</p>
+    <p>Crypto never sleeps, and neither do we. Regulators cracking down, whales making moves, new chains going live, exchanges launching and others shutting down &mdash; we&rsquo;re watching all of it, hour by hour, so you don&rsquo;t have to.</p>
   </section>
 
   <section class="hub-section" id="hub">
@@ -579,7 +578,7 @@
 <script>
 (function(){
   "use strict";
-  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], chains: [], exchanges: [], closedExchanges: [], marketTake: null, hlPositions: [], sentiment: null, dominance: null, updatedAt: null };
+  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], chains: [], exchanges: [], closedExchanges: [], hlPositions: [], sentiment: null, dominance: null, updatedAt: null };
   var priceSortState = { field: null, dir: -1 };
   var priceFilterQuery = "";
 
@@ -816,19 +815,6 @@
       "<div class=\"empty-state\">No closed exchanges tracked yet.</div>";
   }
 
-  function renderMarketTake(){
-    var take = state.marketTake;
-    var dateEl = document.getElementById("heroTakeDate");
-    var body = document.getElementById("heroTake");
-    if(!take || !(take.html || take.text)){
-      dateEl.textContent = "Today's take";
-      body.innerHTML = "Your always-on feed for what's actually moving in crypto: breaking market news, government enforcement and sanctions actions, freshly-launched tokens and DeFi protocols, and large Hyperliquid whale positions &mdash; tracked hour by hour.";
-      return;
-    }
-    dateEl.textContent = "Today's take · " + (fmtDate(take.date) || "");
-    body.innerHTML = take.html || esc(take.text);
-  }
-
   function renderPulse(){
     var fg = state.sentiment;
     var fgEl = document.getElementById("pulseFg");
@@ -1035,11 +1021,10 @@
       fetch("./data/chains.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/exchanges.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/closed-exchanges.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
-      fetch("./data/market_take.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/sentiment.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
       fetch("./data/dominance.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
     ]).then(function(results){
-      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5], chainsData = results[6], exchangesData = results[7], closedData = results[8], takeData = results[9], sentimentData = results[10], dominanceData = results[11];
+      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5], chainsData = results[6], exchangesData = results[7], closedData = results[8], sentimentData = results[9], dominanceData = results[10];
       if(kData && kData.items){ state.knowledge = kData.items; }
       if(launchData && launchData.items){ state.launches = launchData.items; }
       if(newsData && newsData.items){ state.news = newsData.items; }
@@ -1048,13 +1033,12 @@
       if(chainsData && chainsData.items){ state.chains = chainsData.items; }
       if(exchangesData && exchangesData.items){ state.exchanges = exchangesData.items; }
       if(closedData && closedData.items){ state.closedExchanges = closedData.items; }
-      if(takeData){ state.marketTake = takeData; }
       if(sentimentData){ state.sentiment = sentimentData; }
       if(dominanceData){ state.dominance = dominanceData; }
       if(hlData && hlData.positions){ state.hlPositions = hlData.positions; }
       if(hlData && hlData.updatedAt){ state.hlUpdatedAt = hlData.updatedAt; }
       state.updatedAt = (newsData && newsData.updatedAt) || (launchData && launchData.updatedAt) || (priceData && priceData.updatedAt) || state.updatedAt;
-      renderKnowledge(); renderLaunches(); renderNews(); renderPriceTable(); renderDefi(); renderChains(); renderExchanges(); renderClosedExchanges(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
+      renderKnowledge(); renderLaunches(); renderNews(); renderPriceTable(); renderDefi(); renderChains(); renderExchanges(); renderClosedExchanges(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
     });
   }
 
@@ -1103,7 +1087,7 @@
     if(copyBtn){ copyToClipboard(copyBtn.dataset.copy, copyBtn); }
   });
 
-  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPriceTable(); renderDefi(); renderChains(); renderExchanges(); renderClosedExchanges(); renderMarketTake(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
+  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPriceTable(); renderDefi(); renderChains(); renderExchanges(); renderClosedExchanges(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
   loadData();
   setInterval(loadData, 90000);
   setInterval(renderStatus, 30000);

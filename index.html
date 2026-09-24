@@ -136,6 +136,7 @@
   .hub-tab.active .tab-dot{ background:#fff; }
   .hub-tab[data-tab="news"]{ --tab-color:var(--teal); }
   .hub-tab[data-tab="enforcement"]{ --tab-color:var(--bad); }
+  .hub-tab[data-tab="ofac"]{ --tab-color:var(--violet); }
   .hub-tab[data-tab="whales"]{ --tab-color:var(--blue2); }
   .hub-tab[data-tab="chains"]{ --tab-color:var(--accent); }
   .hub-tab[data-tab="exchanges"]{ --tab-color:var(--good); }
@@ -295,6 +296,7 @@
   .cat-badge{ font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 7px; border-radius:5px; white-space:nowrap; }
   .cat-enforcement{ background:var(--bad-soft); color:var(--bad); }
   .cat-market-news{ background:var(--teal-soft); color:var(--teal); }
+  .cat-ofac{ background:var(--violet-soft); color:var(--violet-ink); }
   .n-time{ font-size:11px; color:var(--text-faint); margin-left:auto; font-family:"IBM Plex Mono",monospace; }
   .news-row .n-title{ font-size:13.5px; font-weight:600; line-height:1.4; }
   .news-row .n-title a{ color:var(--text); text-decoration:none; }
@@ -381,6 +383,7 @@
     <div class="hub-tabs" id="hubTabs">
       <button class="hub-tab active" data-tab="news"><span class="tab-dot"></span>News</button>
       <button class="hub-tab" data-tab="enforcement"><span class="tab-dot"></span>Enforcement Alerts</button>
+      <button class="hub-tab" data-tab="ofac"><span class="tab-dot"></span>OFAC Sanctions</button>
       <button class="hub-tab" data-tab="whales"><span class="tab-dot"></span>Whale Activity</button>
       <button class="hub-tab" data-tab="chains"><span class="tab-dot"></span>New Chains</button>
       <button class="hub-tab" data-tab="exchanges"><span class="tab-dot"></span>Exchanges</button>
@@ -405,6 +408,17 @@
       <div class="card feed-card feed-scroll-card" id="enfCard">
         <div class="feed-list" id="enfList"><div class="empty-state">Loading&hellip;</div></div>
       </div>
+    </div>
+
+    <div class="hub-pane" data-pane="ofac" id="ofac">
+      <div class="feed-head-row">
+        <h3>OFAC sanctions actions</h3>
+        <span class="feed-count" id="ofacCount">0 items</span>
+      </div>
+      <div class="card feed-card feed-scroll-card" id="ofacCard">
+        <div class="feed-list" id="ofacList"><div class="empty-state">Loading&hellip;</div></div>
+      </div>
+      <div class="source-note">Every action from the U.S. Treasury&rsquo;s OFAC &ldquo;recent actions&rdquo; feed, crypto-related or not &mdash; the broader Enforcement Alerts tab stays crypto-focused, this one is the complete OFAC record.</div>
     </div>
 
     <div class="hub-pane" data-pane="whales" id="hyperliquid">
@@ -737,8 +751,8 @@
   }
 
   function newsRowHtml(n){
-    var catClass = n.category==="enforcement" ? "cat-enforcement" : "cat-market-news";
-    var catLabel = n.category==="enforcement" ? "Enforcement" : "News";
+    var catClass = n.category==="enforcement" ? "cat-enforcement" : (n.category==="ofac" ? "cat-ofac" : "cat-market-news");
+    var catLabel = n.category==="enforcement" ? "Enforcement" : (n.category==="ofac" ? "OFAC" : "News");
     return "<div class=\"news-row\">"+
       "<div class=\"n-top\"><span class=\"cat-badge "+catClass+"\">"+catLabel+"</span><span class=\"n-time\">"+esc(timeAgo(n.publishedAt||n.fetchedAt))+"</span></div>"+
       "<div class=\"n-title\">"+(n.link?"<a href=\""+esc(n.link)+"\" target=\"_blank\" rel=\"noopener\">"+esc(n.title)+"</a>":esc(n.title))+"</div>"+
@@ -753,9 +767,18 @@
     document.getElementById("enfList").innerHTML = enf.length ? enf.slice(0,60).map(newsRowHtml).join("") :
       "<div class=\"empty-state\">No enforcement alerts synced yet &mdash; check back after the next sync.</div>";
 
+    // Dedicated OFAC feed: every OFAC action regardless of crypto relevance
+    // (category is "enforcement" for the crypto-relevant subset, "ofac" for
+    // the rest — both belong here since this tab is the full OFAC record).
+    var ofac = all.filter(function(n){ return n.source==="OFAC (U.S. Treasury)"; });
+    document.getElementById("ofacCount").textContent = ofac.length+(ofac.length===1?" item":" items");
+    document.getElementById("ofacList").innerHTML = ofac.length ? ofac.slice(0,60).map(newsRowHtml).join("") :
+      "<div class=\"empty-state\">No OFAC actions synced yet &mdash; check back after the next sync.</div>";
+
     // Crypto news is market-news only now — enforcement has its own tab, so it's
-    // no longer duplicated into this list too.
-    var newsOnly = all.filter(function(n){ return n.category!=="enforcement"; });
+    // no longer duplicated into this list too. Non-crypto OFAC items ("ofac"
+    // category) also stay out of the general News feed.
+    var newsOnly = all.filter(function(n){ return n.category!=="enforcement" && n.category!=="ofac"; });
     document.getElementById("newsCount").textContent = newsOnly.length+(newsOnly.length===1?" item":" items");
     var el = document.getElementById("newsList");
     el.innerHTML = newsOnly.length ? newsOnly.slice(0,80).map(newsRowHtml).join("") :

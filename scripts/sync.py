@@ -352,14 +352,16 @@ def scrape_ofac(existing_ids):
 
         relevant = is_crypto_relevant(body_text) if body_text else any(is_crypto_relevant(t) for t in titles)
         print(f"ofac: {date_str} relevant={relevant}")
-        if not relevant:
-            continue
-
+        # Every OFAC action gets kept now (not just crypto-relevant ones) so the
+        # dedicated OFAC tab is a complete feed of OFAC's actions. Crypto-relevant
+        # ones are ALSO tagged "enforcement" so they keep showing in the
+        # crypto-focused Enforcement Alerts tab; non-crypto ones only show in
+        # the OFAC tab, since Enforcement Alerts is meant to stay crypto-only.
         display_title = titles[0] if len(titles) == 1 else f"{titles[0]} (+{len(titles) - 1} more that day)"
         summary = re.sub(r"\s+", " ", body_text).strip()[:280] if body_text else "Sanctions action listed on OFAC's recent actions page."
         items.append({
             "id": uid, "title": display_title, "source": "OFAC (U.S. Treasury)",
-            "category": "enforcement", "link": detail_url, "publishedAt": iso,
+            "category": "enforcement" if relevant else "ofac", "link": detail_url, "publishedAt": iso,
             "fetchedAt": now_iso(), "summary": summary,
         })
         if len(items) >= MAX_PER_SOURCE_PER_RUN:

@@ -1140,6 +1140,42 @@ def html_escape(s):
             .replace('"', "&quot;").replace("'", "&#39;"))
 
 
+def slugify(text, used=None):
+    """Turn a briefing title into a short, URL-safe, dateless slug.
+    Dedupes against `used` (a set) by appending -2, -3, ... on collision."""
+    s = (text or "").strip().lower()
+    s = re.sub(r"[^a-z0-9]+", "-", s)
+    s = s.strip("-")
+    if len(s) > 70:
+        s = s[:70].rsplit("-", 1)[0]
+    if not s:
+        s = "briefing"
+    if used is not None:
+        base = s
+        n = 2
+        while s in used:
+            s = base + "-" + str(n)
+            n += 1
+        used.add(s)
+    return s
+
+
+REDIRECT_PAGE_TMPL = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>%(title)s</title>
+<link rel="canonical" href="%(canonical)s">
+<meta name="robots" content="noindex, follow">
+<meta http-equiv="refresh" content="0; url=%(canonical)s">
+</head>
+<body>
+<p>This page has moved to <a href="%(canonical)s">%(canonical)s</a>.</p>
+</body>
+</html>
+"""
+
+
 LEARN_PAGE_TMPL = """<!doctype html>
 <html lang="en">
 <head>
@@ -1227,29 +1263,38 @@ def fmt_learn_date(ymd):
 def sync_learn_pages():
     """Give every daily knowledge briefing its own permanent, indexable page
     (data/knowledge.json is otherwise only ever rendered client-side, so
-    without this Google has no URL to associate with that content)."""
-    knowledge = load_json(KNOWLEDGE_PATH, {"items": []})
+    without this Google has no URL to associate with that content).
+    Pages live at /learn/<slug>/ where <slug> is derived from the title —
+    not the date — since a descriptive slug is far more useful for search
+    than a bare date. A lightweight redirect stub is kept at any legacy
+    /learn/<date>/ URL so already-indexed/bookmarked links don't break."""
+    knowledge = load_json(KNOWLEDGE_PATH, {"updatedAt": None, "items": []})
     items = sorted(knowledge.get("items", []), key=lambda it: it.get("id", ""), reverse=True)
     if not items:
         return []
 
     os.makedirs(LEARN_DIR, exist_ok=True)
 
+    used_slugs = set()
+    for entry in items:
+        entry["slug"] = slugify(entry.get("title", ""), used_slugs)
+
     for i, entry in enumerate(items):
         eid = entry.get("id", "")
-        if not eid:
+        slug = entry.get("slug", "")
+        if not eid or not slug:
             continue
         title = entry.get("title", "").strip()
         body = entry.get("body", "").strip()
         tags = entry.get("tags", []) or []
         description = body if len(body) <= 300 else (body[:297].rsplit(" ", 1)[0] + "...")
-        canonical = SITE_URL + "/learn/" + eid + "/"
+        canonical = SITE_URL + "/learn/" + slug + "/"
 
         newer = items[i - 1] if i > 0 else None
         older = items[i + 1] if i + 1 < len(items) else None
-        newer_link = ('<a href="' + SITE_URL + "/learn/" + newer["id"] + '/">&larr; Newer: '
+        newer_link = ('<a href="' + SITE_URL + "/learn/" + newer["slug"] + '/">&larr; Newer: '
                        + html_escape(newer.get("title", "")) + "</a>") if newer else ""
-        older_link = ('<a href="' + SITE_URL + "/learn/" + older["id"] + '/">Older: '
+        older_link = ('<a href="' + SITE_URL + "/learn/" + older["slug"] + '/">Older: '
                        + html_escape(older.get("title", "")) + " &rarr;</a>") if older else ""
 
         jsonld = json.dumps({
@@ -1278,13 +1323,28 @@ def sync_learn_pages():
             "newer_link": newer_link,
             "older_link": older_link,
         }
-        page_dir = os.path.join(LEARN_DIR, eid)
+        page_dir = os.path.join(LEARN_DIR, slug)
         os.makedirs(page_dir, exist_ok=True)
         with open(os.path.join(page_dir, "index.html"), "w", encoding="utf-8") as f:
             f.write(page)
 
+        # Legacy date-based URL: keep a small redirect stub so any link or
+        # search-engine index pointing at the old /learn/<date>/ path still
+        # resolves, and points search engines at the new canonical slug URL.
+        if eid != slug:
+            legacy_dir = os.path.join(LEARN_DIR, eid)
+            os.makedirs(legacy_dir, exist_ok=True)
+            redirect_page = REDIRECT_PAGE_TMPL % {
+                "canonical": canonical,
+                "title": html_escape(title + " — JalalOnChain"),
+            }
+            with open(os.path.join(legacy_dir, "index.html"), "w", encoding="utf-8") as f:
+                f.write(redirect_page)
+
+    save_json(KNOWLEDGE_PATH, {"updatedAt": knowledge.get("updatedAt"), "items": items})
+
     rows = "\n".join(
-        '<li><a href="/learn/' + it["id"] + '/"><span class="t">' + html_escape(it.get("title", ""))
+        '<li><a href="/learn/' + it["slug"] + '/"><span class="t">' + html_escape(it.get("title", ""))
         + '</span><span class="d">' + it["id"] + "</span></a></li>"
         for it in items
     )
@@ -1362,7 +1422,7 @@ def sync_learn_pages():
 def sync_sitemap(learn_items):
     urls = [(SITE_URL + "/", "hourly", "1.0"), (SITE_URL + "/learn/", "daily", "0.6")]
     for it in learn_items:
-        urls.append((SITE_URL + "/learn/" + it["id"] + "/", "monthly", "0.5"))
+        urls.append((SITE_URL + "/learn/" + it["slug"] + "/", "monthly", "0.5"))
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     body = "\n".join(
         "  <url>\n    <loc>" + loc + "</loc>\n    <lastmod>" + today + "</lastmod>\n    <changefreq>"
@@ -1375,14 +1435,28 @@ def sync_sitemap(learn_items):
         f.write(xml)
 
 
+KNOWLEDGE_INTERVAL_DAYS = 2  # publish a new briefing every N days, not every day
+
+
 def sync_knowledge():
     knowledge = load_json(KNOWLEDGE_PATH, {"updatedAt": None, "items": []})
     pool = load_json(POOL_PATH, {"items": []}).get("items", [])
     state = load_json(STATE_PATH, {"nextIndex": 0})
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    today_dt = datetime.now(timezone.utc).date()
+    today = today_dt.strftime("%Y-%m-%d")
 
     items = knowledge.get("items", [])
-    if not any(it.get("id") == today for it in items) and pool:
+    last_id = items[0].get("id") if items else None
+    due = True
+    if last_id:
+        try:
+            last_dt = datetime.strptime(last_id, "%Y-%m-%d").date()
+            due = (today_dt - last_dt).days >= KNOWLEDGE_INTERVAL_DAYS
+        except Exception:
+            due = True
+    already_have_today = any(it.get("id") == today for it in items)
+
+    if due and not already_have_today and pool:
         idx = state.get("nextIndex", 0) % len(pool)
         entry = pool[idx]
         items.insert(0, {
@@ -1394,7 +1468,7 @@ def sync_knowledge():
         save_json(STATE_PATH, state)
         print(f"knowledge: published '{entry['title']}' for {today}")
     else:
-        print("knowledge: today already covered")
+        print(f"knowledge: not due yet (last published {last_id}, interval {KNOWLEDGE_INTERVAL_DAYS}d)")
 
     save_json(KNOWLEDGE_PATH, {"updatedAt": now_iso(), "items": items})
 

@@ -640,7 +640,7 @@
   function showKnowledgeDoc(doc, isToday){
     if(!doc) return;
     document.getElementById("kEyebrowLabel").textContent = isToday ? "Daily briefing" : "Past briefing";
-    document.getElementById("kDate").innerHTML = "<a href=\"/learn/"+esc(doc.id)+"/\">"+esc(doc.id)+"</a>";
+    document.getElementById("kDate").innerHTML = "<a href=\"/learn/"+esc(doc.slug||doc.id)+"/\">"+esc(doc.id)+"</a>";
     document.getElementById("kTitle").textContent = doc.title||"On-chain insight";
     document.getElementById("kBody").textContent = doc.body||"";
     document.getElementById("kTags").innerHTML = (doc.tags||[]).map(function(tg){ return "<span class=\"k-tag\">"+esc(tg)+"</span>"; }).join("");
@@ -656,7 +656,7 @@
     if(today) showKnowledgeDoc(today, true);
     var hist = docs.slice(1,8);
     document.getElementById("kHistList").innerHTML = (hist.map(function(d){
-      return "<a class=\"k-hist-item\" href=\"/learn/"+esc(d.id)+"/\" data-id=\""+esc(d.id)+"\"><div class=\"ht\">"+esc(d.title||"")+"</div><div class=\"hd\">"+esc(d.id)+"</div></a>";
+      return "<a class=\"k-hist-item\" href=\"/learn/"+esc(d.slug||d.id)+"/\" data-id=\""+esc(d.id)+"\"><div class=\"ht\">"+esc(d.title||"")+"</div><div class=\"hd\">"+esc(d.id)+"</div></a>";
     }).join("") || "<div class=\"hd\">More briefings appear here daily.</div>") + "<a class=\"k-hist-more\" href=\"/learn/\">View all briefings &rarr;</a>";
   }
 

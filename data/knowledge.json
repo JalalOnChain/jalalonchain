@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T17:17:53Z",
+  "updatedAt": "2026-09-24T17:39:08Z",
   "items": [
     {
       "id": "2026-09-24",
@@ -9,7 +9,8 @@
         "fundamentals",
         "market-structure"
       ],
-      "createdAt": "2026-09-24T00:25:23Z"
+      "createdAt": "2026-09-24T00:25:23Z",
+      "slug": "the-real-reason-gas-fees-spike"
     },
     {
       "id": "2026-09-23",
@@ -19,7 +20,8 @@
         "custody",
         "compliance"
       ],
-      "createdAt": "2026-09-23T00:24:06Z"
+      "createdAt": "2026-09-23T00:24:06Z",
+      "slug": "why-exchange-proof-of-reserves-isn-t-proof-of-solvency"
     },
     {
       "id": "2026-09-22",
@@ -28,7 +30,8 @@
       "tags": [
         "consensus"
       ],
-      "createdAt": "2026-09-22T00:25:03Z"
+      "createdAt": "2026-09-22T00:25:03Z",
+      "slug": "what-slashing-actually-punishes-in-proof-of-stake"
     },
     {
       "id": "2026-09-21",
@@ -37,7 +40,8 @@
       "tags": [
         "market-structure"
       ],
-      "createdAt": "2026-09-21T00:26:02Z"
+      "createdAt": "2026-09-21T00:26:02Z",
+      "slug": "why-a-single-large-sell-doesn-t-equal-a-market-top"
     },
     {
       "id": "2026-09-20",
@@ -47,7 +51,8 @@
         "nft",
         "on-chain-forensics"
       ],
-      "createdAt": "2026-09-20T00:26:30Z"
+      "createdAt": "2026-09-20T00:26:30Z",
+      "slug": "why-nft-provenance-is-more-useful-than-the-image-itself"
     },
     {
       "id": "2026-09-19",
@@ -57,7 +62,8 @@
         "custody",
         "fundamentals"
       ],
-      "createdAt": "2026-09-19T00:25:02Z"
+      "createdAt": "2026-09-19T00:25:02Z",
+      "slug": "the-difference-between-custodial-and-non-custodial-risk"
     },
     {
       "id": "2026-09-18",
@@ -66,7 +72,8 @@
       "tags": [
         "tokenomics"
       ],
-      "createdAt": "2026-09-18T00:25:11Z"
+      "createdAt": "2026-09-18T00:25:11Z",
+      "slug": "why-burn-events-aren-t-automatically-bullish"
     },
     {
       "id": "2026-09-17",
@@ -76,7 +83,8 @@
         "consensus",
         "fundamentals"
       ],
-      "createdAt": "2026-09-17T00:25:14Z"
+      "createdAt": "2026-09-17T00:25:14Z",
+      "slug": "proof-of-work-vs-proof-of-stake-the-one-line-version"
     },
     {
       "id": "2026-09-16",
@@ -86,7 +94,8 @@
         "security",
         "bridges"
       ],
-      "createdAt": "2026-09-16T00:25:04Z"
+      "createdAt": "2026-09-16T00:25:04Z",
+      "slug": "what-makes-a-blockchain-bridge-a-favorite-exploit-target"
     },
     {
       "id": "2026-09-15",
@@ -96,7 +105,8 @@
         "defi",
         "tokenomics"
       ],
-      "createdAt": "2026-09-15T00:27:27Z"
+      "createdAt": "2026-09-15T00:27:27Z",
+      "slug": "why-total-value-locked-can-mislead"
     },
     {
       "id": "2026-09-14",
@@ -106,7 +116,8 @@
         "exchange-flows",
         "custody"
       ],
-      "createdAt": "2026-09-14T00:27:05Z"
+      "createdAt": "2026-09-14T00:27:05Z",
+      "slug": "cold-hot-and-warm-wallets-aren-t-just-about-temperature"
     },
     {
       "id": "2026-09-13",
@@ -116,7 +127,8 @@
         "market-structure",
         "on-chain-forensics"
       ],
-      "createdAt": "2026-09-13T00:26:26Z"
+      "createdAt": "2026-09-13T00:26:26Z",
+      "slug": "what-a-wash-trade-looks-like-on-chain"
     },
     {
       "id": "2026-09-12",
@@ -126,7 +138,8 @@
         "compliance",
         "regulation"
       ],
-      "createdAt": "2026-09-12T00:25:06Z"
+      "createdAt": "2026-09-12T00:25:06Z",
+      "slug": "the-travel-rule-in-plain-terms"
     },
     {
       "id": "2026-09-11",
@@ -136,7 +149,8 @@
         "stablecoins",
         "tokenomics"
       ],
-      "createdAt": "2026-09-11T00:26:50Z"
+      "createdAt": "2026-09-11T00:26:50Z",
+      "slug": "stablecoins-aren-t-all-backed-the-same-way"
     },
     {
       "id": "2026-09-10",
@@ -146,7 +160,8 @@
         "privacy",
         "on-chain-forensics"
       ],
-      "createdAt": "2026-09-10T00:25:02Z"
+      "createdAt": "2026-09-10T00:25:02Z",
+      "slug": "why-mixers-don-t-fully-break-traceability"
     },
     {
       "id": "2026-09-09",
@@ -156,7 +171,8 @@
         "mev",
         "market-structure"
       ],
-      "createdAt": "2026-09-09T00:30:19Z"
+      "createdAt": "2026-09-09T00:30:19Z",
+      "slug": "mev-the-tax-you-don-t-see-on-your-transaction"
     },
     {
       "id": "2026-09-08",
@@ -166,7 +182,8 @@
         "defi",
         "amm"
       ],
-      "createdAt": "2026-09-08T00:30:05Z"
+      "createdAt": "2026-09-08T00:30:05Z",
+      "slug": "what-actually-happens-when-you-swap-on-a-dex"
     },
     {
       "id": "2026-09-07",
@@ -176,7 +193,8 @@
         "market-structure",
         "exchange-flows"
       ],
-      "createdAt": "2026-09-07T00:30:40Z"
+      "createdAt": "2026-09-07T00:30:40Z",
+      "slug": "exchange-inflows-and-outflows-as-a-sentiment-signal"
     },
     {
       "id": "2026-09-06",
@@ -187,7 +205,8 @@
         "clustering",
         "compliance"
       ],
-      "createdAt": "2026-09-06T12:47:10Z"
+      "createdAt": "2026-09-06T12:47:10Z",
+      "slug": "why-address-clustering-matters-more-than-balances"
     }
   ]
 }

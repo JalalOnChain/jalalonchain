@@ -1,6 +1,26 @@
 {
-  "updatedAt": "2026-09-28T20:18:40Z",
+  "updatedAt": "2026-09-28T21:19:51Z",
   "items": [
+    {
+      "id": "news-00c8aed13029",
+      "title": "A Clever RSA Attack Fooled a Hardware Vault\u2014Here's What It Means for Crypto",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/379505/rsa-attack-without-stealing-key-what-it-means-crypto",
+      "publishedAt": "2026-09-28T21:16:03Z",
+      "fetchedAt": "2026-09-28T21:19:50Z",
+      "summary": "A UC San Diego-led team impersonated a hardware security module without extracting its key."
+    },
+    {
+      "id": "news-c360272da2a9",
+      "title": "Citi Clients Can Now Take Stablecoin Payments Through Coinbase\u2014Without Touching Crypto",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/379497/citi-stablecoin-payments-coinbase-without-touching-crypto",
+      "publishedAt": "2026-09-28T20:36:03Z",
+      "fetchedAt": "2026-09-28T21:19:50Z",
+      "summary": "Coinbase and Citi expanded an existing deal so Citi's institutional clients can accept stablecoin payments, while Coinbase business accounts run on Citi's banking rails."
+    },
     {
       "id": "news-674fef5d1a0b",
       "title": "Anthropic's Claude Sonnet 5.5 Is Out, Beats Opus 5.5 at Coding for Half the Price",
@@ -1480,26 +1500,6 @@
       "publishedAt": "2026-09-10T18:51:04Z",
       "fetchedAt": "2026-09-10T19:15:59Z",
       "summary": "Head of Product Ryan Kass says the return to Coinbase Wallet reflects a broader trading strategy, with the self-custody app serving as a testing ground for new assets and experiences."
-    },
-    {
-      "id": "news-978ab66dd657",
-      "title": "Bitcoin Rally Cools, But a Golden Cross Is Coming",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/377903/bitcoin-price-golden-cross-coming",
-      "publishedAt": "2026-09-10T18:46:04Z",
-      "fetchedAt": "2026-09-10T19:15:59Z",
-      "summary": "Bitcoin couldn't escape today's inflation-driven selloff, but a bearish pattern on its chart is about to flip for the first time since November."
-    },
-    {
-      "id": "news-684fb2d42121",
-      "title": "Bitcoin at $400K by 2030 Still 'Reasonable Target': Coinbase CEO",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/377875/bitcoin-at-400k-by-2030-still-reasonable-target-coinbase-ceo",
-      "publishedAt": "2026-09-10T13:04:27Z",
-      "fetchedAt": "2026-09-10T13:19:02Z",
-      "summary": "Brian Armstrong argues the bottom is in, a year into the downturn, with the next halving roughly 18 months out."
     }
   ]
 }

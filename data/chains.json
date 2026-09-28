@@ -1,6 +1,6 @@
 {
   "_note": "Hand-curated, not touched by scripts/sync.py's automatic hourly sync — there's no free API that reliably reports true L1/L2 mainnet launch dates and chain IDs, so this list is compiled and updated manually. Ask to have it refreshed when a new chain launches.",
-  "updatedAt": "2026-09-19T00:00:00Z",
+  "updatedAt": "2026-09-25T09:19:40Z",
   "items": [
     {
       "id": "arc",
@@ -21,6 +21,16 @@
       "launchDate": "2026-07-01",
       "link": "https://docs.robinhood.com/chain/",
       "note": "Robinhood's own chain for tokenized stocks and on-chain trading."
+    },
+    {
+      "id": "citrea",
+      "name": "Citrea",
+      "type": "L2",
+      "parent": "Bitcoin ZK-rollup",
+      "chainId": 4114,
+      "launchDate": "2026-01-27",
+      "link": "https://citrea.xyz/",
+      "note": "Bitcoin's first ZK-rollup, bringing programmable DeFi and lending directly to Bitcoin's base layer."
     },
     {
       "id": "monad",

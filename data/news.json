@@ -1,6 +1,16 @@
 {
-  "updatedAt": "2026-09-28T15:22:51Z",
+  "updatedAt": "2026-09-28T16:23:30Z",
   "items": [
+    {
+      "id": "news-ef68bb9b0f70",
+      "title": "Bitcoin Falls Lower as Trump's Iran Snub Sends Oil, Yields Higher",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/379438/bitcoin-price-falls-trump-iran-oil-yields",
+      "publishedAt": "2026-09-28T15:26:28Z",
+      "fetchedAt": "2026-09-28T16:23:29Z",
+      "summary": "Bitcoin extends last week's pullback as Trump rejects Iran's ceasefire plan, sending oil above $100 and yields higher ahead of Wednesday's PCE report."
+    },
     {
       "id": "news-029b50a1b432",
       "title": "Tom Lee's Bitmine Buys Another $47M of ETH, Taking It to 4.9% of Ethereum Supply",
@@ -1490,16 +1500,6 @@
       "publishedAt": "2026-09-10T10:11:52Z",
       "fetchedAt": "2026-09-10T10:19:47Z",
       "summary": "Buterin wants EIP-8288 in I-star, the upgrade after Hegota, and adopting it would make RISC-V Ethereum's canonical instruction set."
-    },
-    {
-      "id": "news-0ce7b2884a70",
-      "title": "Bitcoin Wallet Maker Trezor Says Hackers Breached Its Email Provider",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/377831/bitcoin-wallet-trezor-hackers-breach-email",
-      "publishedAt": "2026-09-09T23:02:23Z",
-      "fetchedAt": "2026-09-09T23:17:13Z",
-      "summary": "The hardware wallet maker said a fake security alert claimed a hardware flaw could expose users\u2019 recovery phrases."
     }
   ]
 }

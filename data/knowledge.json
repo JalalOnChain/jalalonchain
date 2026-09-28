@@ -1,6 +1,17 @@
 {
-  "updatedAt": "2026-09-27T23:17:03Z",
+  "updatedAt": "2026-09-28T00:28:28Z",
   "items": [
+    {
+      "id": "2026-09-28",
+      "title": "How rug pulls usually show up in code before the chart",
+      "body": "Many rug pulls are visible in the contract before the price ever moves: unlimited mint functions, an owner-only 'pause trading' switch, or liquidity that was never locked. Reading a token's contract permissions is a faster red-flag check than watching the chart for a crash that's already happened.",
+      "tags": [
+        "security",
+        "defi"
+      ],
+      "createdAt": "2026-09-28T00:28:28Z",
+      "slug": "how-rug-pulls-usually-show-up-in-code-before-the-chart"
+    },
     {
       "id": "2026-09-26",
       "title": "Why 'unrealized loss' whales aren't the same as insolvent whales",

@@ -180,6 +180,21 @@
   var DEPOSIT_SELECTOR  = "0xb214faa5";
   var WITHDRAW_SELECTOR = "0x21a0adb6";
 
+  // Since 2021 the official Tornado UI sends deposits through the TornadoRouter
+  // (tornado-router.contract.tornadocash.eth), which then forwards to the pool.
+  // So most deposits show up as a call to the ROUTER, not the pool itself:
+  //   deposit(address _tornado, bytes32 _commitment, bytes _encryptedNote)
+  //   withdraw(address _tornado, bytes _proof, bytes32 _root, bytes32 _nullifierHash,
+  //            address _recipient, address _relayer, uint256 _fee, uint256 _refund)
+  var ROUTER_ADDRESS = "0xd90e2f925DA726b50C4Ed8D0Fb90Ad053324F31b".toLowerCase();
+  var ROUTER_DEPOSIT_SELECTOR  = "0x13d98d13";
+  var ROUTER_WITHDRAW_SELECTOR = "0xb438689f";
+
+  // topic0 of the pool's Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)
+  // event. Scanning this event (rather than transactions sent to the pool) catches
+  // withdrawals however they were routed: directly, via a relayer, or via the router.
+  var WITHDRAWAL_TOPIC0 = "0xe9e508bad6d4c3227e881ca19068f099da81b5164dd6d62b2eaf1e8bc6c34931";
+
   var BLOCKS_PER_DAY = 7200; // ~12s/block post-merge; approximate, used only to size the scan window
   var MAX_DEPOSITS_SCANNED = 10;
 
@@ -242,6 +257,50 @@
     };
   }
 
+  // Router calls put the target pool address in the first argument word.
+  function routerTargetPool(input){
+    var hex = input.slice(10);
+    return POOL_BY_ADDR["0x" + hex.slice(24, 64).toLowerCase()] || null;
+  }
+  function decodeRouterWithdrawInput(input){
+    var hex = input.slice(10);
+    function word(i){ return hex.slice(i*64, i*64+64); }
+    function wordAsAddress(i){ return "0x" + word(i).slice(24); }
+    return { recipient: wordAsAddress(4), relayer: wordAsAddress(5) };
+  }
+
+  // Works out whether a tx from the searched address is a Tornado deposit or
+  // a self-paid withdrawal, and which pool it touched. Returns null otherwise.
+  function classifyTx(tx){
+    if (!tx.to || !tx.input || tx.isError === "1") return null;
+    var to = tx.to.toLowerCase(), sel = tx.input.slice(0, 10).toLowerCase();
+    var pool = POOL_BY_ADDR[to];
+    if (pool && sel === DEPOSIT_SELECTOR)  return { kind: "deposit", pool: pool };
+    if (pool && sel === WITHDRAW_SELECTOR) return { kind: "withdrawal", pool: pool, decoded: decodeWithdrawInput(tx.input) };
+    if (to === ROUTER_ADDRESS) {
+      var rp = routerTargetPool(tx.input);
+      if (!rp) return null;
+      if (sel === ROUTER_DEPOSIT_SELECTOR)  return { kind: "deposit", pool: rp };
+      if (sel === ROUTER_WITHDRAW_SELECTOR) return { kind: "withdrawal", pool: rp, decoded: decodeRouterWithdrawInput(tx.input) };
+    }
+    return null;
+  }
+
+  // All Withdrawal events from one pool between two blocks (paged, up to 5000).
+  async function fetchWithdrawalEvents(poolAddress, fromBlock, toBlock){
+    var all = [];
+    for (var page = 1; page <= 5; page++) {
+      var batch = await escCall({
+        module: "logs", action: "getLogs", address: poolAddress,
+        fromBlock: String(fromBlock), toBlock: String(toBlock),
+        topic0: WITHDRAWAL_TOPIC0, page: String(page), offset: "1000"
+      });
+      all = all.concat(batch);
+      if (batch.length < 1000) break;
+    }
+    return all;
+  }
+
   function fmtGap(seconds){
     if (seconds < 60) return seconds + "s later";
     if (seconds < 3600) return Math.round(seconds/60) + "m later";
@@ -264,17 +323,16 @@
 
     try {
       var ownTxs = await fetchTxList(addr, 0, 99999999);
-      var deposits = ownTxs.filter(function(tx){
-        return tx.to && POOL_BY_ADDR[tx.to.toLowerCase()] &&
-               tx.input && tx.input.toLowerCase().indexOf(DEPOSIT_SELECTOR) === 0;
-      });
-      var selfWithdrawals = ownTxs.filter(function(tx){
-        return tx.to && POOL_BY_ADDR[tx.to.toLowerCase()] &&
-               tx.input && tx.input.toLowerCase().indexOf(WITHDRAW_SELECTOR) === 0;
+      var deposits = [], selfWithdrawals = [];
+      ownTxs.forEach(function(tx){
+        var c = classifyTx(tx);
+        if (!c) return;
+        if (c.kind === "deposit") deposits.push({ tx: tx, pool: c.pool });
+        else selfWithdrawals.push({ tx: tx, pool: c.pool, decoded: c.decoded });
       });
 
       if (deposits.length === 0 && selfWithdrawals.length === 0) {
-        $results.innerHTML = '<div class="notice info">No direct Tornado Cash deposits (or self-relayed withdrawals) found from this address on Ethereum mainnet. If this address only ever <em>received</em> a relayed withdrawal, this tool can\'t detect that — see "Direction matters" in the methodology below.</div>';
+        $results.innerHTML = '<div class="notice info">No Tornado Cash deposits (direct or via the Tornado router) or self-paid withdrawals found from this address on Ethereum mainnet. If this address only ever <em>received</em> a relayed withdrawal, this tool can\'t detect that — see "Direction matters" in the methodology below.</div>';
         return;
       }
 
@@ -286,9 +344,8 @@
       var toScan = deposits.slice(-MAX_DEPOSITS_SCANNED);
 
       if (selfWithdrawals.length) {
-        selfWithdrawals.forEach(function(tx){
-          var pool = POOL_BY_ADDR[tx.to.toLowerCase()];
-          var decoded = decodeWithdrawInput(tx.input);
+        selfWithdrawals.forEach(function(sw){
+          var tx = sw.tx, pool = sw.pool, decoded = sw.decoded;
           var card = document.createElement("div");
           card.className = "dep-card";
           card.innerHTML =
@@ -301,8 +358,8 @@
       }
 
       for (var i = 0; i < toScan.length; i++) {
-        var dep = toScan[i];
-        var pool = POOL_BY_ADDR[dep.to.toLowerCase()];
+        var dep = toScan[i].tx;
+        var pool = toScan[i].pool;
         var depBlock = parseInt(dep.blockNumber, 10);
         var depTime = parseInt(dep.timeStamp, 10);
         var endBlock = depBlock + windowDays * BLOCKS_PER_DAY;
@@ -317,14 +374,17 @@
         $results.appendChild(card);
 
         try {
-          var poolTxs = await fetchTxList(pool.address, depBlock, endBlock);
-          var withdrawals = poolTxs.filter(function(tx){
-            return tx.input && tx.input.toLowerCase().indexOf(WITHDRAW_SELECTOR) === 0;
-          });
-          var candidates = withdrawals.map(function(tx){
-            var decoded = decodeWithdrawInput(tx.input);
-            var gap = parseInt(tx.timeStamp, 10) - depTime;
-            return { recipient: decoded.recipient, relayer: decoded.relayer, gap: gap, hash: tx.hash };
+          var events = await fetchWithdrawalEvents(pool.address, depBlock, endBlock);
+          var candidates = events.map(function(ev){
+            // Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee):
+            // `to` is the first 32-byte word of data; relayer is topics[1].
+            var data = ev.data.slice(2);
+            return {
+              recipient: "0x" + data.slice(24, 64),
+              relayer: "0x" + ev.topics[1].slice(26),
+              gap: parseInt(ev.timeStamp, 16) - depTime,
+              hash: ev.transactionHash
+            };
           }).filter(function(c){ return c.gap >= 0; })
             .sort(function(a,b){ return a.gap - b.gap; });
 

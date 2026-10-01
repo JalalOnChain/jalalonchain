@@ -1438,7 +1438,11 @@ def sync_learn_pages():
 
 
 def sync_sitemap(learn_items):
-    urls = [(SITE_URL + "/", "hourly", "1.0"), (SITE_URL + "/learn/", "daily", "0.6")]
+    urls = [
+        (SITE_URL + "/", "hourly", "1.0"),
+        (SITE_URL + "/learn/", "daily", "0.6"),
+        (SITE_URL + "/tools/tornado-tracer/", "weekly", "0.6"),
+    ]
     for it in learn_items:
         urls.append((SITE_URL + "/learn/" + it["slug"] + "/", "monthly", "0.5"))
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")

@@ -1,6 +1,6 @@
 {
   "_note": "Hand-curated. Scope: notable crypto exchanges that have permanently shut down, been seized, or ceased operations, spanning crypto's history. Included for historical reference — links point to reference/news sources, not trading platforms.",
-  "updatedAt": "2026-09-21T00:00:00Z",
+  "updatedAt": "2026-10-01T09:26:11Z",
   "items": [
     {
       "id": "mtgox",
@@ -136,6 +136,24 @@
       "activeYears": "2011–2026",
       "closedReason": "Announced a phased shutdown of retail trading, winding down through 2026.",
       "link": "https://www.bitcoin.de"
+    },
+    {
+      "id": "bitmex",
+      "name": "BitMEX",
+      "primaryBusiness": "Was a centralized crypto exchange — derivatives trading",
+      "headquarters": "Seychelles",
+      "activeYears": "2014–2026",
+      "closedReason": "Shut down permanently on Sept 23, 2026 after an 11-year run; owner HDR Global Trading's board wound it down following a strategic review and a failed year-long sale process, with remaining positions force-liquidated at final closure.",
+      "link": "https://www.bitmex.com"
+    },
+    {
+      "id": "coinex",
+      "name": "CoinEx",
+      "primaryBusiness": "Was a centralized crypto exchange — spot & derivatives trading",
+      "headquarters": "Hong Kong",
+      "activeYears": "2017–2026",
+      "closedReason": "Announced permanent shutdown on Sept 15, 2026 citing the prolonged crypto market slump and rising compliance costs; halted new user registrations immediately, with withdrawals open and all operations set to fully cease by Dec 22, 2026.",
+      "link": "https://www.coinex.com"
     }
   ]
 }

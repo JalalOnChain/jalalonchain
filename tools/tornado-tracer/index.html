@@ -3,28 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tornado Cash Timing Tracer — JalalOnChain</title>
-<meta name="description" content="Search an EVM address against Tornado Cash's pool contracts and surface candidate deposit-to-withdrawal links by matching transaction timing. A free compliance research tool from JalalOnChain.">
+<title>Tornado Tracer — JalalOnChain</title>
+<meta name="description" content="Look up an Ethereum address that deposited into Tornado Cash and see which withdrawals from the same pool came soon after it.">
 <link rel="canonical" href="https://jalalonchain.com/tools/tornado-tracer/">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#131B2B">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="JalalOnChain">
 <meta property="og:url" content="https://jalalonchain.com/tools/tornado-tracer/">
-<meta property="og:title" content="Tornado Cash Timing Tracer — JalalOnChain">
-<meta property="og:description" content="Search an EVM address against Tornado Cash's pool contracts and surface candidate deposit-to-withdrawal links by matching transaction timing.">
+<meta property="og:title" content="Tornado Tracer — JalalOnChain">
+<meta property="og:description" content="Look up an Ethereum address that deposited into Tornado Cash and see which withdrawals from the same pool came soon after it.">
 <meta property="og:image" content="https://jalalonchain.com/assets/logo.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@JalalOnChain">
-<meta name="twitter:title" content="Tornado Cash Timing Tracer — JalalOnChain">
-<meta name="twitter:description" content="Search an EVM address against Tornado Cash's pool contracts and surface candidate deposit-to-withdrawal links by matching transaction timing.">
+<meta name="twitter:title" content="Tornado Tracer — JalalOnChain">
+<meta name="twitter:description" content="Look up an Ethereum address that deposited into Tornado Cash and see which withdrawals from the same pool came soon after it.">
 <meta name="twitter:image" content="https://jalalonchain.com/assets/logo.png">
 <link rel="icon" type="image/png" href="https://jalalonchain.com/assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "WebApplication", "name": "Tornado Cash Timing Tracer", "url": "https://jalalonchain.com/tools/tornado-tracer/", "applicationCategory": "Blockchain compliance tool", "description": "Search an EVM address against Tornado Cash's pool contracts and surface candidate deposit-to-withdrawal links by matching transaction timing.", "publisher": {"@type": "Organization", "name": "JalalOnChain", "url": "https://jalalonchain.com/"}}
+{"@context": "https://schema.org", "@type": "WebApplication", "name": "Tornado Tracer", "url": "https://jalalonchain.com/tools/tornado-tracer/", "applicationCategory": "Blockchain analysis tool", "description": "Look up an Ethereum address that deposited into Tornado Cash and see which withdrawals from the same pool came soon after it.", "publisher": {"@type": "Organization", "name": "JalalOnChain", "url": "https://jalalonchain.com/"}}
 </script>
 <style>
   :root{ --bg:#F4F6F9; --surface:#FFFFFF; --border:#DCE3EC; --text:#131B2B; --text-muted:#5C6B84; --text-faint:#93A1B8; --accent:#B4700F; --accent-soft:#FBEBD4; --teal:#0E8E89; --teal-soft:#DEF3F1; --bad:#B23B3B; --bad-soft:#F9E3E1; color-scheme: light; }
@@ -40,7 +40,7 @@
   header.site img{ width:36px; height:36px; border-radius:8px; }
   header.site .name{ font-weight:800; font-size:18px; color:var(--text); }
   header.site .name em{ font-style:normal; color:var(--accent); }
-  .eyebrow{ font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--teal); font-weight:700; font-family:"IBM Plex Mono",monospace; margin-bottom:8px; }
+  .eyebrow{ font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); font-weight:700; font-family:"IBM Plex Mono",monospace; margin-bottom:8px; }
   h1{ font-size:27px; line-height:1.3; margin:0 0 10px; }
   .lede{ font-size:15.5px; color:var(--text-muted); max-width:640px; margin:0 0 22px; }
   .panel{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px 22px; margin-bottom:18px; }
@@ -53,25 +53,24 @@
   #searchBtn:disabled{ opacity:.6; cursor:default; }
   #searchBtn:hover:not(:disabled){ filter:brightness(1.06); }
   .hint{ font-size:12px; color:var(--text-faint); margin-top:8px; }
-  .notice{ border-radius:10px; padding:12px 14px; font-size:13.5px; margin-top:14px; }
-  .notice.warn{ background:var(--accent-soft); color:var(--accent); border:1px solid var(--accent); }
-  .notice.bad{ background:var(--bad-soft); color:var(--bad); border:1px solid var(--bad); }
-  .notice.info{ background:var(--teal-soft); color:var(--teal); border:1px solid var(--teal); }
+  .notice{ border:1px solid var(--border); border-left:3px solid var(--text-faint); border-radius:8px; padding:11px 14px; font-size:13.5px; margin-top:14px; color:var(--text-muted); }
+  .notice.warn{ border-left-color:var(--accent); }
+  .notice.bad{ border-left-color:var(--bad); color:var(--text); }
   #results{ margin-top:6px; }
   .dep-card{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:18px 20px; margin-bottom:16px; }
   .dep-head{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:4px; }
   .dep-pool{ font-weight:700; font-size:15px; }
   .dep-time{ font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--text-faint); }
-  .dep-self{ display:inline-block; margin-top:6px; font-size:12px; background:var(--teal-soft); color:var(--teal); padding:3px 9px; border-radius:99px; font-weight:600; }
+  .dep-self{ display:block; margin-top:6px; font-size:12.5px; color:var(--text-muted); }
   table.cand{ width:100%; border-collapse:collapse; margin-top:12px; font-size:13px; }
   table.cand th{ text-align:left; font-family:"IBM Plex Mono",monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--text-faint); font-weight:600; padding:0 8px 6px 0; border-bottom:1px solid var(--border); }
   table.cand td{ padding:8px 8px 8px 0; border-bottom:1px solid var(--border); vertical-align:top; }
   table.cand tr:last-child td{ border-bottom:none; }
   .addr{ font-family:"IBM Plex Mono",monospace; font-size:12.5px; }
-  .gap-strong{ color:var(--accent); font-weight:700; }
+  .gap-strong{ color:var(--text); font-weight:700; }
   .gap-weak{ color:var(--text-faint); }
   .setsize{ color:var(--text-muted); font-size:12px; margin-top:10px; }
-  .spinner{ display:inline-block; width:14px; height:14px; border:2px solid var(--border); border-top-color:var(--teal); border-radius:50%; animation:spin .7s linear infinite; vertical-align:-2px; margin-right:8px; }
+  .spinner{ display:inline-block; width:14px; height:14px; border:2px solid var(--border); border-top-color:var(--text-muted); border-radius:50%; animation:spin .7s linear infinite; vertical-align:-2px; margin-right:8px; }
   @keyframes spin{ to{ transform:rotate(360deg); } }
   details.methodology summary{ cursor:pointer; font-weight:700; font-size:14px; }
   details.methodology[open] summary{ margin-bottom:12px; }
@@ -79,7 +78,6 @@
   .methodology ul{ margin:0 0 10px; padding-left:20px; }
   .methodology li{ font-size:13.5px; color:var(--text-muted); margin-bottom:6px; }
   .back-home{ display:inline-block; margin-top:28px; font-size:13.5px; color:var(--accent); }
-  code{ font-family:"IBM Plex Mono",monospace; background:var(--teal-soft); color:var(--teal); padding:1px 5px; border-radius:5px; font-size:12px; }
 </style>
 </head>
 <body>
@@ -91,23 +89,23 @@
     </header>
   </a>
 
-  <div class="eyebrow">Compliance tool</div>
-  <h1>Tornado Cash Timing Tracer</h1>
-  <p class="lede">Search an Ethereum address that deposited into Tornado Cash, and this tool scans the same pool's activity around that time to surface withdrawal addresses whose timing lines up closely enough to be a candidate match. These are statistical links from public on-chain data, not proof of common ownership — read the methodology below before relying on anything here.</p>
+  <div class="eyebrow">Tools</div>
+  <h1>Tornado Tracer</h1>
+  <p class="lede">Enter an Ethereum address that deposited into Tornado Cash. The tool checks the withdrawals from the same pool that happened afterwards and lists them by how soon they came. A short gap is a lead, not proof, so read the notes at the bottom before you rely on a result.</p>
 
   <div class="panel">
     <h2>Search</h2>
     <div class="search-row">
-      <input type="text" id="addrInput" placeholder="0x... address that deposited into Tornado Cash" autocomplete="off" spellcheck="false">
+      <input type="text" id="addrInput" placeholder="0x... address that made the deposit" autocomplete="off" spellcheck="false">
       <select id="windowSelect">
-        <option value="1">Window: 1 day after</option>
-        <option value="7" selected>Window: 7 days after</option>
-        <option value="30">Window: 30 days after</option>
-        <option value="90">Window: 90 days after</option>
+        <option value="1">1 day after the deposit</option>
+        <option value="7" selected>7 days after</option>
+        <option value="30">30 days after</option>
+        <option value="90">90 days after</option>
       </select>
       <button id="searchBtn">Trace</button>
     </div>
-    <div class="hint">Looks only at Ethereum mainnet pools. Funds can sit in a Tornado Cash pool indefinitely before withdrawal — a wider window catches more candidates but also more noise.</div>
+    <div class="hint">Ethereum mainnet only. Tornado has no time limit on withdrawals, so a longer window finds more matches but also more noise.</div>
     <div id="configNotice"></div>
   </div>
 
@@ -115,14 +113,14 @@
 
   <div class="panel">
     <details class="methodology">
-      <summary>Methodology &amp; limitations</summary>
-      <p><strong>What this does.</strong> Tornado Cash deposits are plain, unrelayed transactions — the depositing address is public. Withdrawals are usually sent through a relayer so the gas-paying address isn't the recipient, but the recipient address is still a public parameter inside the withdrawal transaction. For each deposit your searched address made, this tool pulls every withdrawal from that same fixed-denomination pool inside your selected time window, decodes each one's recipient, and ranks them by how soon after the deposit they happened.</p>
-      <p><strong>Why timing is a real signal, not a guess.</strong> Tornado Cash's own contracts enforce no minimum or maximum holding period — a deposit's commitment just sits in the pool's Merkle tree until someone presents a valid proof to withdraw it, which can happen minutes or years later. Most real users don't wait long, so a withdrawal that lands shortly after your deposit — especially when few other withdrawals happened in that same window — is a meaningfully stronger candidate than one separated by weeks with dozens of other withdrawals in between. This tool shows you that context (the gap, and how many other withdrawals occurred in the same window) rather than inventing a false-precision "confidence score."</p>
+      <summary>How this works and where it falls short</summary>
+      <p>Tornado deposits are ordinary transactions, so the address that made the deposit is public. Withdrawals mostly go through a relayer, which means the address that paid the gas is not the one that received the money. The recipient is still public, because it sits inside the withdrawal itself. For every deposit the address made, the tool pulls all withdrawals from the same pool inside the window you picked, reads the recipient off each one, and sorts them by how long after the deposit they happened.</p>
+      <p>Timing matters because Tornado puts no limit on how long money can stay in a pool. A deposit can be withdrawn a minute later or five years later. Most people do not wait long, so a withdrawal that lands soon after the deposit, with few others around it, is a better lead than one that lands weeks later with dozens in between. That is why the page shows the gap and the number of other withdrawals in the window, and does not give a score.</p>
       <ul>
-        <li><strong>Direction matters.</strong> This only works deposit-first: search an address that sent a deposit, and it surfaces candidate recipients. It cannot currently work backwards from a bare recipient address, because a relayed withdrawal leaves no trace in the recipient's own transaction history — finding it requires already knowing which pool and rough time window to scan.</li>
-        <li><strong>A short gap is a hint, not a verdict.</strong> Other correlating signals investigators use — identical split-denomination deposit sequences, matching gas-fee fingerprints, re-used addresses downstream — are not computed here. Treat matches as leads to corroborate, not conclusions.</li>
-        <li><strong>Ethereum mainnet only</strong>, covering the ETH, DAI, cDAI, USDC, USDT and WBTC fixed-denomination pools. Tornado Cash's L2/sidechain deployments (Arbitrum, Optimism, BSC, Polygon, Avalanche, xDAI) aren't covered yet.</li>
-        <li><strong>Legal status.</strong> Tornado Cash was removed from OFAC's Specially Designated Nationals list in 2025, after the Fifth Circuit ruled the smart contracts aren't "property" the agency had authority to sanction. Using or analyzing it is not, on its own, prohibited — but compliance obligations depend on your own jurisdiction and policies.</li>
+        <li>It only works from the deposit side. A wallet that only ever received a relayed withdrawal leaves nothing in its own history to start from, so the tool can't find it.</li>
+        <li>A short gap is a hint. Investigators also look at deposit amounts split across pools, gas settings, and addresses that later move money together. None of that is checked here.</li>
+        <li>Only the Ethereum mainnet pools are covered (ETH, DAI, cDAI, USDC, USDT, WBTC). Tornado's pools on other chains are not.</li>
+        <li>Tornado Cash came off the OFAC sanctions list in 2025, after a US appeals court ruled that its smart contracts could not be sanctioned as property. Looking at it is not illegal on its own, but your own obligations depend on where you are and on your company's policy.</li>
       </ul>
     </details>
   </div>
@@ -207,7 +205,7 @@
   function isConfigured(){ return ETHERSCAN_API_KEY && ETHERSCAN_API_KEY.indexOf("YOUR_ETHERSCAN") !== 0; }
 
   if (!isConfigured()) {
-    $configNotice.innerHTML = '<div class="notice warn">This tool isn\'t fully switched on yet — it needs a free Etherscan API key configured on the back end. Search is disabled until that\'s done.</div>';
+    $configNotice.innerHTML = '<div class="notice warn">Search is switched off until an Etherscan key is added to this page.</div>';
     $btn.disabled = true;
   }
 
@@ -302,24 +300,24 @@
   }
 
   function fmtGap(seconds){
-    if (seconds < 60) return seconds + "s later";
-    if (seconds < 3600) return Math.round(seconds/60) + "m later";
-    if (seconds < 86400) return (seconds/3600).toFixed(1) + "h later";
-    return (seconds/86400).toFixed(1) + "d later";
+    if (seconds < 60) return seconds + " sec";
+    if (seconds < 3600) return Math.round(seconds/60) + " min";
+    if (seconds < 86400) return (seconds/3600).toFixed(1) + " hours";
+    return (seconds/86400).toFixed(1) + " days";
   }
 
   async function runSearch(){
     var addr = $addr.value.trim();
     $results.innerHTML = "";
     if (!isValidAddress(addr)) {
-      $results.innerHTML = '<div class="notice bad">That doesn\'t look like a valid EVM address — expecting 0x followed by 40 hex characters.</div>';
+      $results.innerHTML = '<div class="notice bad">That doesn\'t look like an Ethereum address. It should start with 0x and have 40 characters after it.</div>';
       return;
     }
     var windowDays = parseInt($win.value, 10);
     var addrLower = addr.toLowerCase();
 
     $btn.disabled = true;
-    $results.innerHTML = '<div class="notice info"><span class="spinner"></span>Looking up ' + short(addr) + '’s transaction history&hellip;</div>';
+    $results.innerHTML = '<div class="notice info"><span class="spinner"></span>Looking up the transactions for ' + short(addr) + '&hellip;</div>';
 
     try {
       var ownTxs = await fetchTxList(addr, 0, 99999999);
@@ -332,12 +330,12 @@
       });
 
       if (deposits.length === 0 && selfWithdrawals.length === 0) {
-        $results.innerHTML = '<div class="notice info">No Tornado Cash deposits (direct or via the Tornado router) or self-paid withdrawals found from this address on Ethereum mainnet. If this address only ever <em>received</em> a relayed withdrawal, this tool can\'t detect that — see "Direction matters" in the methodology below.</div>';
+        $results.innerHTML = '<div class="notice info">No Tornado Cash deposits found for this address, either direct or through the Tornado router, and no withdrawals it paid for itself. If it only ever received a withdrawal through a relayer, this tool can\'t see that. See the notes below.</div>';
         return;
       }
 
       var cappedNotice = deposits.length > MAX_DEPOSITS_SCANNED
-        ? '<div class="notice warn">This address made ' + deposits.length + ' deposits — showing the ' + MAX_DEPOSITS_SCANNED + ' most recent to keep lookups fast.</div>'
+        ? '<div class="notice warn">This address made ' + deposits.length + ' deposits. Showing the ' + MAX_DEPOSITS_SCANNED + ' most recent.</div>'
         : "";
       $results.innerHTML = cappedNotice;
 
@@ -351,8 +349,8 @@
           card.innerHTML =
             '<div class="dep-head"><span class="dep-pool">' + pool.token + ' ' + pool.denom + ' pool</span>' +
             '<span class="dep-time">' + new Date(parseInt(tx.timeStamp,10)*1000).toISOString() + '</span></div>' +
-            '<div>Self-relayed withdrawal to <a class="addr" href="' + etherscanAddrLink(decoded.recipient) + '" target="_blank" rel="noopener">' + decoded.recipient + '</a> &mdash; <a href="' + etherscanTxLink(tx.hash) + '" target="_blank" rel="noopener">view tx</a></div>' +
-            '<span class="dep-self">Certain — this address paid its own gas</span>';
+            '<div>Withdrawal this address paid for itself, sent to <a class="addr" href="' + etherscanAddrLink(decoded.recipient) + '" target="_blank" rel="noopener">' + decoded.recipient + '</a> &mdash; <a href="' + etherscanTxLink(tx.hash) + '" target="_blank" rel="noopener">view tx</a></div>' +
+            '<span class="dep-self">Confirmed: the address paid its own gas, so the link is certain.</span>';
           $results.appendChild(card);
         });
       }
@@ -370,7 +368,7 @@
           '<div class="dep-head"><span class="dep-pool">Deposit into ' + pool.token + ' ' + pool.denom + ' pool</span>' +
           '<span class="dep-time">' + new Date(depTime*1000).toISOString() + '</span></div>' +
           '<div><a href="' + etherscanTxLink(dep.hash) + '" target="_blank" rel="noopener">view deposit tx</a></div>' +
-          '<div class="notice info" style="margin-top:10px;"><span class="spinner"></span>Scanning this pool’s withdrawals for the next ' + windowDays + ' day(s)&hellip;</div>';
+          '<div class="notice info" style="margin-top:10px;"><span class="spinner"></span>Checking this pool\'s withdrawals over the next ' + windowDays + ' day(s)&hellip;</div>';
         $results.appendChild(card);
 
         try {
@@ -391,11 +389,11 @@
           var notice = card.querySelector(".notice");
           if (candidates.length === 0) {
             notice.className = "notice info";
-            notice.innerHTML = "No withdrawals from this pool in the selected window.";
+            notice.innerHTML = "No withdrawals from this pool in that window.";
             continue;
           }
 
-          var setSizeLine = '<div class="setsize">' + candidates.length + ' total withdrawal(s) from this pool in the ' + windowDays + '-day window after the deposit — the fewer there are, the stronger a close-timing match is.</div>';
+          var setSizeLine = '<div class="setsize">' + candidates.length + ' withdrawals from this pool in the ' + windowDays + '-day window after this deposit. The fewer there are, the more a close match means.</div>';
 
           var rows = candidates.slice(0, 20).map(function(c){
             var gapClass = c.gap < 3600 ? "gap-strong" : (c.gap < 86400 ? "" : "gap-weak");
@@ -407,14 +405,14 @@
 
           card.querySelector(".notice").remove();
           card.insertAdjacentHTML("beforeend",
-            '<table class="cand"><thead><tr><th>Candidate recipient</th><th>Timing</th><th>Via relayer</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>' + setSizeLine);
+            '<table class="cand"><thead><tr><th>Recipient</th><th>After deposit</th><th>Relayer</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>' + setSizeLine);
         } catch (err) {
           card.querySelector(".notice").className = "notice bad";
-          card.querySelector(".notice").textContent = "Couldn't scan this pool: " + err.message;
+          card.querySelector(".notice").textContent = "Couldn't check this pool: " + err.message;
         }
       }
     } catch (err) {
-      $results.innerHTML = '<div class="notice bad">Lookup failed: ' + err.message + '. Etherscan may be rate-limiting — wait a moment and try again.</div>';
+      $results.innerHTML = '<div class="notice bad">Lookup failed: ' + err.message + '. Etherscan may be limiting requests. Wait a bit and try again.</div>';
     } finally {
       $btn.disabled = !isConfigured() ? true : false;
     }

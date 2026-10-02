@@ -1,6 +1,26 @@
 {
-  "updatedAt": "2026-10-02T19:20:32Z",
+  "updatedAt": "2026-10-02T20:19:25Z",
   "items": [
+    {
+      "id": "news-331eb2c4c8fd",
+      "title": "Ethereum Now Lets You Pay for AI Without Revealing Who You Are",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/379991/ethereum-now-pay-for-ai-without-revealing-identity",
+      "publishedAt": "2026-10-02T20:16:04Z",
+      "fetchedAt": "2026-10-02T20:19:24Z",
+      "summary": "Ethereum's zkAPI lets users prepay in USDC and query AI models through cryptographic proofs, so no single party sees both who they are and what they ask."
+    },
+    {
+      "id": "news-ddf5d8f51e09",
+      "title": "Circle Pushes Back on MiCA's Bank-Deposit Mandate for Stablecoins",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/379984/circle-pushes-back-on-micas-bank-deposit-mandate-for-stablecoins",
+      "publishedAt": "2026-10-02T19:46:03Z",
+      "fetchedAt": "2026-10-02T20:19:24Z",
+      "summary": "The USDC issuer told the European Commission that MiCA's reserve mandates and concentration caps keep the largest global stablecoins outside Europe's perimeter\u2014siding with the ECB in calling for more flexible rules."
+    },
     {
       "id": "news-4c5a602c8156",
       "title": "Once a $2.3 Billion Network, Ethereum Layer-2 Blast Is Shutting Down",
@@ -1480,26 +1500,6 @@
       "publishedAt": "2026-09-16T09:41:53Z",
       "fetchedAt": "2026-09-16T10:20:19Z",
       "summary": "The Home Office names crypto alongside fintech and AI as drivers of a threat the NCA puts at \u00a3100 billion a year in the UK."
-    },
-    {
-      "id": "news-43602c40f6f2",
-      "title": "Crypto firms get guidance on how the new regime applies",
-      "source": "UK FCA",
-      "category": "enforcement",
-      "link": "https://www.fca.org.uk/news/press-releases/crypto-firms-get-guidance-how-new-regime-applies",
-      "publishedAt": "2026-09-16T09:19:27Z",
-      "fetchedAt": "2026-09-16T09:19:27Z",
-      "summary": "New FCA guidance will help firms understand how the law underpinning the UK's future cryptoasset regime applies to their business. It also sets out which activities may require FCA authorisation.\n\nThe regime comes into force on 25 October 2027. With applications for authorisation"
-    },
-    {
-      "id": "news-a5b19550a016",
-      "title": "Tonkeeper Becomes Keeper as Wallet Adds Bitcoin, Ethereum, and Tron",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/378265/tonkeeper-keeper-adds-bitcoin-ethereum-tron",
-      "publishedAt": "2026-09-16T09:01:03Z",
-      "fetchedAt": "2026-09-16T09:19:29Z",
-      "summary": "The self-custodial wallet is expanding beyond The Open Network, with support for seven blockchains and more financial products planned."
     }
   ]
 }

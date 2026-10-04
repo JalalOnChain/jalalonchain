@@ -1,6 +1,17 @@
 {
-  "updatedAt": "2026-10-03T18:32:33Z",
+  "updatedAt": "2026-10-04T02:32:40Z",
   "items": [
+    {
+      "id": "2026-10-04",
+      "title": "Why compliance teams care about 'peel chains'",
+      "body": "A peel chain is when a large balance moves through a long sequence of addresses, peeling off a small amount at each hop while the bulk continues onward \u2014 a common obfuscation pattern for both stolen funds and simple UTXO wallet behavior. Distinguishing genuine peel-chain laundering from ordinary wallet housekeeping is one of the harder calls in on-chain investigations.",
+      "tags": [
+        "on-chain-forensics",
+        "compliance"
+      ],
+      "createdAt": "2026-10-04T02:32:40Z",
+      "slug": "why-compliance-teams-care-about-peel-chains"
+    },
     {
       "id": "2026-10-02",
       "title": "What separates a fork from a fresh chain",

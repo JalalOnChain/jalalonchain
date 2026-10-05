@@ -2,7 +2,7 @@ name: Sync site data
 
 on:
   schedule:
-    - cron: "7 * * * *"   # every hour, at :07
+    - cron: "12,42 * * * *"   # every hour, at :07
   workflow_dispatch: {}    # lets you trigger a run manually from the Actions tab
 
 permissions:

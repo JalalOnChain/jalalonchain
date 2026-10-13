@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Railgun Tracer — JalalOnChain</title>
+<meta name="description" content="Look up an Ethereum address that deposited into Railgun and see which withdrawals of the same token match it by amount or came soon after it.">
+<link rel="canonical" href="https://jalalonchain.com/tools/railgun-tracer/">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#131B2B">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JalalOnChain">
+<meta property="og:url" content="https://jalalonchain.com/tools/railgun-tracer/">
+<meta property="og:title" content="Railgun Tracer — JalalOnChain">
+<meta property="og:description" content="Look up an Ethereum address that deposited into Railgun and see which withdrawals of the same token match it by amount or came soon after it.">
+<meta property="og:image" content="https://jalalonchain.com/assets/logo.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@JalalOnChain">
+<meta name="twitter:title" content="Railgun Tracer — JalalOnChain">
+<meta name="twitter:description" content="Look up an Ethereum address that deposited into Railgun and see which withdrawals of the same token match it by amount or came soon after it.">
+<meta name="twitter:image" content="https://jalalonchain.com/assets/logo.png">
+<link rel="icon" type="image/png" href="https://jalalonchain.com/assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "WebApplication", "name": "Railgun Tracer", "url": "https://jalalonchain.com/tools/railgun-tracer/", "applicationCategory": "Blockchain analysis tool", "description": "Look up an Ethereum address that deposited into Railgun and see which withdrawals of the same token match it by amount or came soon after it.", "publisher": {"@type": "Organization", "name": "JalalOnChain", "url": "https://jalalonchain.com/"}}
+</script>
+<style>
+  :root{ --bg:#F4F6F9; --surface:#FFFFFF; --border:#DCE3EC; --text:#131B2B; --text-muted:#5C6B84; --text-faint:#93A1B8; --accent:#B4700F; --accent-soft:#FBEBD4; --teal:#0E8E89; --teal-soft:#DEF3F1; --bad:#B23B3B; --bad-soft:#F9E3E1; color-scheme: light; }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){ --bg:#0B1220; --surface:#121B2E; --border:#233047; --text:#E7ECF5; --text-muted:#93A1B8; --text-faint:#5C6B84; --accent:#E3A857; --accent-soft:#2A2011; --teal:#3FD1C9; --teal-soft:#0E2B29; --bad:#E3897F; --bad-soft:#2E1A18; color-scheme: dark; }
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",system-ui,sans-serif; line-height:1.6; }
+  .wrap{ max-width:860px; margin:0 auto; padding:28px 20px 60px; }
+  a{ color:var(--teal); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+  header.site{ display:flex; align-items:center; gap:10px; margin-bottom:28px; text-decoration:none; color:inherit; }
+  header.site img{ width:36px; height:36px; border-radius:8px; }
+  header.site .name{ font-weight:800; font-size:18px; color:var(--text); }
+  header.site .name em{ font-style:normal; color:var(--accent); }
+  .eyebrow{ font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); font-weight:700; font-family:"IBM Plex Mono",monospace; margin-bottom:8px; }
+  h1{ font-size:27px; line-height:1.3; margin:0 0 10px; }
+  .lede{ font-size:15.5px; color:var(--text-muted); max-width:640px; margin:0 0 22px; }
+  .panel{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px 22px; margin-bottom:18px; }
+  .panel h2{ font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); margin:0 0 12px; font-family:"IBM Plex Mono",monospace; }
+  .search-row{ display:flex; gap:10px; flex-wrap:wrap; }
+  #addrInput{ flex:1 1 320px; background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:9px; padding:12px 14px; font-size:14px; font-family:"IBM Plex Mono",monospace; min-width:0; }
+  #addrInput:focus{ outline:2px solid var(--teal); outline-offset:1px; }
+  #windowSelect{ background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:9px; padding:12px 10px; font-size:13.5px; font-family:inherit; }
+  #searchBtn{ background:var(--accent); color:#1a1200; border:none; border-radius:9px; padding:12px 22px; font-size:14px; font-weight:700; font-family:inherit; cursor:pointer; white-space:nowrap; }
+  #searchBtn:disabled{ opacity:.6; cursor:default; }
+  #searchBtn:hover:not(:disabled){ filter:brightness(1.06); }
+  .hint{ font-size:12px; color:var(--text-faint); margin-top:8px; }
+  .notice{ border:1px solid var(--border); border-left:3px solid var(--text-faint); border-radius:8px; padding:11px 14px; font-size:13.5px; margin-top:14px; color:var(--text-muted); }
+  .notice.warn{ border-left-color:var(--accent); }
+  .notice.bad{ border-left-color:var(--bad); color:var(--text); }
+  #results{ margin-top:6px; }
+  .dep-card{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:18px 20px; margin-bottom:16px; }
+  .dep-head{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:4px; }
+  .dep-pool{ font-weight:700; font-size:15px; }
+  .dep-time{ font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--text-faint); }
+  .dep-sub{ font-size:12.5px; color:var(--text-muted); }
+  .dep-self{ display:block; margin-top:6px; font-size:12.5px; color:var(--text-muted); }
+  .tabs{ display:flex; gap:4px; margin-top:14px; border-bottom:1px solid var(--border); }
+  .tab{ background:none; border:none; border-bottom:2px solid transparent; padding:6px 10px 8px; margin-bottom:-1px; font:inherit; font-size:13px; font-weight:600; color:var(--text-muted); cursor:pointer; }
+  .tab:hover{ color:var(--text); }
+  .tab.on{ color:var(--text); border-bottom-color:var(--accent); }
+  .tab .n{ font-weight:400; color:var(--text-faint); margin-left:4px; }
+  .view{ display:none; }
+  .view.on{ display:block; }
+  .table-scroll{ overflow-x:auto; }
+  table.cand{ width:100%; border-collapse:collapse; margin-top:12px; font-size:13px; }
+  table.cand th{ text-align:left; font-family:"IBM Plex Mono",monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--text-faint); font-weight:600; padding:0 10px 6px 0; border-bottom:1px solid var(--border); white-space:nowrap; }
+  table.cand td{ padding:8px 10px 8px 0; border-bottom:1px solid var(--border); vertical-align:top; }
+  table.cand tr:last-child td{ border-bottom:none; }
+  .addr{ font-family:"IBM Plex Mono",monospace; font-size:12.5px; word-break:break-all; }
+  .num{ font-family:"IBM Plex Mono",monospace; font-size:12.5px; white-space:nowrap; }
+  .via{ display:block; font-family:"IBM Plex Sans",sans-serif; font-size:11.5px; color:var(--text-faint); }
+  .gap-strong{ color:var(--text); font-weight:700; }
+  .gap-weak{ color:var(--text-faint); }
+  .exact{ font-weight:700; color:var(--text); }
+  .setsize{ color:var(--text-muted); font-size:12px; margin-top:10px; }
+  .empty{ font-size:13px; color:var(--text-muted); margin-top:12px; }
+  .spinner{ display:inline-block; width:14px; height:14px; border:2px solid var(--border); border-top-color:var(--text-muted); border-radius:50%; animation:spin .7s linear infinite; vertical-align:-2px; margin-right:8px; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  details.methodology summary{ cursor:pointer; font-weight:700; font-size:14px; }
+  details.methodology[open] summary{ margin-bottom:12px; }
+  .methodology p{ font-size:13.5px; color:var(--text-muted); margin:0 0 10px; }
+  .methodology ul{ margin:0 0 10px; padding-left:20px; }
+  .methodology li{ font-size:13.5px; color:var(--text-muted); margin-bottom:6px; }
+  .back-home{ display:inline-block; margin-top:28px; font-size:13.5px; color:var(--accent); }
+  @media (max-width:560px){ .wrap{ padding:22px 16px 48px; } .panel, .dep-card{ padding:16px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="https://jalalonchain.com/">
+    <header class="site">
+      <img src="https://jalalonchain.com/assets/logo.png" alt="JalalOnChain logo">
+      <span class="name">Jalal<em>OnChain</em></span>
+    </header>
+  </a>
+
+  <div class="eyebrow">Tools</div>
+  <h1>Railgun Tracer</h1>
+  <p class="lede">Search an Ethereum address that deposited into Railgun, and this tool looks at withdrawals of the same token after that deposit. It lists the ones whose amount matches what went in, and the ones that came out soonest. These are leads from public on-chain data, not proof that the same person is behind both. Read the notes below before relying on anything here.</p>
+
+  <div class="panel">
+    <h2>Search</h2>
+    <div class="search-row">
+      <input type="text" id="addrInput" placeholder="0x... address that deposited into Railgun" autocomplete="off" spellcheck="false">
+      <select id="windowSelect">
+        <option value="1">1 day after the deposit</option>
+        <option value="7" selected>7 days after</option>
+        <option value="30">30 days after</option>
+        <option value="90">90 days after</option>
+      </select>
+      <button id="searchBtn">Trace</button>
+    </div>
+    <div class="hint">Ethereum mainnet only. Railgun calls a deposit a "shield" and a withdrawal an "unshield". There is no time limit on either, so a longer window finds more but also adds noise.</div>
+    <div id="configNotice"></div>
+  </div>
+
+  <div id="results"></div>
+
+  <div class="panel">
+    <details class="methodology">
+      <summary>How this works and where it falls short</summary>
+      <p>Putting money into Railgun is an ordinary transaction, so the address that deposited, the token and the amount are all public. Taking money out is public too: the receiving address, the token and the amount are written into the withdrawal. What Railgun hides is the path in between. This tool reads the deposits an address made, then pulls every withdrawal of the same token inside the window you picked.</p>
+      <p>Unlike Tornado, Railgun does not use fixed amounts, and that helps here. Railgun takes a small fee on the way in and again on the way out, but the withdrawal records both the amount sent and the fee taken. Add those two together and you get exactly what was spent from inside Railgun. If someone puts in a sum and later takes the whole of it out in one go, the numbers match to the last unit. Those rows are marked "exact" in the By amount tab. The By time tab shows the same withdrawals ordered by how soon they came after the deposit.</p>
+      <p>ETH goes in and out through a Railgun helper contract that wraps and unwraps it. When a withdrawal lands on that helper, the tool checks where the ETH went next and shows that address instead, with a small note under it.</p>
+      <ul>
+        <li>It only works from the deposit side. A wallet that only ever received a withdrawal leaves nothing in its own history to start from, apart from the incoming transfer itself.</li>
+        <li>Money can be swapped to another token inside Railgun before it comes out. The tool compares the same token only, so it misses those.</li>
+        <li>Partial withdrawals and several deposits merged into one withdrawal will not match exactly. The By amount tab shows the percentage difference, so close ones still show up, but they mean less.</li>
+        <li>Only Railgun on Ethereum mainnet is covered, from the November 2022 contract upgrade onwards. Railgun on Polygon, BNB Chain and Arbitrum is not included.</li>
+        <li>Using Railgun is not a sign of wrongdoing on its own. Plenty of people use it for ordinary privacy. Treat every match as something to check against other evidence.</li>
+      </ul>
+    </details>
+  </div>
+
+  <a class="back-home" href="https://jalalonchain.com/">&larr; Back to JalalOnChain</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // Same free Etherscan key as the Tornado Tracer (free tier: 5 req/sec, 100k req/day).
+  var ETHERSCAN_API_KEY = "F4JZ76GDDH4HN1KDGZ9F3W532QAS46JCZ3";
+  var ETHERSCAN_BASE = "https://api.etherscan.io/v2/api";
+  var CHAIN_ID = "1"; // Ethereum mainnet
+
+  // Railgun contracts on Ethereum mainnet, from Railgun's own network config
+  // (github.com/Railgun-Community/shared-models, src/models/network-config.ts).
+  var RAILGUN_PROXY = "0xfa7093cdd9ee6932b4eb2c9e1cde7ce00b1fa4b9";
+  // Relay Adapt: the helper that wraps/unwraps ETH and runs multi-step actions.
+  // Current address first, then the earlier one it replaced.
+  var RELAY_ADAPTS = [
+    "0xac9f360ae85469b27aeddeafc579ef2d052ad405",
+    "0x4025ee6512dbbda97049bcf5aa5d38c54af6be8a"
+  ];
+  function isRelayAdapt(a){ return RELAY_ADAPTS.indexOf((a || "").toLowerCase()) !== -1; }
+
+  // Event topics and selectors, computed with keccak256 from the ABIs in
+  // github.com/Railgun-Community/engine (src/abi/V2, V2.1).
+  //   Shield(uint256,uint256,(bytes32,(uint8,address,uint256),uint120)[],(bytes32[3],bytes32)[],uint256[])   (since Mar 2023)
+  //   Shield(uint256,uint256,(bytes32,(uint8,address,uint256),uint120)[],(bytes32[3],bytes32)[])             (Nov 2022 to Mar 2023)
+  //   Unshield(address,(uint8,address,uint256),uint256,uint256)
+  var SHIELD_TOPICS = [
+    "0x3a5b9dc26075a3801a6ddccf95fec485bb7500a91b44cec1add984c21ee6db3b",
+    "0xc3821e11e71307afd1d94a490660178ff37aefdd3c0514e5dd08937bd7024f34"
+  ];
+  var UNSHIELD_TOPIC = "0xd93cf895c7d5b2cd7dc7a098b678b3089f37d91f48d9b83a0800a91cbdf05284";
+  // RelayAdapt.relay(...): a private action run through the helper. Any Shield
+  // inside it is money going back into Railgun from Railgun, not a new deposit.
+  var RELAY_SELECTOR = "0x28223a77";
+
+  var KNOWN_TOKENS = {
+    "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": { symbol: "WETH", decimals: 18 },
+    "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": { symbol: "USDC", decimals: 6 },
+    "0xdac17f958d2ee523a2206206994597c13d831ec7": { symbol: "USDT", decimals: 6 },
+    "0x6b175474e89094c44da98b954eedeac495271d0f": { symbol: "DAI",  decimals: 18 },
+    "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599": { symbol: "WBTC", decimals: 8 },
+    "0xe76c6c83af64e4c60245d8c7de953df673a7a33d": { symbol: "RAIL", decimals: 18 }
+  };
+
+  var BLOCKS_PER_DAY = 7200;      // ~12s blocks; only used to size the window
+  var MAX_DEPOSITS_SCANNED = 10;
+  var MAX_RECEIPTS = 25;          // most recent Railgun-related txs read in full
+  var MAX_ROWS = 20;
+  var AMOUNT_TOLERANCE_PPM = 100000n; // By amount tab lists withdrawals within 10%
+  var LOG_PAGE = 1000, LOG_PAGES = 5;
+
+  var $addr = document.getElementById("addrInput");
+  var $win = document.getElementById("windowSelect");
+  var $btn = document.getElementById("searchBtn");
+  var $results = document.getElementById("results");
+  var $configNotice = document.getElementById("configNotice");
+
+  function isConfigured(){ return ETHERSCAN_API_KEY && ETHERSCAN_API_KEY.indexOf("YOUR_ETHERSCAN") !== 0; }
+  if (!isConfigured()) {
+    $configNotice.innerHTML = '<div class="notice warn">Search is switched off until an Etherscan key is added to this page.</div>';
+    $btn.disabled = true;
+  }
+
+  function isValidAddress(a){ return /^0x[a-fA-F0-9]{40}$/.test(a); }
+  function short(a){ return a.slice(0,6) + "…" + a.slice(-4); }
+  function addrLink(a, label){ return '<a class="addr" href="https://etherscan.io/address/' + a + '" target="_blank" rel="noopener">' + (label || a) + '</a>'; }
+  function txLink(h, label){ return '<a href="https://etherscan.io/tx/' + h + '" target="_blank" rel="noopener">' + (label || "tx") + '</a>'; }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+  // ---- Etherscan, spaced out to stay under the free-tier rate limit ----
+  var lastCall = 0;
+  function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+  async function rawCall(params){
+    var gapMs = 230 - (Date.now() - lastCall);
+    if (gapMs > 0) await wait(gapMs);
+    lastCall = Date.now();
+    var url = new URL(ETHERSCAN_BASE);
+    Object.keys(params).forEach(function(k){ url.searchParams.set(k, params[k]); });
+    url.searchParams.set("chainid", CHAIN_ID);
+    url.searchParams.set("apikey", ETHERSCAN_API_KEY);
+    var res = await fetch(url.toString());
+    if (!res.ok) throw new Error("Etherscan request failed (HTTP " + res.status + ")");
+    return res.json();
+  }
+  async function escList(params){
+    var json = await rawCall(params);
+    if (json.status === "0" && !/no transactions found|no records found/i.test(json.message || "")) {
+      throw new Error(typeof json.result === "string" ? json.result : (json.message || "Etherscan API error"));
+    }
+    return Array.isArray(json.result) ? json.result : [];
+  }
+  async function escProxy(params){
+    var json = await rawCall(Object.assign({ module: "proxy" }, params));
+    if (json.error) throw new Error(json.error.message || "Etherscan proxy error");
+    if (json.status === "0") throw new Error(typeof json.result === "string" ? json.result : "Etherscan API error");
+    return json.result;
+  }
+
+  // ---- ABI helpers ----
+  function words(dataHex){
+    var h = dataHex.replace(/^0x/, "");
+    var out = [];
+    for (var i = 0; i < h.length; i += 64) out.push(h.slice(i, i + 64));
+    return out;
+  }
+  function wAddr(w){ return "0x" + w.slice(24).toLowerCase(); }
+  function wBig(w){ return BigInt("0x" + w); }
+  function wNum(w){ return Number(BigInt("0x" + w)); }
+
+  // Shield event data: treeNumber, startPosition, offset(commitments), offset(ciphertext)[, offset(fees)]
+  // commitments[] = CommitmentPreimage{ npk, (tokenType, tokenAddress, tokenSubID), value } — 5 static words each.
+  // value is what landed inside Railgun, after the shield fee. fees[] (newer event only) is the fee per commitment.
+  function decodeShield(log){
+    var w = words(log.data);
+    var cStart = wNum(w[2]) / 32;
+    var n = wNum(w[cStart]);
+    var fees = [];
+    var newer = log.topics[0].toLowerCase() === SHIELD_TOPICS[0];
+    if (newer && w[4]) {
+      var fStart = wNum(w[4]) / 32;
+      var fn = wNum(w[fStart]);
+      for (var j = 0; j < fn; j++) fees.push(wBig(w[fStart + 1 + j]));
+    }
+    var out = [];
+    for (var i = 0; i < n; i++) {
+      var b = cStart + 1 + i * 5;
+      out.push({
+        tokenType: wNum(w[b + 1]),
+        token: wAddr(w[b + 2]),
+        value: wBig(w[b + 4]),
+        fee: fees[i] !== undefined ? fees[i] : null
+      });
+    }
+    return out;
+  }
+  // Unshield(address to, (uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint256 amount, uint256 fee)
+  // Nothing indexed and the tuple is static, so data is six words in order.
+  function decodeUnshield(log){
+    var w = words(log.data);
+    return {
+      to: wAddr(w[0]),
+      tokenType: wNum(w[1]),
+      token: wAddr(w[2]),
+      amount: wBig(w[4]),
+      fee: wBig(w[5])
+    };
+  }
+
+  // ---- token names and decimals ----
+  var tokenCache = Object.assign({}, KNOWN_TOKENS);
+  function decodeSymbol(hex){
+    var h = (hex || "0x").replace(/^0x/, "");
+    if (!h) return null;
+    try {
+      if (h.length > 64) {
+        var w = words(h);
+        var len = wNum(w[1]);
+        var bytes = h.slice(128, 128 + len * 2);
+        return decodeURIComponent(bytes.replace(/../g, "%$&"));
+      }
+      var s = h.replace(/(00)+$/, "");
+      return decodeURIComponent(s.replace(/../g, "%$&"));
+    } catch (e) { return null; }
+  }
+  async function tokenInfo(addr){
+    addr = addr.toLowerCase();
+    if (tokenCache[addr]) return tokenCache[addr];
+    var info = { symbol: short(addr), decimals: 18 };
+    try {
+      var d = await escProxy({ action: "eth_call", to: addr, data: "0x313ce567", tag: "latest" });
+      if (d && d !== "0x") info.decimals = parseInt(d, 16);
+      var s = decodeSymbol(await escProxy({ action: "eth_call", to: addr, data: "0x95d89b41", tag: "latest" }));
+      if (s) info.symbol = s.replace(/[^\x20-\x7E]/g, "").slice(0, 12) || info.symbol;
+    } catch (e) { /* keep fallback */ }
+    tokenCache[addr] = info;
+    return info;
+  }
+  function fmtUnits(big, decimals){
+    var neg = big < 0n; if (neg) big = -big;
+    var base = 10n ** BigInt(decimals);
+    var whole = big / base, frac = big % base;
+    var fracStr = frac.toString().padStart(decimals, "0");
+    var keep = whole === 0n ? 6 : 4;
+    fracStr = fracStr.slice(0, keep).replace(/0+$/, "");
+    var wholeStr = whole.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return (neg ? "-" : "") + wholeStr + (fracStr ? "." + fracStr : "");
+  }
+  function tokenLabel(info){ return info.symbol === "WETH" ? "ETH (WETH)" : info.symbol; }
+
+  function fmtGap(seconds){
+    if (seconds < 60) return seconds + " sec";
+    if (seconds < 3600) return Math.round(seconds/60) + " min";
+    if (seconds < 86400) return (seconds/3600).toFixed(1) + " hours";
+    return (seconds/86400).toFixed(1) + " days";
+  }
+  function fmtTime(ts){ return new Date(ts * 1000).toISOString().replace("T", " ").slice(0, 16) + " UTC"; }
+
+  // ---- unshield scan, cached per block range ----
+  var unshieldCache = {};
+  async function fetchUnshields(fromBlock, toBlock){
+    var key = fromBlock + "-" + toBlock;
+    if (unshieldCache[key]) return unshieldCache[key];
+    var all = [];
+    for (var page = 1; page <= LOG_PAGES; page++) {
+      var batch = await escList({
+        module: "logs", action: "getLogs", address: RAILGUN_PROXY,
+        fromBlock: String(fromBlock), toBlock: String(toBlock),
+        topic0: UNSHIELD_TOPIC, page: String(page), offset: String(LOG_PAGE)
+      });
+      all = all.concat(batch);
+      if (batch.length < LOG_PAGE) break;
+    }
+    var result = { logs: all, capped: all.length >= LOG_PAGE * LOG_PAGES };
+    unshieldCache[key] = result;
+    return result;
+  }
+
+  // When a withdrawal lands on the Relay Adapt helper, the ETH (or token) is
+  // passed on in the same transaction. For ETH that shows up as an internal
+  // transfer, which we can read back.
+  var hopCache = {};
+  async function resolveHelperHop(txHash){
+    if (hopCache[txHash] !== undefined) return hopCache[txHash];
+    var found = null;
+    try {
+      var internals = await escList({ module: "account", action: "txlistinternal", txhash: txHash });
+      var outs = internals.filter(function(t){
+        return isRelayAdapt(t.from) && t.to && !isRelayAdapt(t.to) && t.to.toLowerCase() !== RAILGUN_PROXY && t.value !== "0" && t.isError !== "1";
+      });
+      if (outs.length === 1) found = outs[0].to.toLowerCase();
+      else if (outs.length > 1) {
+        outs.sort(function(a,b){ return BigInt(b.value) > BigInt(a.value) ? 1 : -1; });
+        found = outs[0].to.toLowerCase();
+      }
+    } catch (e) { found = null; }
+    hopCache[txHash] = found;
+    return found;
+  }
+
+  function recipientCell(c){
+    if (!isRelayAdapt(c.to)) return addrLink(c.to);
+    if (c.finalTo) return addrLink(c.finalTo) + '<span class="via">ETH unwrapped by the Railgun helper</span>';
+    return '<span class="addr">Railgun helper</span><span class="via">Passed on inside the tx, likely a swap. Open the tx to follow it.</span>';
+  }
+
+  async function runSearch(){
+    var addr = $addr.value.trim();
+    $results.innerHTML = "";
+    if (!isValidAddress(addr)) {
+      $results.innerHTML = '<div class="notice bad">That doesn\'t look like an Ethereum address. It should start with 0x and have 40 characters after it.</div>';
+      return;
+    }
+    var windowDays = parseInt($win.value, 10);
+    var me = addr.toLowerCase();
+
+    $btn.disabled = true;
+    $results.innerHTML = '<div class="notice"><span class="spinner"></span>Looking up the transactions for ' + short(addr) + '&hellip;</div>';
+
+    try {
+      // 1. Find transactions that touched Railgun: calls this address sent to
+      //    Railgun or its helper, and token transfers from this address into Railgun.
+      var normal = await escList({ module: "account", action: "txlist", address: addr, startblock: "0", endblock: "99999999", sort: "asc", page: "1", offset: "10000" });
+      var tokenTx = await escList({ module: "account", action: "tokentx", address: addr, startblock: "0", endblock: "99999999", sort: "asc", page: "1", offset: "10000" });
+
+      var txMeta = {}; // hash -> { block, time, selfSent, selector }
+      normal.forEach(function(tx){
+        if (tx.isError === "1" || !tx.to) return;
+        var to = tx.to.toLowerCase();
+        if (tx.from.toLowerCase() !== me) return;
+        if (to !== RAILGUN_PROXY && !isRelayAdapt(to)) return;
+        txMeta[tx.hash.toLowerCase()] = { hash: tx.hash, block: parseInt(tx.blockNumber, 10), time: parseInt(tx.timeStamp, 10), selfSent: true, selector: (tx.input || "").slice(0, 10).toLowerCase() };
+      });
+      var receivedCount = 0;
+      tokenTx.forEach(function(t){
+        var from = t.from.toLowerCase(), to = t.to.toLowerCase();
+        if (from === RAILGUN_PROXY && to === me) receivedCount++;
+        if (from !== me || to !== RAILGUN_PROXY) return;
+        var h = t.hash.toLowerCase();
+        if (!txMeta[h]) txMeta[h] = { hash: t.hash, block: parseInt(t.blockNumber, 10), time: parseInt(t.timeStamp, 10), selfSent: false, selector: "" };
+      });
+
+      var touched = Object.keys(txMeta).map(function(k){ return txMeta[k]; }).sort(function(a,b){ return a.block - b.block; });
+      var receivedLine = receivedCount
+        ? '<div class="notice">This address also received ' + receivedCount + ' token withdrawal' + (receivedCount === 1 ? '' : 's') + ' straight from Railgun. Those are not traced here.</div>'
+        : "";
+
+      if (touched.length === 0) {
+        $results.innerHTML = '<div class="notice">No Railgun deposits found for this address, either direct or through Railgun\'s helper contract.' + (receivedCount ? '' : ' If it only ever received a withdrawal, there is nothing in its own history to start from. See the notes below.') + '</div>' + receivedLine;
+        return;
+      }
+
+      // 2. Read the receipts and pull out Shield (deposit) and Unshield logs.
+      var readList = touched.slice(-MAX_RECEIPTS);
+      var deposits = [], selfUnshields = [];
+      for (var r = 0; r < readList.length; r++) {
+        var m = readList[r];
+        $results.innerHTML = '<div class="notice"><span class="spinner"></span>Reading Railgun transaction ' + (r + 1) + ' of ' + readList.length + '&hellip;</div>';
+        var receipt = await escProxy({ action: "eth_getTransactionReceipt", txhash: m.hash });
+        if (!receipt || receipt.status === "0x0") continue;
+        (receipt.logs || []).forEach(function(log){
+          if ((log.address || "").toLowerCase() !== RAILGUN_PROXY) return;
+          var t0 = (log.topics[0] || "").toLowerCase();
+          if (SHIELD_TOPICS.indexOf(t0) !== -1 && m.selector !== RELAY_SELECTOR) {
+            decodeShield(log).forEach(function(c){
+              if (c.tokenType !== 0) return; // ERC20 only
+              deposits.push({ meta: m, token: c.token, value: c.value, fee: c.fee });
+            });
+          } else if (t0 === UNSHIELD_TOPIC && m.selfSent) {
+            var u = decodeUnshield(log);
+            if (u.tokenType === 0) selfUnshields.push({ meta: m, u: u });
+          }
+        });
+      }
+
+      $results.innerHTML = "";
+      if (touched.length > MAX_RECEIPTS) {
+        $results.insertAdjacentHTML("beforeend", '<div class="notice warn">This address has ' + touched.length + ' Railgun transactions. Only the ' + MAX_RECEIPTS + ' most recent were read.</div>');
+      }
+      if (deposits.length > MAX_DEPOSITS_SCANNED) {
+        $results.insertAdjacentHTML("beforeend", '<div class="notice warn">Found ' + deposits.length + ' deposits. Showing the ' + MAX_DEPOSITS_SCANNED + ' most recent.</div>');
+      }
+      if (receivedLine) $results.insertAdjacentHTML("beforeend", receivedLine);
+
+      // Withdrawals this address paid for itself: a certain link.
+      for (var s = 0; s < selfUnshields.length; s++) {
+        var su = selfUnshields[s];
+        var sInfo = await tokenInfo(su.u.token);
+        var row = { to: su.u.to, finalTo: null };
+        if (isRelayAdapt(row.to)) row.finalTo = await resolveHelperHop(su.meta.hash);
+        var sCard = document.createElement("div");
+        sCard.className = "dep-card";
+        sCard.innerHTML =
+          '<div class="dep-head"><span class="dep-pool">Withdrawal of ' + fmtUnits(su.u.amount, sInfo.decimals) + ' ' + esc(tokenLabel(sInfo)) + '</span>' +
+          '<span class="dep-time">' + fmtTime(su.meta.time) + '</span></div>' +
+          '<div>This address sent the withdrawal itself, to ' + recipientCell(row) + ' &mdash; ' + txLink(su.meta.hash, "view tx") + '</div>' +
+          '<span class="dep-self">Confirmed: the address paid its own gas for this one, so the link is certain.</span>';
+        $results.appendChild(sCard);
+      }
+
+      if (deposits.length === 0) {
+        if (!selfUnshields.length) $results.insertAdjacentHTML("beforeend", '<div class="notice">This address touched Railgun, but none of those transactions was a token deposit from its own funds.</div>');
+        return;
+      }
+
+      // 3. For each deposit, scan same-token withdrawals in the window.
+      var toScan = deposits.slice(-MAX_DEPOSITS_SCANNED).reverse();
+      for (var i = 0; i < toScan.length; i++) {
+        await renderDeposit(toScan[i], windowDays, i);
+      }
+    } catch (err) {
+      $results.innerHTML = '<div class="notice bad">Lookup failed: ' + esc(err.message) + '. Etherscan may be limiting requests. Wait a bit and try again.</div>';
+    } finally {
+      $btn.disabled = !isConfigured();
+    }
+  }
+
+  async function renderDeposit(dep, windowDays, idx){
+    var info = await tokenInfo(dep.token);
+    var m = dep.meta;
+    var endBlock = m.block + windowDays * BLOCKS_PER_DAY;
+    var paidLine = dep.fee !== null
+      ? 'Paid in ' + fmtUnits(dep.value + dep.fee, info.decimals) + ' ' + esc(info.symbol) + ', and Railgun kept ' + fmtUnits(dep.fee, info.decimals) + ' as its fee.'
+      : 'Amount shown is what landed inside Railgun, after its fee.';
+
+    var card = document.createElement("div");
+    card.className = "dep-card";
+    card.innerHTML =
+      '<div class="dep-head"><span class="dep-pool">Deposit of ' + fmtUnits(dep.value, info.decimals) + ' ' + esc(tokenLabel(info)) + '</span>' +
+      '<span class="dep-time">' + fmtTime(m.time) + '</span></div>' +
+      '<div class="dep-sub">' + paidLine + ' ' + txLink(m.hash, "view deposit tx") + '</div>' +
+      '<div class="notice"><span class="spinner"></span>Checking ' + esc(info.symbol) + ' withdrawals over the next ' + windowDays + ' day' + (windowDays === 1 ? '' : 's') + '&hellip;</div>';
+    $results.appendChild(card);
+    var notice = card.querySelector(".notice");
+
+    try {
+      var scan = await fetchUnshields(m.block, endBlock);
+      var cands = [];
+      scan.logs.forEach(function(log){
+        var u = decodeUnshield(log);
+        if (u.tokenType !== 0 || u.token !== dep.token) return;
+        var gap = parseInt(log.timeStamp, 16) - m.time;
+        if (gap < 0) return;
+        if (log.transactionHash.toLowerCase() === m.hash.toLowerCase()) return;
+        var spent = u.amount + u.fee; // what left the private balance
+        var diff = spent > dep.value ? spent - dep.value : dep.value - spent;
+        var ppm = dep.value > 0n ? (diff * 1000000n) / dep.value : 1000000n;
+        cands.push({ to: u.to, amount: u.amount, spent: spent, diff: diff, ppm: ppm, gap: gap, hash: log.transactionHash, finalTo: null });
+      });
+
+      var byTime = cands.slice().sort(function(a,b){ return a.gap - b.gap; });
+      var byAmount = cands.filter(function(c){ return c.ppm <= AMOUNT_TOLERANCE_PPM; })
+        .sort(function(a,b){ return a.ppm === b.ppm ? a.gap - b.gap : (a.ppm < b.ppm ? -1 : 1); });
+
+      if (cands.length === 0) {
+        notice.textContent = "No " + info.symbol + " withdrawals from Railgun in that window.";
+        return;
+      }
+
+      var shownTime = byTime.slice(0, MAX_ROWS), shownAmount = byAmount.slice(0, MAX_ROWS);
+      var helperRows = shownTime.concat(shownAmount).filter(function(c){ return isRelayAdapt(c.to) && c.finalTo === null; });
+      var seen = {};
+      for (var h = 0; h < helperRows.length; h++) {
+        var c = helperRows[h];
+        if (seen[c.hash]) { c.finalTo = seen[c.hash]; continue; }
+        notice.innerHTML = '<span class="spinner"></span>Following ETH out of the Railgun helper (' + (h + 1) + ' of ' + helperRows.length + ')&hellip;';
+        c.finalTo = await resolveHelperHop(c.hash);
+        seen[c.hash] = c.finalTo;
+      }
+      cands.forEach(function(c){ if (seen[c.hash] !== undefined) c.finalTo = seen[c.hash]; });
+
+      function pctCell(c){
+        if (c.diff === 0n) return '<span class="exact">exact</span>';
+        var pct = Number(c.ppm) / 10000;
+        var label = pct < 0.01 ? "&lt;0.01%" : pct.toFixed(pct < 1 ? 2 : 1) + "%";
+        return '<span class="num">' + (c.spent > dep.value ? "+" : "&minus;") + label + '</span>';
+      }
+      function gapCell(c){
+        var cls = c.gap < 3600 ? "gap-strong" : (c.gap < 86400 ? "" : "gap-weak");
+        return '<span class="' + cls + '">' + fmtGap(c.gap) + '</span>';
+      }
+      var amountRows = shownAmount.map(function(c){
+        return '<tr><td>' + recipientCell(c) + '</td><td class="num">' + fmtUnits(c.amount, info.decimals) + '</td><td>' + pctCell(c) + '</td><td>' + gapCell(c) + '</td><td>' + txLink(c.hash) + '</td></tr>';
+      }).join("");
+      var timeRows = shownTime.map(function(c){
+        return '<tr><td>' + recipientCell(c) + '</td><td>' + gapCell(c) + '</td><td class="num">' + fmtUnits(c.amount, info.decimals) + '</td><td>' + pctCell(c) + '</td><td>' + txLink(c.hash) + '</td></tr>';
+      }).join("");
+      var exactCount = byAmount.filter(function(c){ return c.diff === 0n; }).length;
+
+      var amountView = byAmount.length
+        ? '<div class="table-scroll"><table class="cand"><thead><tr><th>Recipient</th><th>Received</th><th>Vs deposit</th><th>After deposit</th><th></th></tr></thead><tbody>' + amountRows + '</tbody></table></div>' +
+          '<div class="setsize">' + (exactCount ? exactCount + ' exact match' + (exactCount === 1 ? '' : 'es') + '. ' : 'No exact match. ') + 'Withdrawals within 10% of the deposit are listed, closest first. "Vs deposit" compares the amount plus Railgun\'s withdrawal fee with what went in.</div>'
+        : '<div class="empty">No ' + esc(info.symbol) + ' withdrawal in this window came within 10% of the deposit. The money may have come out in pieces, been swapped first, or is still inside.</div>';
+      var timeView =
+        '<div class="table-scroll"><table class="cand"><thead><tr><th>Recipient</th><th>After deposit</th><th>Received</th><th>Vs deposit</th><th></th></tr></thead><tbody>' + timeRows + '</tbody></table></div>';
+
+      var setSize = '<div class="setsize">' + cands.length + ' ' + esc(info.symbol) + ' withdrawal' + (cands.length === 1 ? '' : 's') + ' from Railgun in the ' + windowDays + '-day window after this deposit. The fewer there are, the more a close match means.' +
+        (scan.capped ? ' The scan stopped at 5,000 withdrawals of all tokens, so the window was cut short.' : '') + '</div>';
+
+      notice.remove();
+      card.insertAdjacentHTML("beforeend",
+        '<div class="tabs" role="tablist">' +
+          '<button type="button" class="tab on" data-view="amount" role="tab">By amount<span class="n">' + byAmount.length + '</span></button>' +
+          '<button type="button" class="tab" data-view="time" role="tab">By time<span class="n">' + cands.length + '</span></button>' +
+        '</div>' +
+        '<div class="view on" data-view="amount">' + amountView + '</div>' +
+        '<div class="view" data-view="time">' + timeView + '</div>' + setSize);
+
+      var tabs = card.querySelectorAll(".tab"), views = card.querySelectorAll(".view");
+      tabs.forEach(function(t){
+        t.addEventListener("click", function(){
+          tabs.forEach(function(x){ x.classList.toggle("on", x === t); });
+          views.forEach(function(v){ v.classList.toggle("on", v.getAttribute("data-view") === t.getAttribute("data-view")); });
+        });
+      });
+    } catch (err) {
+      notice.className = "notice bad";
+      notice.textContent = "Couldn't check withdrawals for this deposit: " + err.message;
+    }
+  }
+
+  $btn.addEventListener("click", runSearch);
+  $addr.addEventListener("keydown", function(e){ if (e.key === "Enter") runSearch(); });
+})();
+</script>
+</body>
+</html>

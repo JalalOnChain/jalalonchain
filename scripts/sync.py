@@ -1442,6 +1442,7 @@ def sync_sitemap(learn_items):
         (SITE_URL + "/", "hourly", "1.0"),
         (SITE_URL + "/learn/", "daily", "0.6"),
         (SITE_URL + "/tools/tornado-tracer/", "weekly", "0.6"),
+        (SITE_URL + "/tools/railgun-tracer/", "weekly", "0.6"),
     ]
     for it in learn_items:
         urls.append((SITE_URL + "/learn/" + it["slug"] + "/", "monthly", "0.5"))

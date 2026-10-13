@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-13T20:40:19Z",
+  "updatedAt": "2026-10-13T23:56:16Z",
   "items": [
     {
       "id": "news-4c6df6a7e5be",
@@ -40,6 +40,16 @@
       "publishedAt": "2026-10-13T16:46:05Z",
       "fetchedAt": "2026-10-13T20:40:14Z",
       "summary": "Bitcoin dipped below $81,000 before buyers stepped in, but the Fear and Greed Index says traders aren't convinced yet."
+    },
+    {
+      "id": "news-36d097ee5323",
+      "title": "Trezor Cuts Its Resellers After Ledger Finds Spy Implant in Crypto Wallets",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/380848/trezor-cuts-resellers-ledger-finds-spy-implant-crypto-wallets",
+      "publishedAt": "2026-10-13T16:14:50Z",
+      "fetchedAt": "2026-10-13T23:56:15Z",
+      "summary": "Trezor is ending reseller authorizations on January 1, 2027, after Ledger confirmed that wallets sold by a Southeast Asian retailer carried a hidden implant that sent out users' recovery phrases."
     },
     {
       "id": "news-dd069b1d5f70",
@@ -1490,16 +1500,6 @@
       "publishedAt": "2026-09-25T21:25:35Z",
       "fetchedAt": "2026-09-25T22:18:16Z",
       "summary": "Federal prosecutors are targeting a Montana payments firm and a Caribbean bank accused of moving money without a license."
-    },
-    {
-      "id": "news-30cf9dd83b44",
-      "title": "Circle and Tether Freeze Stablecoins Tied to Bitget Hack\u2014But Most Funds Slip Away",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/379365/circle-tether-freeze-stablecoins-bitget-hack",
-      "publishedAt": "2026-09-25T18:42:51Z",
-      "fetchedAt": "2026-09-25T19:16:54Z",
-      "summary": "The two stablecoin issuers blacklisted a wallet labeled \"Bitget Exploiter 8,\" locking about $318,000 in USDC and USDT\u2014but the attacker swapped most funds into unfreezable ETH before they could act."
     }
   ]
 }

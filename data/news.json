@@ -1,6 +1,36 @@
 {
-  "updatedAt": "2026-10-14T15:09:39Z",
+  "updatedAt": "2026-10-14T19:24:47Z",
   "items": [
+    {
+      "id": "news-1b50d065e0cc",
+      "title": "Solana Sets a Date for Its Next Major Upgrade",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/380974/solana-alpenglow-upgrade-date",
+      "publishedAt": "2026-10-14T19:16:04Z",
+      "fetchedAt": "2026-10-14T19:24:46Z",
+      "summary": "Solana's Alpenglow upgrade replaces the TowerBFT voting system on October 21, cutting finality from 12.8 seconds to a target of 150ms and pulling vote transactions out of blocks entirely."
+    },
+    {
+      "id": "news-2043b983213f",
+      "title": "Standard Chartered Opens Bitcoin and Ethereum Trading to Wealthy UAE Clients",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/380967/standard-chartered-bitcoin-ethereum-trading",
+      "publishedAt": "2026-10-14T17:46:05Z",
+      "fetchedAt": "2026-10-14T19:24:46Z",
+      "summary": "The British bank won Dubai regulatory approval to let affluent clients buy BTC and ETH straight from their bank accounts, with custody and settlement kept in-house."
+    },
+    {
+      "id": "news-6b9fca6ce1a8",
+      "title": "'It Can Take Years': Coinbase Presses for Bitcoin Quantum Migration to Start Now",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/380963/coinbase-bitcoin-quantum-migration-start-now",
+      "publishedAt": "2026-10-14T16:15:19Z",
+      "fetchedAt": "2026-10-14T19:24:46Z",
+      "summary": "In a detailed technical post, the exchange argued Bitcoin\u2019s multi-year migration to quantum-resistant cryptography must begin before any \u201cQ-Day,\u201d laying out requirements spanning block space, custody and dormant coins."
+    },
     {
       "id": "news-cb959806079b",
       "title": "Bitcoin Falls as Hot Inflation Puts a Fed Hike Back on the Table",
@@ -1470,36 +1500,6 @@
       "publishedAt": "2026-09-28T12:45:41Z",
       "fetchedAt": "2026-09-28T13:21:38Z",
       "summary": "Michael Saylor's Bitcoin treasury firm bought 1,665 BTC last week, taking its holdings above its previous record to 847,666 BTC."
-    },
-    {
-      "id": "news-fa39f468f2ea",
-      "title": "Morning Minute: SEC Clears Token Buybacks for Crypto Networks",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/379412/morning-minute-sec-clears-token-buybacks-for-crypto-networks",
-      "publishedAt": "2026-09-28T12:03:21Z",
-      "fetchedAt": "2026-09-28T12:26:13Z",
-      "summary": "The Gary Gensler era is long gone and now the SEC is providing clarity on what crypto protocols can and can\u2019t do with their tokens."
-    },
-    {
-      "id": "news-b6810d9cf3bc",
-      "title": "California Bans Public Officials From Issuing Meme Coins Under New Newsom Law",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/379404/california-bans-public-officials-from-issuing-meme-coins-under-new-newsom-law",
-      "publishedAt": "2026-09-28T10:16:25Z",
-      "fetchedAt": "2026-09-28T10:22:01Z",
-      "summary": "Governor Gavin Newsom\u2019s legislation bars public officials from issuing meme coins and exchanges from listing tokens tied to politicians."
-    },
-    {
-      "id": "news-0e749e6c0149",
-      "title": "Bitcoin's Quantum Problem: Three Ways Researchers Are Trying to Fix It",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/379400/bitcoins-quantum-problem-three-ways-researchers-are-trying-to-fix-it",
-      "publishedAt": "2026-09-27T15:01:03Z",
-      "fetchedAt": "2026-09-27T15:17:58Z",
-      "summary": "Three developments this week\u2014a cost breakthrough, a new privacy design, and a custody playbook\u2014show a field moving from theory to logistics, even as \"Q-Day\" remains hypotheti"
     }
   ]
 }

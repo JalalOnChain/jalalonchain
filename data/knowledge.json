@@ -1,6 +1,17 @@
 {
-  "updatedAt": "2026-10-13T23:56:09Z",
+  "updatedAt": "2026-10-14T04:49:41Z",
   "items": [
+    {
+      "id": "2026-10-14",
+      "title": "MEV: the tax you don't see on your transaction",
+      "body": "Maximal extractable value (MEV) is profit block builders and searchers make by reordering, inserting, or censoring transactions within a block \u2014 commonly via sandwich attacks around large DEX swaps. It's a structural feature of public mempools, not a bug, and is one reason large trades are often routed through private order flow or MEV-protected RPCs.",
+      "tags": [
+        "mev",
+        "market-structure"
+      ],
+      "createdAt": "2026-10-14T04:49:41Z",
+      "slug": "mev-the-tax-you-don-t-see-on-your-transaction"
+    },
     {
       "id": "2026-10-12",
       "title": "What actually happens when you 'swap' on a DEX",
@@ -268,7 +279,7 @@
         "market-structure"
       ],
       "createdAt": "2026-09-09T00:30:19Z",
-      "slug": "mev-the-tax-you-don-t-see-on-your-transaction"
+      "slug": "mev-the-tax-you-don-t-see-on-your-transaction-2"
     },
     {
       "id": "2026-09-08",

@@ -359,6 +359,8 @@
     display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-top:14px;
     font-size:11.5px; color:var(--text-faint);
   }
+  .foot-bottom a{ color:inherit; text-decoration:underline; text-underline-offset:2px; }
+  .foot-bottom a:hover{ color:var(--text); }
   .foot-credit{ font-size:10.5px; color:var(--text-faint); opacity:.8; }
   ::-webkit-scrollbar{ width:8px; height:8px; }
   ::-webkit-scrollbar-thumb{ background:var(--border); border-radius:4px; }
@@ -376,11 +378,7 @@
       </div>
     </a>
     <div class="nav-links">
-      <a href="#hub" class="nav-tab-link" data-tab="news">News</a>
-      <a href="#hub" class="nav-tab-link" data-tab="enforcement">Enforcement</a>
-      <a href="#hub" class="nav-tab-link" data-tab="whales">Whales</a>
       <a href="#hub" class="nav-tab-link" data-tab="chains">Chains</a>
-      <a href="#prices">Prices</a>
       <a href="#tokens">Tokens</a>
       <a href="#defi">DeFi</a>
       <a href="#learn">Learn</a>
@@ -606,7 +604,7 @@
       </a>
     </div>
     <div class="foot-bottom">
-      <span>JalalOnChain &middot; crypto news, enforcement alerts, live prices, token &amp; DeFi launches, whale activity and daily market takes &mdash; not financial advice</span>
+      <span>JalalOnChain &middot; crypto news, enforcement alerts, whale activity, new tokens crossing $1M, daily market takes, and the <a href="/tools/tornado-tracer/">Tornado Tracer</a> and <a href="/tools/railgun-tracer/">Railgun Tracer</a> for following funds on-chain &mdash; not financial advice</span>
       <span id="footSync">Waiting for first sync&hellip;</span>
     </div>
     <div class="foot-credit">Live price data and protocol TVL are pulled from public, no-key market-data APIs. Individual articles link straight to their original publisher.</div>

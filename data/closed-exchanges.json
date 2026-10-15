@@ -1,6 +1,6 @@
 {
   "_note": "Hand-curated. Scope: notable crypto exchanges that have permanently shut down, been seized, or ceased operations, spanning crypto's history. Included for historical reference — links point to reference/news sources, not trading platforms.",
-  "updatedAt": "2026-10-01T09:26:11Z",
+  "updatedAt": "2026-10-15T09:36:24Z",
   "items": [
     {
       "id": "mtgox",
@@ -154,6 +154,15 @@
       "activeYears": "2017–2026",
       "closedReason": "Announced permanent shutdown on Sept 15, 2026 citing the prolonged crypto market slump and rising compliance costs; halted new user registrations immediately, with withdrawals open and all operations set to fully cease by Dec 22, 2026.",
       "link": "https://www.coinex.com"
+    },
+    {
+      "id": "exmo",
+      "name": "EXMO",
+      "primaryBusiness": "Was a centralized crypto exchange — spot trading",
+      "headquarters": "London, UK",
+      "activeYears": "2013–2026",
+      "closedReason": "Began an orderly wind-down in July 2026 after the UK sanctioned group entities (including EXMO Exchange Limited) in May 2026 over alleged ties to Russia's war economy; new registrations, deposits and trading were halted, and roughly 29.4% of client balances were deemed unrecoverable and replaced with non-tradable IOU tokens.",
+      "link": "https://exmo.com/blog/en/notifications/exmo-com-is-closing-please-initiate-withdrawal-from-your-account"
     }
   ]
 }

@@ -1,6 +1,17 @@
 {
-  "updatedAt": "2026-10-17T22:16:34Z",
+  "updatedAt": "2026-10-18T00:19:56Z",
   "items": [
+    {
+      "id": "2026-10-18",
+      "title": "Stablecoins aren't all backed the same way",
+      "body": "Fiat-collateralized stablecoins (like USDC, USDT) hold reserves off-chain in cash and short-term securities; crypto-collateralized ones (like DAI) are over-collateralized by on-chain assets to absorb price swings; algorithmic designs try to hold a peg through incentives alone with no hard collateral \u2014 the last category has the worst historical track record for depegging under stress.",
+      "tags": [
+        "stablecoins",
+        "tokenomics"
+      ],
+      "createdAt": "2026-10-18T00:19:56Z",
+      "slug": "stablecoins-aren-t-all-backed-the-same-way"
+    },
     {
       "id": "2026-10-16",
       "title": "Why mixers don't fully break traceability",
@@ -268,7 +279,7 @@
         "tokenomics"
       ],
       "createdAt": "2026-09-11T00:26:50Z",
-      "slug": "stablecoins-aren-t-all-backed-the-same-way"
+      "slug": "stablecoins-aren-t-all-backed-the-same-way-2"
     },
     {
       "id": "2026-09-10",

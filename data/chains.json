@@ -1,7 +1,17 @@
 {
   "_note": "Hand-curated, not touched by scripts/sync.py's automatic hourly sync — there's no free API that reliably reports true L1/L2 mainnet launch dates and chain IDs, so this list is compiled and updated manually. Ask to have it refreshed when a new chain launches.",
-  "updatedAt": "2026-10-13T00:00:00Z",
+  "updatedAt": "2026-10-19T09:37:38Z",
   "items": [
+    {
+      "id": "moca-chain",
+      "name": "Moca Chain",
+      "type": "L1",
+      "parent": "EVM-compatible",
+      "chainId": 2288,
+      "launchDate": "2026-09-29",
+      "link": "https://mocachain.org/",
+      "note": "Animoca Brands-backed L1 for privacy-preserving digital identity, credentials, and AI agents."
+    },
     {
       "id": "arc",
       "name": "Arc",
@@ -91,16 +101,6 @@
       "launchDate": "2025-02-09",
       "link": "https://www.megaeth.com/",
       "note": "Real-time Ethereum rollup targeting very high throughput/low latency."
-    },
-    {
-      "id": "berachain",
-      "name": "Berachain",
-      "type": "L1",
-      "parent": "EVM-compatible",
-      "chainId": 80094,
-      "launchDate": "2025-02-06",
-      "link": "https://www.berachain.com/",
-      "note": "Proof-of-Liquidity L1, BERA token."
     }
   ]
 }

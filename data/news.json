@@ -1,6 +1,36 @@
 {
-  "updatedAt": "2026-10-20T19:59:22Z",
+  "updatedAt": "2026-10-20T23:10:13Z",
   "items": [
+    {
+      "id": "news-07f48bea238e",
+      "title": "JPMorgan Puts a Number on Bitcoin for the First Time: 10% a Year, With a Big Caveat",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/381464/jpmorgan-bitcoin-forecast-first-time-stocks-gold",
+      "publishedAt": "2026-10-20T21:16:04Z",
+      "fetchedAt": "2026-10-20T23:10:11Z",
+      "summary": "J.P. Morgan Asset Management\u2019s 2027 Long-Term Capital Market Assumptions project a 10% annual return for Bitcoin over 10 to 15 years, though the firm isn\u2019t adding it to its main portfolio models."
+    },
+    {
+      "id": "news-5fd6470ee13e",
+      "title": "Wallet Linked to Drift Exploit Sends $61 Million in Ethereum to Tornado Cash",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/381450/wallet-drift-exploit-sends-61-million-ethereum-tornado-cash",
+      "publishedAt": "2026-10-20T20:46:04Z",
+      "fetchedAt": "2026-10-20T23:10:11Z",
+      "summary": "The North Korea-linked attacker behind April's $295 million Drift heist pushed 25,700 ETH through the mixer in two hours, and still controls roughly $198 million more."
+    },
+    {
+      "id": "news-b9172ede54a9",
+      "title": "Microsoft, Alphabet, Goldman Sachs Join Growing List of Companies Objecting to Tokenized Stocks",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/381448/microsoft-alphabet-goldman-sachs-growing-list-objecting-tokenized-stocks",
+      "publishedAt": "2026-10-20T20:16:04Z",
+      "fetchedAt": "2026-10-20T23:10:11Z",
+      "summary": "Sixteen companies have now objected to having their shares traded on the planned OKX-ICE tokenized stock venue, up from nine just four days earlier, according to an updated public notice."
+    },
     {
       "id": "news-06f6872f5921",
       "title": "Swiss Regulator Approves First Retail Fund That Holds Bitcoin Directly",
@@ -40,6 +70,16 @@
       "publishedAt": "2026-10-20T17:03:26Z",
       "fetchedAt": "2026-10-20T19:59:21Z",
       "summary": "Zcash jumped 8.5% in 24 hours to $1,215.85 as the broader crypto market rebounded, with Bitcoin up 1.6% and ETF money flowing back in."
+    },
+    {
+      "id": "news-041fb9e0d3a5",
+      "title": "The Midterms Are the First Real Test of Whether Markets Beat Pollsters",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/380966/the-midterms-are-the-first-real-test-of-whether-markets-beat-pollsters",
+      "publishedAt": "2026-10-20T16:26:58Z",
+      "fetchedAt": "2026-10-20T23:10:11Z",
+      "summary": "Former NBC News political director Chuck Todd is hosting NEXTPredict two weeks before the vote, and has yet to pick a side."
     },
     {
       "id": "news-2623d63164e1",
@@ -1460,46 +1500,6 @@
       "publishedAt": "2026-10-05T16:10:00Z",
       "fetchedAt": "2026-10-05T16:22:56Z",
       "summary": "The Bitcoin rally keeps bumping into the same wall, but a classic bullish signal suggests the trend is built to last."
-    },
-    {
-      "id": "news-c9e2624b519c",
-      "title": "Bitmine Buys $41M More Ethereum, Reaching 99% of Its 'Alchemy of 5%' Target",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380059/bitmine-41m-more-ethereum-alchemy-of-5-target",
-      "publishedAt": "2026-10-05T14:54:17Z",
-      "fetchedAt": "2026-10-05T15:23:28Z",
-      "summary": "The purchase lifts Bitmine's stash past 6 million ETH\u20144.9% of supply and 99% of the way to its \"Alchemy of 5%\" goal\u2014as chairman Tom Lee says Ethereum is \"dwarfing\" other macro assets."
-    },
-    {
-      "id": "news-585031f78fba",
-      "title": "Strategy Posts $21B Q3 Gain, Buys $29M in BTC, Repurchases $176M in STRC",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380056/strategy-posts-21b-q3-gain-buys-29m-in-btc-repurchases-176m-in-strc",
-      "publishedAt": "2026-10-05T12:51:42Z",
-      "fetchedAt": "2026-10-05T13:26:14Z",
-      "summary": "The firm's Bitcoin holdings hit a record 848,000 BTC, while the quarterly gain is a fair-value mark carrying $1.88 billion in deferred tax."
-    },
-    {
-      "id": "news-dbd85ef41087",
-      "title": "Metaplanet Sold 10,000 Bitcoin and Bought Back 11,000 to Prove a Point",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380053/metaplanet-sold-10000-bitcoin-and-bought-back-11000-to-prove-a-point",
-      "publishedAt": "2026-10-05T12:04:01Z",
-      "fetchedAt": "2026-10-05T12:27:42Z",
-      "summary": "Rating agencies ask if a Bitcoin company will actually sell when obligations fall due. \"We answered by doing it,\" said CEO Simon Gerovich."
-    },
-    {
-      "id": "news-c1c12d8cf0a8",
-      "title": "Morning Minute: Uptober Off to a Green Start",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380050/morning-minute-uptober-off-to-a-green-start",
-      "publishedAt": "2026-10-05T11:39:08Z",
-      "fetchedAt": "2026-10-05T12:27:42Z",
-      "summary": "Crypto majors and alts are rallying to start October. What\u2019s driving the early action and will it continue?"
     }
   ]
 }

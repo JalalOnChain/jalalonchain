@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-21T17:39:41Z",
+  "updatedAt": "2026-10-21T20:54:31Z",
   "items": [
     {
       "id": "news-ce771393b26d",
@@ -40,6 +40,26 @@
       "publishedAt": "2026-10-21T15:43:32Z",
       "fetchedAt": "2026-10-21T17:39:40Z",
       "summary": "Bitcoin-backed loans let holders borrow cash or stablecoins without selling BTC. Here's how collateral, LTV and liquidations work."
+    },
+    {
+      "id": "news-ca5f8ef878c6",
+      "title": "Solana Alpenglow Goes Live in 'Most Ambitious' Upgrade Since Ethereum's Merge",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/381484/solana-alpenglow-goes-live-in-most-ambitious-upgrade-since-ethereums-merge",
+      "publishedAt": "2026-10-21T14:24:25Z",
+      "fetchedAt": "2026-10-21T20:54:30Z",
+      "summary": "The new consensus protocol retires TowerBFT, which had run Solana since its 2020 launch, after a handoff on the live network."
+    },
+    {
+      "id": "news-b708eff569c3",
+      "title": "GTA 6 Trailer Features 'Dacity' Meme Coin\u2014Here's What Traders Think It'll Do",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/381511/gta-6-trailer-features-dacity-meme-coin-heres-what-traders-think-itll-do",
+      "publishedAt": "2026-10-21T13:16:04Z",
+      "fetchedAt": "2026-10-21T20:54:30Z",
+      "summary": "Grand Theft Auto 6 is rumoured to feature a meme coin, and crypto traders are speculating on how prominently Rockstar will integrate it."
     },
     {
       "id": "news-4081c5df619c",
@@ -1480,26 +1500,6 @@
       "publishedAt": "2026-10-06T10:36:57Z",
       "fetchedAt": "2026-10-06T10:55:43Z",
       "summary": "Adam Iza used off-duty LA deputies to pull warrants and personal data on his rivals, then moved the proceeds through crypto custodians."
-    },
-    {
-      "id": "news-3da961351add",
-      "title": "Boats destined for people smugglers seized at East Midlands Airport",
-      "source": "UK National Crime Agency",
-      "category": "enforcement",
-      "link": "https://www.nationalcrimeagency.gov.uk/news/boats-destined-for-people-smugglers-seized-at-east-midlands-airport",
-      "publishedAt": "2026-10-06T08:44:16Z",
-      "fetchedAt": "2026-10-06T08:55:48Z",
-      "summary": "NCA and Border Force officers have seized 25 inflatable boats that were destined to be shipped to cross-Channel people smugglers."
-    },
-    {
-      "id": "news-4cd56ead7d31",
-      "title": "Solana Debuts Institutional Settlement Standard With J.P. Morgan Input",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380126/solana-institutional-settlement-standard-jp-morgan",
-      "publishedAt": "2026-10-06T02:01:03Z",
-      "fetchedAt": "2026-10-06T02:27:29Z",
-      "summary": "Built with input from J.P. Morgan, the open-source \"DvP\" program lets institutions settle trades atomically on Solana with finality in seconds instead of days."
     }
   ]
 }

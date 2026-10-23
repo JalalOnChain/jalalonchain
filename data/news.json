@@ -1,6 +1,46 @@
 {
-  "updatedAt": "2026-10-23T15:55:13Z",
+  "updatedAt": "2026-10-23T19:56:43Z",
   "items": [
+    {
+      "id": "news-8efca5b91f8f",
+      "title": "Europol urges early action to protect cryptocurrencies and sensitive data from quantum threats",
+      "source": "Europol",
+      "category": "enforcement",
+      "link": "https://www.europol.europa.eu/media-press/newsroom/news/europol-urges-early-action-to-protect-cryptocurrencies-and-sensitive-data-quantum-threats",
+      "publishedAt": "2026-10-23T19:56:41Z",
+      "fetchedAt": "2026-10-23T19:56:41Z",
+      "summary": "The timing of these capabilities remains uncertain. However, this should not be the main concern. Adapting systems and coordinating security upgrades will take time. Therefore, regardless of the nature of the threats that may emerge, crypto-agility should be pursued proactively t"
+    },
+    {
+      "id": "news-d179b13c7d18",
+      "title": "SEC Flags AI 'Super Intelligence' and Tokenization as Systemic Market Risks",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/381745/sec-ai-super-intelligence-tokenization-2027-exam-list",
+      "publishedAt": "2026-10-23T18:54:55Z",
+      "fetchedAt": "2026-10-23T19:56:42Z",
+      "summary": "The regulator's Division of Examinations named \"super intelligence and other advanced technologies\" as a focus area alongside tokenization risks."
+    },
+    {
+      "id": "news-92510b5fea29",
+      "title": "Bitcoin Core Rewrites Its Security Policy for a World Where AI Finds Bugs in One Prompt",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/381715/bitcoin-core-security-policy-ai-threats",
+      "publishedAt": "2026-10-23T17:16:03Z",
+      "fetchedAt": "2026-10-23T19:56:42Z",
+      "summary": "Developers will now backport fixes and cut releases immediately for flaws flagged as \u201ceasily discoverable,\u201d abandoning long embargoes for bugs an attacker can surface with a single AI prompt."
+    },
+    {
+      "id": "news-76863c8eca72",
+      "title": "Crypto Scammers Who Used Prayer Groups to Lure Victims Must Pay $1.3 Billion, Says New York",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/381708/crypto-scammers-prayer-groups-lure-victims-must-pay-1-3-billion-new-york",
+      "publishedAt": "2026-10-23T16:31:03Z",
+      "fetchedAt": "2026-10-23T19:56:42Z",
+      "summary": "New York\u2019s attorney general asked a court to order NovaTech\u2019s founders, who fled the country, to pay about $1.37 billion, and settled with four top promoters for nearly $6 million."
+    },
     {
       "id": "news-2505b641f252",
       "title": "Bitcoin ETFs Bleed $636 Million as October Turns Red Again",
@@ -1460,46 +1500,6 @@
       "publishedAt": "2026-10-08T09:05:50Z",
       "fetchedAt": "2026-10-08T14:03:01Z",
       "summary": "Users can send USDC across borders from late October, three months after Samsung teased stablecoin support without naming a blockchain."
-    },
-    {
-      "id": "news-be508f1a01f9",
-      "title": "Ethereum Researcher Says AI May Break Encryption Before Quantum Does",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380363/ethereum-researcher-ai-break-encryption-before-quantum",
-      "publishedAt": "2026-10-07T21:16:03Z",
-      "fetchedAt": "2026-10-08T00:24:30Z",
-      "summary": "Ethereum Foundation researcher Justin Drake urged holders to calmly move funds to unused addresses, warning that AI-driven math could break crypto signatures before quantum computers do."
-    },
-    {
-      "id": "news-f8c338b24bae",
-      "title": "SEC and CFTC Crypto Rules 'Fall Short' of Clarity, Says Rep. French Hill",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380349/sec-cftc-crypto-rules-fall-short-clarity-french-hill",
-      "publishedAt": "2026-10-07T20:16:04Z",
-      "fetchedAt": "2026-10-07T20:36:00Z",
-      "summary": "The House Financial Services chairman credited the SEC and CFTC for stepping in after the Clarity Act's collapse but said only \"permanent law change\" can secure U.S. leadership."
-    },
-    {
-      "id": "news-dbf85ec7c995",
-      "title": "Tether Signs Deal With Kazakhstan's Central Bank to Explore a Stablecoin and Tokenized Assets",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380347/tether-kazakhstan-central-bank-stablecoin-tokenized-assets",
-      "publishedAt": "2026-10-07T19:46:04Z",
-      "fetchedAt": "2026-10-07T20:36:00Z",
-      "summary": "Tether, issuer of the USDT stablecoin, will help Kazakhstan's central bank study a tenge-pegged token and put real-world assets on a blockchain."
-    },
-    {
-      "id": "news-10f6074257fb",
-      "title": "US Government Moves $103 Million in Seized Bitcoin and BNB, But Hasn't Said Why",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380313/us-government-moves-103-million-seized-bitcoin-bnb",
-      "publishedAt": "2026-10-07T16:56:56Z",
-      "fetchedAt": "2026-10-07T20:36:00Z",
-      "summary": "Government-labeled wallets sent 833.6 BTC to Coinbase Prime deposit addresses and shuffled 40,285 BNB. No sale is confirmed, but the stash behind it is the largest any government holds in Arkham's ranking."
     }
   ]
 }

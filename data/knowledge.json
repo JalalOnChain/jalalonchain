@@ -1,6 +1,17 @@
 {
-  "updatedAt": "2026-10-23T23:07:23Z",
+  "updatedAt": "2026-10-24T01:33:53Z",
   "items": [
+    {
+      "id": "2026-10-24",
+      "title": "Cold, hot, and warm wallets aren't just about temperature",
+      "body": "Cold wallets (offline keys) hold the bulk of an exchange's reserves and move rarely; hot wallets sign automatically for user withdrawals and are deliberately kept thin to limit breach exposure; warm wallets sit in between, often multisig, used to top up hot wallets on a schedule. A sudden large cold-to-hot transfer is one of the more reliable pre-outflow signals analysts watch for.",
+      "tags": [
+        "exchange-flows",
+        "custody"
+      ],
+      "createdAt": "2026-10-24T01:33:53Z",
+      "slug": "cold-hot-and-warm-wallets-aren-t-just-about-temperature"
+    },
     {
       "id": "2026-10-22",
       "title": "What a 'wash trade' looks like on-chain",
@@ -268,7 +279,7 @@
         "custody"
       ],
       "createdAt": "2026-09-14T00:27:05Z",
-      "slug": "cold-hot-and-warm-wallets-aren-t-just-about-temperature"
+      "slug": "cold-hot-and-warm-wallets-aren-t-just-about-temperature-2"
     },
     {
       "id": "2026-09-13",

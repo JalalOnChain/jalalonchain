@@ -1,24 +1,35 @@
+<div align="center">
+
 # JalalOnChain
 
-**[jalalonchain.com](https://jalalonchain.com)** — a live crypto information hub in one place: real-time prices, breaking news, regulatory enforcement alerts, large whale activity, newly launched tokens, DeFi protocols, blockchains, and exchanges — plus a daily plain-language briefing on what's actually moving in crypto.
+**Crypto news, market intel and mixer tracing, all in one place.**
 
-## What's on the site
+[**jalalonchain.com**](https://jalalonchain.com)
 
-- **Live Prices** — real-time coin prices, 24h change, and market dominance
-- **Tokens Monitor** — newly launched tokens once they cross a market-cap threshold
-- **DeFi** — recently listed DeFi protocols by TVL
-- **News** — breaking crypto market news
-- **Enforcement Alerts** — regulatory and government enforcement actions
-- **Whale Activity** — large tracked on-chain positions
-- **New Chains** — newly launched blockchains (L1s/L2s), hand-verified
-- **New VASPs** — newly launched or newly licensed crypto exchanges, custodians, and similar platforms, hand-verified
-- **Daily Briefing** — a short write-up of what's moving in crypto, refreshed through the day
-
-## Notes for maintainers
-
-- Data on this site refreshes automatically throughout the day. The files under `data/` are generated — don't hand-edit them, changes will be overwritten on the next refresh.
-- This repository is public. Please don't commit API keys, credentials, or other sensitive configuration to it.
+</div>
 
 ---
 
-Questions, feedback, or spotted something stale? See the Support section on the site.
+### Stay ahead
+
+| | |
+|---|---|
+| **News & intel** | Breaking stories, enforcement actions and big wallet moves |
+| **New tokens** | Fresh launches the moment they cross $1M market cap |
+| **New DeFi** | Newly listed protocols, ranked by TVL |
+| **New chains** | L1s and L2s as they go live, checked by hand |
+| **Exchanges** | Lists of exchanges and other VASPs, including newly launched and newly licensed ones |
+| **Learn** | Short, plain-English briefings on what's moving and why |
+
+### Follow the money
+
+| | |
+|---|---|
+| **[Tornado Tracer](https://jalalonchain.com/tools/tornado-tracer/)** | Paste an address that deposited into Tornado Cash and get likely withdrawal addresses, matched on timing |
+| **[Railgun Tracer](https://jalalonchain.com/tools/railgun-tracer/)** | Trace Railgun deposits on Ethereum, matched by amount and by timing |
+
+> Tracer results are leads, not proof. Verify before you act on them.
+
+---
+
+<sub>Maintainers: everything under `data/` is generated automatically, so don't edit it by hand. This repo is public, so keep keys and secrets out of it.</sub>

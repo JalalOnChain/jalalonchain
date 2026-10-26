@@ -1,6 +1,36 @@
 {
-  "updatedAt": "2026-10-26T15:10:31Z",
+  "updatedAt": "2026-10-26T20:30:06Z",
   "items": [
+    {
+      "id": "news-a9c11fa6541f",
+      "title": "Bitcoin Wallet Fixes Critical Flaw That Redirected Funds to Attackers",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/381844/bitcoin-wallet-flaw-trick-users-paying-attackers",
+      "publishedAt": "2026-10-26T17:41:21Z",
+      "fetchedAt": "2026-10-26T20:29:45Z",
+      "summary": "A confirmed exploit let rogue servers replace Electrum\u2019s pending transactions, tricking users into redirecting Bitcoin to attacker addresses."
+    },
+    {
+      "id": "news-8fb369bd2f91",
+      "title": "India\u2019s CoinDCX Confirms $16 Million Loss Days After CEO Called It a \u2018False Alarm\u2019",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/381834/india-coindcx-confirms-16-million-loss-ceo-called-false-alarm",
+      "publishedAt": "2026-10-26T16:36:03Z",
+      "fetchedAt": "2026-10-26T20:29:45Z",
+      "summary": "The Mumbai-based exchange says 15.99 million USDT was drained from wallets it retired after last year\u2019s $44 million hack, bringing its combined losses to nearly $60 million\u2014and it\u2019s absorbing the hit."
+    },
+    {
+      "id": "news-29dee9cae201",
+      "title": "Tom Lee's Bitmine Keeps Buying Ethereum But Pivots to Record Share Buybacks",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/381826/tom-lee-bitmine-keeps-buying-ethereum-share-buybacks",
+      "publishedAt": "2026-10-26T15:36:03Z",
+      "fetchedAt": "2026-10-26T20:29:45Z",
+      "summary": "The firm added 10,452 ETH to reach 4.95% of supply, but its bigger move was repurchasing 2.04 million of its own shares\u2014part of what it calls the largest equity buyback any crypto treasury company has run."
+    },
     {
       "id": "news-31d4e9d08736",
       "title": "Strategy Pauses Bitcoin Buying, Spends $205M Buying Back STRC",
@@ -40,6 +70,16 @@
       "publishedAt": "2026-10-26T12:16:12Z",
       "fetchedAt": "2026-10-26T15:10:10Z",
       "summary": "Some relief is appearing this morning as oil and rates fall, with a big macro week ahead featuring major earnings, FOMC and key data drops."
+    },
+    {
+      "id": "news-0a6c53b2d3a8",
+      "title": "Israel's Central Bank Rebukes Netanyahu Plan to Use Crypto to Dodge Sanctions",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/381789/israels-central-bank-rebukes-netanyahu-plan-to-use-crypto-to-dodge-sanctions",
+      "publishedAt": "2026-10-26T11:34:08Z",
+      "fetchedAt": "2026-10-26T20:29:45Z",
+      "summary": "Over 100 economists, including former governor Jacob Frenkel, warned of deeper isolation ahead of Israel's October 27 national election."
     },
     {
       "id": "news-b6f31ad74095",
@@ -1460,46 +1500,6 @@
       "publishedAt": "2026-10-08T18:46:04Z",
       "fetchedAt": "2026-10-08T19:56:11Z",
       "summary": "A batch of 100.02 BTC mined in July 2010 moved Wednesday after 16 years. It's worth about $8.3 million, but nothing in the transaction shows who owns it."
-    },
-    {
-      "id": "news-0fef81114983",
-      "title": "Solana DeFi Firms Orca and Loopscale Merge Under New Formation Brand",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380522/solana-defi-firms-orca-and-loopscale-merge-under-new-formation-brand",
-      "publishedAt": "2026-10-08T18:16:05Z",
-      "fetchedAt": "2026-10-08T19:56:11Z",
-      "summary": "Solana DEX Orca and lending platform Loopscale will operate as Formation, a New York company aiming to finance AI, energy, robotics and defense assets and eventually reach regulated U.S. markets."
-    },
-    {
-      "id": "news-877577926671",
-      "title": "Bitcoin ETFs Suffer Worst Loss Since June as Uptober Turns Red",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380490/bitcoin-etfs-worst-outflow-since-june-uptober-red",
-      "publishedAt": "2026-10-08T17:46:05Z",
-      "fetchedAt": "2026-10-08T19:56:11Z",
-      "summary": "Investors yanked $484.9 million out of spot Bitcoin ETFs in a single day. Oil is near $100, bond yields are at their highest since 2002, and the Fed isn't done hiking."
-    },
-    {
-      "id": "news-4c752fab5e5b",
-      "title": "Will AI Break Crypto Encryption? Ethereum\u2019s Vitalik Buterin Weighs In on 'Bunker Mode' Shift",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380503/ai-break-crypto-encryption-ethereum-vitalik-buterin-bunker-mode",
-      "publishedAt": "2026-10-08T17:07:48Z",
-      "fetchedAt": "2026-10-09T00:21:21Z",
-      "summary": "Ethereum co-founder Vitalik Buterin thinks the crypto industry needs to make sure encryption is both quantum and AI-resistant."
-    },
-    {
-      "id": "news-6ff379e248a4",
-      "title": "US Government Moves $1 Billion in Bitcoin Seized From Bitfinex Hacker",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380504/us-government-moves-1-billion-bitcoin-bitfinex",
-      "publishedAt": "2026-10-08T16:44:20Z",
-      "fetchedAt": "2026-10-09T00:21:21Z",
-      "summary": "A government wallet holding Bitcoin seized from the Bitfinex hacker sent 12,267 BTC to a new, unlabeled address, according to Arkham data."
     }
   ]
 }

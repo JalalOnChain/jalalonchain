@@ -1,6 +1,17 @@
 {
-  "updatedAt": "2026-10-25T23:32:44Z",
+  "updatedAt": "2026-10-26T01:43:07Z",
   "items": [
+    {
+      "id": "2026-10-26",
+      "title": "Why 'total value locked' can mislead",
+      "body": "TVL counts assets deposited into a protocol, but the same capital can be double- or triple-counted when it's re-deposited across composable protocols (e.g., a token that's staked, then the staking receipt is deposited elsewhere as collateral). Comparing raw TVL across protocols without accounting for this loop overstates real economic activity.",
+      "tags": [
+        "defi",
+        "tokenomics"
+      ],
+      "createdAt": "2026-10-26T01:43:07Z",
+      "slug": "why-total-value-locked-can-mislead"
+    },
     {
       "id": "2026-10-24",
       "title": "Cold, hot, and warm wallets aren't just about temperature",
@@ -268,7 +279,7 @@
         "tokenomics"
       ],
       "createdAt": "2026-09-15T00:27:27Z",
-      "slug": "why-total-value-locked-can-mislead"
+      "slug": "why-total-value-locked-can-mislead-2"
     },
     {
       "id": "2026-09-14",

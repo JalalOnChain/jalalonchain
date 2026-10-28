@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T05:38:10Z",
+  "updatedAt": "2026-10-28T11:39:41Z",
   "items": [
     {
       "id": "defi-54acb9696ee2",
@@ -9,10 +9,10 @@
       "chains": [
         "Tron"
       ],
-      "tvlUsd": 3263706249.15,
-      "change1d": 0.4851254722320988,
+      "tvlUsd": 3273075655.55,
+      "change1d": 1.4183470693441222,
       "listedAt": "2026-09-23T04:25:28Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://app.justlend.org/strx?lang=en-US"
     },
     {
@@ -23,10 +23,10 @@
       "chains": [
         "Hyperliquid L1"
       ],
-      "tvlUsd": 1489764314.39,
-      "change1d": 3.9023461222003277,
+      "tvlUsd": 1498643937.63,
+      "change1d": 4.450795941322852,
       "listedAt": "2026-10-21T09:50:13Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://app.hyperliquid.xyz/earn"
     },
     {
@@ -38,10 +38,10 @@
         "Ethereum",
         "Optimism"
       ],
-      "tvlUsd": 592061358.29,
-      "change1d": 1.9895979690979715,
+      "tvlUsd": 594282352.53,
+      "change1d": 2.5296258838973955,
       "listedAt": "2026-09-30T21:35:01Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://nonce-capital.xyz/"
     },
     {
@@ -52,10 +52,10 @@
       "chains": [
         "Bittensor"
       ],
-      "tvlUsd": 467398587.02,
-      "change1d": 4.7906966710558265,
+      "tvlUsd": 462796221.18,
+      "change1d": 4.399768468169512,
       "listedAt": "2026-09-19T02:25:23Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://bittensor.com"
     },
     {
@@ -66,10 +66,10 @@
       "chains": [
         "Solana"
       ],
-      "tvlUsd": 293915546.69,
-      "change1d": 4.68280403224685,
+      "tvlUsd": 297125161.9,
+      "change1d": 6.685747233279329,
       "listedAt": "2026-09-30T22:00:32Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://www.forwardindustries.com/"
     },
     {
@@ -80,10 +80,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 178192384.47,
-      "change1d": 0.4785447783429504,
+      "tvlUsd": 179252518.88,
+      "change1d": 0.9802569435316713,
       "listedAt": "2026-10-08T10:18:53Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://app.derive.xyz"
     },
     {
@@ -94,11 +94,39 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 132133425.34,
-      "change1d": 0.0007786656922519342,
+      "tvlUsd": 132129163.88,
+      "change1d": -0.0029667005525908507,
       "listedAt": "2026-09-10T00:48:33Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://app.theo.xyz/"
+    },
+    {
+      "id": "defi-de1e6f5cb1d4",
+      "name": "Stellar DeFi Hub",
+      "symbol": "-",
+      "category": "Farm",
+      "chains": [
+        "Stellar"
+      ],
+      "tvlUsd": 114201882.63,
+      "change1d": 0.3001691641067765,
+      "listedAt": "2026-08-14T18:56:13Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
+      "link": "https://stellardefihub.com/"
+    },
+    {
+      "id": "defi-9a479f62de30",
+      "name": "Phase Delegation",
+      "symbol": "-",
+      "category": "Liquid Staking",
+      "chains": [
+        "Solana"
+      ],
+      "tvlUsd": 113417474.7,
+      "change1d": 3.1875690412953617,
+      "listedAt": "2026-08-27T19:03:37Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
+      "link": "https://defillama.com/protocol/phase-delegation"
     },
     {
       "id": "defi-05f57cde1f69",
@@ -111,39 +139,11 @@
         "Optimism",
         "Robinhood Chain"
       ],
-      "tvlUsd": 116634455.63,
-      "change1d": 10.866292865339915,
+      "tvlUsd": 111473082.39,
+      "change1d": 7.292535249799741,
       "listedAt": "2026-09-18T20:57:27Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://aero.xyz/"
-    },
-    {
-      "id": "defi-de1e6f5cb1d4",
-      "name": "Stellar DeFi Hub",
-      "symbol": "-",
-      "category": "Farm",
-      "chains": [
-        "Stellar"
-      ],
-      "tvlUsd": 114173498.31,
-      "change1d": 0.19831934305084076,
-      "listedAt": "2026-08-14T18:56:13Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
-      "link": "https://stellardefihub.com/"
-    },
-    {
-      "id": "defi-9a479f62de30",
-      "name": "Phase Delegation",
-      "symbol": "-",
-      "category": "Liquid Staking",
-      "chains": [
-        "Solana"
-      ],
-      "tvlUsd": 111832427.97,
-      "change1d": 1.3990191560553598,
-      "listedAt": "2026-08-27T19:03:37Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
-      "link": "https://defillama.com/protocol/phase-delegation"
     },
     {
       "id": "defi-623de423b7fc",
@@ -153,10 +153,10 @@
       "chains": [
         "Tron"
       ],
-      "tvlUsd": 108385250.24,
-      "change1d": 0.31524319180309135,
+      "tvlUsd": 108566157.73,
+      "change1d": 0.75930842113425,
       "listedAt": "2026-10-08T21:00:05Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://sun.io"
     },
     {
@@ -170,7 +170,7 @@
       "tvlUsd": 103025487.48,
       "change1d": 0.736014443490788,
       "listedAt": "2026-10-21T10:01:41Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://app.lighter.xyz"
     },
     {
@@ -182,10 +182,10 @@
         "Arc",
         "Ethereum"
       ],
-      "tvlUsd": 82968772.95,
-      "change1d": -1.1566327287039968,
+      "tvlUsd": 82968567.87,
+      "change1d": -1.172580741440072,
       "listedAt": "2026-09-02T12:33:38Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://keyrock.com/"
     },
     {
@@ -197,10 +197,10 @@
         "Arbitrum",
         "Morph"
       ],
-      "tvlUsd": 73821602.75,
-      "change1d": -0.18462268566041473,
+      "tvlUsd": 75770525.93,
+      "change1d": 2.7170552755363673,
       "listedAt": "2026-09-29T21:26:47Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://popdex.xyz/"
     },
     {
@@ -211,10 +211,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 68489209.19,
-      "change1d": 2.167704206687887,
+      "tvlUsd": 68680341.89,
+      "change1d": 0.9311883761333775,
       "listedAt": "2026-08-20T22:09:11Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://axis.to"
     },
     {
@@ -225,10 +225,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 67162816.09,
-      "change1d": 2.262831668527852,
+      "tvlUsd": 67312760.03,
+      "change1d": 2.477475886086509,
       "listedAt": "2026-08-18T19:27:37Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://app.wisetoken.com/"
     },
     {
@@ -242,10 +242,10 @@
         "Robinhood Chain",
         "Ethereum"
       ],
-      "tvlUsd": 60279614.67,
-      "change1d": 6.573763535041309,
+      "tvlUsd": 60302662.58,
+      "change1d": 6.08632413280273,
       "listedAt": "2026-10-20T20:46:47Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://aero.xyz/"
     },
     {
@@ -259,10 +259,10 @@
         "Ethereum",
         "Bitcoin"
       ],
-      "tvlUsd": 51986422.61,
-      "change1d": 0.03264534758906734,
+      "tvlUsd": 52010420.14,
+      "change1d": 0.07605176609968112,
       "listedAt": "2026-07-31T04:49:07Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://defillama.com/protocol/azverse-perps"
     },
     {
@@ -274,10 +274,10 @@
         "Bitcoin",
         "Ethereum"
       ],
-      "tvlUsd": 49361103.08,
-      "change1d": 1.4987180794129955,
+      "tvlUsd": 49536726.85,
+      "change1d": 2.100650814939641,
       "listedAt": "2026-08-18T01:48:11Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://defillama.com/protocol/niza"
     },
     {
@@ -288,10 +288,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 47673519.67,
-      "change1d": 0.4541745094468723,
+      "tvlUsd": 47191008.83,
+      "change1d": -0.44697613875560194,
       "listedAt": "2026-09-02T01:30:45Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://www.flowdesk.co/"
     },
     {
@@ -302,10 +302,10 @@
       "chains": [
         "Solana"
       ],
-      "tvlUsd": 31792287.19,
-      "change1d": 1.9344686089741998,
+      "tvlUsd": 32073171.32,
+      "change1d": 3.1864335803117143,
       "listedAt": "2026-09-30T22:01:07Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://www.definity.finance/"
     },
     {
@@ -316,10 +316,10 @@
       "chains": [
         "BOT Chain"
       ],
-      "tvlUsd": 31247819.77,
-      "change1d": 0.3293385386147918,
+      "tvlUsd": 31157641.3,
+      "change1d": -0.2653443489683269,
       "listedAt": "2026-08-24T20:46:23Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://dex.botchain.ai/"
     },
     {
@@ -330,10 +330,10 @@
       "chains": [
         "Hyperliquid L1"
       ],
-      "tvlUsd": 30655472.57,
-      "change1d": -0.2191622022306774,
+      "tvlUsd": 30209837.88,
+      "change1d": -1.812238418645478,
       "listedAt": "2026-10-09T07:42:31Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://papertrade.xyz"
     },
     {
@@ -344,10 +344,10 @@
       "chains": [
         "Robinhood Chain"
       ],
-      "tvlUsd": 28059905.82,
-      "change1d": 3.077390860894937,
+      "tvlUsd": 28328660.0,
+      "change1d": 4.274002332053058,
       "listedAt": "2026-08-26T01:26:59Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://www.fables.fi/"
     },
     {
@@ -356,13 +356,14 @@
       "symbol": "-",
       "category": "Basis Trading",
       "chains": [
+        "Arbitrum",
         "Ethereum",
-        "Arbitrum"
+        "Aleo"
       ],
-      "tvlUsd": 25106233.24,
-      "change1d": 0.06508634644410449,
+      "tvlUsd": 25107317.82,
+      "change1d": 0.07199428565949972,
       "listedAt": "2026-10-02T14:08:52Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://defillama.com/protocol/jusd-finance"
     },
     {
@@ -373,10 +374,10 @@
       "chains": [
         "Solana"
       ],
-      "tvlUsd": 24149997.27,
-      "change1d": 0.34144888641453974,
+      "tvlUsd": 24251776.85,
+      "change1d": 0.9766517370504886,
       "listedAt": "2026-10-13T06:55:00Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://app.pacifica.fi"
     },
     {
@@ -387,10 +388,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 23372708.63,
-      "change1d": -1.7826504536718915,
+      "tvlUsd": 23470786.89,
+      "change1d": -0.8951653142160154,
       "listedAt": "2026-09-03T18:17:47Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://www.waterline.build"
     },
     {
@@ -402,10 +403,10 @@
         "Ethereum",
         "Monad"
       ],
-      "tvlUsd": 22204736.58,
-      "change1d": 0.02875730053968084,
+      "tvlUsd": 22205261.22,
+      "change1d": 0.023038220194067094,
       "listedAt": "2026-08-03T21:19:15Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://defillama.com/protocol/agua"
     },
     {
@@ -416,10 +417,10 @@
       "chains": [
         "Solana"
       ],
-      "tvlUsd": 21484371.82,
-      "change1d": 4.628579668192742,
+      "tvlUsd": 21554545.11,
+      "change1d": 5.090582498497412,
       "listedAt": "2026-08-26T18:59:07Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://defillama.com/protocol/bisonfi"
     },
     {
@@ -430,10 +431,10 @@
       "chains": [
         "Polygon"
       ],
-      "tvlUsd": 21335298.31,
-      "change1d": -0.06450752843738883,
+      "tvlUsd": 21258760.37,
+      "change1d": -0.32701292552253847,
       "listedAt": "2026-10-21T22:08:13Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://app.reental.co/"
     },
     {
@@ -447,10 +448,10 @@
         "Ethereum",
         "Base"
       ],
-      "tvlUsd": 18622995.74,
-      "change1d": 1.9441717944788763,
+      "tvlUsd": 18996173.63,
+      "change1d": 4.091526094572103,
       "listedAt": "2026-10-12T23:19:47Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://www.metric.xyz/"
     },
     {
@@ -461,10 +462,10 @@
       "chains": [
         "Solana"
       ],
-      "tvlUsd": 18259268.32,
-      "change1d": 0.7338601157516962,
+      "tvlUsd": 18501862.26,
+      "change1d": 2.6012836796725765,
       "listedAt": "2026-09-19T02:31:55Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://stake.raiku.com"
     },
     {
@@ -475,10 +476,10 @@
       "chains": [
         "Monad"
       ],
-      "tvlUsd": 17718818.38,
-      "change1d": -0.012471437677589847,
+      "tvlUsd": 17724982.64,
+      "change1d": 0.009033412172044564,
       "listedAt": "2026-09-03T04:51:25Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://gammaresearch.xyz/"
     },
     {
@@ -489,10 +490,10 @@
       "chains": [
         "Base"
       ],
-      "tvlUsd": 17348983.22,
-      "change1d": 1.817176337101074,
+      "tvlUsd": 17428096.06,
+      "change1d": 2.312236631025087,
       "listedAt": "2026-08-19T20:59:47Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://syntetika.io/"
     },
     {
@@ -503,10 +504,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 17245774.16,
-      "change1d": 8.604373470160894,
+      "tvlUsd": 17269798.82,
+      "change1d": 7.332964714338502,
       "listedAt": "2026-09-19T02:31:47Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://nemo.trading/"
     },
     {
@@ -519,10 +520,10 @@
         "Arc",
         "Base"
       ],
-      "tvlUsd": 15697083.49,
-      "change1d": -10.00410681428859,
+      "tvlUsd": 15758020.51,
+      "change1d": -9.656040510071662,
       "listedAt": "2026-09-03T18:17:57Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://app.morpho.org/curator/bitwise"
     },
     {
@@ -533,10 +534,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 12676498.98,
-      "change1d": 0.09137491238303141,
+      "tvlUsd": 12573625.51,
+      "change1d": -1.6255892022064558,
       "listedAt": "2026-10-19T17:25:02Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://defillama.com/protocol/communityv3"
     },
     {
@@ -548,10 +549,10 @@
         "Monad",
         "Ethereum"
       ],
-      "tvlUsd": 11951081.56,
-      "change1d": -0.7092722049151945,
+      "tvlUsd": 11861798.08,
+      "change1d": 0.21617021916013357,
       "listedAt": "2026-09-02T17:22:43Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://augustdigital.io/"
     },
     {
@@ -564,10 +565,10 @@
         "Ethereum",
         "Fluent"
       ],
-      "tvlUsd": 11549456.64,
-      "change1d": -0.25042518799700986,
+      "tvlUsd": 11544579.28,
+      "change1d": -0.08592447055492869,
       "listedAt": "2026-09-03T04:48:35Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://www.sharpbyte.xyz/"
     },
     {
@@ -579,10 +580,10 @@
         "Base",
         "Binance"
       ],
-      "tvlUsd": 9175703.48,
-      "change1d": 0.014687498765326268,
+      "tvlUsd": 9175707.87,
+      "change1d": 0.011420987066259158,
       "listedAt": "2026-09-04T18:22:41Z",
-      "fetchedAt": "2026-10-28T05:38:10Z",
+      "fetchedAt": "2026-10-28T11:39:41Z",
       "link": "https://pangolins.io/"
     }
   ]

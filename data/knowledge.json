@@ -1,6 +1,17 @@
 {
-  "updatedAt": "2026-10-27T20:40:59Z",
+  "updatedAt": "2026-10-28T00:03:21Z",
   "items": [
+    {
+      "id": "2026-10-28",
+      "title": "What makes a blockchain bridge a favorite exploit target",
+      "body": "Bridges have to custody or mint assets based on messages from another chain, which means their security often reduces to a small multisig or a handful of validators \u2014 a much smaller attack surface than the base layers they connect. Historically, bridge hacks account for a disproportionate share of total DeFi losses relative to how much value they typically hold.",
+      "tags": [
+        "security",
+        "bridges"
+      ],
+      "createdAt": "2026-10-28T00:03:21Z",
+      "slug": "what-makes-a-blockchain-bridge-a-favorite-exploit-target"
+    },
     {
       "id": "2026-10-26",
       "title": "Why 'total value locked' can mislead",
@@ -268,7 +279,7 @@
         "bridges"
       ],
       "createdAt": "2026-09-16T00:25:04Z",
-      "slug": "what-makes-a-blockchain-bridge-a-favorite-exploit-target"
+      "slug": "what-makes-a-blockchain-bridge-a-favorite-exploit-target-2"
     },
     {
       "id": "2026-09-15",

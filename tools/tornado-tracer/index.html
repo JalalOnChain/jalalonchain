@@ -64,10 +64,15 @@
   .notice.warn{ border-left-color:var(--accent); }
   .notice.bad{ border-left-color:var(--bad); color:var(--text); }
   #results{ margin-top:6px; }
+  #results > .notice:last-child{ margin-bottom:18px; }
   .dep-card{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:18px 20px; margin-bottom:16px; }
   .dep-head{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:4px; }
   .dep-pool{ font-weight:700; font-size:15px; }
   .dep-time{ font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--text-faint); }
+  .dep-sub{ font-size:12.5px; color:var(--text-muted); }
+  .via{ display:block; font-family:"IBM Plex Sans",sans-serif; font-size:11.5px; color:var(--text-faint); }
+  .wd-list{ margin:8px 0 4px; padding-left:20px; }
+  .wd-list li{ margin-bottom:4px; }
   .dep-self{ display:block; margin-top:6px; font-size:12.5px; color:var(--text-muted); }
   table.cand{ width:100%; border-collapse:collapse; margin-top:12px; font-size:13px; }
   table.cand th{ text-align:left; font-family:"IBM Plex Mono",monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--text-faint); font-weight:600; padding:0 8px 6px 0; border-bottom:1px solid var(--border); }
@@ -108,16 +113,16 @@
     </div>
     <div id="customRange" class="custom-range">
       <div class="cr-row">
-        <span class="cr-label">Deposits made</span>
+        <span class="cr-label">Deposit dates</span>
         <label>From <input type="datetime-local" id="depFrom"></label>
         <label>To <input type="datetime-local" id="depTo"></label>
       </div>
       <div class="cr-row">
-        <span class="cr-label">Withdrawals made</span>
+        <span class="cr-label">Withdrawal dates</span>
         <label>From <input type="datetime-local" id="wdFrom"></label>
         <label>To <input type="datetime-local" id="wdTo"></label>
       </div>
-      <div class="hint">All times are UTC. Leave any box empty to keep that side open. With no dates at all, each deposit is checked against everything that came out after it. The deposit dates also limit which of the address's own Tornado transactions are read. <button type="button" class="cr-clear" id="crClear">Clear dates</button></div>
+      <div class="hint">All times are in UTC. Leave a box empty if you don't want a limit on that side. With no dates set, each deposit is compared with every withdrawal from its pool made after it. <button type="button" class="cr-clear" id="crClear">Clear dates</button></div>
     </div>
     <div class="hint">Ethereum mainnet only. Tornado has no time limit on withdrawals, so a wider date range finds more matches but also more noise.</div>
     <div id="configNotice"></div>
@@ -128,10 +133,10 @@
   <div class="panel">
     <details class="methodology">
       <summary>How this works and where it falls short</summary>
-      <p>Tornado deposits are ordinary transactions, so the address that made the deposit is public. Withdrawals mostly go through a relayer, which means the address that paid the gas is not the one that received the money. The recipient is still public, because it sits inside the withdrawal itself. For every deposit the address made, the tool pulls all withdrawals from the same pool inside the window you picked, reads the recipient off each one, and sorts them by how long after the deposit they happened.</p>
-      <p>Timing matters because Tornado puts no limit on how long money can stay in a pool. A deposit can be withdrawn a minute later or five years later. Most people do not wait long, so a withdrawal that lands soon after the deposit, with few others around it, is a better lead than one that lands weeks later with dozens in between. That is why the page shows the gap and the number of other withdrawals in the window, and does not give a score.</p>
+      <p>Tornado deposits are ordinary transactions, so the address that made the deposit is public. Withdrawals mostly go through a relayer, which means the address that paid the gas is not the one that received the money. The recipient is still public, because it sits inside the withdrawal itself. For every deposit the address made, the tool pulls every withdrawal from the same pool between the dates you picked, reads the receiving address off each one, and sorts them by how soon after the deposit they happened.</p>
+      <p>Timing matters because Tornado puts no limit on how long money can stay in a pool. A deposit can be withdrawn a minute later or five years later. Most people do not wait long, so a withdrawal that lands soon after the deposit, with few others around it, is a better lead than one that lands weeks later with dozens in between. That is why the page shows the gap and the number of other withdrawals in that period, and does not give a score.</p>
       <ul>
-        <li>It only works from the deposit side. A wallet that only ever received a relayed withdrawal leaves nothing in its own history to start from, so the tool can't find it.</li>
+        <li>It only works from the deposit side. If you search an address that withdrew from Tornado, the page will tell you so, but it can't trace backwards to the deposit.</li>
         <li>A short gap is a hint. Investigators also look at deposit amounts split across pools, gas settings, and addresses that later move money together. None of that is checked here.</li>
         <li>Only the Ethereum mainnet pools are covered (ETH, DAI, cDAI, USDC, USDT, WBTC). Tornado's pools on other chains are not.</li>
         <li>Tornado Cash came off the OFAC sanctions list in 2025, after a US appeals court ruled that its smart contracts could not be sanctioned as property. Looking at it is not illegal on its own, but your own obligations depend on where you are and on your company's policy.</li>
@@ -380,11 +385,37 @@
     return (seconds/86400).toFixed(1) + " days";
   }
 
+  function poolName(p){ return p.denom + " " + p.token + " pool"; }
+  function relayerCell(r){ return /^0x0{40}$/.test(r) ? '<span class="gap-weak">None</span>' : short(r); }
+
+  // An address with no deposits may still have taken money out of Tornado.
+  // Finds those withdrawals so the page can say so plainly instead of
+  // showing nothing (or showing them as if they were search results).
+  async function findWithdrawalsTo(addr, selfWithdrawals){
+    var me = addr.toLowerCase(), seen = {}, list = [];
+    selfWithdrawals.forEach(function(sw){
+      seen[sw.tx.hash.toLowerCase()] = true;
+      list.push({ pool: sw.pool, ts: parseInt(sw.tx.timeStamp, 10), hash: sw.tx.hash, to: sw.decoded.recipient.toLowerCase() });
+    });
+    var internal = [], tokens = [];
+    try { internal = await escCall({ module: "account", action: "txlistinternal", address: addr, startblock: "0", endblock: "99999999", sort: "asc", page: "1", offset: "10000" }); } catch (e) {}
+    try { tokens = await escCall({ module: "account", action: "tokentx", address: addr, startblock: "0", endblock: "99999999", sort: "asc", page: "1", offset: "10000" }); } catch (e) {}
+    internal.concat(tokens).forEach(function(t){
+      var pool = POOL_BY_ADDR[(t.from || "").toLowerCase()];
+      if (!pool || (t.to || "").toLowerCase() !== me || t.isError === "1") return;
+      var h = t.hash.toLowerCase();
+      if (seen[h]) return;
+      seen[h] = true;
+      list.push({ pool: pool, ts: parseInt(t.timeStamp, 10), hash: t.hash, to: me });
+    });
+    return list.sort(function(a, b){ return b.ts - a.ts; });
+  }
+
   async function runSearch(){
     var addr = $addr.value.trim();
     $results.innerHTML = "";
     if (!isValidAddress(addr)) {
-      $results.innerHTML = '<div class="notice bad">That doesn\'t look like an Ethereum address. It should start with 0x and have 40 characters after it.</div>';
+      $results.innerHTML = '<div class="notice bad">That doesn\'t look like an Ethereum address. It should start with 0x followed by 40 letters and numbers.</div>';
       return;
     }
     var win = readWindow();
@@ -392,51 +423,57 @@
       $results.innerHTML = '<div class="notice bad">' + win.error + '</div>';
       return;
     }
+    var me = addr.toLowerCase();
 
     $btn.disabled = true;
-    $results.innerHTML = '<div class="notice info"><span class="spinner"></span>Looking up the transactions for ' + short(addr) + '&hellip;</div>';
+    $results.innerHTML = '<div class="notice info"><span class="spinner"></span>Looking up transactions for ' + short(addr) + '&hellip;</div>';
 
     try {
       await resolveWindowBlocks(win);
       var ownTxs = await fetchTxList(addr, 0, 99999999);
-      var deposits = [], selfWithdrawals = [], outsideRange = 0;
+      var allDeposits = [], selfWithdrawals = [];
       ownTxs.forEach(function(tx){
         var c = classifyTx(tx);
         if (!c) return;
-        if (!inDepositRange(win, parseInt(tx.timeStamp, 10))) { outsideRange++; return; }
-        if (c.kind === "deposit") deposits.push({ tx: tx, pool: c.pool });
+        if (c.kind === "deposit") allDeposits.push({ tx: tx, pool: c.pool });
         else selfWithdrawals.push({ tx: tx, pool: c.pool, decoded: c.decoded });
       });
 
-      if (deposits.length === 0 && selfWithdrawals.length === 0 && outsideRange > 0) {
-        $results.innerHTML = '<div class="notice">This address has ' + outsideRange + ' Tornado transaction' + (outsideRange === 1 ? '' : 's') + ', but none ' + depositRangeText(win) + '.</div>';
+      // No deposits at all: this is not a starting point for this tool.
+      if (allDeposits.length === 0) {
+        $results.innerHTML = '<div class="notice info"><span class="spinner"></span>No deposits found. Checking whether this address took money out of Tornado instead&hellip;</div>';
+        var outs = await findWithdrawalsTo(addr, selfWithdrawals);
+        if (outs.length === 0) {
+          $results.innerHTML = '<div class="notice">This address has no Tornado Cash deposits, either made directly or through the Tornado router, and no withdrawals from Tornado either. See the notes below for what this tool can and can\'t find.</div>';
+          return;
+        }
+        var items = outs.slice(0, 5).map(function(o){
+          return '<li>' + o.pool.denom + ' ' + o.pool.token + ' from the ' + poolName(o.pool) + ' on ' + fmtUtc(o.ts) +
+            (o.to !== me ? ', sent to <a class="addr" href="' + etherscanAddrLink(o.to) + '" target="_blank" rel="noopener">' + short(o.to) + '</a>' : '') +
+            ' &middot; <a href="' + etherscanTxLink(o.hash) + '" target="_blank" rel="noopener">transaction</a></li>';
+        }).join("");
+        $results.innerHTML = '<div class="notice warn"><strong>This address didn\'t deposit into Tornado Cash. It withdrew from it.</strong> ' +
+          'This tool starts from a deposit and looks for where the money came out, so a withdrawal address can\'t be traced here. To follow this money, search the address that made the deposit.' +
+          '<ul class="wd-list">' + items + '</ul>' +
+          (outs.length > 5 ? '<div>Showing the 5 most recent of ' + outs.length + ' withdrawals.</div>' : '') + '</div>';
         return;
       }
-      if (deposits.length === 0 && selfWithdrawals.length === 0) {
-        $results.innerHTML = '<div class="notice info">No Tornado Cash deposits found for this address, either direct or through the Tornado router, and no withdrawals it paid for itself. If it only ever received a withdrawal through a relayer, this tool can\'t see that. See the notes below.</div>';
+
+      var deposits = allDeposits.filter(function(d){ return inDepositRange(win, parseInt(d.tx.timeStamp, 10)); });
+      if (deposits.length === 0) {
+        $results.innerHTML = '<div class="notice">This address made ' + allDeposits.length + ' deposit' + (allDeposits.length === 1 ? '' : 's') + ' into Tornado, but none ' + depositRangeText(win) + '. Clear the deposit dates to see ' + (allDeposits.length === 1 ? 'it' : 'them') + '.</div>';
         return;
       }
 
-      var cappedNotice = deposits.length > MAX_DEPOSITS_SCANNED
-        ? '<div class="notice warn">This address made ' + deposits.length + ' deposits. Showing the ' + MAX_DEPOSITS_SCANNED + ' most recent.</div>'
-        : "";
-      $results.innerHTML = cappedNotice;
-
-      var toScan = deposits.slice(-MAX_DEPOSITS_SCANNED);
-
+      $results.innerHTML = "";
+      if (deposits.length > MAX_DEPOSITS_SCANNED) {
+        $results.insertAdjacentHTML("beforeend", '<div class="notice warn">This address made ' + deposits.length + ' deposits. Showing the ' + MAX_DEPOSITS_SCANNED + ' most recent.</div>');
+      }
       if (selfWithdrawals.length) {
-        selfWithdrawals.forEach(function(sw){
-          var tx = sw.tx, pool = sw.pool, decoded = sw.decoded;
-          var card = document.createElement("div");
-          card.className = "dep-card";
-          card.innerHTML =
-            '<div class="dep-head"><span class="dep-pool">' + pool.token + ' ' + pool.denom + ' pool</span>' +
-            '<span class="dep-time">' + fmtUtc(parseInt(tx.timeStamp,10)) + '</span></div>' +
-            '<div>Withdrawal this address paid for itself, sent to <a class="addr" href="' + etherscanAddrLink(decoded.recipient) + '" target="_blank" rel="noopener">' + decoded.recipient + '</a> &mdash; <a href="' + etherscanTxLink(tx.hash) + '" target="_blank" rel="noopener">view tx</a></div>' +
-            '<span class="dep-self">Confirmed: the address paid its own gas, so the link is certain.</span>';
-          $results.appendChild(card);
-        });
+        $results.insertAdjacentHTML("beforeend", '<div class="notice">This address also withdrew from Tornado ' + (selfWithdrawals.length === 1 ? 'once' : selfWithdrawals.length + ' times') + '. Withdrawals are not listed here, because this tool only traces deposits.</div>');
       }
+
+      var toScan = deposits.slice(-MAX_DEPOSITS_SCANNED).reverse();
 
       for (var i = 0; i < toScan.length; i++) {
         var dep = toScan[i].tx;
@@ -448,27 +485,27 @@
         var card = document.createElement("div");
         card.className = "dep-card";
         card.innerHTML =
-          '<div class="dep-head"><span class="dep-pool">Deposit into ' + pool.token + ' ' + pool.denom + ' pool</span>' +
+          '<div class="dep-head"><span class="dep-pool">Deposit of ' + pool.denom + ' ' + pool.token + ' into the ' + poolName(pool) + '</span>' +
           '<span class="dep-time">' + fmtUtc(depTime) + '</span></div>' +
-          '<div><a href="' + etherscanTxLink(dep.hash) + '" target="_blank" rel="noopener">view deposit tx</a></div>' +
-          '<div class="notice info" style="margin-top:10px;"><span class="spinner"></span>Checking this pool\'s withdrawals ' + (range ? range.label : '') + '&hellip;</div>';
+          '<div class="dep-sub"><a href="' + etherscanTxLink(dep.hash) + '" target="_blank" rel="noopener">View the deposit on Etherscan</a></div>' +
+          '<div class="notice info" style="margin-top:10px;"><span class="spinner"></span>Checking withdrawals from this pool ' + (range ? range.label : '') + '&hellip;</div>';
         $results.appendChild(card);
         if (!range) {
-          card.querySelector(".notice").textContent = "Your withdrawal range ends before this deposit was made, so there is nothing to check for it.";
+          card.querySelector(".notice").textContent = "Your withdrawal dates end before this deposit was made, so there is nothing to check.";
           continue;
         }
 
         try {
           var events = await fetchWithdrawalEvents(pool.address, range.from, range.to);
           var lastTs = events.length ? parseInt(events[events.length - 1].timeStamp, 16) : 0;
-          var capNote = events.capped ? ' The scan stopped at 5,000 withdrawals, the last one on ' + fmtUtc(lastTs) + ', so anything after that was not read. Narrow the range to see past it.' : '';
+          var capNote = events.capped ? ' The search stopped after 5,000 withdrawals, at ' + fmtUtc(lastTs) + ', so later ones were not read. Use narrower dates to see them.' : '';
           var candidates = events.map(function(ev){
             // Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee):
             // `to` is the first 32-byte word of data; relayer is topics[1].
             var data = ev.data.slice(2);
             var ts = parseInt(ev.timeStamp, 16);
             return {
-              recipient: "0x" + data.slice(24, 64),
+              recipient: "0x" + data.slice(24, 64).toLowerCase(),
               relayer: "0x" + ev.topics[1].slice(26),
               ts: ts,
               gap: ts - depTime,
@@ -484,28 +521,30 @@
             continue;
           }
 
-          var setSizeLine = '<div class="setsize">' + candidates.length + ' withdrawals from this pool ' + range.windowText + '. The fewer there are, the more a close match means.' + capNote + '</div>';
+          var n = candidates.length;
+          var setSizeLine = '<div class="setsize">' + n + ' withdrawal' + (n === 1 ? '' : 's') + ' from this pool ' + range.windowText + '. The fewer there are, the more a close match means.' + capNote + '</div>';
 
           var rows = candidates.slice(0, 20).map(function(c){
             var gapClass = c.gap < 3600 ? "gap-strong" : (c.gap < 86400 ? "" : "gap-weak");
-            return '<tr><td class="addr"><a href="' + etherscanAddrLink(c.recipient) + '" target="_blank" rel="noopener">' + c.recipient + '</a></td>' +
+            return '<tr><td class="addr"><a href="' + etherscanAddrLink(c.recipient) + '" target="_blank" rel="noopener">' + c.recipient + '</a>' +
+                   (c.recipient === me ? '<span class="via">Same address you searched</span>' : '') + '</td>' +
                    '<td class="' + gapClass + '">' + fmtGap(c.gap) + '</td>' +
-                   '<td class="addr">' + short(c.relayer) + '</td>' +
+                   '<td class="addr">' + relayerCell(c.relayer) + '</td>' +
                    '<td><a href="' + etherscanTxLink(c.hash) + '" target="_blank" rel="noopener">tx</a></td></tr>';
           }).join("");
 
-          card.querySelector(".notice").remove();
+          notice.remove();
           card.insertAdjacentHTML("beforeend",
-            '<table class="cand"><thead><tr><th>Recipient</th><th>After deposit</th><th>Relayer</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>' + setSizeLine);
+            '<table class="cand"><thead><tr><th>Withdrawn to</th><th>Time after deposit</th><th>Relayer</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>' + setSizeLine);
         } catch (err) {
           card.querySelector(".notice").className = "notice bad";
           card.querySelector(".notice").textContent = "Couldn't check this pool: " + err.message;
         }
       }
     } catch (err) {
-      $results.innerHTML = '<div class="notice bad">Lookup failed: ' + err.message + '. Etherscan may be limiting requests. Wait a bit and try again.</div>';
+      $results.innerHTML = '<div class="notice bad">The lookup failed: ' + err.message + '. Etherscan may be limiting requests, so wait a moment and try again.</div>';
     } finally {
-      $btn.disabled = !isConfigured() ? true : false;
+      $btn.disabled = !isConfigured();
     }
   }
 

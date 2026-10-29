@@ -64,11 +64,14 @@
   .notice.warn{ border-left-color:var(--accent); }
   .notice.bad{ border-left-color:var(--bad); color:var(--text); }
   #results{ margin-top:6px; }
+  #results > .notice:last-child{ margin-bottom:18px; }
   .dep-card{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:18px 20px; margin-bottom:16px; }
   .dep-head{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:4px; }
   .dep-pool{ font-weight:700; font-size:15px; }
   .dep-time{ font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--text-faint); }
   .dep-sub{ font-size:12.5px; color:var(--text-muted); }
+  .wd-list{ margin:8px 0 4px; padding-left:20px; }
+  .wd-list li{ margin-bottom:4px; }
   .dep-self{ display:block; margin-top:6px; font-size:12.5px; color:var(--text-muted); }
   .tabs{ display:flex; gap:4px; margin-top:14px; border-bottom:1px solid var(--border); }
   .tab{ background:none; border:none; border-bottom:2px solid transparent; padding:6px 10px 8px; margin-bottom:-1px; font:inherit; font-size:13px; font-weight:600; color:var(--text-muted); cursor:pointer; }
@@ -122,16 +125,16 @@
     </div>
     <div id="customRange" class="custom-range">
       <div class="cr-row">
-        <span class="cr-label">Deposits made</span>
+        <span class="cr-label">Deposit dates</span>
         <label>From <input type="datetime-local" id="depFrom"></label>
         <label>To <input type="datetime-local" id="depTo"></label>
       </div>
       <div class="cr-row">
-        <span class="cr-label">Withdrawals made</span>
+        <span class="cr-label">Withdrawal dates</span>
         <label>From <input type="datetime-local" id="wdFrom"></label>
         <label>To <input type="datetime-local" id="wdTo"></label>
       </div>
-      <div class="hint">All times are UTC. Leave any box empty to keep that side open. With no dates at all, each deposit is checked against everything that came out after it. The deposit dates also limit which of the address's own Railgun transactions are read. <button type="button" class="cr-clear" id="crClear">Clear dates</button></div>
+      <div class="hint">All times are in UTC. Leave a box empty if you don't want a limit on that side. With no dates set, each deposit is compared with every withdrawal of the same token made after it. <button type="button" class="cr-clear" id="crClear">Clear dates</button></div>
     </div>
     <div class="hint">Ethereum mainnet only. Railgun calls a deposit a "shield" and a withdrawal an "unshield". There is no time limit on either, so a wider date range finds more but also adds noise.</div>
     <div id="configNotice"></div>
@@ -142,11 +145,11 @@
   <div class="panel">
     <details class="methodology">
       <summary>How this works and where it falls short</summary>
-      <p>Putting money into Railgun is an ordinary transaction, so the address that deposited, the token and the amount are all public. Taking money out is public too: the receiving address, the token and the amount are written into the withdrawal. What Railgun hides is the path in between. This tool reads the deposits an address made, then pulls every withdrawal of the same token inside the window you picked.</p>
+      <p>Putting money into Railgun is an ordinary transaction, so the address that deposited, the token and the amount are all public. Taking money out is public too: the receiving address, the token and the amount are written into the withdrawal. What Railgun hides is the path in between. This tool reads the deposits an address made, then pulls every withdrawal of the same token between the dates you picked.</p>
       <p>Unlike Tornado, Railgun does not use fixed amounts, and that helps here. Railgun takes a small fee on the way in and again on the way out, but the withdrawal records both the amount sent and the fee taken. Add those two together and you get exactly what was spent from inside Railgun. If someone puts in a sum and later takes the whole of it out in one go, the numbers match to the last unit. Those rows are marked "exact" in the By amount tab. The By time tab shows the same withdrawals ordered by how soon they came after the deposit.</p>
       <p>ETH goes in and out through a Railgun helper contract that wraps and unwraps it. When a withdrawal lands on that helper, the tool checks where the ETH went next and shows that address instead, with a small note under it.</p>
       <ul>
-        <li>It only works from the deposit side. A wallet that only ever received a withdrawal leaves nothing in its own history to start from, apart from the incoming transfer itself.</li>
+        <li>It only works from the deposit side. If you search an address that withdrew from Railgun, the page will tell you so, but it can't trace backwards to the deposit.</li>
         <li>Money can be swapped to another token inside Railgun before it comes out. The tool compares the same token only, so it misses those.</li>
         <li>Partial withdrawals and several deposits merged into one withdrawal will not match exactly. The By amount tab shows the percentage difference, so close ones still show up, but they mean less.</li>
         <li>Only Railgun on Ethereum mainnet is covered, from the November 2022 contract upgrade onwards. Railgun on Polygon, BNB Chain and Arbitrum is not included.</li>
@@ -455,17 +458,48 @@
     return found;
   }
 
+  var searchedAddr = "";
   function recipientCell(c){
-    if (!isRelayAdapt(c.to)) return addrLink(c.to);
+    if (!isRelayAdapt(c.to)) return addrLink(c.to) + (c.to === searchedAddr ? '<span class="via">Same address you searched</span>' : '');
     if (c.finalTo) return addrLink(c.finalTo) + '<span class="via">ETH unwrapped by the Railgun helper</span>';
     return '<span class="addr">Railgun helper</span><span class="via">Passed on inside the tx, likely a swap. Open the tx to follow it.</span>';
+  }
+
+  // An address with no deposits may still have taken money out of Railgun.
+  // Collects those withdrawals so the page can say so plainly instead of
+  // treating the address as a starting point.
+  async function findWithdrawalsTo(me, tokenTx, selfUnshields){
+    var list = [], seen = {};
+    for (var i = 0; i < selfUnshields.length; i++) {
+      var su = selfUnshields[i];
+      var info = await tokenInfo(su.u.token);
+      seen[su.meta.hash.toLowerCase()] = true;
+      list.push({ ts: su.meta.time, hash: su.meta.hash, to: su.u.to, amount: fmtUnits(su.u.amount, info.decimals) + " " + tokenLabel(info) });
+    }
+    var received = tokenTx.filter(function(t){ return t.from.toLowerCase() === RAILGUN_PROXY && t.to.toLowerCase() === me; });
+    for (var j = 0; j < received.length; j++) {
+      var t = received[j], h = t.hash.toLowerCase();
+      if (seen[h]) continue;
+      seen[h] = true;
+      var dec = parseInt(t.tokenDecimal, 10);
+      list.push({ ts: parseInt(t.timeStamp, 10), hash: t.hash, to: me, amount: fmtUnits(BigInt(t.value), isNaN(dec) ? 18 : dec) + " " + (t.tokenSymbol || "tokens") });
+    }
+    var internal = [];
+    try { internal = await escList({ module: "account", action: "txlistinternal", address: me, startblock: "0", endblock: "99999999", sort: "asc", page: "1", offset: "10000" }); } catch (e) {}
+    internal.forEach(function(t){
+      var h = t.hash.toLowerCase();
+      if (seen[h] || !isRelayAdapt(t.from) || (t.to || "").toLowerCase() !== me || t.isError === "1" || t.value === "0") return;
+      seen[h] = true;
+      list.push({ ts: parseInt(t.timeStamp, 10), hash: t.hash, to: me, amount: fmtUnits(BigInt(t.value), 18) + " ETH" });
+    });
+    return list.sort(function(a, b){ return b.ts - a.ts; });
   }
 
   async function runSearch(){
     var addr = $addr.value.trim();
     $results.innerHTML = "";
     if (!isValidAddress(addr)) {
-      $results.innerHTML = '<div class="notice bad">That doesn\'t look like an Ethereum address. It should start with 0x and have 40 characters after it.</div>';
+      $results.innerHTML = '<div class="notice bad">That doesn\'t look like an Ethereum address. It should start with 0x followed by 40 letters and numbers.</div>';
       return;
     }
     var win = readWindow();
@@ -474,9 +508,10 @@
       return;
     }
     var me = addr.toLowerCase();
+    searchedAddr = me;
 
     $btn.disabled = true;
-    $results.innerHTML = '<div class="notice"><span class="spinner"></span>Looking up the transactions for ' + short(addr) + '&hellip;</div>';
+    $results.innerHTML = '<div class="notice"><span class="spinner"></span>Looking up transactions for ' + short(addr) + '&hellip;</div>';
 
     try {
       await resolveWindowBlocks(win);
@@ -493,31 +528,14 @@
         if (to !== RAILGUN_PROXY && !isRelayAdapt(to)) return;
         txMeta[tx.hash.toLowerCase()] = { hash: tx.hash, block: parseInt(tx.blockNumber, 10), time: parseInt(tx.timeStamp, 10), selfSent: true, selector: (tx.input || "").slice(0, 10).toLowerCase() };
       });
-      var receivedCount = 0;
       tokenTx.forEach(function(t){
-        var from = t.from.toLowerCase(), to = t.to.toLowerCase();
-        if (from === RAILGUN_PROXY && to === me) receivedCount++;
-        if (from !== me || to !== RAILGUN_PROXY) return;
+        if (t.from.toLowerCase() !== me || t.to.toLowerCase() !== RAILGUN_PROXY) return;
         var h = t.hash.toLowerCase();
         if (!txMeta[h]) txMeta[h] = { hash: t.hash, block: parseInt(t.blockNumber, 10), time: parseInt(t.timeStamp, 10), selfSent: false, selector: "" };
       });
 
-      var touched = Object.keys(txMeta).map(function(k){ return txMeta[k]; }).sort(function(a,b){ return a.block - b.block; });
-      var receivedLine = receivedCount
-        ? '<div class="notice">This address also received ' + receivedCount + ' token withdrawal' + (receivedCount === 1 ? '' : 's') + ' straight from Railgun. Those are not traced here.</div>'
-        : "";
-
-      if (touched.length === 0) {
-        $results.innerHTML = '<div class="notice">No Railgun deposits found for this address, either direct or through Railgun\'s helper contract.' + (receivedCount ? '' : ' If it only ever received a withdrawal, there is nothing in its own history to start from. See the notes below.') + '</div>' + receivedLine;
-        return;
-      }
-
-      var allTouched = touched.length;
-      touched = touched.filter(function(t){ return inDepositRange(win, t.time); });
-      if (touched.length === 0) {
-        $results.innerHTML = '<div class="notice">This address has ' + allTouched + ' Railgun transaction' + (allTouched === 1 ? '' : 's') + ', but none ' + depositRangeText(win) + '.</div>' + receivedLine;
-        return;
-      }
+      var allTouched = Object.keys(txMeta).map(function(k){ return txMeta[k]; }).sort(function(a,b){ return a.block - b.block; });
+      var touched = allTouched.filter(function(t){ return inDepositRange(win, t.time); });
 
       // 2. Read the receipts and pull out Shield (deposit) and Unshield logs.
       var readList = touched.slice(-MAX_RECEIPTS);
@@ -542,43 +560,50 @@
         });
       }
 
+      if (deposits.length === 0) {
+        // Deposit dates hid some of the history: say that, not "withdrawal address".
+        if (touched.length < allTouched.length) {
+          $results.innerHTML = '<div class="notice">No deposits into Railgun ' + depositRangeText(win) + '. This address has other Railgun transactions outside those dates, so clear the deposit dates to check them.</div>';
+          return;
+        }
+        $results.innerHTML = '<div class="notice"><span class="spinner"></span>No deposits found. Checking whether this address took money out of Railgun instead&hellip;</div>';
+        var outs = await findWithdrawalsTo(me, tokenTx, selfUnshields);
+        if (outs.length === 0) {
+          $results.innerHTML = '<div class="notice">This address has no Railgun deposits, either made directly or through Railgun\'s helper contract, and no withdrawals from Railgun either. See the notes below for what this tool can and can\'t find.</div>';
+          return;
+        }
+        var items = outs.slice(0, 5).map(function(o){
+          return '<li>' + esc(o.amount) + ' on ' + fmtTime(o.ts) +
+            (o.to !== me && !isRelayAdapt(o.to) ? ', sent to ' + addrLink(o.to, short(o.to)) : '') +
+            ' &middot; ' + txLink(o.hash, "transaction") + '</li>';
+        }).join("");
+        $results.innerHTML = '<div class="notice warn"><strong>This address didn\'t deposit into Railgun. It withdrew from it.</strong> ' +
+          'This tool starts from a deposit and looks for where the money came out, so a withdrawal address can\'t be traced here. To follow this money, search the address that made the deposit.' +
+          '<ul class="wd-list">' + items + '</ul>' +
+          (outs.length > 5 ? '<div>Showing the 5 most recent of ' + outs.length + ' withdrawals.</div>' : '') + '</div>';
+        return;
+      }
+
       $results.innerHTML = "";
       if (touched.length > MAX_RECEIPTS) {
         $results.insertAdjacentHTML("beforeend", '<div class="notice warn">This address has ' + touched.length + ' Railgun transactions. Only the ' + MAX_RECEIPTS + ' most recent were read.</div>');
       }
       if (deposits.length > MAX_DEPOSITS_SCANNED) {
-        $results.insertAdjacentHTML("beforeend", '<div class="notice warn">Found ' + deposits.length + ' deposits. Showing the ' + MAX_DEPOSITS_SCANNED + ' most recent.</div>');
+        $results.insertAdjacentHTML("beforeend", '<div class="notice warn">This address made ' + deposits.length + ' deposits. Showing the ' + MAX_DEPOSITS_SCANNED + ' most recent.</div>');
       }
-      if (receivedLine) $results.insertAdjacentHTML("beforeend", receivedLine);
-
-      // Withdrawals this address paid for itself: a certain link.
-      for (var s = 0; s < selfUnshields.length; s++) {
-        var su = selfUnshields[s];
-        var sInfo = await tokenInfo(su.u.token);
-        var row = { to: su.u.to, finalTo: null };
-        if (isRelayAdapt(row.to)) row.finalTo = await resolveHelperHop(su.meta.hash);
-        var sCard = document.createElement("div");
-        sCard.className = "dep-card";
-        sCard.innerHTML =
-          '<div class="dep-head"><span class="dep-pool">Withdrawal of ' + fmtUnits(su.u.amount, sInfo.decimals) + ' ' + esc(tokenLabel(sInfo)) + '</span>' +
-          '<span class="dep-time">' + fmtTime(su.meta.time) + '</span></div>' +
-          '<div>This address sent the withdrawal itself, to ' + recipientCell(row) + ' &mdash; ' + txLink(su.meta.hash, "view tx") + '</div>' +
-          '<span class="dep-self">Confirmed: the address paid its own gas for this one, so the link is certain.</span>';
-        $results.appendChild(sCard);
+      var receivedCount = tokenTx.filter(function(t){ return t.from.toLowerCase() === RAILGUN_PROXY && t.to.toLowerCase() === me; }).length;
+      var wdCount = Math.max(receivedCount, selfUnshields.length);
+      if (wdCount) {
+        $results.insertAdjacentHTML("beforeend", '<div class="notice">This address also withdrew from Railgun ' + (wdCount === 1 ? 'once' : wdCount + ' times') + '. Withdrawals are not listed here, because this tool only traces deposits.</div>');
       }
 
-      if (deposits.length === 0) {
-        if (!selfUnshields.length) $results.insertAdjacentHTML("beforeend", '<div class="notice">This address touched Railgun, but none of those transactions was a token deposit from its own funds.</div>');
-        return;
-      }
-
-      // 3. For each deposit, scan same-token withdrawals in the window.
+      // 3. For each deposit, scan same-token withdrawals between the chosen dates.
       var toScan = deposits.slice(-MAX_DEPOSITS_SCANNED).reverse();
       for (var i = 0; i < toScan.length; i++) {
         await renderDeposit(toScan[i], win, i);
       }
     } catch (err) {
-      $results.innerHTML = '<div class="notice bad">Lookup failed: ' + esc(err.message) + '. Etherscan may be limiting requests. Wait a bit and try again.</div>';
+      $results.innerHTML = '<div class="notice bad">The lookup failed: ' + esc(err.message) + '. Etherscan may be limiting requests, so wait a moment and try again.</div>';
     } finally {
       $btn.disabled = !isConfigured();
     }
@@ -597,13 +622,13 @@
     card.innerHTML =
       '<div class="dep-head"><span class="dep-pool">Deposit of ' + fmtUnits(dep.value, info.decimals) + ' ' + esc(tokenLabel(info)) + '</span>' +
       '<span class="dep-time">' + fmtTime(m.time) + '</span></div>' +
-      '<div class="dep-sub">' + paidLine + ' ' + txLink(m.hash, "view deposit tx") + '</div>' +
+      '<div class="dep-sub">' + paidLine + ' ' + txLink(m.hash, "View the deposit on Etherscan") + '</div>' +
       '<div class="notice"><span class="spinner"></span>Checking ' + esc(info.symbol) + ' withdrawals ' + (range ? range.label : '') + '&hellip;</div>';
     $results.appendChild(card);
     var notice = card.querySelector(".notice");
 
     if (!range) {
-      notice.textContent = "Your withdrawal range ends before this deposit was made, so there is nothing to check for it.";
+      notice.textContent = "Your withdrawal dates end before this deposit was made, so there is nothing to check.";
       return;
     }
     try {
@@ -627,7 +652,7 @@
         .sort(function(a,b){ return a.ppm === b.ppm ? a.gap - b.gap : (a.ppm < b.ppm ? -1 : 1); });
 
       if (cands.length === 0) {
-        notice.textContent = "No " + info.symbol + " withdrawals from Railgun " + range.windowText + "." + (scan.capped ? " The scan stopped at 5,000 withdrawals of all tokens, so later ones were not read. Narrow the range to see past that." : "");
+        notice.textContent = "No " + info.symbol + " withdrawals from Railgun " + range.windowText + "." + (scan.capped ? " The search stopped after 5,000 withdrawals of all tokens, so later ones were not read. Use narrower dates to see them." : "");
         return;
       }
 
@@ -662,14 +687,14 @@
       var exactCount = byAmount.filter(function(c){ return c.diff === 0n; }).length;
 
       var amountView = byAmount.length
-        ? '<div class="table-scroll"><table class="cand"><thead><tr><th>Recipient</th><th>Received</th><th>Vs deposit</th><th>After deposit</th><th></th></tr></thead><tbody>' + amountRows + '</tbody></table></div>' +
+        ? '<div class="table-scroll"><table class="cand"><thead><tr><th>Withdrawn to</th><th>Received</th><th>Vs deposit</th><th>Time after deposit</th><th></th></tr></thead><tbody>' + amountRows + '</tbody></table></div>' +
           '<div class="setsize">' + (exactCount ? exactCount + ' exact match' + (exactCount === 1 ? '' : 'es') + '. ' : 'No exact match. ') + 'Withdrawals within 10% of the deposit are listed, closest first. "Vs deposit" compares the amount plus Railgun\'s withdrawal fee with what went in.</div>'
         : '<div class="empty">No ' + esc(info.symbol) + ' withdrawal in this window came within 10% of the deposit. The money may have come out in pieces, been swapped first, or is still inside.</div>';
       var timeView =
-        '<div class="table-scroll"><table class="cand"><thead><tr><th>Recipient</th><th>After deposit</th><th>Received</th><th>Vs deposit</th><th></th></tr></thead><tbody>' + timeRows + '</tbody></table></div>';
+        '<div class="table-scroll"><table class="cand"><thead><tr><th>Withdrawn to</th><th>Time after deposit</th><th>Received</th><th>Vs deposit</th><th></th></tr></thead><tbody>' + timeRows + '</tbody></table></div>';
 
       var setSize = '<div class="setsize">' + cands.length + ' ' + esc(info.symbol) + ' withdrawal' + (cands.length === 1 ? '' : 's') + ' from Railgun ' + range.windowText + '. The fewer there are, the more a close match means.' +
-        (scan.capped ? ' The scan stopped at 5,000 withdrawals of all tokens, the last one on ' + fmtTime(scan.lastTs) + ', so anything after that was not read. Narrow the range to see past it.' : '') + '</div>';
+        (scan.capped ? ' The search stopped after 5,000 withdrawals of all tokens, at ' + fmtTime(scan.lastTs) + ', so later ones were not read. Use narrower dates to see them.' : '') + '</div>';
 
       notice.remove();
       card.insertAdjacentHTML("beforeend",

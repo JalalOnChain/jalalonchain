@@ -48,10 +48,17 @@
   .search-row{ display:flex; gap:10px; flex-wrap:wrap; }
   #addrInput{ flex:1 1 320px; background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:9px; padding:12px 14px; font-size:14px; font-family:"IBM Plex Mono",monospace; min-width:0; }
   #addrInput:focus{ outline:2px solid var(--teal); outline-offset:1px; }
-  #windowSelect{ background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:9px; padding:12px 10px; font-size:13.5px; font-family:inherit; }
   #searchBtn{ background:var(--accent); color:#1a1200; border:none; border-radius:9px; padding:12px 22px; font-size:14px; font-weight:700; font-family:inherit; cursor:pointer; white-space:nowrap; }
   #searchBtn:disabled{ opacity:.6; cursor:default; }
   #searchBtn:hover:not(:disabled){ filter:brightness(1.06); }
+  .custom-range{ margin-top:14px; padding-top:14px; border-top:1px dashed var(--border); }
+  .custom-range[hidden]{ display:none; }
+  .cr-row{ display:flex; align-items:center; gap:8px 14px; flex-wrap:wrap; margin-bottom:10px; }
+  .cr-label{ font-size:13px; font-weight:600; color:var(--text-muted); min-width:120px; }
+  .cr-row label{ font-size:12.5px; color:var(--text-faint); display:inline-flex; align-items:center; gap:6px; }
+  .cr-row input{ background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:8px 10px; font-size:13px; font-family:"IBM Plex Mono",monospace; color-scheme:inherit; }
+  .cr-row input:focus{ outline:2px solid var(--teal); outline-offset:1px; }
+  .cr-clear{ background:none; border:none; padding:0; font:inherit; font-size:12.5px; color:var(--teal); cursor:pointer; }
   .hint{ font-size:12px; color:var(--text-faint); margin-top:8px; }
   .notice{ border:1px solid var(--border); border-left:3px solid var(--text-faint); border-radius:8px; padding:11px 14px; font-size:13.5px; margin-top:14px; color:var(--text-muted); }
   .notice.warn{ border-left-color:var(--accent); }
@@ -97,15 +104,22 @@
     <h2>Search</h2>
     <div class="search-row">
       <input type="text" id="addrInput" placeholder="0x... address that made the deposit" autocomplete="off" spellcheck="false">
-      <select id="windowSelect">
-        <option value="1">1 day after the deposit</option>
-        <option value="7" selected>7 days after</option>
-        <option value="30">30 days after</option>
-        <option value="90">90 days after</option>
-      </select>
       <button id="searchBtn">Trace</button>
     </div>
-    <div class="hint">Ethereum mainnet only. Tornado has no time limit on withdrawals, so a longer window finds more matches but also more noise.</div>
+    <div id="customRange" class="custom-range">
+      <div class="cr-row">
+        <span class="cr-label">Deposits made</span>
+        <label>From <input type="datetime-local" id="depFrom"></label>
+        <label>To <input type="datetime-local" id="depTo"></label>
+      </div>
+      <div class="cr-row">
+        <span class="cr-label">Withdrawals made</span>
+        <label>From <input type="datetime-local" id="wdFrom"></label>
+        <label>To <input type="datetime-local" id="wdTo"></label>
+      </div>
+      <div class="hint">All times are UTC. Leave any box empty to keep that side open. With no dates at all, each deposit is checked against everything that came out after it. The deposit dates also limit which of the address's own Tornado transactions are read. <button type="button" class="cr-clear" id="crClear">Clear dates</button></div>
+    </div>
+    <div class="hint">Ethereum mainnet only. Tornado has no time limit on withdrawals, so a wider date range finds more matches but also more noise.</div>
     <div id="configNotice"></div>
   </div>
 
@@ -193,11 +207,9 @@
   // withdrawals however they were routed: directly, via a relayer, or via the router.
   var WITHDRAWAL_TOPIC0 = "0xe9e508bad6d4c3227e881ca19068f099da81b5164dd6d62b2eaf1e8bc6c34931";
 
-  var BLOCKS_PER_DAY = 7200; // ~12s/block post-merge; approximate, used only to size the scan window
   var MAX_DEPOSITS_SCANNED = 10;
 
   var $addr = document.getElementById("addrInput");
-  var $win = document.getElementById("windowSelect");
   var $btn = document.getElementById("searchBtn");
   var $results = document.getElementById("results");
   var $configNotice = document.getElementById("configNotice");
@@ -296,8 +308,70 @@
       all = all.concat(batch);
       if (batch.length < 1000) break;
     }
+    all.capped = all.length >= 5000;
     return all;
   }
+
+  // ---- custom date range (UTC) ----
+  document.getElementById("crClear").addEventListener("click", function(){
+    ["depFrom","depTo","wdFrom","wdTo"].forEach(function(id){ document.getElementById(id).value = ""; });
+  });
+  function utcSeconds(id){
+    var v = document.getElementById(id).value;
+    if (!v) return null;
+    var t = Date.parse(v + "Z"); // the box has no zone, so read it as UTC
+    return isNaN(t) ? NaN : Math.floor(t / 1000);
+  }
+  function fmtUtc(ts){ return new Date(ts * 1000).toISOString().replace("T", " ").slice(0, 16) + " UTC"; }
+  function readWindow(){
+    var w = { custom: true, depFrom: utcSeconds("depFrom"), depTo: utcSeconds("depTo"), wdFrom: utcSeconds("wdFrom"), wdTo: utcSeconds("wdTo") };
+    var now = Math.floor(Date.now() / 1000);
+    if ([w.depFrom, w.depTo, w.wdFrom, w.wdTo].some(function(x){ return Number.isNaN(x); })) return { error: "One of the dates isn't complete. Fill in the date and the time, or clear the box." };
+    if (w.depFrom !== null && w.depTo !== null && w.depFrom > w.depTo) return { error: "The deposit range ends before it starts." };
+    if (w.wdFrom !== null && w.wdTo !== null && w.wdFrom > w.wdTo) return { error: "The withdrawal range ends before it starts." };
+    if (w.wdFrom !== null && w.wdFrom > now) return { error: "The withdrawal range starts in the future, so there is nothing to find yet." };
+    return w;
+  }
+  function inDepositRange(w, ts){
+    if (!w.custom) return true;
+    return (w.depFrom === null || ts >= w.depFrom) && (w.depTo === null || ts <= w.depTo);
+  }
+  function depositRangeText(w){
+    if (w.depFrom !== null && w.depTo !== null) return "between " + fmtUtc(w.depFrom) + " and " + fmtUtc(w.depTo);
+    if (w.depFrom !== null) return "after " + fmtUtc(w.depFrom);
+    return "before " + fmtUtc(w.depTo);
+  }
+  async function blockAt(ts, closest){
+    var url = new URL(ETHERSCAN_BASE);
+    url.searchParams.set("module", "block"); url.searchParams.set("action", "getblocknobytime");
+    url.searchParams.set("timestamp", String(ts)); url.searchParams.set("closest", closest);
+    url.searchParams.set("chainid", CHAIN_ID); url.searchParams.set("apikey", ETHERSCAN_API_KEY);
+    var res = await fetch(url.toString());
+    if (!res.ok) throw new Error("Etherscan request failed (HTTP " + res.status + ")");
+    var json = await res.json();
+    var n = parseInt(json.result, 10);
+    if (json.status !== "1" || isNaN(n)) throw new Error("Couldn't turn " + fmtUtc(ts) + " into a block number");
+    return n;
+  }
+  // Turns the withdrawal dates into block numbers once per search.
+  async function resolveWindowBlocks(w){
+    if (!w.custom) return;
+    var now = Math.floor(Date.now() / 1000);
+    w.wdFromBlock = w.wdFrom !== null ? await blockAt(w.wdFrom, "after") : 0;
+    w.wdToBlock = (w.wdTo === null || w.wdTo >= now - 60) ? 99999999 : await blockAt(w.wdTo, "before");
+  }
+  // The block range and wording for one deposit. Returns null when the
+  // withdrawal range ends before the deposit happened.
+  function scanRange(w, depBlock, depTime){
+    if (w.wdTo !== null && w.wdTo < depTime) return null;
+    var fromTs = Math.max(depTime, w.wdFrom === null ? 0 : w.wdFrom);
+    var span = "between " + fmtUtc(fromTs) + " and " + (w.wdTo === null ? "now" : fmtUtc(w.wdTo));
+    return {
+      from: Math.max(depBlock, w.wdFromBlock), to: w.wdToBlock, fromTs: fromTs, toTs: w.wdTo,
+      label: span, windowText: span
+    };
+  }
+  function inScan(range, ts){ return ts >= range.fromTs && (range.toTs === null || ts <= range.toTs); }
 
   function fmtGap(seconds){
     if (seconds < 60) return seconds + " sec";
@@ -313,22 +387,31 @@
       $results.innerHTML = '<div class="notice bad">That doesn\'t look like an Ethereum address. It should start with 0x and have 40 characters after it.</div>';
       return;
     }
-    var windowDays = parseInt($win.value, 10);
-    var addrLower = addr.toLowerCase();
+    var win = readWindow();
+    if (win.error) {
+      $results.innerHTML = '<div class="notice bad">' + win.error + '</div>';
+      return;
+    }
 
     $btn.disabled = true;
     $results.innerHTML = '<div class="notice info"><span class="spinner"></span>Looking up the transactions for ' + short(addr) + '&hellip;</div>';
 
     try {
+      await resolveWindowBlocks(win);
       var ownTxs = await fetchTxList(addr, 0, 99999999);
-      var deposits = [], selfWithdrawals = [];
+      var deposits = [], selfWithdrawals = [], outsideRange = 0;
       ownTxs.forEach(function(tx){
         var c = classifyTx(tx);
         if (!c) return;
+        if (!inDepositRange(win, parseInt(tx.timeStamp, 10))) { outsideRange++; return; }
         if (c.kind === "deposit") deposits.push({ tx: tx, pool: c.pool });
         else selfWithdrawals.push({ tx: tx, pool: c.pool, decoded: c.decoded });
       });
 
+      if (deposits.length === 0 && selfWithdrawals.length === 0 && outsideRange > 0) {
+        $results.innerHTML = '<div class="notice">This address has ' + outsideRange + ' Tornado transaction' + (outsideRange === 1 ? '' : 's') + ', but none ' + depositRangeText(win) + '.</div>';
+        return;
+      }
       if (deposits.length === 0 && selfWithdrawals.length === 0) {
         $results.innerHTML = '<div class="notice info">No Tornado Cash deposits found for this address, either direct or through the Tornado router, and no withdrawals it paid for itself. If it only ever received a withdrawal through a relayer, this tool can\'t see that. See the notes below.</div>';
         return;
@@ -348,7 +431,7 @@
           card.className = "dep-card";
           card.innerHTML =
             '<div class="dep-head"><span class="dep-pool">' + pool.token + ' ' + pool.denom + ' pool</span>' +
-            '<span class="dep-time">' + new Date(parseInt(tx.timeStamp,10)*1000).toISOString() + '</span></div>' +
+            '<span class="dep-time">' + fmtUtc(parseInt(tx.timeStamp,10)) + '</span></div>' +
             '<div>Withdrawal this address paid for itself, sent to <a class="addr" href="' + etherscanAddrLink(decoded.recipient) + '" target="_blank" rel="noopener">' + decoded.recipient + '</a> &mdash; <a href="' + etherscanTxLink(tx.hash) + '" target="_blank" rel="noopener">view tx</a></div>' +
             '<span class="dep-self">Confirmed: the address paid its own gas, so the link is certain.</span>';
           $results.appendChild(card);
@@ -360,40 +443,48 @@
         var pool = toScan[i].pool;
         var depBlock = parseInt(dep.blockNumber, 10);
         var depTime = parseInt(dep.timeStamp, 10);
-        var endBlock = depBlock + windowDays * BLOCKS_PER_DAY;
+        var range = scanRange(win, depBlock, depTime);
 
         var card = document.createElement("div");
         card.className = "dep-card";
         card.innerHTML =
           '<div class="dep-head"><span class="dep-pool">Deposit into ' + pool.token + ' ' + pool.denom + ' pool</span>' +
-          '<span class="dep-time">' + new Date(depTime*1000).toISOString() + '</span></div>' +
+          '<span class="dep-time">' + fmtUtc(depTime) + '</span></div>' +
           '<div><a href="' + etherscanTxLink(dep.hash) + '" target="_blank" rel="noopener">view deposit tx</a></div>' +
-          '<div class="notice info" style="margin-top:10px;"><span class="spinner"></span>Checking this pool\'s withdrawals over the next ' + windowDays + ' day(s)&hellip;</div>';
+          '<div class="notice info" style="margin-top:10px;"><span class="spinner"></span>Checking this pool\'s withdrawals ' + (range ? range.label : '') + '&hellip;</div>';
         $results.appendChild(card);
+        if (!range) {
+          card.querySelector(".notice").textContent = "Your withdrawal range ends before this deposit was made, so there is nothing to check for it.";
+          continue;
+        }
 
         try {
-          var events = await fetchWithdrawalEvents(pool.address, depBlock, endBlock);
+          var events = await fetchWithdrawalEvents(pool.address, range.from, range.to);
+          var lastTs = events.length ? parseInt(events[events.length - 1].timeStamp, 16) : 0;
+          var capNote = events.capped ? ' The scan stopped at 5,000 withdrawals, the last one on ' + fmtUtc(lastTs) + ', so anything after that was not read. Narrow the range to see past it.' : '';
           var candidates = events.map(function(ev){
             // Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee):
             // `to` is the first 32-byte word of data; relayer is topics[1].
             var data = ev.data.slice(2);
+            var ts = parseInt(ev.timeStamp, 16);
             return {
               recipient: "0x" + data.slice(24, 64),
               relayer: "0x" + ev.topics[1].slice(26),
-              gap: parseInt(ev.timeStamp, 16) - depTime,
+              ts: ts,
+              gap: ts - depTime,
               hash: ev.transactionHash
             };
-          }).filter(function(c){ return c.gap >= 0; })
+          }).filter(function(c){ return inScan(range, c.ts); })
             .sort(function(a,b){ return a.gap - b.gap; });
 
           var notice = card.querySelector(".notice");
           if (candidates.length === 0) {
             notice.className = "notice info";
-            notice.innerHTML = "No withdrawals from this pool in that window.";
+            notice.innerHTML = "No withdrawals from this pool " + range.windowText + "." + capNote;
             continue;
           }
 
-          var setSizeLine = '<div class="setsize">' + candidates.length + ' withdrawals from this pool in the ' + windowDays + '-day window after this deposit. The fewer there are, the more a close match means.</div>';
+          var setSizeLine = '<div class="setsize">' + candidates.length + ' withdrawals from this pool ' + range.windowText + '. The fewer there are, the more a close match means.' + capNote + '</div>';
 
           var rows = candidates.slice(0, 20).map(function(c){
             var gapClass = c.gap < 3600 ? "gap-strong" : (c.gap < 86400 ? "" : "gap-weak");

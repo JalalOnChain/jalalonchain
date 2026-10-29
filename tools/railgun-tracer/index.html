@@ -48,10 +48,17 @@
   .search-row{ display:flex; gap:10px; flex-wrap:wrap; }
   #addrInput{ flex:1 1 320px; background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:9px; padding:12px 14px; font-size:14px; font-family:"IBM Plex Mono",monospace; min-width:0; }
   #addrInput:focus{ outline:2px solid var(--teal); outline-offset:1px; }
-  #windowSelect{ background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:9px; padding:12px 10px; font-size:13.5px; font-family:inherit; }
   #searchBtn{ background:var(--accent); color:#1a1200; border:none; border-radius:9px; padding:12px 22px; font-size:14px; font-weight:700; font-family:inherit; cursor:pointer; white-space:nowrap; }
   #searchBtn:disabled{ opacity:.6; cursor:default; }
   #searchBtn:hover:not(:disabled){ filter:brightness(1.06); }
+  .custom-range{ margin-top:14px; padding-top:14px; border-top:1px dashed var(--border); }
+  .custom-range[hidden]{ display:none; }
+  .cr-row{ display:flex; align-items:center; gap:8px 14px; flex-wrap:wrap; margin-bottom:10px; }
+  .cr-label{ font-size:13px; font-weight:600; color:var(--text-muted); min-width:120px; }
+  .cr-row label{ font-size:12.5px; color:var(--text-faint); display:inline-flex; align-items:center; gap:6px; }
+  .cr-row input{ background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:8px 10px; font-size:13px; font-family:"IBM Plex Mono",monospace; color-scheme:inherit; }
+  .cr-row input:focus{ outline:2px solid var(--teal); outline-offset:1px; }
+  .cr-clear{ background:none; border:none; padding:0; font:inherit; font-size:12.5px; color:var(--teal); cursor:pointer; }
   .hint{ font-size:12px; color:var(--text-faint); margin-top:8px; }
   .notice{ border:1px solid var(--border); border-left:3px solid var(--text-faint); border-radius:8px; padding:11px 14px; font-size:13.5px; margin-top:14px; color:var(--text-muted); }
   .notice.warn{ border-left-color:var(--accent); }
@@ -111,15 +118,22 @@
     <h2>Search</h2>
     <div class="search-row">
       <input type="text" id="addrInput" placeholder="0x... address that deposited into Railgun" autocomplete="off" spellcheck="false">
-      <select id="windowSelect">
-        <option value="1">1 day after the deposit</option>
-        <option value="7" selected>7 days after</option>
-        <option value="30">30 days after</option>
-        <option value="90">90 days after</option>
-      </select>
       <button id="searchBtn">Trace</button>
     </div>
-    <div class="hint">Ethereum mainnet only. Railgun calls a deposit a "shield" and a withdrawal an "unshield". There is no time limit on either, so a longer window finds more but also adds noise.</div>
+    <div id="customRange" class="custom-range">
+      <div class="cr-row">
+        <span class="cr-label">Deposits made</span>
+        <label>From <input type="datetime-local" id="depFrom"></label>
+        <label>To <input type="datetime-local" id="depTo"></label>
+      </div>
+      <div class="cr-row">
+        <span class="cr-label">Withdrawals made</span>
+        <label>From <input type="datetime-local" id="wdFrom"></label>
+        <label>To <input type="datetime-local" id="wdTo"></label>
+      </div>
+      <div class="hint">All times are UTC. Leave any box empty to keep that side open. With no dates at all, each deposit is checked against everything that came out after it. The deposit dates also limit which of the address's own Railgun transactions are read. <button type="button" class="cr-clear" id="crClear">Clear dates</button></div>
+    </div>
+    <div class="hint">Ethereum mainnet only. Railgun calls a deposit a "shield" and a withdrawal an "unshield". There is no time limit on either, so a wider date range finds more but also adds noise.</div>
     <div id="configNotice"></div>
   </div>
 
@@ -187,7 +201,6 @@
     "0xe76c6c83af64e4c60245d8c7de953df673a7a33d": { symbol: "RAIL", decimals: 18 }
   };
 
-  var BLOCKS_PER_DAY = 7200;      // ~12s blocks; only used to size the window
   var MAX_DEPOSITS_SCANNED = 10;
   var MAX_RECEIPTS = 25;          // most recent Railgun-related txs read in full
   var MAX_ROWS = 20;
@@ -195,7 +208,6 @@
   var LOG_PAGE = 1000, LOG_PAGES = 5;
 
   var $addr = document.getElementById("addrInput");
-  var $win = document.getElementById("windowSelect");
   var $btn = document.getElementById("searchBtn");
   var $results = document.getElementById("results");
   var $configNotice = document.getElementById("configNotice");
@@ -340,6 +352,67 @@
   }
   function fmtTime(ts){ return new Date(ts * 1000).toISOString().replace("T", " ").slice(0, 16) + " UTC"; }
 
+  // ---- custom date range (UTC) ----
+  document.getElementById("crClear").addEventListener("click", function(){
+    ["depFrom","depTo","wdFrom","wdTo"].forEach(function(id){ document.getElementById(id).value = ""; });
+  });
+  function utcSeconds(id){
+    var v = document.getElementById(id).value;
+    if (!v) return null;
+    var t = Date.parse(v + "Z"); // the box has no zone, so read it as UTC
+    return isNaN(t) ? NaN : Math.floor(t / 1000);
+  }
+  function fmtUtc(ts){ return new Date(ts * 1000).toISOString().replace("T", " ").slice(0, 16) + " UTC"; }
+  function readWindow(){
+    var w = { custom: true, depFrom: utcSeconds("depFrom"), depTo: utcSeconds("depTo"), wdFrom: utcSeconds("wdFrom"), wdTo: utcSeconds("wdTo") };
+    var now = Math.floor(Date.now() / 1000);
+    if ([w.depFrom, w.depTo, w.wdFrom, w.wdTo].some(function(x){ return Number.isNaN(x); })) return { error: "One of the dates isn't complete. Fill in the date and the time, or clear the box." };
+    if (w.depFrom !== null && w.depTo !== null && w.depFrom > w.depTo) return { error: "The deposit range ends before it starts." };
+    if (w.wdFrom !== null && w.wdTo !== null && w.wdFrom > w.wdTo) return { error: "The withdrawal range ends before it starts." };
+    if (w.wdFrom !== null && w.wdFrom > now) return { error: "The withdrawal range starts in the future, so there is nothing to find yet." };
+    return w;
+  }
+  function inDepositRange(w, ts){
+    if (!w.custom) return true;
+    return (w.depFrom === null || ts >= w.depFrom) && (w.depTo === null || ts <= w.depTo);
+  }
+  function depositRangeText(w){
+    if (w.depFrom !== null && w.depTo !== null) return "between " + fmtUtc(w.depFrom) + " and " + fmtUtc(w.depTo);
+    if (w.depFrom !== null) return "after " + fmtUtc(w.depFrom);
+    return "before " + fmtUtc(w.depTo);
+  }
+  async function blockAt(ts, closest){
+    var url = new URL(ETHERSCAN_BASE);
+    url.searchParams.set("module", "block"); url.searchParams.set("action", "getblocknobytime");
+    url.searchParams.set("timestamp", String(ts)); url.searchParams.set("closest", closest);
+    url.searchParams.set("chainid", CHAIN_ID); url.searchParams.set("apikey", ETHERSCAN_API_KEY);
+    var res = await fetch(url.toString());
+    if (!res.ok) throw new Error("Etherscan request failed (HTTP " + res.status + ")");
+    var json = await res.json();
+    var n = parseInt(json.result, 10);
+    if (json.status !== "1" || isNaN(n)) throw new Error("Couldn't turn " + fmtUtc(ts) + " into a block number");
+    return n;
+  }
+  // Turns the withdrawal dates into block numbers once per search.
+  async function resolveWindowBlocks(w){
+    if (!w.custom) return;
+    var now = Math.floor(Date.now() / 1000);
+    w.wdFromBlock = w.wdFrom !== null ? await blockAt(w.wdFrom, "after") : 0;
+    w.wdToBlock = (w.wdTo === null || w.wdTo >= now - 60) ? 99999999 : await blockAt(w.wdTo, "before");
+  }
+  // The block range and wording for one deposit. Returns null when the
+  // withdrawal range ends before the deposit happened.
+  function scanRange(w, depBlock, depTime){
+    if (w.wdTo !== null && w.wdTo < depTime) return null;
+    var fromTs = Math.max(depTime, w.wdFrom === null ? 0 : w.wdFrom);
+    var span = "between " + fmtUtc(fromTs) + " and " + (w.wdTo === null ? "now" : fmtUtc(w.wdTo));
+    return {
+      from: Math.max(depBlock, w.wdFromBlock), to: w.wdToBlock, fromTs: fromTs, toTs: w.wdTo,
+      label: span, windowText: span
+    };
+  }
+  function inScan(range, ts){ return ts >= range.fromTs && (range.toTs === null || ts <= range.toTs); }
+
   // ---- unshield scan, cached per block range ----
   var unshieldCache = {};
   async function fetchUnshields(fromBlock, toBlock){
@@ -355,7 +428,7 @@
       all = all.concat(batch);
       if (batch.length < LOG_PAGE) break;
     }
-    var result = { logs: all, capped: all.length >= LOG_PAGE * LOG_PAGES };
+    var result = { logs: all, capped: all.length >= LOG_PAGE * LOG_PAGES, lastTs: all.length ? parseInt(all[all.length - 1].timeStamp, 16) : 0 };
     unshieldCache[key] = result;
     return result;
   }
@@ -395,13 +468,18 @@
       $results.innerHTML = '<div class="notice bad">That doesn\'t look like an Ethereum address. It should start with 0x and have 40 characters after it.</div>';
       return;
     }
-    var windowDays = parseInt($win.value, 10);
+    var win = readWindow();
+    if (win.error) {
+      $results.innerHTML = '<div class="notice bad">' + esc(win.error) + '</div>';
+      return;
+    }
     var me = addr.toLowerCase();
 
     $btn.disabled = true;
     $results.innerHTML = '<div class="notice"><span class="spinner"></span>Looking up the transactions for ' + short(addr) + '&hellip;</div>';
 
     try {
+      await resolveWindowBlocks(win);
       // 1. Find transactions that touched Railgun: calls this address sent to
       //    Railgun or its helper, and token transfers from this address into Railgun.
       var normal = await escList({ module: "account", action: "txlist", address: addr, startblock: "0", endblock: "99999999", sort: "asc", page: "1", offset: "10000" });
@@ -431,6 +509,13 @@
 
       if (touched.length === 0) {
         $results.innerHTML = '<div class="notice">No Railgun deposits found for this address, either direct or through Railgun\'s helper contract.' + (receivedCount ? '' : ' If it only ever received a withdrawal, there is nothing in its own history to start from. See the notes below.') + '</div>' + receivedLine;
+        return;
+      }
+
+      var allTouched = touched.length;
+      touched = touched.filter(function(t){ return inDepositRange(win, t.time); });
+      if (touched.length === 0) {
+        $results.innerHTML = '<div class="notice">This address has ' + allTouched + ' Railgun transaction' + (allTouched === 1 ? '' : 's') + ', but none ' + depositRangeText(win) + '.</div>' + receivedLine;
         return;
       }
 
@@ -490,7 +575,7 @@
       // 3. For each deposit, scan same-token withdrawals in the window.
       var toScan = deposits.slice(-MAX_DEPOSITS_SCANNED).reverse();
       for (var i = 0; i < toScan.length; i++) {
-        await renderDeposit(toScan[i], windowDays, i);
+        await renderDeposit(toScan[i], win, i);
       }
     } catch (err) {
       $results.innerHTML = '<div class="notice bad">Lookup failed: ' + esc(err.message) + '. Etherscan may be limiting requests. Wait a bit and try again.</div>';
@@ -499,10 +584,10 @@
     }
   }
 
-  async function renderDeposit(dep, windowDays, idx){
+  async function renderDeposit(dep, win, idx){
     var info = await tokenInfo(dep.token);
     var m = dep.meta;
-    var endBlock = m.block + windowDays * BLOCKS_PER_DAY;
+    var range = scanRange(win, m.block, m.time);
     var paidLine = dep.fee !== null
       ? 'Paid in ' + fmtUnits(dep.value + dep.fee, info.decimals) + ' ' + esc(info.symbol) + ', and Railgun kept ' + fmtUnits(dep.fee, info.decimals) + ' as its fee.'
       : 'Amount shown is what landed inside Railgun, after its fee.';
@@ -513,18 +598,23 @@
       '<div class="dep-head"><span class="dep-pool">Deposit of ' + fmtUnits(dep.value, info.decimals) + ' ' + esc(tokenLabel(info)) + '</span>' +
       '<span class="dep-time">' + fmtTime(m.time) + '</span></div>' +
       '<div class="dep-sub">' + paidLine + ' ' + txLink(m.hash, "view deposit tx") + '</div>' +
-      '<div class="notice"><span class="spinner"></span>Checking ' + esc(info.symbol) + ' withdrawals over the next ' + windowDays + ' day' + (windowDays === 1 ? '' : 's') + '&hellip;</div>';
+      '<div class="notice"><span class="spinner"></span>Checking ' + esc(info.symbol) + ' withdrawals ' + (range ? range.label : '') + '&hellip;</div>';
     $results.appendChild(card);
     var notice = card.querySelector(".notice");
 
+    if (!range) {
+      notice.textContent = "Your withdrawal range ends before this deposit was made, so there is nothing to check for it.";
+      return;
+    }
     try {
-      var scan = await fetchUnshields(m.block, endBlock);
+      var scan = await fetchUnshields(range.from, range.to);
       var cands = [];
       scan.logs.forEach(function(log){
         var u = decodeUnshield(log);
         if (u.tokenType !== 0 || u.token !== dep.token) return;
-        var gap = parseInt(log.timeStamp, 16) - m.time;
-        if (gap < 0) return;
+        var ts = parseInt(log.timeStamp, 16);
+        if (!inScan(range, ts)) return;
+        var gap = ts - m.time;
         if (log.transactionHash.toLowerCase() === m.hash.toLowerCase()) return;
         var spent = u.amount + u.fee; // what left the private balance
         var diff = spent > dep.value ? spent - dep.value : dep.value - spent;
@@ -537,7 +627,7 @@
         .sort(function(a,b){ return a.ppm === b.ppm ? a.gap - b.gap : (a.ppm < b.ppm ? -1 : 1); });
 
       if (cands.length === 0) {
-        notice.textContent = "No " + info.symbol + " withdrawals from Railgun in that window.";
+        notice.textContent = "No " + info.symbol + " withdrawals from Railgun " + range.windowText + "." + (scan.capped ? " The scan stopped at 5,000 withdrawals of all tokens, so later ones were not read. Narrow the range to see past that." : "");
         return;
       }
 
@@ -578,8 +668,8 @@
       var timeView =
         '<div class="table-scroll"><table class="cand"><thead><tr><th>Recipient</th><th>After deposit</th><th>Received</th><th>Vs deposit</th><th></th></tr></thead><tbody>' + timeRows + '</tbody></table></div>';
 
-      var setSize = '<div class="setsize">' + cands.length + ' ' + esc(info.symbol) + ' withdrawal' + (cands.length === 1 ? '' : 's') + ' from Railgun in the ' + windowDays + '-day window after this deposit. The fewer there are, the more a close match means.' +
-        (scan.capped ? ' The scan stopped at 5,000 withdrawals of all tokens, so the window was cut short.' : '') + '</div>';
+      var setSize = '<div class="setsize">' + cands.length + ' ' + esc(info.symbol) + ' withdrawal' + (cands.length === 1 ? '' : 's') + ' from Railgun ' + range.windowText + '. The fewer there are, the more a close match means.' +
+        (scan.capped ? ' The scan stopped at 5,000 withdrawals of all tokens, the last one on ' + fmtTime(scan.lastTs) + ', so anything after that was not read. Narrow the range to see past it.' : '') + '</div>';
 
       notice.remove();
       card.insertAdjacentHTML("beforeend",

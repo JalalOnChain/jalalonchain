@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-30T18:52:24Z",
+  "updatedAt": "2026-10-30T22:57:57Z",
   "items": [
     {
       "id": "ds-0xca584c573db35a4445a23542f358c998a6a5c39f",
@@ -23,7 +23,7 @@
       "platform": "DexScreener / Base",
       "marketCapUsd": 175334053332.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:53Z",
       "link": "https://dexscreener.com/base/0x33ae3b1d13b4ad4b4195388ef551afd8a8c5f3f1",
       "address": "0x638336aa8c7330a45d727ab7611e57da62286f0b"
     },
@@ -34,9 +34,9 @@
       "chain": "BNB Chain",
       "chainId": "bsc",
       "platform": "DexScreener / BNB Chain",
-      "marketCapUsd": 2351589572.0,
+      "marketCapUsd": 2350569234.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/bsc/0x458be779c33b9ddfbbf17792bdd0d01cd78b6d3e",
       "address": "0x581a0d5398394af52faba585369b359b50f8ceac"
     },
@@ -65,6 +65,19 @@
       "fetchedAt": "2026-10-28T21:54:27Z",
       "link": "https://dexscreener.com/bsc/0x3c2bfd5f42ac2d8a1d53649d12fc5d124cf0dd9f",
       "address": "0x337bf3a79efde521cf53540511c1846b26b0817e"
+    },
+    {
+      "id": "ds-0x7c9ef7230527ba7035c0459abd687e75157b4f3c",
+      "name": "XPanda",
+      "symbol": "XPanda",
+      "chain": "BNB Chain",
+      "chainId": "bsc",
+      "platform": "DexScreener / BNB Chain",
+      "marketCapUsd": 451814285.0,
+      "createdAt": null,
+      "fetchedAt": "2026-10-30T22:57:54Z",
+      "link": "https://dexscreener.com/bsc/0x9d6a99834e40415f54fa77437e6041e13502a279",
+      "address": "0x7c9ef7230527ba7035c0459abd687e75157b4f3c"
     },
     {
       "id": "ds-0x53d4b97f34062e1e6b22a1a4d4345623fe356764",
@@ -145,19 +158,6 @@
       "address": "9sse89entupjkk7bz8wbax1yy5b78cguaunzfgonst9d"
     },
     {
-      "id": "ds-0x7c9ef7230527ba7035c0459abd687e75157b4f3c",
-      "name": "XPanda",
-      "symbol": "XPanda",
-      "chain": "BNB Chain",
-      "chainId": "bsc",
-      "platform": "DexScreener / BNB Chain",
-      "marketCapUsd": 176130112.0,
-      "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
-      "link": "https://dexscreener.com/bsc/0x9d6a99834e40415f54fa77437e6041e13502a279",
-      "address": "0x7c9ef7230527ba7035c0459abd687e75157b4f3c"
-    },
-    {
       "id": "ds-gkdbd4kjqgbgpsyok71klan2avxtdckglfsyymyd5jtm",
       "name": "SemiPepe",
       "symbol": "SPEPE",
@@ -166,7 +166,7 @@
       "platform": "DexScreener / Solana",
       "marketCapUsd": 142025128.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/solana/enpme1po2juncnbus7jodmoj2nxtbcvypkbsnqheyl2t",
       "address": "gkdbd4kjqgbgpsyok71klan2avxtdckglfsyymyd5jtm"
     },
@@ -192,7 +192,7 @@
       "platform": "DexScreener / BNB Chain",
       "marketCapUsd": 74120791.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/bsc/0x5825c36086cc90d63557525ebb27fa39e043bb3c",
       "address": "0x026405b7c5de213e007ac536dd58059c01550bde"
     },
@@ -203,9 +203,9 @@
       "chain": "Ethereum",
       "chainId": "ethereum",
       "platform": "DexScreener / Ethereum",
-      "marketCapUsd": 39987976.0,
+      "marketCapUsd": 43111654.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/ethereum/0xc63eb6794f7b98afa83a350eceb9052401c6da65e2e27d8b3479e12bbc720b91",
       "address": "0x7cf9a80db3b29ee8efe3710aadb7b95270572d47"
     },
@@ -216,9 +216,9 @@
       "chain": "Base",
       "chainId": "base",
       "platform": "DexScreener / Base",
-      "marketCapUsd": 31919714.0,
+      "marketCapUsd": 33136790.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:53Z",
       "link": "https://dexscreener.com/base/0xe30d5bf485f7476ac15884a28ffb3c9cea635dcb",
       "address": "0x696f9436b67233384889472cd7cd58a6fb5df4f1"
     },
@@ -242,9 +242,9 @@
       "chain": "Robinhood Chain",
       "chainId": "robinhood",
       "platform": "DexScreener / Robinhood Chain",
-      "marketCapUsd": 22174331.0,
+      "marketCapUsd": 21994465.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:19Z",
+      "fetchedAt": "2026-10-30T22:57:53Z",
       "link": "https://dexscreener.com/robinhood/0xe3e493da94a2a6feedaf998dfaedbd551b984dac3b3b96fae4d0fb2b862c8481",
       "address": "0x62ed300a5916aed339a65e04754392763982a967"
     },
@@ -270,7 +270,7 @@
       "platform": "DexScreener / Ethereum",
       "marketCapUsd": 20862695.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/ethereum/0x36307fed492c0389d1e4c8a6d40f06c35ed6fd1d3d7e442e590d14698ed5f1f5",
       "address": "0xd3ddb098a529a14d920203ed5015482c9226f9b9"
     },
@@ -281,9 +281,9 @@
       "chain": "BNB Chain",
       "chainId": "bsc",
       "platform": "DexScreener / BNB Chain",
-      "marketCapUsd": 20269416.0,
+      "marketCapUsd": 20437819.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/bsc/0x05f4a518fe9271cb45d4a1d708ece2ac04bc6a6c",
       "address": "0x4c067de26475e1cefee8b8d1f6e2266b33a2372e"
     },
@@ -294,9 +294,9 @@
       "chain": "Solana",
       "chainId": "solana",
       "platform": "DexScreener / Solana",
-      "marketCapUsd": 20219828.0,
+      "marketCapUsd": 20396087.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/solana/b6xfztvhpqg3y3ldtgwskqbwa4aycyvw7yb4kbcstrnv",
       "address": "8smmso8muv8d6i4wmmdthkt6tn1ysn6937sx3dklxzqb"
     },
@@ -307,9 +307,9 @@
       "chain": "Near",
       "chainId": "near",
       "platform": "DexScreener / Near",
-      "marketCapUsd": 20150603.0,
+      "marketCapUsd": 20334819.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:21Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/near/refv1-6458",
       "address": "token.rhealab.near"
     },
@@ -320,9 +320,9 @@
       "chain": "Solana",
       "chainId": "solana",
       "platform": "DexScreener / Solana",
-      "marketCapUsd": 20116886.0,
+      "marketCapUsd": 20030827.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/solana/7trxshpnnefuerqosc6evbmcb6subfiqvuj9ngwnband",
       "address": "6eaecvv5kkahx9rlrmww2rpurdwqbjkhepaax8iqhcya"
     },
@@ -333,9 +333,9 @@
       "chain": "BNB Chain",
       "chainId": "bsc",
       "platform": "DexScreener / BNB Chain",
-      "marketCapUsd": 19021907.0,
+      "marketCapUsd": 19090691.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/bsc/0x55845fc381100bac7313fce58dc6412608fd794b",
       "address": "0x7af3eeb03894c5150abac3e8b2ab6fb427a17777"
     },
@@ -346,24 +346,11 @@
       "chain": "Robinhood Chain",
       "chainId": "robinhood",
       "platform": "DexScreener / Robinhood Chain",
-      "marketCapUsd": 17464840.0,
+      "marketCapUsd": 17733723.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:19Z",
+      "fetchedAt": "2026-10-30T22:57:53Z",
       "link": "https://dexscreener.com/robinhood/0x77f0e97f94b742b7c2046efb6675eb9583a31b36316c8b7b070d0d04f11aa7b2",
       "address": "0x5ab3d4c385b400f3abb49e80de2faf6a88a7b691"
-    },
-    {
-      "id": "ds-0x6d34013052c8fe696805dde682ae8086be5655cc",
-      "name": "Super Inu",
-      "symbol": "SI",
-      "chain": "Ethereum",
-      "chainId": "ethereum",
-      "platform": "DexScreener / Ethereum",
-      "marketCapUsd": 17387717.0,
-      "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
-      "link": "https://dexscreener.com/ethereum/0x66e4c63873c716c16433ede4b22911631923de96",
-      "address": "0x6d34013052c8fe696805dde682ae8086be5655cc"
     },
     {
       "id": "ds-0x76d89e26502d0aa9bf83da222cfcf12a27ead801",
@@ -374,9 +361,22 @@
       "platform": "DexScreener / BNB Chain",
       "marketCapUsd": 16260040.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/bsc/0x9b1893e468189cbbbd6b73a77092fff9cd92d504",
       "address": "0x76d89e26502d0aa9bf83da222cfcf12a27ead801"
+    },
+    {
+      "id": "ds-0x5181b7dd097b42d7787ee78efab86f43d4e12f44",
+      "name": "SpaceX (Reality Tokenized)",
+      "symbol": "rSPCX",
+      "chain": "Arbitrum",
+      "chainId": "arbitrum",
+      "platform": "DexScreener / Arbitrum",
+      "marketCapUsd": 15676105.0,
+      "createdAt": null,
+      "fetchedAt": "2026-10-30T22:57:55Z",
+      "link": "https://dexscreener.com/arbitrum/0xe072110fbaec692284b4038e196b7fdb2c96ff58",
+      "address": "0x5181b7dd097b42d7787ee78efab86f43d4e12f44"
     },
     {
       "id": "ds-0x64e8bee350c0ba7c7601f7eca7f61ab965148b51",
@@ -392,17 +392,17 @@
       "address": "0x64e8bee350c0ba7c7601f7eca7f61ab965148b51"
     },
     {
-      "id": "ds-0x5181b7dd097b42d7787ee78efab86f43d4e12f44",
-      "name": "SpaceX (Reality Tokenized)",
-      "symbol": "rSPCX",
-      "chain": "Arbitrum",
-      "chainId": "arbitrum",
-      "platform": "DexScreener / Arbitrum",
-      "marketCapUsd": 15575262.0,
+      "id": "ds-0x6d34013052c8fe696805dde682ae8086be5655cc",
+      "name": "Super Inu",
+      "symbol": "SI",
+      "chain": "Ethereum",
+      "chainId": "ethereum",
+      "platform": "DexScreener / Ethereum",
+      "marketCapUsd": 15461939.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:21Z",
-      "link": "https://dexscreener.com/arbitrum/0xe072110fbaec692284b4038e196b7fdb2c96ff58",
-      "address": "0x5181b7dd097b42d7787ee78efab86f43d4e12f44"
+      "fetchedAt": "2026-10-30T22:57:54Z",
+      "link": "https://dexscreener.com/ethereum/0x66e4c63873c716c16433ede4b22911631923de96",
+      "address": "0x6d34013052c8fe696805dde682ae8086be5655cc"
     },
     {
       "id": "ds-0x88ecdd1b4902fdf504fd6bf4ef2f4449d0a89d6a",
@@ -424,9 +424,9 @@
       "chain": "Arbitrum",
       "chainId": "arbitrum",
       "platform": "DexScreener / Arbitrum",
-      "marketCapUsd": 13298889.0,
+      "marketCapUsd": 13458710.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:21Z",
+      "fetchedAt": "2026-10-30T22:57:55Z",
       "link": "https://dexscreener.com/arbitrum/0x18c3fbfd0178113875792659e3207a5f895e0fee",
       "address": "0x861a85a78c371bc0a02675bbe00a4cbc0826b421"
     },
@@ -437,9 +437,9 @@
       "chain": "Hyperevm",
       "chainId": "hyperevm",
       "platform": "DexScreener / Hyperevm",
-      "marketCapUsd": 12585102.0,
+      "marketCapUsd": 12652814.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:21Z",
+      "fetchedAt": "2026-10-30T22:57:55Z",
       "link": "https://dexscreener.com/hyperevm/0x05db494929c683d67d7fba09da9aaa9caf2487d8",
       "address": "0x6b73113ac6d5455c17332098377a4b99ae553237"
     },
@@ -450,9 +450,9 @@
       "chain": "Arc",
       "chainId": "arc",
       "platform": "DexScreener / Arc",
-      "marketCapUsd": 11367071.0,
+      "marketCapUsd": 11377674.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:22Z",
+      "fetchedAt": "2026-10-30T22:57:55Z",
       "link": "https://dexscreener.com/arc/0xa3abdb2721cd343da530ff6fd0ad73f3caa77163ea2fb8206847249f9bba57d5",
       "address": "0x5849fd68a097b3ee7d87ce88a0fcbb76857648ff"
     },
@@ -463,9 +463,9 @@
       "chain": "Base",
       "chainId": "base",
       "platform": "DexScreener / Base",
-      "marketCapUsd": 10881789.0,
+      "marketCapUsd": 10758578.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:53Z",
       "link": "https://dexscreener.com/base/0x4f4f9ce72933292958e7cde445bc57f889378085",
       "address": "0xe2ef6ea8cb5ef092f068416ff8f9727eb2586ec9"
     },
@@ -476,9 +476,9 @@
       "chain": "BNB Chain",
       "chainId": "bsc",
       "platform": "DexScreener / BNB Chain",
-      "marketCapUsd": 9324055.0,
+      "marketCapUsd": 9318517.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/bsc/0x098962554262b7f68774419dd99c4d36e5d0560f",
       "address": "0xa9650709005e8ad1798e42c539d3f1576e3b9850"
     },
@@ -489,9 +489,9 @@
       "chain": "Xrpl",
       "chainId": "xrpl",
       "platform": "DexScreener / Xrpl",
-      "marketCapUsd": 8699862.0,
+      "marketCapUsd": 8685598.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:22Z",
+      "fetchedAt": "2026-10-30T22:57:55Z",
       "link": "https://dexscreener.com/xrpl/lht.rhashlabsu2h6hxdsunl8acvdmtye17z35_xrp",
       "address": "lht.rhashlabsu2h6hxdsunl8acvdmtye17z35"
     },
@@ -504,7 +504,7 @@
       "platform": "DexScreener / Solana",
       "marketCapUsd": 8658550.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/solana/7s6ptw2r6wg7opacuniktbjyetfepjqcm31p6zashs9t",
       "address": "ecsgxsbgoqznxhgkhon3jsmqjyw57fsglfrrf8sgtvgr"
     },
@@ -517,7 +517,7 @@
       "platform": "DexScreener / BNB Chain",
       "marketCapUsd": 8268616.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/bsc/0xb155c81c9d1e31fe9bee02d005d160abb795c836",
       "address": "0xa04fec6ffdd70615e9f509c5ad8f8a430fe97995"
     },
@@ -530,22 +530,9 @@
       "platform": "DexScreener / Base",
       "marketCapUsd": 8000470.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:53Z",
       "link": "https://dexscreener.com/base/0x1d726fbde08d8f8a9b8ceb35ce6702162c5711c9",
       "address": "0xf2166d39dd7e2712b81e96b4ab802764ef68f7c9"
-    },
-    {
-      "id": "ds-0x216ef90e789a8c97b166901ec1d11d6612c8cf8c",
-      "name": "SEED Token",
-      "symbol": "SEED",
-      "chain": "Base",
-      "chainId": "base",
-      "platform": "DexScreener / Base",
-      "marketCapUsd": 7934020.0,
-      "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
-      "link": "https://dexscreener.com/base/0x20949603e54db00f376a8d113abb45b9d245b5cc",
-      "address": "0x216ef90e789a8c97b166901ec1d11d6612c8cf8c"
     },
     {
       "id": "ds-0xdae0fafd65385e7775cf75b1398735155ef6acd2",
@@ -556,9 +543,22 @@
       "platform": "DexScreener / Ethereum",
       "marketCapUsd": 7834177.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/ethereum/0x1402416ec2f474cf161c1c9759b40fc1daab458bfc84a99abbf332e728055ba7",
       "address": "0xdae0fafd65385e7775cf75b1398735155ef6acd2"
+    },
+    {
+      "id": "ds-0x216ef90e789a8c97b166901ec1d11d6612c8cf8c",
+      "name": "SEED Token",
+      "symbol": "SEED",
+      "chain": "Base",
+      "chainId": "base",
+      "platform": "DexScreener / Base",
+      "marketCapUsd": 7511818.0,
+      "createdAt": null,
+      "fetchedAt": "2026-10-30T22:57:53Z",
+      "link": "https://dexscreener.com/base/0x20949603e54db00f376a8d113abb45b9d245b5cc",
+      "address": "0x216ef90e789a8c97b166901ec1d11d6612c8cf8c"
     },
     {
       "id": "ds-0x4f0ed1f48beaa4797a62202a21804cadc2170d6b",
@@ -567,9 +567,9 @@
       "chain": "BNB Chain",
       "chainId": "bsc",
       "platform": "DexScreener / BNB Chain",
-      "marketCapUsd": 6726972.0,
+      "marketCapUsd": 6046384.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/bsc/0x3079ae2e87dc2e0c75c9b98d65bc622ad10f326c",
       "address": "0x4f0ed1f48beaa4797a62202a21804cadc2170d6b"
     },
@@ -593,9 +593,9 @@
       "chain": "BNB Chain",
       "chainId": "bsc",
       "platform": "DexScreener / BNB Chain",
-      "marketCapUsd": 4390731.0,
+      "marketCapUsd": 4523550.0,
       "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
+      "fetchedAt": "2026-10-30T22:57:54Z",
       "link": "https://dexscreener.com/bsc/0xfeef70ff6f58f0a900e28a77e5a8945afb343923",
       "address": "0xa394dcea3fd3847fd793afbfd163e2e3858b7c65"
     },
@@ -607,9 +607,35 @@
       "platform": "pump.fun",
       "marketCapUsd": 4041058.45,
       "createdAt": "2026-10-21T07:40:52Z",
-      "fetchedAt": "2026-10-30T18:52:22Z",
+      "fetchedAt": "2026-10-30T22:57:56Z",
       "link": "https://pump.fun/4VJpen64piyrizdJLxNfhjhEd9JceXCR7i5oSKkxpump",
       "address": "4VJpen64piyrizdJLxNfhjhEd9JceXCR7i5oSKkxpump"
+    },
+    {
+      "id": "ds-0x7fae52142bc5cc81c9d5c61399fe46331ec596a3",
+      "name": "Bitcoin Pepe",
+      "symbol": "BITPEPE",
+      "chain": "Ethereum",
+      "chainId": "ethereum",
+      "platform": "DexScreener / Ethereum",
+      "marketCapUsd": 1634370.0,
+      "createdAt": null,
+      "fetchedAt": "2026-10-30T22:57:54Z",
+      "link": "https://dexscreener.com/ethereum/0xfc9d572b57dce19141be33ab60a7721fd320ba59",
+      "address": "0x7fae52142bc5cc81c9d5c61399fe46331ec596a3"
+    },
+    {
+      "id": "ds-0x008df4b3e857d06c4603aeb11f267ccd32ce2005",
+      "name": "Robinhood",
+      "symbol": "ROBINHOOD",
+      "chain": "Robinhood Chain",
+      "chainId": "robinhood",
+      "platform": "DexScreener / Robinhood Chain",
+      "marketCapUsd": 1388667.0,
+      "createdAt": null,
+      "fetchedAt": "2026-10-30T22:57:53Z",
+      "link": "https://dexscreener.com/robinhood/0x7f8271c1a7a6a434f33b0babc15bf2980a0dcb4196848b4f7e789a7fd73a5350",
+      "address": "0x008df4b3e857d06c4603aeb11f267ccd32ce2005"
     },
     {
       "id": "ds-526f62696e686f6f640000000000000000000000.robinhxxnxvhxfqdm63jk3ggcyainyfta",
@@ -625,32 +651,6 @@
       "address": "526f62696e686f6f640000000000000000000000.robinhxxnxvhxfqdm63jk3ggcyainyfta"
     },
     {
-      "id": "ds-0x008df4b3e857d06c4603aeb11f267ccd32ce2005",
-      "name": "Robinhood",
-      "symbol": "ROBINHOOD",
-      "chain": "Robinhood Chain",
-      "chainId": "robinhood",
-      "platform": "DexScreener / Robinhood Chain",
-      "marketCapUsd": 1315867.0,
-      "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:19Z",
-      "link": "https://dexscreener.com/robinhood/0x7f8271c1a7a6a434f33b0babc15bf2980a0dcb4196848b4f7e789a7fd73a5350",
-      "address": "0x008df4b3e857d06c4603aeb11f267ccd32ce2005"
-    },
-    {
-      "id": "ds-0x7fae52142bc5cc81c9d5c61399fe46331ec596a3",
-      "name": "Bitcoin Pepe",
-      "symbol": "BITPEPE",
-      "chain": "Ethereum",
-      "chainId": "ethereum",
-      "platform": "DexScreener / Ethereum",
-      "marketCapUsd": 1284596.0,
-      "createdAt": null,
-      "fetchedAt": "2026-10-30T18:52:20Z",
-      "link": "https://dexscreener.com/ethereum/0xfc9d572b57dce19141be33ab60a7721fd320ba59",
-      "address": "0x7fae52142bc5cc81c9d5c61399fe46331ec596a3"
-    },
-    {
       "id": "pf-6hv39Af49pgUuL21RNSMAGhWB1apmiRM7abExTFJpump",
       "name": "E91",
       "symbol": "E91",
@@ -658,7 +658,7 @@
       "platform": "pump.fun",
       "marketCapUsd": 1241765.83,
       "createdAt": "2026-10-21T21:47:46Z",
-      "fetchedAt": "2026-10-30T18:52:22Z",
+      "fetchedAt": "2026-10-30T22:57:56Z",
       "link": "https://pump.fun/6hv39Af49pgUuL21RNSMAGhWB1apmiRM7abExTFJpump",
       "address": "6hv39Af49pgUuL21RNSMAGhWB1apmiRM7abExTFJpump"
     },
@@ -670,9 +670,21 @@
       "platform": "pump.fun",
       "marketCapUsd": 1192670.61,
       "createdAt": "2026-10-13T11:10:17Z",
-      "fetchedAt": "2026-10-30T18:52:22Z",
+      "fetchedAt": "2026-10-30T22:57:56Z",
       "link": "https://pump.fun/82wf4j3PBW4oqq6BwEEf7S9zCQS6mZCmPBLLnQsbpump",
       "address": "82wf4j3PBW4oqq6BwEEf7S9zCQS6mZCmPBLLnQsbpump"
+    },
+    {
+      "id": "pf-B3ryieyLguigqDyjck3ADK1RLf4ApiuL6QoShdijpump",
+      "name": "nevada",
+      "symbol": "nevada",
+      "chain": "Solana",
+      "platform": "pump.fun",
+      "marketCapUsd": 1079293.49,
+      "createdAt": "2026-10-28T18:33:17Z",
+      "fetchedAt": "2026-10-30T22:57:56Z",
+      "link": "https://pump.fun/B3ryieyLguigqDyjck3ADK1RLf4ApiuL6QoShdijpump",
+      "address": "B3ryieyLguigqDyjck3ADK1RLf4ApiuL6QoShdijpump"
     }
   ]
 }

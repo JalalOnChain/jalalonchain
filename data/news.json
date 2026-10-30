@@ -1,6 +1,36 @@
 {
-  "updatedAt": "2026-10-29T20:36:08Z",
+  "updatedAt": "2026-10-30T00:22:56Z",
   "items": [
+    {
+      "id": "news-e5403fe62a02",
+      "title": "Binance Hacker Hunts for Exit Ramps as DeFi Exchanges Pause Markets",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382194/binance-hack-exit-ramps-defi-exchange-ethereum",
+      "publishedAt": "2026-10-29T22:57:48Z",
+      "fetchedAt": "2026-10-30T00:22:36Z",
+      "summary": "Etherscan records show wallets tied to the suspected Binance hack swapping freezable stablecoins for Ethereum on decentralized exchanges."
+    },
+    {
+      "id": "news-05202c0fc77b",
+      "title": "Binance Drained of $5.5 Billion in Suspected Hack, Tether and Circle Freeze $1.8 Billion",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382191/binance-suspected-hack-5-billion-tether-circle-freeze-crypto",
+      "publishedAt": "2026-10-29T21:36:24Z",
+      "fetchedAt": "2026-10-30T00:22:36Z",
+      "summary": "An on-chain tally puts the suspected Binance drain at $5.57 billion across three blockchains, as Tether and Circle froze $1.8 billion."
+    },
+    {
+      "id": "news-e0ebb6c4f6c7",
+      "title": "Coinbase Swings to $719 Million Q3 Profit on Crypto Gains",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382188/coinbase-beats-719-million-q3-profit-crypto-gains",
+      "publishedAt": "2026-10-29T20:46:43Z",
+      "fetchedAt": "2026-10-30T00:22:36Z",
+      "summary": "Coinbase reported third-quarter net income of $719 million, driven largely by gains on its crypto holdings, as revenue held flat at $1.22 billion."
+    },
     {
       "id": "news-2c07d793d02f",
       "title": "Polymarket Pauses Trading as Prediction Market Investigates Security Incident",
@@ -40,6 +70,16 @@
       "publishedAt": "2026-10-29T16:32:47Z",
       "fetchedAt": "2026-10-29T20:35:47Z",
       "summary": "Bitcoin is trading close to the average price paid by U.S. spot ETF holders, a day after the Federal Reserve held rates steady."
+    },
+    {
+      "id": "news-b1f234d11380",
+      "title": "Hyperliquid's HYPE Jumps 13% as NYSE Owner ICE Moves to Bring Its Perpetual Futures to the US",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382149/hyperliquid-hype-jumps-nyse-owner-ice-perpetual-futures-us",
+      "publishedAt": "2026-10-29T15:59:48Z",
+      "fetchedAt": "2026-10-30T00:22:36Z",
+      "summary": "Intercontinental Exchange signed a deal with Trade[XYZ] to launch regulated perpetual futures built on Hyperliquid in the United States, sending HYPE soaring."
     },
     {
       "id": "news-baa1511c10cb",
@@ -1460,46 +1500,6 @@
       "publishedAt": "2026-10-13T20:16:03Z",
       "fetchedAt": "2026-10-13T20:40:14Z",
       "summary": "Binance will discontinue Binance Pool, Pool Savings, Cloud Mining, and other related services in a retreat from mining infrastructure."
-    },
-    {
-      "id": "news-b239f4d4a404",
-      "title": "Bitcoin Whale That Sat Through Every Crash Since 2020 Just Moved $377M",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380867/bitcoin-whale-every-crash-2020-moves-377m",
-      "publishedAt": "2026-10-13T19:38:12Z",
-      "fetchedAt": "2026-10-13T20:40:14Z",
-      "summary": "A wallet that received 4,581 BTC in March 2020, worth about $40 million then, moved its stash today when it was worth about $377 million."
-    },
-    {
-      "id": "news-d37a700fe57c",
-      "title": "Strive Buys $280 Million in Bitcoin, Its Largest Purchase in Months",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380858/strive-buys-280-million-bitcoin-largest-purchase-months",
-      "publishedAt": "2026-10-13T18:15:05Z",
-      "fetchedAt": "2026-10-13T20:40:14Z",
-      "summary": "The Nasdaq-listed asset manager bought the Bitcoin at an average of about $84,500 during a rough week for the market, lifting its total stash to 32,773 BTC."
-    },
-    {
-      "id": "news-574f66ee109c",
-      "title": "Bitcoin Shakes Off Spooky Season Jitters: Can Bulls Keep It Going?",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380842/bitcoin-shakes-off-spooky-season-jitters",
-      "publishedAt": "2026-10-13T16:46:05Z",
-      "fetchedAt": "2026-10-13T20:40:14Z",
-      "summary": "Bitcoin dipped below $81,000 before buyers stepped in, but the Fear and Greed Index says traders aren't convinced yet."
-    },
-    {
-      "id": "news-36d097ee5323",
-      "title": "Trezor Cuts Its Resellers After Ledger Finds Spy Implant in Crypto Wallets",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/380848/trezor-cuts-resellers-ledger-finds-spy-implant-crypto-wallets",
-      "publishedAt": "2026-10-13T16:14:50Z",
-      "fetchedAt": "2026-10-13T23:56:15Z",
-      "summary": "Trezor is ending reseller authorizations on January 1, 2027, after Ledger confirmed that wallets sold by a Southeast Asian retailer carried a hidden implant that sent out users' recovery phrases."
     }
   ]
 }

@@ -8,9 +8,9 @@ for git itself — GitHub provides GITHUB_TOKEN automatically). Responsibilities
 1. Pull crypto news, hack alerts and government/regulatory enforcement actions
    from RSS feeds and a couple of best-effort scrapes, de-duplicate with
    stable content-hash IDs, and write data/news.json.
-2. Pull new token launches that crossed a market-cap threshold from pump.fun
-   and DexScreener (including a targeted search for Robinhood-branded/chain
-   tokens), and write data/launches.json.
+2. Pull new token launches that crossed a market-cap threshold, Solana first
+   (pump.fun plus other launchpads found through DexScreener), with checks
+   on pair age, liquidity and market cap, and write data/launches.json.
 3. Pull a live top-N coin price snapshot from CoinGecko for the homepage
    price ticker, and write data/prices.json.
 4. Pull newly-listed DeFi protocols/entities (by TVL) from DefiLlama, and
@@ -508,28 +508,115 @@ def sync_news():
     print(f"news: {len(new_items)} new, {before - len(items)} duplicate(s) collapsed, {len(items)} total")
 
 
-# --- New token launches ($1M+ market cap, across platforms) ---------------
+# --- New token launches ($1M+ market cap, Solana first) ------------------
 # Note: crossing $1M once doesn't mean staying there — pump.fun tokens in
-# particular routinely crash back to near-zero within hours. Earlier versions
-# of this script only ever ADDED items and never revisited them, so a coin
-# that peaked at $1M+ and then collapsed kept showing its stale peak value
-# forever. sync_launches() now refreshes (or drops) every already-saved item
-# every run, in addition to discovering new ones.
+# particular routinely crash back to near-zero within hours. sync_launches()
+# refreshes (or drops) every already-saved item every run, in addition to
+# discovering new ones.
+#
+# Data-quality rules (added Oct 2026 after Robinhood Chain tokenized-stock
+# listings showed market caps in the trillions):
+#   * Robinhood Chain is excluded entirely.
+#   * A DexScreener token only counts if its first trading pair is at most
+#     LAUNCH_MAX_AGE_DAYS old, so old tokens that just refreshed their
+#     DexScreener profile don't show up as "new".
+#   * Its biggest pool needs at least LAUNCH_MIN_LIQ_USD of liquidity, and the
+#     market cap can't be more than LAUNCH_MAX_MC_TO_LIQ times that liquidity.
+#   * Anything above LAUNCH_MAX_MC_USD is treated as bad data and skipped.
+#   * Solana fills most of the list; other chains are capped at
+#     LAUNCH_NON_SOLANA_MAX combined.
 MAX_LAUNCHES = 80
 LAUNCH_MIN_USD = 1_000_000
 LAUNCH_MAX_AGE_DAYS = 30
 DELIST_BELOW_USD = 300_000   # confirmed current cap below this -> drop it (well under the $1M entry bar, so it doesn't flicker in/out right at the boundary)
-LAUNCH_STALE_MAX_DAYS = 14   # hard cap for items we couldn't actively re-confirm (e.g. no chainId on record)
+LAUNCH_STALE_MAX_DAYS = 14   # hard cap for items we couldn't actively re-confirm
+LAUNCH_MIN_LIQ_USD = 50_000
+LAUNCH_MAX_MC_TO_LIQ = 100
+LAUNCH_MAX_MC_USD = 5_000_000_000
+LAUNCH_NON_SOLANA_MAX = 10
+LAUNCH_EXCLUDED_CHAINS = {"robinhood"}
 PUMPFUN_URL = "https://frontend-api-v3.pump.fun/coins?offset=0&limit=50&sort=market_cap&order=DESC&includeNsfw=false"
 PUMPFUN_COIN_URL = "https://frontend-api-v3.pump.fun/coins/{mint}"
-DEXSCREENER_PROFILES_URL = "https://api.dexscreener.com/token-profiles/latest/v1"
+# DexScreener feeds of recently promoted tokens. Each entry carries chainId +
+# tokenAddress; market cap, liquidity and pair age come from the pairs lookup.
+DEXSCREENER_FEED_URLS = [
+    "https://api.dexscreener.com/token-profiles/latest/v1",
+    "https://api.dexscreener.com/token-boosts/latest/v1",
+    "https://api.dexscreener.com/token-boosts/top/v1",
+]
 DEXSCREENER_PAIR_URL = "https://api.dexscreener.com/tokens/v1/{chain}/{addresses}"
-DEXSCREENER_SEARCH_URL = "https://api.dexscreener.com/latest/dex/search?q={query}"
-# Targeted searches to widen coverage beyond whatever happens to be in the
-# latest-profiles feed — in particular Robinhood's tokenized-stock/crypto
-# offerings, which are easy to miss since they don't always show up as
-# freshly "submitted profiles".
-DEXSCREENER_SEARCH_QUERIES = ["robinhood"]
+
+
+def _is_excluded_launch(it):
+    return (it.get("chainId") or "") in LAUNCH_EXCLUDED_CHAINS or it.get("chain") == "Robinhood Chain"
+
+
+def _solana_launchpad(addr):
+    """pump.fun and bonk.fun mint vanity addresses ending in 'pump' / 'bonk',
+    which is the most reliable way to tell the launchpad apart without an
+    extra API call per token."""
+    a = addr or ""
+    if a.endswith("pump"):
+        return "pump.fun"
+    if a.endswith("bonk"):
+        return "bonk.fun"
+    return None
+
+
+def _launch_platform(chain, addr):
+    if chain == "solana":
+        pad = _solana_launchpad(addr)
+        return "Solana · " + pad if pad else "Solana"
+    return chain_label(chain)
+
+
+def _age_ok(created_iso):
+    if not created_iso:
+        return True  # unknown age — the staleness cutoff handles these
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=LAUNCH_MAX_AGE_DAYS)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return created_iso >= cutoff
+
+
+def _summarize_pairs(pairs):
+    """DexScreener returns one row per trading pair, so a token can appear
+    several times. Collapse them per token: market cap and liquidity from its
+    deepest pool, age from its oldest pool."""
+    by_token = {}
+    for pr in pairs:
+        try:
+            base = pr.get("baseToken") or {}
+            addr = base.get("address") or ""
+            if not addr:
+                continue
+            liq = float((pr.get("liquidity") or {}).get("usd") or 0)
+            mc = float(pr.get("marketCap") or pr.get("fdv") or 0)
+            created = pr.get("pairCreatedAt")
+            key = addr.lower()
+            t = by_token.get(key)
+            if t is None:
+                t = by_token[key] = {"address": addr, "name": base.get("name") or base.get("symbol") or "Unknown",
+                                     "symbol": base.get("symbol") or "", "chain": pr.get("chainId") or "",
+                                     "liq": -1, "mc": 0, "url": "", "created_ms": None}
+            if liq > t["liq"]:
+                t["liq"], t["mc"], t["url"] = liq, mc, pr.get("url") or t["url"]
+            if created and (t["created_ms"] is None or int(created) < t["created_ms"]):
+                t["created_ms"] = int(created)
+        except Exception:
+            continue
+    for t in by_token.values():
+        t["createdAt"] = (datetime.fromtimestamp(t["created_ms"] / 1000, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+                          if t["created_ms"] else None)
+    return by_token
+
+
+def _numbers_trustworthy(mc, liq):
+    """True when a DexScreener market cap looks real: enough liquidity behind
+    it, a sane cap-to-liquidity ratio, and not absurdly large for a new token."""
+    if mc <= 0 or mc > LAUNCH_MAX_MC_USD:
+        return False
+    if liq < LAUNCH_MIN_LIQ_USD:
+        return False
+    return mc <= liq * LAUNCH_MAX_MC_TO_LIQ
 
 
 def refresh_pumpfun_items(items):
@@ -553,73 +640,77 @@ def refresh_pumpfun_items(items):
             mc = float(data.get("usd_market_cap") or data.get("market_cap_usd") or 0)
             if mc <= 0:
                 kept.append(it)  # couldn't confirm a live figure — keep the old value
-            elif mc < DELIST_BELOW_USD:
+            elif mc < DELIST_BELOW_USD or mc > LAUNCH_MAX_MC_USD:
                 dropped += 1
             else:
                 it = dict(it)
                 it["marketCapUsd"] = round(mc, 2)
+                it["chainId"] = "solana"
+                it["platform"] = "Solana · pump.fun"
                 it["fetchedAt"] = now_iso()
                 kept.append(it)
         except Exception:
             kept.append(it)
         time.sleep(0.1)
     if dropped:
-        print(f"launches: {dropped} pump.fun token(s) dropped (crashed below ${DELIST_BELOW_USD:,})")
+        print(f"launches: {dropped} pump.fun token(s) dropped (crashed or implausible cap)")
     return kept
 
 
+def _fetch_pairs(chain, addrs):
+    """Yields DexScreener pair rows for up to 30 addresses per request.
+    Addresses are sent exactly as stored: Solana addresses are case-sensitive."""
+    for i in range(0, len(addrs), 30):
+        batch = addrs[i:i + 30]
+        url = DEXSCREENER_PAIR_URL.format(chain=chain, addresses=",".join(batch))
+        try:
+            r = requests.get(url, timeout=20, headers={"User-Agent": UA})
+            pairs = r.json()
+            if isinstance(pairs, list):
+                yield pairs
+        except Exception:
+            pass
+        time.sleep(0.25)
+
+
 def refresh_dexscreener_items(items):
-    """Re-check each saved DexScreener-sourced token's current market cap,
-    batched by chain. Confirmed crashes get dropped; anything DexScreener
-    didn't answer for this run (network hiccup, or genuinely delisted) keeps
-    its last-known record — the staleness cutoff in sync_launches() clears
-    it out if that persists for too long."""
+    """Re-check each saved DexScreener-sourced token, batched by chain.
+    Confirmed crashes, untrustworthy numbers and tokens that are no longer new
+    get dropped; anything DexScreener didn't answer for this run keeps its
+    last-known record — the staleness cutoff clears it out eventually."""
     by_chain = {}
     kept = []
     for it in items:
         chain, addr = it.get("chainId"), it.get("address")
         if chain and addr:
-            by_chain.setdefault(chain, {})[addr] = it
+            by_chain.setdefault(chain, {})[addr.lower()] = it
         else:
             kept.append(it)  # no chainId on record (older item) — can't batch-refresh this one
 
-    crashed = 0
+    dropped = 0
     for chain, by_addr in by_chain.items():
-        addrs = list(by_addr.keys())
         confirmed = set()
-        for i in range(0, len(addrs), 20):
-            batch = addrs[i:i + 20]
-            url = DEXSCREENER_PAIR_URL.format(chain=chain, addresses=",".join(batch))
-            try:
-                r = requests.get(url, timeout=20, headers={"User-Agent": UA})
-                pairs = r.json()
-                if not isinstance(pairs, list):
+        for pairs in _fetch_pairs(chain, [it["address"] for it in by_addr.values()]):
+            for key, t in _summarize_pairs(pairs).items():
+                if key not in by_addr or key in confirmed:
                     continue
-            except Exception:
-                continue  # request failed — leave these addresses unconfirmed, not dropped
-            for pr in pairs:
-                try:
-                    base = pr.get("baseToken") or {}
-                    addr = (base.get("address") or "").lower()
-                    if addr not in by_addr:
-                        continue
-                    confirmed.add(addr)
-                    mc = float(pr.get("marketCap") or pr.get("fdv") or 0)
-                    if mc < DELIST_BELOW_USD:
-                        crashed += 1
-                        continue  # confirmed crash — drop it
-                    it = dict(by_addr[addr])
-                    it["marketCapUsd"] = round(mc, 2)
-                    it["fetchedAt"] = now_iso()
-                    kept.append(it)
-                except Exception:
+                confirmed.add(key)
+                created = t["createdAt"] or by_addr[key].get("createdAt")
+                if t["mc"] < DELIST_BELOW_USD or not _numbers_trustworthy(t["mc"], t["liq"]) or not _age_ok(created):
+                    dropped += 1
                     continue
-            time.sleep(0.2)
-        for addr, it in by_addr.items():
-            if addr not in confirmed:
+                it = dict(by_addr[key])
+                it["marketCapUsd"] = round(t["mc"], 2)
+                it["liquidityUsd"] = round(t["liq"], 2)
+                it["createdAt"] = created
+                it["platform"] = _launch_platform(chain, it.get("address"))
+                it["fetchedAt"] = now_iso()
+                kept.append(it)
+        for key, it in by_addr.items():
+            if key not in confirmed:
                 kept.append(it)  # unconfirmed this run — keep as-is, let the age cutoff handle it eventually
-    if crashed:
-        print(f"launches: {crashed} DexScreener token(s) dropped (crashed below ${DELIST_BELOW_USD:,})")
+    if dropped:
+        print(f"launches: {dropped} DexScreener token(s) dropped (crashed, thin liquidity, implausible cap, or older than {LAUNCH_MAX_AGE_DAYS} days)")
     return kept
 
 
@@ -634,7 +725,7 @@ def fetch_pumpfun_launches(existing_ids):
         for c in coins:
             try:
                 mc = float(c.get("usd_market_cap") or c.get("market_cap_usd") or 0)
-                if mc < LAUNCH_MIN_USD:
+                if mc < LAUNCH_MIN_USD or mc > LAUNCH_MAX_MC_USD:
                     continue
                 created_ms = c.get("created_timestamp")
                 created_dt = None
@@ -647,7 +738,8 @@ def fetch_pumpfun_launches(existing_ids):
                     continue
                 out.append({
                     "id": "pf-" + mint, "name": c.get("name") or c.get("symbol") or "Unknown",
-                    "symbol": c.get("symbol") or "", "chain": "Solana", "platform": "pump.fun",
+                    "symbol": c.get("symbol") or "", "chain": "Solana", "chainId": "solana",
+                    "platform": "Solana · pump.fun",
                     "marketCapUsd": round(mc, 2),
                     "createdAt": created_dt.strftime("%Y-%m-%dT%H:%M:%SZ") if created_dt else None,
                     "fetchedAt": now_iso(), "link": f"https://pump.fun/{mint}", "address": mint,
@@ -659,93 +751,64 @@ def fetch_pumpfun_launches(existing_ids):
     return out
 
 
-def _pairs_to_launch_items(pairs, existing_ids, seen_addr):
-    out = []
-    for pr in pairs:
-        try:
-            base = pr.get("baseToken") or {}
-            addr = (base.get("address") or "").lower()
-            if not addr or addr in seen_addr:
-                continue
-            mc = float(pr.get("marketCap") or pr.get("fdv") or 0)
-            uid = "ds-" + addr
-            if mc < LAUNCH_MIN_USD or uid in existing_ids:
-                continue
-            seen_addr.add(addr)
-            chain = pr.get("chainId") or ""
-            out.append({
-                "id": uid, "name": base.get("name") or base.get("symbol") or "Unknown",
-                "symbol": base.get("symbol") or "", "chain": chain_label(chain), "chainId": chain,
-                "platform": "DexScreener / " + chain_label(chain),
-                "marketCapUsd": round(mc, 2), "createdAt": None,
-                "fetchedAt": now_iso(), "link": pr.get("url") or "", "address": addr,
-            })
-        except Exception:
-            continue
-    return out
-
-
-def fetch_dexscreener_launches(existing_ids):
-    out = []
-    try:
-        r = requests.get(DEXSCREENER_PROFILES_URL, timeout=20, headers={"User-Agent": UA})
-        profiles = r.json()
-        if not isinstance(profiles, list):
-            return out
-    except Exception:
-        traceback.print_exc()
-        return out
-
-    # Group latest-profile addresses by chain so the market-cap lookup can be
-    # batched (DexScreener accepts comma-separated addresses per call). This
-    # naturally covers new launches across whatever platforms/chains
-    # DexScreener has indexed — pump.fun clones, Robinhood's tokenized-asset
-    # chain, Base/Solana launchpads, etc — not just one named platform.
+def fetch_dexscreener_launches(existing_ids, known_addrs):
+    """New tokens from DexScreener's promoted-token feeds, kept only if they
+    pass the newness and data-quality checks above."""
     by_chain = {}
-    for p in profiles[:120]:
-        chain = p.get("chainId")
-        addr = p.get("tokenAddress")
-        if not chain or not addr:
-            continue
-        by_chain.setdefault(chain, []).append(addr)
-
-    seen_addr = set()
-    for chain, addrs in by_chain.items():
-        for i in range(0, len(addrs), 20):
-            batch = addrs[i:i + 20]
-            url = DEXSCREENER_PAIR_URL.format(chain=chain, addresses=",".join(batch))
-            try:
-                r = requests.get(url, timeout=20, headers={"User-Agent": UA})
-                pairs = r.json()
-                if not isinstance(pairs, list):
-                    continue
-            except Exception:
+    for feed in DEXSCREENER_FEED_URLS:
+        try:
+            r = requests.get(feed, timeout=20, headers={"User-Agent": UA})
+            entries = r.json()
+            if not isinstance(entries, list):
                 continue
-            out += _pairs_to_launch_items(pairs, existing_ids, seen_addr)
-            time.sleep(0.2)
-    return out
+        except Exception:
+            traceback.print_exc()
+            continue
+        for p in entries[:150]:
+            chain = p.get("chainId")
+            addr = p.get("tokenAddress")
+            if not chain or not addr or chain in LAUNCH_EXCLUDED_CHAINS:
+                continue
+            if addr.lower() in known_addrs:
+                continue
+            by_chain.setdefault(chain, {})[addr.lower()] = addr
+        time.sleep(0.2)
 
-
-def fetch_dexscreener_search(query, existing_ids):
     out = []
-    try:
-        url = DEXSCREENER_SEARCH_URL.format(query=quote(query))
-        r = requests.get(url, timeout=20, headers={"User-Agent": UA})
-        data = r.json()
-        pairs = data.get("pairs") or []
-    except Exception:
-        traceback.print_exc()
-        return out
-    return _pairs_to_launch_items(pairs, existing_ids, set())
+    for chain, addrs in by_chain.items():
+        for pairs in _fetch_pairs(chain, list(addrs.values())):
+            for key, t in _summarize_pairs(pairs).items():
+                if key not in addrs or key in known_addrs:
+                    continue
+                uid = "ds-" + key
+                if uid in existing_ids:
+                    continue
+                if t["mc"] < LAUNCH_MIN_USD or not _numbers_trustworthy(t["mc"], t["liq"]):
+                    continue
+                if not t["createdAt"] or not _age_ok(t["createdAt"]):
+                    continue  # unknown or too old: not a new launch
+                known_addrs.add(key)
+                out.append({
+                    "id": uid, "name": t["name"], "symbol": t["symbol"],
+                    "chain": chain_label(chain), "chainId": chain,
+                    "platform": _launch_platform(chain, t["address"]),
+                    "marketCapUsd": round(t["mc"], 2), "liquidityUsd": round(t["liq"], 2),
+                    "createdAt": t["createdAt"], "fetchedAt": now_iso(),
+                    "link": t["url"], "address": t["address"],
+                })
+    return out
 
 
 def sync_launches():
     current = load_json(LAUNCHES_PATH, {"updatedAt": None, "items": []})
-    items = current.get("items", [])
+    items = [l for l in current.get("items", []) if not _is_excluded_launch(l)]
+    # Older runs stored Solana addresses lowercased, which DexScreener can't
+    # look up (Solana addresses are case-sensitive). Drop those; any that are
+    # still live get picked up again with the right address.
+    items = [l for l in items if not (str(l.get("id", "")).startswith("ds-") and l.get("chainId") == "solana"
+                                      and (l.get("address") or "") == (l.get("address") or "").lower())]
 
-    # Re-check every already-saved item before adding anything new — a coin
-    # that crossed $1M once and then crashed shouldn't keep showing its stale
-    # peak value forever (see the module comment above LAUNCH_MIN_USD).
+    # Re-check every already-saved item before adding anything new.
     pf_items, ds_items, other_items = [], [], []
     for l in items:
         lid = str(l.get("id") or "")
@@ -765,14 +828,24 @@ def sync_launches():
         traceback.print_exc()
     items = pf_items + ds_items + other_items
 
-    # Safety-net cutoff for anything we haven't been able to actively
-    # re-confirm in a long time (e.g. an older DexScreener item saved before
-    # chainId was recorded, so it can't be batch-refreshed).
+    # Safety-net cutoffs: anything unconfirmed for too long, and anything
+    # that has stopped being new.
     stale_cutoff = (datetime.now(timezone.utc) - timedelta(days=LAUNCH_STALE_MAX_DAYS)).strftime("%Y-%m-%dT%H:%M:%SZ")
-    before_stale = len(items)
-    items = [l for l in items if (l.get("fetchedAt") or "") >= stale_cutoff]
-    if before_stale - len(items):
-        print(f"launches: {before_stale - len(items)} item(s) dropped for staleness (unconfirmed {LAUNCH_STALE_MAX_DAYS}+ days)")
+    before = len(items)
+    items = [l for l in items if (l.get("fetchedAt") or "") >= stale_cutoff and _age_ok(l.get("createdAt"))]
+    if before - len(items):
+        print(f"launches: {before - len(items)} item(s) dropped (unconfirmed {LAUNCH_STALE_MAX_DAYS}+ days, or older than {LAUNCH_MAX_AGE_DAYS} days)")
+
+    # The same pump.fun token can turn up through DexScreener too; keep one.
+    seen_addr, deduped = set(), []
+    for l in sorted(items, key=lambda l: 0 if str(l.get("id", "")).startswith("pf-") else 1):
+        a = (l.get("address") or "").lower()
+        if a and a in seen_addr:
+            continue
+        if a:
+            seen_addr.add(a)
+        deduped.append(l)
+    items = deduped
 
     existing_ids = {l.get("id") for l in items}
     new_items = []
@@ -780,23 +853,29 @@ def sync_launches():
         new_items += fetch_pumpfun_launches(existing_ids)
     except Exception:
         traceback.print_exc()
+    seen_addr |= {(l.get("address") or "").lower() for l in new_items}
     try:
-        new_items += fetch_dexscreener_launches(existing_ids | {l["id"] for l in new_items})
+        new_items += fetch_dexscreener_launches(existing_ids | {l["id"] for l in new_items}, seen_addr)
     except Exception:
         traceback.print_exc()
-    for q in DEXSCREENER_SEARCH_QUERIES:
-        try:
-            new_items += fetch_dexscreener_search(q, existing_ids | {l["id"] for l in new_items})
-        except Exception:
-            traceback.print_exc()
-        time.sleep(0.2)
 
     items = new_items + items
     items.sort(key=lambda l: l.get("marketCapUsd") or 0, reverse=True)
-    items = items[:MAX_LAUNCHES]
+
+    # Solana first: every qualifying Solana token, plus at most
+    # LAUNCH_NON_SOLANA_MAX from all other chains combined.
+    final, others = [], 0
+    for l in items:
+        is_solana = (l.get("chainId") == "solana") or l.get("chain") == "Solana"
+        if not is_solana:
+            if others >= LAUNCH_NON_SOLANA_MAX:
+                continue
+            others += 1
+        final.append(l)
+    items = final[:MAX_LAUNCHES]
 
     save_json(LAUNCHES_PATH, {"updatedAt": now_iso(), "items": items})
-    print(f"launches: {len(new_items)} new, {len(items)} total")
+    print(f"launches: {len(new_items)} new, {len(items)} total ({others} outside Solana)")
 
 
 # --- Live coin prices (top coins by market cap) ----------------------------

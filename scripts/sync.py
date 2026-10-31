@@ -1221,6 +1221,15 @@ def html_escape(s):
             .replace('"', "&quot;").replace("'", "&#39;"))
 
 
+# Folders under /learn/ that are hand-made pages, never briefing slugs.
+RESERVED_LEARN_SLUGS = {"c-7f3k9q"}
+
+
+def norm_title(text):
+    """Compare briefing titles loosely (case, quotes, punctuation)."""
+    return re.sub(r"[^a-z0-9]+", " ", (text or "").lower()).strip()
+
+
 def slugify(text, used=None):
     """Turn a briefing title into a short, URL-safe, dateless slug.
     Dedupes against `used` (a set) by appending -2, -3, ... on collision."""
@@ -1364,9 +1373,41 @@ def sync_learn_pages():
 
     os.makedirs(LEARN_DIR, exist_ok=True)
 
-    used_slugs = set()
+    # Work out every slug the old logic gave out (repeat topics got -2, -3...),
+    # so retired duplicates can be pointed at the one page we keep.
+    old_slugs = set(RESERVED_LEARN_SLUGS)
+    for entry in items:
+        entry["slug"] = slugify(entry.get("title", ""), old_slugs)
+
+    # One page per topic: keep the newest copy of each title, retire the rest.
+    kept, retired, seen = [], [], {}
+    for entry in items:
+        key = norm_title(entry.get("title", ""))
+        if key in seen:
+            retired.append((entry, seen[key]))
+        else:
+            seen[key] = entry
+            kept.append(entry)
+    items = kept
+
+    used_slugs = set(RESERVED_LEARN_SLUGS)
     for entry in items:
         entry["slug"] = slugify(entry.get("title", ""), used_slugs)
+
+    # Retired duplicates: their old slug URL and date URL both redirect to the
+    # surviving page, so nothing that was shared or indexed breaks.
+    for dup, keeper in retired:
+        target = SITE_URL + "/learn/" + keeper["slug"] + "/"
+        stub = REDIRECT_PAGE_TMPL % {
+            "canonical": target,
+            "title": html_escape(keeper.get("title", "") + " — JalalOnChain"),
+        }
+        for d in {dup.get("slug", ""), dup.get("id", "")}:
+            if d and d != keeper["slug"] and d not in RESERVED_LEARN_SLUGS:
+                os.makedirs(os.path.join(LEARN_DIR, d), exist_ok=True)
+                with open(os.path.join(LEARN_DIR, d, "index.html"), "w", encoding="utf-8") as f:
+                    f.write(stub)
+        print(f"learn: retired duplicate '{dup.get('title', '')}' ({dup.get('id', '')}) -> {keeper['slug']}")
 
     for i, entry in enumerate(items):
         eid = entry.get("id", "")
@@ -1558,9 +1599,19 @@ def sync_knowledge():
             due = True
     already_have_today = any(it.get("id") == today for it in items)
 
+    # Never publish the same topic twice. Walk the pool from nextIndex and take
+    # the first entry whose title hasn't been published yet; once every pool
+    # topic is out, publishing pauses until new topics are added to the pool.
+    published_titles = {norm_title(it.get("title", "")) for it in items}
+    entry = None
     if due and not already_have_today and pool:
-        idx = state.get("nextIndex", 0) % len(pool)
-        entry = pool[idx]
+        start = state.get("nextIndex", 0)
+        for step in range(len(pool)):
+            idx = (start + step) % len(pool)
+            if norm_title(pool[idx].get("title", "")) not in published_titles:
+                entry = pool[idx]
+                break
+    if entry is not None:
         items.insert(0, {
             "id": today, "title": entry["title"], "body": entry["body"],
             "tags": entry.get("tags", []), "createdAt": now_iso(),
@@ -1569,6 +1620,8 @@ def sync_knowledge():
         state["nextIndex"] = idx + 1
         save_json(STATE_PATH, state)
         print(f"knowledge: published '{entry['title']}' for {today}")
+    elif due and not already_have_today and pool:
+        print("knowledge: every topic in the pool has been published; add new topics to data/knowledge-pool.json")
     else:
         print(f"knowledge: not due yet (last published {last_id}, interval {KNOWLEDGE_INTERVAL_DAYS}d)")
 

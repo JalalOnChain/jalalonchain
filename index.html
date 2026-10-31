@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CVTJPLDH93"></script>
 <script>
@@ -11,958 +11,1138 @@
   gtag('js', new Date());
   gtag('config', 'G-CVTJPLDH93');
 </script>
-<title>Crypto from Zero — JalalOnChain</title>
-<meta name="description" content="A free beginner's course in crypto: money, blockchains, wallets, tokens, fees, and how to read real transactions on Bitcoin, Ethereum, Tron and more.">
-<!-- Unlisted for now: reachable by direct link only. Remove noindex when the course goes public. -->
-<meta name="robots" content="noindex, nofollow">
+<title>JalalOnChain — The Crypto Information Hub</title>
+<meta name="description" content="Live crypto news, enforcement alerts, new token and DeFi listings, and Hyperliquid whale activity in one hub — plus a daily plain-English lesson on how crypto actually works.">
+<link rel="canonical" href="https://jalalonchain.com/">
+<meta name="robots" content="index, follow">
 <meta name="theme-color" content="#131B2B">
-<link rel="icon" type="image/png" href="/assets/logo.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JalalOnChain">
+<meta property="og:url" content="https://jalalonchain.com/">
+<meta property="og:title" content="JalalOnChain — The Crypto Information Hub">
+<meta property="og:description" content="Live crypto news, enforcement alerts, new token and DeFi listings, and Hyperliquid whale activity in one hub — plus a daily plain-English lesson on how crypto actually works.">
+<meta property="og:image" content="https://jalalonchain.com/assets/logo.png">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@JalalOnChain">
+<meta name="twitter:title" content="JalalOnChain — The Crypto Information Hub">
+<meta name="twitter:description" content="Live crypto news, enforcement alerts, new token and DeFi listings, and Hyperliquid whale activity in one hub — plus a daily plain-English lesson on how crypto actually works.">
+<meta name="twitter:image" content="https://jalalonchain.com/assets/logo.png">
+
+<link rel="icon" type="image/png" href="./assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "JalalOnChain",
+  "url": "https://jalalonchain.com/",
+  "description": "Live crypto news, enforcement alerts, new token and DeFi listings, and Hyperliquid whale activity in one hub — plus a daily plain-English lesson on how crypto actually works.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "JalalOnChain",
+    "url": "https://jalalonchain.com/",
+    "logo": "https://jalalonchain.com/assets/logo.png",
+    "sameAs": ["https://x.com/JalalOnChain"]
+  }
+}
+</script>
 <style>
-  /* JalalOnChain tokens (same as the homepage) */
   :root{
     --bg:#F4F6F9; --surface:#FFFFFF; --surface-2:#EBF0F6; --border:#DCE3EC;
     --text:#131B2B; --text-muted:#5C6B84; --text-faint:#93A1B8;
     --accent:#B4700F; --accent-ink:#7A4B08; --accent-soft:#FBEBD4;
     --teal:#0E8E89; --teal-soft:#DEF3F1;
+    --violet:#6D4CE0; --violet-soft:#EDE8FD; --violet-ink:#4A32A8;
+    --blue2:#1D6FE0; --blue2-soft:#E1EDFC; --blue2-ink:#154F9F;
     --good:#0F9D66; --good-soft:#DFF5EA; --bad:#D93A44; --bad-soft:#FBE2E3;
-    --shadow:rgba(20,30,48,0.10);
-    --sans:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-    --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+    --shadow:rgba(20,30,48,0.10); --chip-bg:#EEF1F6;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --bg:#0A0F1A; --surface:#111A2B; --surface-2:#162135; --border:#22304A;
+      --bg:#0A0F1A; --surface:#111A2B; --surface-2:#16213599; --border:#22304A;
       --text:#E8ECF5; --text-muted:#93A2BC; --text-faint:#5C6B84;
       --accent:#F2A93B; --accent-ink:#FFD48A; --accent-soft:#3A2A10;
       --teal:#41CFC9; --teal-soft:#0F2C2A;
+      --violet:#B79CFF; --violet-soft:#2B2350; --violet-ink:#D9CBFF;
+      --blue2:#6FA8FF; --blue2-soft:#122A4D; --blue2-ink:#BFDCFF;
       --good:#3FDB9A; --good-soft:#0E2A21; --bad:#FF6470; --bad-soft:#3A1418;
-      --shadow:rgba(0,0,0,0.45); color-scheme: dark;
+      --shadow:rgba(0,0,0,0.45); --chip-bg:#182238;
+      color-scheme: dark;
     }
   }
   :root[data-theme="dark"]{
-    --bg:#0A0F1A; --surface:#111A2B; --surface-2:#162135; --border:#22304A;
+    --bg:#0A0F1A; --surface:#111A2B; --surface-2:#16213599; --border:#22304A;
     --text:#E8ECF5; --text-muted:#93A2BC; --text-faint:#5C6B84;
     --accent:#F2A93B; --accent-ink:#FFD48A; --accent-soft:#3A2A10;
     --teal:#41CFC9; --teal-soft:#0F2C2A;
+    --violet:#B79CFF; --violet-soft:#2B2350; --violet-ink:#D9CBFF;
+    --blue2:#6FA8FF; --blue2-soft:#122A4D; --blue2-ink:#BFDCFF;
     --good:#3FDB9A; --good-soft:#0E2A21; --bad:#FF6470; --bad-soft:#3A1418;
-    --shadow:rgba(0,0,0,0.45); color-scheme: dark;
+    --shadow:rgba(0,0,0,0.45); --chip-bg:#182238;
+    color-scheme: dark;
   }
-  *{ box-sizing:border-box; }
-  [hidden]{ display:none !important; }
+  *{box-sizing:border-box;}
   html,body{ margin:0; background:var(--bg); }
-  body{ color:var(--text); font-family:var(--sans); font-size:16px; line-height:1.6; }
+  body{
+    color:var(--text); font-family:"IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    font-variant-numeric: tabular-nums;
+  }
+  .num,.mono{ font-family:"IBM Plex Mono", ui-monospace, monospace; }
+  h1,h2,h3{ text-wrap:balance; margin:0; }
   a{ color:var(--teal); }
-  code,.mono{ font-family:var(--mono); font-size:.88em; }
-  h1,h2,h3{ margin:0; line-height:1.2; text-wrap:balance; letter-spacing:-0.01em; }
-  h1{ font-size:clamp(1.9rem,4vw,2.6rem); font-weight:800; }
-  h2{ font-size:1.5rem; font-weight:700; }
-  h3{ font-size:1.1rem; font-weight:700; }
-  p{ margin:0; }
-  .eyebrow{ font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--teal); font-weight:700; font-family:var(--mono); }
-  :focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
+  button{ font-family:inherit; }
 
-  .pad{ padding-left:max(20px, env(safe-area-inset-left,0px)); padding-right:max(20px, env(safe-area-inset-right,0px)); }
-  .topbar{ position:sticky; top:0; z-index:50; background:var(--bg); border-bottom:1px solid var(--border); box-shadow:0 2px 10px var(--shadow); padding-top:env(safe-area-inset-top,0px); }
-  .topbar-in{ max-width:1180px; margin:0 auto; display:flex; align-items:center; gap:16px; flex-wrap:wrap; padding-block:12px; }
-  .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
-  .brand img{ width:38px; height:38px; border-radius:8px; }
-  .brand .name{ font-size:19px; font-weight:800; }
-  .brand .name em{ font-style:normal; color:var(--accent); }
-  .course-name{ font-weight:600; color:var(--text-muted); font-size:14px; padding-left:14px; border-left:1px solid var(--border); text-decoration:none; }
-  .prog{ margin-left:auto; display:flex; align-items:center; gap:10px; font-size:13px; color:var(--text-muted); }
-  .prog-bar{ width:140px; height:6px; background:var(--surface-2); border-radius:3px; overflow:hidden; }
-  .prog-bar b{ display:block; height:100%; width:0; background:var(--good); transition:width .4s; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 20px; }
 
-  .shell{ max-width:1180px; margin:0 auto; display:grid; grid-template-columns:250px minmax(0,1fr); gap:40px; padding-block:28px 80px; }
-  nav.map{ position:sticky; top:84px; align-self:start; display:flex; flex-direction:column; gap:16px; }
-  .track{ display:flex; flex-direction:column; gap:2px; }
-  .track .eyebrow{ margin:0 0 6px 10px; color:var(--text-faint); }
-  .mlink{ display:grid; grid-template-columns:26px 1fr auto; align-items:center; gap:8px; padding:7px 10px; border-radius:8px; text-decoration:none; color:var(--text); font-size:14px; line-height:1.3; font-weight:500; }
-  .mlink:hover{ background:var(--surface-2); }
-  .mlink[aria-current="page"]{ background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--accent-ink); }
-  .mnum{ font-family:var(--mono); font-size:12px; color:var(--text-faint); }
-  .mstate{ width:15px; height:15px; border-radius:50%; border:1.5px solid var(--border); position:relative; }
-  .mstate.done{ background:var(--good); border-color:var(--good); }
-  .mstate.done::after{ content:""; position:absolute; left:4px; top:1px; width:4px; height:8px; border:solid var(--surface); border-width:0 2px 2px 0; transform:rotate(45deg); }
-
-  main{ min-width:0; }
-  .view{ display:flex; flex-direction:column; gap:28px; }
-  .lede{ font-size:1.12rem; color:var(--text-muted); max-width:64ch; }
-  .prose{ display:flex; flex-direction:column; gap:12px; max-width:68ch; }
-  .prose ul,.prose ol{ margin:0; padding-left:1.2em; display:flex; flex-direction:column; gap:6px; }
-  .block{ display:flex; flex-direction:column; gap:14px; }
-  .two{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 24px; }
-
-  .analogy{ background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 20px; display:flex; flex-direction:column; gap:6px; max-width:72ch; }
-  .analogy .eyebrow{ color:var(--accent); }
-  .closer{ border-left:3px solid var(--teal); background:var(--teal-soft); padding:14px 18px; border-radius:0 10px 10px 0; max-width:72ch; display:flex; flex-direction:column; gap:6px; }
-  .safe{ border-left:3px solid var(--bad); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); padding:14px 18px; border-radius:0 10px 10px 0; max-width:72ch; display:flex; flex-direction:column; gap:6px; }
-  .safe .eyebrow{ color:var(--bad); }
-  .more{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; font-size:14px; }
-  .more span{ color:var(--text-muted); }
-  .more a{ background:var(--surface); border:1px solid var(--border); border-radius:99px; padding:4px 12px; text-decoration:none; font-weight:500; }
-  .more a:hover{ border-color:var(--teal); }
-
-  /* home */
-  .hero{ display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:32px; align-items:end; padding-block:4px 28px; border-bottom:1px solid var(--border); }
-  .ledger{ font-family:var(--mono); font-size:12.5px; background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
-  .ledger div{ display:grid; grid-template-columns:62px 1fr auto; gap:10px; padding:8px 12px; border-bottom:1px solid var(--border); }
-  .ledger div:last-child{ border-bottom:0; }
-  .ledger span:first-child{ color:var(--text-faint); }
-  .ledger .hl{ background:var(--accent-soft); }
-  .stage{ display:flex; flex-direction:column; gap:10px; }
-  .cards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px; }
-  .mcard{ background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; flex-direction:column; gap:6px; text-decoration:none; color:var(--text); }
-  .mcard:hover{ border-color:var(--teal); }
-  .mcard p{ font-size:14px; color:var(--text-muted); }
-  .mcard .row{ display:flex; justify-content:space-between; align-items:center; }
-  .pill{ font-size:11px; font-weight:700; padding:2px 9px; border-radius:99px; background:var(--surface-2); color:var(--text-muted); }
-  .pill.done{ background:var(--good-soft); color:var(--good); }
-
-  /* explorer view */
-  .xp{ background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
-  .xp-head{ display:flex; justify-content:space-between; align-items:center; gap:12px; padding:12px 16px; border-bottom:1px solid var(--border); flex-wrap:wrap; background:var(--surface-2); }
-  .xp-head .t{ font-weight:700; }
-  .xp-head .chain{ font-family:var(--mono); font-size:12px; color:var(--text-muted); }
-  .xp-head a{ font-size:14px; font-weight:600; white-space:nowrap; }
-  .xp-row{ display:grid; grid-template-columns:26px 160px minmax(0,1fr); gap:10px; padding:10px 16px; border:0; border-bottom:1px solid var(--border); align-items:start; cursor:pointer; background:none; width:100%; text-align:left; color:inherit; font:inherit; }
-  .xp-row:last-of-type{ border-bottom:0; }
-  .xp-row:hover .xp-v{ background:var(--accent-soft); }
-  .xp-row[aria-expanded="true"] .xp-v{ background:var(--accent-soft); box-shadow:inset 0 -2px 0 var(--accent); }
-  .pin{ width:22px; height:22px; border-radius:50%; background:var(--accent); color:#fff; font-size:11px; font-weight:600; display:grid; place-items:center; font-family:var(--mono); margin-top:1px; }
-  .xp-k{ font-size:14px; color:var(--text-muted); padding-top:2px; }
-  .xp-v{ font-family:var(--mono); font-size:13px; word-break:break-all; padding:1px 4px; border-radius:3px; transition:background .15s; }
-  .xp-note{ grid-column:2 / -1; font-family:var(--sans); font-size:14.5px; color:var(--text); word-break:normal; padding:4px 0 2px; line-height:1.55; }
-  .xp-foot{ padding:10px 16px; font-size:13px; color:var(--text-muted); border-top:1px solid var(--border); }
-
-  /* coins in, coins out */
-  .flow{ display:grid; grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr); align-items:center; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; }
-  .flow .col{ display:flex; flex-direction:column; gap:8px; min-width:0; }
-  .flow .lab{ font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); font-weight:700; font-family:var(--mono); }
-  .coin{ border:1px solid var(--border); border-radius:8px; padding:8px 10px; display:flex; flex-direction:column; gap:2px; background:var(--bg); min-width:0; }
-  .coin b{ font-family:var(--mono); font-weight:600; }
-  .coin span{ font-family:var(--mono); font-size:12px; color:var(--text-muted); word-break:break-all; }
-  .coin.change{ border-style:dashed; }
-  .coin.fee{ background:transparent; border-color:transparent; padding-block:2px; }
-  .flow .arrow{ display:grid; place-items:center; color:var(--text-faint); }
-  .flow .arrow svg{ width:36px; height:24px; }
-
-  /* edit-a-block demo */
-  .chain-demo{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
-  .blk{ background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px; display:flex; flex-direction:column; gap:8px; min-width:0; transition:border-color .2s, background .2s; }
-  .blk.broken{ border-color:var(--bad); background:var(--bad-soft); }
-  .blk h4{ margin:0; font-size:14px; display:flex; justify-content:space-between; }
-  .blk label,.blk .lbl{ font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.06em; font-family:var(--mono); }
-  .blk textarea{ font-family:var(--sans); font-size:13.5px; border:1px solid var(--border); border-radius:6px; padding:6px; background:var(--bg); color:var(--text); resize:vertical; min-height:58px; width:100%; }
-  .blk .h{ font-family:var(--mono); font-size:11.5px; word-break:break-all; color:var(--text-muted); }
-  .blk .st{ font-size:12px; font-weight:700; }
-  .blk .st.ok{ color:var(--good); } .blk .st.bad{ color:var(--bad); }
-
-  .tablewrap{ overflow-x:auto; border:1px solid var(--border); border-radius:12px; background:var(--surface); }
-  table{ border-collapse:collapse; width:100%; font-size:14px; min-width:620px; }
-  th,td{ text-align:left; padding:10px 12px; border-bottom:1px solid var(--border); vertical-align:top; }
-  th{ font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--text-muted); font-weight:700; background:var(--surface-2); font-family:var(--mono); }
-  tr:last-child td{ border-bottom:0; }
-
-  .quiz{ background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:18px; }
-  .q{ display:flex; flex-direction:column; gap:8px; }
-  .q > p{ font-weight:600; }
-  .opts{ display:flex; flex-direction:column; gap:6px; }
-  .opt{ padding:9px 12px; border:1px solid var(--border); border-radius:8px; cursor:pointer; background:var(--bg); text-align:left; font:inherit; font-size:15px; color:inherit; }
-  .opt:hover{ border-color:var(--teal); }
-  .opt.right{ border-color:var(--good); background:var(--good-soft); }
-  .opt.wrong{ border-color:var(--bad); background:var(--bad-soft); }
-  .opt[disabled]{ cursor:default; }
-  .why{ font-size:14px; color:var(--text-muted); }
-  .btn{ font:inherit; font-weight:700; font-size:14px; padding:10px 16px; border-radius:8px; border:1px solid var(--accent); background:var(--accent); color:#fff; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
-  .btn.ghost{ background:transparent; color:var(--accent-ink); border-color:var(--border); }
-  .btn.ghost:hover{ border-color:var(--accent); }
-  .actions{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-  .score{ font-size:14px; color:var(--text-muted); }
-  .next{ display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; border-top:1px solid var(--border); padding-top:20px; }
-  .gloss{ display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:10px; }
-  .gloss div{ background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 14px; font-size:14.5px; }
-  .gloss b{ display:block; }
-  .steps{ counter-reset:s; display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; }
-  .steps div{ background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; font-size:14.5px; display:flex; flex-direction:column; gap:4px; }
-  .steps div::before{ counter-increment:s; content:counter(s); font-family:var(--mono); font-size:12px; color:var(--accent); font-weight:700; }
-  .foot{ max-width:1180px; margin:0 auto; padding-block:0 40px; font-size:13px; color:var(--text-faint); }
-
-  @media (max-width:880px){
-    .shell{ grid-template-columns:minmax(0,1fr); gap:18px; }
-    nav.map{ position:static; flex-direction:row; overflow-x:auto; gap:6px; padding-bottom:6px; }
-    .track{ flex-direction:row; gap:6px; }
-    .track .eyebrow{ display:none; }
-    .mlink{ grid-template-columns:auto auto; white-space:nowrap; border:1px solid var(--border); background:var(--surface); }
-    .mlink .mtitle{ display:none; }
-    .hero{ grid-template-columns:minmax(0,1fr); }
-    .chain-demo{ grid-template-columns:repeat(2,minmax(0,1fr)); }
-    .two{ grid-template-columns:minmax(0,1fr); }
-    .course-name{ display:none; }
+  /* ---- top nav ---- */
+  .topbar{ border-bottom:1px solid var(--border); position:sticky; top:0; z-index:50; background:var(--bg); box-shadow:0 2px 10px var(--shadow); }
+  .topbar .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 20px; flex-wrap:wrap; }
+  .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; cursor:pointer; }
+  .brand-logo{ border-radius:8px; object-fit:cover; flex:none; }
+  .brand-text{ display:flex; flex-direction:column; line-height:1.05; }
+  .brand-text .name{ font-size:23px; font-weight:800; letter-spacing:-0.01em; }
+  .brand-text .name em{ font-style:normal; color:var(--accent); }
+  .brand-text .tag{ font-size:10.5px; color:var(--text-muted); letter-spacing:.06em; text-transform:uppercase; margin-top:1px; }
+  .nav-links{ display:flex; align-items:center; gap:16px; font-size:13px; color:var(--text-muted); flex-wrap:wrap; }
+  .nav-links a{ color:var(--text-muted); text-decoration:none; font-weight:600; }
+  .nav-links a:hover{ color:var(--text); }
+  .nav-dd{ position:relative; }
+  .nav-dd-btn{ background:none; border:none; padding:0; font:inherit; font-size:13px; font-weight:600; color:var(--text-muted); cursor:pointer; display:inline-flex; align-items:center; gap:4px; }
+  .nav-dd-btn:hover, .nav-dd:focus-within .nav-dd-btn{ color:var(--text); }
+  .nav-dd-btn::after{ content:""; border:4px solid transparent; border-top-color:currentColor; margin-top:4px; }
+  .nav-dd-menu{ display:none; position:absolute; top:100%; left:-10px; padding-top:8px; min-width:170px; z-index:60; }
+  .nav-dd-menu-inner{ background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:6px; box-shadow:0 8px 24px var(--shadow); }
+  .nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu, .nav-dd.open .nav-dd-menu{ display:block; }
+  .nav-dd-menu a{ display:block; padding:8px 10px; border-radius:7px; white-space:nowrap; color:var(--text); }
+  .nav-dd-menu a:hover{ background:var(--surface-2); color:var(--accent); }
+  .live-pill{
+    display:flex; align-items:center; gap:7px; background:var(--surface); border:1px solid var(--border);
+    padding:6px 12px 6px 10px; border-radius:999px; font-size:12px; color:var(--text-muted);
   }
-  @media (max-width:560px){
-    .xp-row{ grid-template-columns:26px minmax(0,1fr); }
-    .xp-k,.xp-v{ grid-column:2; }
-    .xp-note{ grid-column:1 / -1; }
-    .flow{ grid-template-columns:minmax(0,1fr); gap:8px; }
-    .flow .arrow{ transform:rotate(90deg); height:30px; }
-    .chain-demo{ grid-template-columns:minmax(0,1fr); }
-    .prog-bar{ width:70px; }
+  .live-dot{ width:8px; height:8px; border-radius:50%; background:var(--good); box-shadow:0 0 0 3px var(--good-soft); }
+  @media (prefers-reduced-motion: no-preference){ .live-dot.live{ animation: pulse 2.2s ease-in-out infinite; } }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.45; } }
+
+  /* ---- hero ---- */
+  .hero{
+    margin-top:18px; padding:26px 28px 24px; border-radius:22px;
+    background:linear-gradient(135deg, var(--accent-soft) 0%, var(--teal-soft) 70%, transparent 100%);
   }
-  @media (prefers-reduced-motion:reduce){ *{ transition:none !important; } }
+  .hero h1{ font-size:clamp(26px,3.6vw,38px); font-weight:800; letter-spacing:-0.02em; max-width:960px; }
+  .hero h1 em{ font-style:normal; color:var(--accent-ink); }
+  .hero-eyebrow{ font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--accent-ink); font-weight:700; margin-top:12px; }
+  .hero p{ max-width:960px; color:var(--text-muted); font-size:15.5px; line-height:1.6; margin-top:6px; }
+  .hero p a{ color:var(--accent-ink); text-decoration:none; }
+  .hero p a:hover{ text-decoration:underline; }
+
+  .hub-tabs{ display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; }
+  .hub-tab{
+    --tab-color:var(--teal);
+    display:inline-flex; align-items:center; gap:8px; border:1.5px solid var(--border); background:var(--surface);
+    color:var(--text-muted); font-weight:700; font-size:13.5px; padding:10px 18px; border-radius:999px;
+    cursor:pointer; transition:background .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease;
+  }
+  .hub-tab .tab-dot{ width:7px; height:7px; border-radius:50%; background:var(--tab-color); flex:none; }
+  .hub-tab:hover{ border-color:var(--tab-color); color:var(--text); }
+  .hub-tab.active{ background:var(--tab-color); border-color:var(--tab-color); color:#fff; box-shadow:0 6px 16px -6px var(--tab-color); }
+  .hub-tab.active .tab-dot{ background:#fff; }
+  .hub-tab[data-tab="news"]{ --tab-color:var(--teal); }
+  .hub-tab[data-tab="enforcement"]{ --tab-color:var(--bad); }
+  .hub-tab[data-tab="ofac"]{ --tab-color:var(--violet); }
+  .hub-tab[data-tab="whales"]{ --tab-color:var(--blue2); }
+  .hub-tab[data-tab="chains"]{ --tab-color:var(--accent); }
+  .hub-tab[data-tab="exchanges"]{ --tab-color:var(--good); }
+  .hub-tab[data-tab="closed"]{ --tab-color:var(--bad); }
+
+  .pulse-bar{ display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; padding:2px 0 14px; font-size:12.5px; color:var(--text-muted); }
+  .pulse-item b{ font-weight:800; }
+  .pulse-sep{ color:var(--text-faint); }
+  .pulse-fg-fear{ color:var(--bad); }
+  .pulse-fg-greed{ color:var(--good); }
+  .pulse-fg-neutral{ color:var(--accent-ink); }
+  .pulse-up{ color:var(--good); }
+  .pulse-down{ color:var(--bad); }
+
+  /* ---- dominance + live prices ---- */
+  .dominance-row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:2px 0 16px; }
+  .dom-label{ font-weight:700; color:var(--text-faint); text-transform:uppercase; letter-spacing:.06em; font-size:11px; }
+  .dom-chip{ display:inline-flex; align-items:center; gap:5px; background:var(--chip-bg); border:1px solid var(--border); border-radius:999px; padding:4px 10px; font-weight:700; font-size:12px; font-family:"IBM Plex Mono",monospace; }
+  .dom-chip .dom-pct{ color:var(--accent-ink); }
+
+  .price-search-row{ display:flex; gap:8px; padding:14px 18px; border-bottom:1px solid var(--border); }
+  .price-search-row input{ flex:1; background:var(--surface-2); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:9px 12px; font-size:13px; font-family:inherit; min-width:0; }
+  .price-search-btn{ background:var(--teal); color:#fff; border:none; border-radius:8px; padding:9px 16px; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; }
+  .price-search-btn:hover{ filter:brightness(1.08); }
+  .price-search-result:empty{ display:none; }
+  .price-table-scroll{ max-height:460px; overflow-y:auto; }
+  .price-table-head, .price-row{ display:grid; grid-template-columns:2fr 1fr 1fr 1fr 1.3fr; gap:8px; align-items:center; padding:9px 18px; }
+  .price-table-head{ position:sticky; top:0; background:var(--surface); border-bottom:1px solid var(--border); font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--text-faint); font-weight:700; z-index:1; }
+  .pt-sort{ cursor:pointer; user-select:none; }
+  .pt-sort:hover{ color:var(--text); }
+  .pt-sort.active{ color:var(--teal); }
+  .price-row{ border-top:1px solid var(--border); font-size:12.5px; }
+  .price-row .pt-name{ font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .price-row .pt-name .pt-sym{ color:var(--text-faint); font-weight:600; font-family:"IBM Plex Mono",monospace; font-size:11px; }
+  .price-row .pt-num{ font-family:"IBM Plex Mono",monospace; }
+
+  /* ---- layout ---- */
+  .layout{ display:grid; grid-template-columns: 1fr 340px; gap:20px; align-items:start; padding:8px 0 40px; }
+  @media (max-width:900px){ .layout{ grid-template-columns:1fr; } }
+  .card{ background:var(--surface); border:1px solid var(--border); border-radius:14px; box-shadow:0 1px 2px var(--shadow); }
+
+  .feed-col{ display:flex; flex-direction:column; gap:14px; }
+  .feed-head-row{ display:flex; justify-content:space-between; align-items:baseline; }
+  .feed-head-row h3{ font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); font-weight:700; }
+
+  .feed-card{ padding:4px 0 8px; }
+  .feed-scroll-card{ max-height:640px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
+  .feed-scroll-card::-webkit-scrollbar{ width:8px; }
+  .feed-scroll-card::-webkit-scrollbar-track{ background:transparent; }
+  .feed-scroll-card::-webkit-scrollbar-thumb{ background:var(--border); border-radius:8px; }
+  .feed-count{ font-size:12px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; }
+  .feed-list{ display:flex; flex-direction:column; }
+  .empty-state{ padding:40px 18px; text-align:center; color:var(--text-muted); font-size:13.5px; }
+
+  /* ---- hub (tabbed feeds) ---- */
+  .hub-section{ padding:22px 0 6px; }
+  .hub-pane{ display:none; margin-top:18px; }
+  .hub-pane.active{ display:block; animation:fade-in .18s ease; }
+  @keyframes fade-in{ from{ opacity:0; } to{ opacity:1; } }
+
+  /* ---- ad slots ---- */
+  .ad-slot{
+    border:1.5px dashed var(--border); border-radius:14px; color:var(--text-faint); font-size:11.5px;
+    letter-spacing:.06em; text-transform:uppercase; font-weight:700; background:var(--surface-2);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+  }
+  .ad-leaderboard{ min-height:86px; margin:22px 0; }
+  .ad-rect{ min-height:250px; }
+
+  /* ---- knowledge / subscribe ---- */
+  .side{ display:flex; flex-direction:column; gap:16px; }
+  .k-card{ padding:18px; }
+  .k-eyebrow{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+  .k-eyebrow span{ font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--teal); font-weight:700; }
+  .k-eyebrow time{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; }
+  .k-title{ font-size:16.5px; font-weight:700; line-height:1.3; margin-bottom:8px; }
+  .k-body{ font-size:15.5px; line-height:1.6; color:var(--text); margin-bottom:12px; }
+  .k-tags{ display:flex; gap:6px; flex-wrap:wrap; }
+  .k-tag{ font-size:10.5px; background:var(--teal-soft); color:var(--teal); padding:3px 8px; border-radius:5px; font-weight:600; }
+  .k-hist{ padding:14px 18px 6px; }
+  .k-hist h4{ font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); font-weight:600; margin-bottom:8px; }
+  .k-hist-item{ display:block; padding:9px 0; border-top:1px solid var(--border); cursor:pointer; border-radius:4px; color:inherit; text-decoration:none; }
+  .k-hist-item:first-child{ border-top:none; }
+  .k-hist-item:hover .ht{ color:var(--teal); }
+  .k-hist-item.active .ht{ color:var(--teal); }
+  .k-hist-item .ht{ font-size:12.5px; font-weight:600; margin-bottom:2px; }
+  .k-hist-item .hd{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; }
+  .k-hist-more{ display:block; margin-top:10px; font-size:11.5px; font-weight:600; color:var(--teal); text-decoration:none; }
+  .k-hist-more:hover{ text-decoration:underline; }
+  .k-eyebrow time a{ color:inherit; text-decoration:none; }
+  .k-eyebrow time a:hover{ text-decoration:underline; }
+  .k-back-today{ font-size:11px; color:var(--teal); cursor:pointer; font-weight:600; text-decoration:underline; }
+  .k-hist-nested{ margin-top:14px; padding-top:12px; border-top:1px solid var(--border); }
+  .k-hist-nested h4{ font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); font-weight:600; margin-bottom:8px; }
+  .k-hist-scroll{ max-height:150px; overflow-y:auto; }
+
+  .sub-card{ padding:20px 18px; background:linear-gradient(160deg, var(--accent-soft), var(--surface)); }
+  .sub-card h4{ font-size:15px; font-weight:800; margin-bottom:6px; }
+  .sub-card p{ font-size:12.5px; color:var(--text-muted); line-height:1.5; margin-bottom:14px; }
+  .sub-form{ display:flex; gap:8px; }
+  .sub-form input[type=email]{ flex:1; background:var(--surface); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:10px 12px; font-size:13px; font-family:inherit; min-width:0; }
+  .sub-btn{ background:var(--accent); color:#1a1204; border:none; border-radius:8px; padding:10px 16px; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; }
+  .sub-btn:hover{ filter:brightness(1.05); }
+  .sub-msg{ font-size:11.5px; color:var(--good); margin-top:8px; min-height:14px; }
+  .sub-msg.err{ color:var(--bad); }
+
+  .support-card{ padding:20px 18px; }
+  .support-card h4{ font-size:15px; font-weight:800; margin-bottom:4px; }
+  .support-tagline{ font-size:12.5px; color:var(--text-muted); line-height:1.5; margin-bottom:14px; font-style:italic; }
+  .support-tabs{ display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-bottom:14px; }
+  .support-tab{ flex:1; background:var(--surface-2); border:none; color:var(--text-muted); font-size:12px; font-weight:600; padding:8px 10px; cursor:pointer; border-right:1px solid var(--border); font-family:inherit; }
+  .support-tab:last-child{ border-right:none; }
+  .support-tab.active{ background:var(--accent); color:#1a1204; }
+  .coin-pills{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+  .coin-pill{ background:var(--chip-bg); border:1px solid var(--border); color:var(--text-muted); border-radius:7px; padding:6px 12px; font-size:12px; font-weight:700; cursor:pointer; font-family:"IBM Plex Mono",monospace; }
+  .coin-pill:hover{ border-color:var(--teal); color:var(--text); }
+  .coin-pill.active{ background:var(--accent-soft); border-color:var(--accent); color:var(--accent-ink); }
+  .addr-box{ background:var(--surface-2); border:1px solid var(--border); border-radius:8px; padding:10px 12px; display:flex; align-items:center; gap:8px; }
+  .addr-box .addr-text{ flex:1; font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--text); word-break:break-all; }
+  .copy-btn{ background:var(--surface); border:1px solid var(--border); color:var(--text-muted); border-radius:6px; padding:5px 9px; font-size:11px; font-weight:600; cursor:pointer; white-space:nowrap; }
+  .copy-btn:hover{ border-color:var(--teal); color:var(--teal); }
+  .copy-btn.copied{ background:var(--good-soft); border-color:var(--good); color:var(--good); }
+  .addr-row{ display:flex; flex-direction:column; gap:6px; padding:10px 0; border-top:1px solid var(--border); }
+  .addr-row:first-child{ border-top:none; }
+  .addr-row .addr-label{ font-size:11.5px; font-weight:700; color:var(--text); }
+  .addr-row .addr-label .coin-sym{ color:var(--teal); font-family:"IBM Plex Mono",monospace; margin-right:6px; }
+
+  .source-note{ font-size:11px; color:var(--text-faint); line-height:1.5; padding:2px 4px; }
+  .source-note a{ color:var(--text-faint); }
+
+  /* ---- launches / news sections ---- */
+  .section{ padding:8px 0 4px; }
+  .section-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px; flex-wrap:wrap; gap:6px; }
+  .section-head h2{ font-size:15px; text-transform:uppercase; letter-spacing:.06em; color:var(--text); font-weight:800; }
+  .section-head .hint{ font-size:11.5px; color:var(--text-faint); }
+
+  .grid-cards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; padding:16px; align-content:start; max-height:620px; overflow-y:auto; }
+  .launch-card{ background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+  .launch-card .lc-top{ display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
+  .launch-card .lc-name{ font-weight:700; font-size:14px; }
+  .launch-card .lc-sym{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; }
+  .launch-card .lc-mc{ font-family:"IBM Plex Mono",monospace; font-weight:700; color:var(--good); font-size:16px; margin-top:8px; }
+  .launch-card .lc-addr{ font-family:"IBM Plex Mono",monospace; font-size:10.5px; color:var(--text-faint); margin-top:5px; }
+  .launch-card .lc-meta{ display:flex; justify-content:space-between; align-items:center; margin-top:9px; font-size:11px; color:var(--text-muted); }
+  .launch-card .lc-meta a{ color:var(--text-muted); }
+  .launch-card .lc-meta-right{ display:inline-flex; align-items:center; gap:6px; }
+  .platform-badge{ background:var(--chip-bg); border:1px solid var(--border); border-radius:6px; padding:2px 7px; font-size:10px; color:var(--text-muted); }
+  .dup-warn{ background:var(--bad-soft); border-color:var(--bad); color:var(--bad); font-weight:600; cursor:help; }
+  .side-long{ color:var(--good); }
+  .side-short{ color:var(--bad); }
+  .hl-pnl.up{ color:var(--good); }
+  .hl-pnl.down{ color:var(--bad); }
+
+  .news-row{ padding:12px 18px; border-top:1px solid var(--border); }
+  .news-row:first-child{ border-top:none; }
+  .news-row .n-top{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:4px; }
+  .cat-badge{ font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 7px; border-radius:5px; white-space:nowrap; }
+  .cat-enforcement{ background:var(--bad-soft); color:var(--bad); }
+  .cat-market-news{ background:var(--teal-soft); color:var(--teal); }
+  .cat-ofac{ background:var(--violet-soft); color:var(--violet-ink); }
+  .n-time{ font-size:11px; color:var(--text-faint); margin-left:auto; font-family:"IBM Plex Mono",monospace; }
+  .news-row .n-title{ font-size:13.5px; font-weight:600; line-height:1.4; }
+  .news-row .n-title a{ color:var(--text); text-decoration:none; }
+  .news-row .n-title a:hover{ text-decoration:underline; }
+  .news-row .n-summary{ font-size:12px; color:var(--text-muted); margin-top:4px; line-height:1.5; }
+
+  .chain-row{ display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 18px; border-top:1px solid var(--border); font-size:12.5px; }
+  .chain-row:first-child{ border-top:none; }
+  .chain-row .ch-left{ display:flex; align-items:center; gap:8px; min-width:0; }
+  .cat-l1{ background:var(--teal-soft); color:var(--teal); }
+  .cat-l2{ background:var(--accent-soft); color:var(--accent-ink); }
+  .cat-exchange{ background:var(--good-soft); color:var(--good); }
+  .cat-closed{ background:var(--bad-soft); color:var(--bad); }
+  .vasp-row{ padding:10px 18px; border-top:1px solid var(--border); font-size:12.5px; }
+  .vasp-row:first-child{ border-top:none; }
+  .vasp-row .row-top{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .vasp-row .ch-left{ display:flex; align-items:center; gap:8px; min-width:0; }
+  .vasp-row .ch-name{ font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .vasp-row .ch-name a{ color:var(--text); text-decoration:none; }
+  .vasp-row .ch-name a:hover{ text-decoration:underline; }
+  .vasp-row .ch-meta{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; white-space:nowrap; flex:none; }
+  .vasp-sub{ margin-top:4px; font-size:11px; color:var(--text-faint); }
+  .chain-row .ch-name{ font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .chain-row .ch-name a{ color:var(--text); text-decoration:none; }
+  .chain-row .ch-name a:hover{ text-decoration:underline; }
+  .chain-row .ch-meta{ font-size:11px; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; white-space:nowrap; flex:none; }
+
+  footer.page-foot{
+    border-top:1px solid var(--border); padding:6px 0 40px;
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .foot-support{ display:flex; flex-direction:column; gap:12px; padding:26px 0 22px; border-bottom:1px solid var(--border); }
+  .foot-support-head{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+  .foot-support-head h4{ font-size:14px; font-weight:800; }
+  .foot-support-tagline{ font-size:12px; color:var(--text-faint); font-style:italic; }
+  .foot-support-tagline-main{ font-size:15px; font-weight:700; font-style:italic; color:var(--text); }
+  .foot-contact{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; padding-top:20px; }
+  .foot-contact-label{ font-size:11.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.07em; }
+  .foot-contact-link{ display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:600; color:var(--text); text-decoration:none; font-family:"IBM Plex Mono",monospace; }
+  .foot-contact-link:hover{ color:var(--teal); }
+  .foot-contact-link svg{ width:15px; height:15px; flex:none; }
+  .foot-bottom{
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-top:14px;
+    font-size:11.5px; color:var(--text-faint);
+  }
+  .foot-credit{ font-size:10.5px; color:var(--text-faint); opacity:.8; }
+  ::-webkit-scrollbar{ width:8px; height:8px; }
+  ::-webkit-scrollbar-thumb{ background:var(--border); border-radius:4px; }
 </style>
 </head>
 <body>
 
-<header class="topbar pad"><div class="topbar-in">
-  <a class="brand" href="/" aria-label="JalalOnChain home"><img src="/assets/logo.png" alt="JalalOnChain logo" width="38" height="38"><span class="name">Jalal<em>OnChain</em></span></a>
-  <a class="course-name" href="#home">Crypto from Zero</a>
-  <div class="prog"><span id="progText">0 of 9 lessons done</span><div class="prog-bar"><b id="progBar"></b></div></div>
-</div></header>
-
-<div class="shell pad">
-<nav class="map" aria-label="Lessons">
-  <div class="track">
-    <a class="mlink" href="#home" data-route="home"><span class="mnum">00</span><span class="mtitle">Start here</span><span></span></a>
-  </div>
-  <div class="track">
-    <div class="eyebrow">The basics</div>
-    <a class="mlink" href="#m1" data-route="m1"><span class="mnum">01</span><span class="mtitle">Money, and why crypto exists</span><span class="mstate" data-state="m1"></span></a>
-    <a class="mlink" href="#m2" data-route="m2"><span class="mnum">02</span><span class="mtitle">How a blockchain works</span><span class="mstate" data-state="m2"></span></a>
-    <a class="mlink" href="#m3" data-route="m3"><span class="mnum">03</span><span class="mtitle">Wallets, keys and seed phrases</span><span class="mstate" data-state="m3"></span></a>
-    <a class="mlink" href="#m4" data-route="m4"><span class="mnum">04</span><span class="mtitle">Coins, tokens and stablecoins</span><span class="mstate" data-state="m4"></span></a>
-    <a class="mlink" href="#m5" data-route="m5"><span class="mnum">05</span><span class="mtitle">Buying, sending and fees</span><span class="mstate" data-state="m5"></span></a>
-  </div>
-  <div class="track">
-    <div class="eyebrow">Reading transactions</div>
-    <a class="mlink" href="#m6" data-route="m6"><span class="mnum">06</span><span class="mtitle">A Bitcoin transaction</span><span class="mstate" data-state="m6"></span></a>
-    <a class="mlink" href="#m7" data-route="m7"><span class="mnum">07</span><span class="mtitle">An Ethereum transaction</span><span class="mstate" data-state="m7"></span></a>
-    <a class="mlink" href="#m8" data-route="m8"><span class="mnum">08</span><span class="mtitle">Token transfers</span><span class="mstate" data-state="m8"></span></a>
-    <a class="mlink" href="#m9" data-route="m9"><span class="mnum">09</span><span class="mtitle">Other chains</span><span class="mstate" data-state="m9"></span></a>
-  </div>
-  <div class="track">
-    <a class="mlink" href="#glossary" data-route="glossary"><span class="mnum">A–Z</span><span class="mtitle">Glossary</span><span></span></a>
-  </div>
-</nav>
-
-<main>
-
-<!-- HOME -->
-<section class="view" data-view="home">
-  <div class="hero">
-    <div class="block">
-      <span class="eyebrow">Free course · 9 short lessons</span>
-      <h1>Crypto from Zero</h1>
-      <p class="lede">No background needed. Start with what money is and why crypto showed up, work through wallets, tokens and fees, and finish by reading real Bitcoin, Ethereum and Tron transactions on a public explorer, line by line.</p>
-      <div class="actions"><a class="btn" href="#m1">Start lesson 1</a><a class="btn ghost" href="#glossary">Glossary</a></div>
-    </div>
-    <div class="ledger" aria-label="Real transactions you will read in this course">
-      <div><span>2009-01</span><span>Satoshi → Hal Finney</span><span>10 BTC</span></div>
-      <div><span>2010-05</span><span>Two pizzas</span><span>10,000 BTC</span></div>
-      <div><span>2015-08</span><span>First ETH transfer</span><span>31,337 wei</span></div>
-      <div class="hl"><span>2026-10</span><span>USDT on Ethereum</span><span>129.13 USDT</span></div>
-      <div><span>2026-10</span><span>USDT on Tron</span><span>1,000 USDT</span></div>
-    </div>
-  </div>
-
-  <div class="prose">
-    <h2>How it works</h2>
-    <p>Each lesson starts with a simple idea, then shows it on a real blockchain. In the second half of the course you'll open real transactions as explorer views: click any highlighted field to see what it means, then open the same transaction on the real explorer and find it yourself. A quick quiz at the end of each lesson marks it done. Your progress is saved in this browser.</p>
-  </div>
-
-  <div class="stage">
-    <span class="eyebrow">The basics</span>
-    <div class="cards" id="cardsBasics"></div>
-  </div>
-  <div class="stage">
-    <span class="eyebrow">Reading transactions</span>
-    <div class="cards" id="cardsTx"></div>
-  </div>
-</section>
-
-<!-- 01 -->
-<section class="view" data-view="m1" hidden>
-  <div class="block">
-    <span class="eyebrow">Lesson 01 · about 10 minutes</span>
-    <h1>Money, and why crypto exists</h1>
-    <p class="lede">Money is a shared record of who owns what. Crypto is a different way of keeping that record: one that no single bank or company controls.</p>
-  </div>
-
-  <div class="prose">
-    <h2>Money is mostly a record</h2>
-    <p>Most of your money isn't notes in a drawer. It's a number in your bank's database. When you pay someone by UPI or card, no cash moves. Two banks update their records: your balance goes down and theirs goes up. You trust the banks to keep those records honest, keep them running all day, and settle up with each other.</p>
-    <p>That system works well most of the time, but it has limits. Payments stop at borders and bank holidays. A middleman can freeze, delay or refuse a payment. And everyone has to trust whoever holds the record.</p>
-  </div>
-
-  <div class="analogy"><span class="eyebrow">Think of it like this</span>
-    <h3>The village notebook</h3>
-    <p>Picture a village with no bank. Every payment is written in a notebook: "Asha pays Ben 5." Instead of one person keeping the notebook, every household keeps an identical copy. If Ben says Asha never paid, anyone can check. If someone scribbles a fake entry in their copy, it stops matching everyone else's, and the village ignores it. That shared notebook is the idea behind Bitcoin.</p>
-  </div>
-
-  <div class="prose">
-    <h2>Where Bitcoin came from</h2>
-    <p>In October 2008, during the global financial crisis, someone using the name Satoshi Nakamoto published a nine-page paper describing "a peer-to-peer electronic cash system". The network went live in January 2009. Instead of a bank keeping the record, thousands of computers around the world keep copies of the same ledger and agree on every new entry.</p>
-    <p>Since then, thousands of other cryptocurrencies have launched. Some, like Ethereum, added programs that run on the ledger. Others, like USDT, are digital dollars that ride on top of existing chains.</p>
-  </div>
-
-  <div class="two">
-    <div class="prose"><h3>What crypto is good at</h3><ul>
-      <li>Sending value anywhere, any hour, without asking a bank</li>
-      <li>A record anyone can check for themselves</li>
-      <li>Owning an asset directly, without a middleman holding it for you</li>
-    </ul></div>
-    <div class="prose"><h3>What it isn't</h3><ul>
-      <li>Not guaranteed. Prices can fall fast and far</li>
-      <li>Not reversible. A mistaken payment usually can't be undone</li>
-      <li>Not invisible. Most blockchains are public for anyone to read</li>
-    </ul></div>
-  </div>
-
-  <div class="closer"><span class="eyebrow">Look closer</span>
-    <p>People often call crypto "anonymous". A better word is <b>pseudonymous</b>. Names aren't recorded, but every payment is public and permanent, tied to an address. You'll see exactly what that looks like in lesson 6.</p>
-  </div>
-
-  <div class="block"><h2>Quick quiz</h2><div class="quiz" data-quiz="m1"></div></div>
-  <div class="next"><a class="btn ghost" href="#home">Course home</a><a class="btn" href="#m2">Next: How a blockchain works</a></div>
-</section>
-
-<!-- 02 -->
-<section class="view" data-view="m2" hidden>
-  <div class="block">
-    <span class="eyebrow">Lesson 02 · about 15 minutes</span>
-    <h1>How a blockchain works</h1>
-    <p class="lede">A blockchain is the village notebook, run by computers. New payments are grouped into pages called blocks, and each page is sealed with a fingerprint of the page before it.</p>
-  </div>
-
-  <div class="two">
-    <div class="prose"><h3>Transactions</h3><p>A transaction is a signed message: "move this amount from my address to that one." It's broadcast to the network and waits in a queue called the mempool.</p></div>
-    <div class="prose"><h3>Blocks</h3><p>Every so often a batch of waiting transactions is packed into a block and added to the end of the chain. Bitcoin adds a block about every 10 minutes, Ethereum every 12 seconds.</p></div>
-    <div class="prose"><h3>Hashes</h3><p>A hash is a short fingerprint of any data. Change a single letter and the fingerprint changes completely. Each block stores the hash of the block before it, which chains them together.</p></div>
-    <div class="prose"><h3>Who adds blocks</h3><p>On Bitcoin, miners compete with computing power (proof of work). On Ethereum, validators lock up ETH as a deposit (proof of stake). Either way, they earn fees and rewards for doing it honestly.</p></div>
-  </div>
-
-  <div class="block">
-    <h2>Try to rewrite history</h2>
-    <p class="prose">Each block below holds some payments and the fingerprint of the block before it. Edit any payment. Watch which blocks break, and notice the damage spreads to every block after it. To get away with a change, you'd have to redo every later block faster than the rest of the network, which is what makes old entries so hard to alter.</p>
-    <div class="chain-demo" id="chainDemo"></div>
-    <div class="actions"><button class="btn ghost" id="chainReset" type="button">Reset the chain</button><span class="score" id="chainMsg">All four blocks link up.</span></div>
-  </div>
-
-  <div class="prose">
-    <h2>Confirmations</h2>
-    <p>Once your transaction is in a block, it has one confirmation. Each new block added on top adds another. The deeper it's buried, the safer it is. That's why exchanges wait for a few confirmations before crediting a deposit.</p>
-  </div>
-
-  <div class="more"><span>Read more:</span><a href="/learn/proof-of-work-vs-proof-of-stake-the-one-line-version/">Proof of work vs proof of stake</a><a href="/learn/why-chain-reorgs-matter-for-exchange-deposit-confirmations/">Why confirmations matter</a></div>
-
-  <div class="block"><h2>Quick quiz</h2><div class="quiz" data-quiz="m2"></div></div>
-  <div class="next"><a class="btn ghost" href="#m1">Back</a><a class="btn" href="#m3">Next: Wallets, keys and seed phrases</a></div>
-</section>
-
-<!-- 03 -->
-<section class="view" data-view="m3" hidden>
-  <div class="block">
-    <span class="eyebrow">Lesson 03 · about 15 minutes</span>
-    <h1>Wallets, keys and seed phrases</h1>
-    <p class="lede">A crypto wallet doesn't hold coins. The coins stay on the blockchain. A wallet holds the keys that let you move them.</p>
-  </div>
-
-  <div class="analogy"><span class="eyebrow">Think of it like this</span>
-    <h3>A glass letterbox</h3>
-    <p>Your <b>address</b> is a glass letterbox on a public street. Anyone can see it, anyone can drop money in, and anyone can see how much is inside. Your <b>private key</b> is the only key that opens it. Lose the key and the money is stuck there forever. Give someone a copy and they can empty it.</p>
-  </div>
-
-  <div class="two">
-    <div class="prose"><h3>Address</h3><p>Public, safe to share. It's what you give someone so they can pay you. Bitcoin addresses often start with <code>bc1</code>, Ethereum's with <code>0x</code>.</p></div>
-    <div class="prose"><h3>Private key</h3><p>Secret. It signs your transactions. Whoever has it controls the funds, no questions asked.</p></div>
-    <div class="prose"><h3>Seed phrase</h3><p>12 or 24 ordinary words that can regenerate all your keys. It's a master backup: write it on paper, keep it offline, never type it into a website.</p></div>
-    <div class="prose"><h3>Wallet app</h3><p>Software or a device that stores your keys and signs for you. Examples: MetaMask, Trust Wallet, a Ledger hardware wallet.</p></div>
-  </div>
-
-  <div class="block">
-    <h2>Two ways to hold crypto</h2>
-    <div class="tablewrap"><table>
-      <thead><tr><th></th><th>On an exchange (custodial)</th><th>In your own wallet (self-custody)</th></tr></thead>
-      <tbody>
-        <tr><td>Who holds the keys</td><td>The exchange</td><td>You</td></tr>
-        <tr><td>Forgot your password?</td><td>Reset it with support</td><td>Restore from your seed phrase, or it's gone</td></tr>
-        <tr><td>Main risk</td><td>The exchange fails, freezes withdrawals or gets hacked</td><td>You lose the seed phrase or get tricked into sharing it</td></tr>
-        <tr><td>Good for</td><td>Buying, selling, small amounts while you learn</td><td>Holding long term, using apps on the blockchain</td></tr>
-      </tbody>
-    </table></div>
-    <p class="prose">You'll also hear <b>hot</b> wallets (keys on an internet-connected device, convenient) and <b>cold</b> wallets (keys kept offline, safer for savings).</p>
-  </div>
-
-  <div class="safe"><span class="eyebrow">Stay safe</span>
-    <p>No real exchange, wallet company or support agent will ever ask for your seed phrase. Anyone who asks for it is trying to steal from you. The same goes for "wallet sync" or "validation" websites that ask you to type it in.</p>
-  </div>
-
-  <div class="more"><span>Read more:</span><a href="/learn/cold-hot-and-warm-wallets-aren-t-just-about-temperature/">Cold, hot and warm wallets</a><a href="/learn/the-difference-between-custodial-and-non-custodial-risk/">Custodial vs non-custodial risk</a></div>
-
-  <div class="block"><h2>Quick quiz</h2><div class="quiz" data-quiz="m3"></div></div>
-  <div class="next"><a class="btn ghost" href="#m2">Back</a><a class="btn" href="#m4">Next: Coins, tokens and stablecoins</a></div>
-</section>
-
-<!-- 04 -->
-<section class="view" data-view="m4" hidden>
-  <div class="block">
-    <span class="eyebrow">Lesson 04 · about 12 minutes</span>
-    <h1>Coins, tokens and stablecoins</h1>
-    <p class="lede">Not every crypto asset is the same kind of thing. Some are built into a blockchain, some are created by programs running on top of one, and some are designed to always be worth one dollar.</p>
-  </div>
-
-  <div class="two">
-    <div class="prose"><h3>Coins</h3><p>The built-in currency of a blockchain, used to pay its fees. BTC on Bitcoin, ETH on Ethereum, TRX on Tron, SOL on Solana.</p></div>
-    <div class="prose"><h3>Tokens</h3><p>Assets created by a program (a smart contract) on an existing chain. Anyone can create one in minutes, which is why there are millions. Examples: USDT, USDC, UNI, LINK.</p></div>
-    <div class="prose"><h3>Stablecoins</h3><p>Tokens built to hold a steady price, usually $1. USDT and USDC are backed by cash and short-term government bonds held by the company that issues them.</p></div>
-    <div class="prose"><h3>NFTs</h3><p>Tokens where each one is unique, like a numbered ticket. Used for digital art, collectibles and memberships.</p></div>
-  </div>
-
-  <div class="analogy"><span class="eyebrow">Think of it like this</span>
-    <h3>A country's currency vs. gift vouchers</h3>
-    <p>A coin is like a country's own currency: it's built into the system and you need it to pay the fees. A token is like a gift voucher printed by a shop that operates inside that country. The voucher only means something because the shop's records say so.</p>
-  </div>
-
-  <div class="prose">
-    <h2>Same name, different chains</h2>
-    <p>USDT exists on Ethereum, Tron, Solana and many other chains. Each version lives in its own contract on its own chain. USDT on Tron is not the same thing as USDT on Ethereum, and you can't send one directly to the other network. Lesson 5 shows why that matters when you send.</p>
-  </div>
-
-  <div class="safe"><span class="eyebrow">Stay safe</span>
-    <p>Because anyone can create a token, anyone can create one called "USDT". Fake tokens show up in wallets looking exactly like the real thing. What makes a token real is its contract address, not its name. Lesson 8 shows you how to check it.</p>
-  </div>
-
-  <div class="more"><span>Read more:</span><a href="/learn/stablecoins-aren-t-all-backed-the-same-way/">Stablecoins aren't all backed the same way</a><a href="/learn/why-circulating-supply-is-a-judgment-call-not-a-fact/">What circulating supply really means</a></div>
-
-  <div class="block"><h2>Quick quiz</h2><div class="quiz" data-quiz="m4"></div></div>
-  <div class="next"><a class="btn ghost" href="#m3">Back</a><a class="btn" href="#m5">Next: Buying, sending and fees</a></div>
-</section>
-
-<!-- 05 -->
-<section class="view" data-view="m5" hidden>
-  <div class="block">
-    <span class="eyebrow">Lesson 05 · about 15 minutes</span>
-    <h1>Buying, sending and fees</h1>
-    <p class="lede">Most people's first crypto comes from an exchange. The trickiest part isn't buying. It's sending it somewhere else without making an expensive mistake.</p>
-  </div>
-
-  <div class="block">
-    <h2>A typical first journey</h2>
-    <div class="steps">
-      <div><b>Sign up on an exchange</b>You verify your identity (KYC), much like opening a bank account.</div>
-      <div><b>Add money and buy</b>Deposit rupees or dollars and buy BTC, ETH or USDT. At this point the exchange holds it for you.</div>
-      <div><b>Withdraw to a wallet</b>Paste your wallet address, pick the network, confirm. This is a real on-chain transaction.</div>
-      <div><b>Wait for confirmations</b>Your wallet shows it once it's in a block. A few more blocks and it's settled.</div>
-    </div>
-  </div>
-
-  <div class="prose">
-    <h2>Before you hit send</h2>
-    <ul>
-      <li><b>Pick the right network.</b> Sending USDT on Tron to an address that expects Ethereum can lose the funds. Sender and receiver must use the same network.</li>
-      <li><b>Check the whole address.</b> Compare it character by character, not just the first and last few.</li>
-      <li><b>Send a small test first.</b> For large amounts, send a little, confirm it arrived, then send the rest.</li>
-      <li><b>There's no undo.</b> Once confirmed, a transaction can't be reversed. Only the receiver can send it back.</li>
-    </ul>
-  </div>
-
-  <div class="prose">
-    <h2>Why fees exist</h2>
-    <p>Block space is limited. Fees pay the miners or validators who include your transaction, and they rise when lots of people want in at once. On Bitcoin the fee depends on how many bytes your transaction takes up. On Ethereum it depends on how much computing it needs, measured in "gas". You always pay the fee in the chain's own coin, so you need a little ETH to send USDT on Ethereum, and a little TRX to send it on Tron.</p>
-  </div>
-
-  <div class="safe"><span class="eyebrow">Stay safe</span>
-    <p>Scammers send tiny or zero-value transfers from addresses that look almost like ones you've used, so a fake address appears in your history. If you copy from history without checking, you pay the scammer. Copy addresses from a source you trust and check every character.</p>
-  </div>
-
-  <div class="more"><span>Read more:</span><a href="/learn/the-real-reason-gas-fees-spike/">The real reason gas fees spike</a><a href="/learn/mev-the-tax-you-don-t-see-on-your-transaction/">MEV: the hidden cost on a transaction</a></div>
-
-  <div class="block"><h2>Quick quiz</h2><div class="quiz" data-quiz="m5"></div></div>
-  <div class="next"><a class="btn ghost" href="#m4">Back</a><a class="btn" href="#m6">Next: Reading a Bitcoin transaction</a></div>
-</section>
-
-<!-- 06 -->
-<section class="view" data-view="m6" hidden>
-  <div class="block">
-    <span class="eyebrow">Lesson 06 · about 20 minutes</span>
-    <h1>Reading a Bitcoin transaction</h1>
-    <p class="lede">Bitcoin doesn't keep balances. It keeps a pile of unspent coins of different sizes, and every transaction spends some of them and creates new ones. Once that clicks, every Bitcoin explorer page makes sense.</p>
-  </div>
-
-  <div class="analogy"><span class="eyebrow">Think of it like this</span>
-    <h3>Paying with notes, getting change</h3>
-    <p>You owe a shop ₹300 and you have a ₹500 note. You can't tear the note, so you hand over all ₹500 and get ₹200 back. Bitcoin works the same way. The coins you hold are called UTXOs (unspent transaction outputs). A transaction spends whole UTXOs as inputs and creates new ones as outputs: one for the person you're paying and usually one for your change.</p>
-  </div>
-
-  <div class="block">
-    <h2>Example 1: the first payment between two people</h2>
-    <p class="prose">On 12 January 2009, Satoshi Nakamoto sent 10 BTC to Hal Finney, a programmer testing the brand-new software. It sits in block 170.</p>
-    <div class="flow" aria-label="Coins in and out of the block 170 transaction">
-      <div class="col"><span class="lab">Input</span><div class="coin"><b>50 BTC</b><span>Mining reward from block 9 · shown as 12cbQLTF…pTu3S</span></div></div>
-      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 36 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h30M24 5l8 7-8 7"/></svg></div>
-      <div class="col"><span class="lab">Outputs</span>
-        <div class="coin"><b>10 BTC</b><span>to Hal Finney · shown as 1Q2TWHE3…t5Jvm3</span></div>
-        <div class="coin change"><b>40 BTC</b><span>change, back to Satoshi</span></div>
-        <div class="coin fee"><span>Fee: 0 BTC</span></div>
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="JalalOnChain — home">
+      <img class="brand-logo" src="./assets/logo.png" alt="JalalOnChain logo" width="54" height="54">
+      <div class="brand-text">
+        <div class="name">Jalal<em>OnChain</em></div>
+        <div class="tag">Beyond the transaction.</div>
       </div>
-    </div>
-    <div class="xp" data-xp="btc170"></div>
-  </div>
-
-  <div class="block">
-    <h2>Example 2: the pizza transaction</h2>
-    <p class="prose">On 22 May 2010, Laszlo Hanyecz paid 10,000 BTC for two pizzas, which is why 22 May is now Bitcoin Pizza Day. Look at the shape: he had mined lots of small coins, so his wallet had to gather 131 of them to reach 10,000.</p>
-    <div class="flow" aria-label="Coins in and out of the pizza transaction">
-      <div class="col"><span class="lab">Inputs (131)</span><div class="coin"><b>≈ 10,000.99 BTC total</b><span>131 separate coins, all from 1XPTgDRh…KZatrvH4</span></div></div>
-      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 36 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h30M24 5l8 7-8 7"/></svg></div>
-      <div class="col"><span class="lab">Output</span>
-        <div class="coin"><b>10,000 BTC</b><span>to 17SkEw2m…NKwkXaxFyQ</span></div>
-        <div class="coin fee"><span>Fee: ≈ 0.99 BTC · no change</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="#hub" class="nav-tab-link" data-tab="chains">Chains</a>
+      <a href="#tokens">Tokens</a>
+      <a href="#defi">DeFi</a>
+      <a href="#learn">Learn</a>
+      <div class="nav-dd" id="toolsDd">
+        <button type="button" class="nav-dd-btn" aria-haspopup="true" aria-expanded="false">Tools</button>
+        <div class="nav-dd-menu"><div class="nav-dd-menu-inner">
+          <a href="/tools/tornado-tracer/">Tornado Tracer</a>
+          <a href="/tools/railgun-tracer/">Railgun Tracer</a>
+        </div></div>
       </div>
+      <a href="#subscribe">Subscribe</a>
+      <div class="live-pill"><span class="live-dot live" id="liveDot"></span><span id="liveText">syncing&hellip;</span></div>
     </div>
-    <div class="xp" data-xp="pizza"></div>
   </div>
-
-  <div class="block">
-    <h2>Example 3: an everyday payment</h2>
-    <p class="prose">This is what most transactions look like: one coin in, two out. One output pays someone, the other returns the change. Here the sender sent the change straight back to the same address, which makes it easy to tell which is which.</p>
-    <div class="flow" aria-label="Coins in and out of a recent payment">
-      <div class="col"><span class="lab">Input</span><div class="coin"><b>0.39975281 BTC</b><span>bc1qwfgd…rskvx0</span></div></div>
-      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 36 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h30M24 5l8 7-8 7"/></svg></div>
-      <div class="col"><span class="lab">Outputs</span>
-        <div class="coin"><b>0.00210196 BTC</b><span>payment to bc1qtr9s…257s7t</span></div>
-        <div class="coin change"><b>0.39763957 BTC</b><span>change back to bc1qwfgd…rskvx0</span></div>
-        <div class="coin fee"><span>Fee: 1,128 sats (≈ 6 sat/vB)</span></div>
-      </div>
-    </div>
-    <div class="xp" data-xp="btcRecent"></div>
-  </div>
-
-  <div class="prose">
-    <h2>The one equation to remember</h2>
-    <p><b>Inputs = outputs + fee.</b> Bitcoin has no fee field. The fee is whatever is left over. Check it on example 3: 39,975,281 − 210,196 − 39,763,957 = 1,128 sats.</p>
-    <p>One bitcoin is 100,000,000 satoshis (sats). Explorers switch between the two, so get comfortable converting.</p>
-  </div>
-
-  <div class="closer"><span class="eyebrow">Look closer</span>
-    <p>When a transaction spends several inputs at once, one wallet had to sign for all of them, so they almost always belong to the same owner. And spotting which output is change tells you where the money actually went. Keep both in mind whenever you read a Bitcoin transaction.</p>
-  </div>
-
-  <div class="block"><h2>Quick quiz</h2><div class="quiz" data-quiz="m6"></div></div>
-  <div class="next"><a class="btn ghost" href="#m5">Back</a><a class="btn" href="#m7">Next: Reading an Ethereum transaction</a></div>
-</section>
-
-<!-- 07 -->
-<section class="view" data-view="m7" hidden>
-  <div class="block">
-    <span class="eyebrow">Lesson 07 · about 15 minutes</span>
-    <h1>Reading an Ethereum transaction</h1>
-    <p class="lede">Ethereum swaps Bitcoin's coins-and-change for something closer to a bank account. Each address has a balance, and a transaction moves value from one to another. It also numbers every transaction an account sends and charges for computing in "gas".</p>
-  </div>
-
-  <div class="analogy"><span class="eyebrow">Think of it like this</span>
-    <h3>A bank account with numbered cheques</h3>
-    <p>An Ethereum address works like a bank account: no notes, no change, just a balance going up and down. Every outgoing payment carries a cheque number, called the nonce, starting at 0. Cheque 5 can't clear before cheque 4. The fee is like paying a courier by distance: plain transfers are short trips, complicated contract calls cost more.</p>
-  </div>
-
-  <div class="two">
-    <div class="prose"><h3>Units</h3><p>1 ETH = 1,000,000,000 gwei = 10<sup>18</sup> wei. Fees are quoted in gwei. Raw data from an API is in wei.</p></div>
-    <div class="prose"><h3>The fee formula</h3><p><b>Fee = gas used × gas price.</b> A plain ETH transfer always uses exactly 21,000 gas.</p></div>
-  </div>
-
-  <div class="block">
-    <h2>Example: the first ETH ever transferred</h2>
-    <p class="prose">Ethereum launched on 30 July 2015, and transfers were switched on about a week later. Block 46147 holds the first one. The amount, 31,337 wei, is a programmers' in-joke ("elite" in hacker slang), and the fee was huge by today's standards.</p>
-    <div class="xp" data-xp="eth1"></div>
-  </div>
-
-  <div class="block">
-    <h2>Bitcoin and Ethereum side by side</h2>
-    <div class="tablewrap"><table>
-      <thead><tr><th></th><th>Bitcoin</th><th>Ethereum</th></tr></thead>
-      <tbody>
-        <tr><td>Model</td><td>Coins (UTXOs) with change</td><td>Account balances</td></tr>
-        <tr><td>Address looks like</td><td><code>1…</code>, <code>3…</code>, <code>bc1…</code></td><td><code>0x</code> + 40 characters</td></tr>
-        <tr><td>Inputs and outputs</td><td>Many in, many out</td><td>One sender, one "To"</td></tr>
-        <tr><td>Fee</td><td>Inputs minus outputs</td><td>Gas used × gas price</td></tr>
-        <tr><td>Ordering</td><td>None per address</td><td>Nonce counts every transaction sent</td></tr>
-        <tr><td>Block time</td><td>About 10 minutes</td><td>12 seconds</td></tr>
-        <tr><td>Popular explorer</td><td>mempool.space</td><td>etherscan.io</td></tr>
-      </tbody>
-    </table></div>
-  </div>
-
-  <div class="closer"><span class="eyebrow">Look closer</span>
-    <p>The nonce tells you a lot for free. A nonce of 0 means you're looking at an account's very first transaction. A nonce in the tens of thousands means a machine sent it, usually an exchange's wallet, not a person clicking send.</p>
-  </div>
-
-  <div class="block"><h2>Quick quiz</h2><div class="quiz" data-quiz="m7"></div></div>
-  <div class="next"><a class="btn ghost" href="#m6">Back</a><a class="btn" href="#m8">Next: Token transfers</a></div>
-</section>
-
-<!-- 08 -->
-<section class="view" data-view="m8" hidden>
-  <div class="block">
-    <span class="eyebrow">Lesson 08 · about 20 minutes</span>
-    <h1>Token transfers</h1>
-    <p class="lede">Most value moving on Ethereum today isn't ETH, it's tokens like USDT. This is where people misread explorers most often: the "To" field usually shows the token's contract, not the person who got paid.</p>
-  </div>
-
-  <div class="analogy"><span class="eyebrow">Think of it like this</span>
-    <h3>A vending machine with a ledger inside</h3>
-    <p>A smart contract is a program that lives at its own address. The USDT contract keeps a private ledger of who owns how many dollars. To send USDT you don't send money to the other person. You send a message to the contract saying "move 129 of mine to this address," and the contract updates its ledger.</p>
-  </div>
-
-  <div class="block">
-    <h2>Example: a USDT transfer</h2>
-    <p class="prose">Look closely at where the real recipient shows up. It isn't the To field.</p>
-    <div class="xp" data-xp="usdt"></div>
-  </div>
-
-  <div class="prose">
-    <h2>Three places a token transfer shows up</h2>
-    <ol>
-      <li><b>Input data.</b> The raw instruction, <code>transfer(to, amount)</code>, encoded as hex. Explorers decode it when the contract's code is verified.</li>
-      <li><b>Event logs.</b> The contract announces a <code>Transfer(from, to, value)</code> event. Explorers build their token-transfer lists from these.</li>
-      <li><b>Token transfers section.</b> The friendly summary at the top of the explorer page. Start here, then check the details below it.</li>
-    </ol>
-    <h2>Decimals</h2>
-    <p>Contracts only store whole numbers. USDT uses 6 decimals, so a raw value of 129128964 means 129.128964 USDT. Most other tokens use 18. Always check a token's decimals before reading a raw number.</p>
-  </div>
-
-  <div class="safe"><span class="eyebrow">Stay safe</span>
-    <p>In the same block as this example, another transaction made ten USDT transfers of exactly <b>0</b> between unrelated addresses (<a href="https://etherscan.io/tx/0x6dcc189b87e7d0e6b76b17cdd972c108b5cb9c83ea7818581c9ebb404827979f" target="_blank" rel="noopener">0x6dcc18…27979f</a>). That's the address-poisoning trick from lesson 5, happening for real. And to check a token is genuine, open its contract: real USDT on Ethereum is <code>0xdAC17F958D2ee523a2206206994597C13D831ec7</code>.</p>
-  </div>
-
-  <div class="block"><h2>Quick quiz</h2><div class="quiz" data-quiz="m8"></div></div>
-  <div class="next"><a class="btn ghost" href="#m7">Back</a><a class="btn" href="#m9">Next: Other chains</a></div>
-</section>
-
-<!-- 09 -->
-<section class="view" data-view="m9" hidden>
-  <div class="block">
-    <span class="eyebrow">Lesson 09 · about 20 minutes</span>
-    <h1>Other chains</h1>
-    <p class="lede">Bitcoin and Ethereum give you two models: coins with change, and accounts with balances. Almost every other chain is a variation on one of them. Spot which family a chain belongs to and you can read it in minutes.</p>
-  </div>
-
-  <div class="block">
-    <h2>Tron: where most USDT moves</h2>
-    <div class="prose">
-      <p>Tron is an account-based chain with addresses starting with <code>T</code>. Its version of USDT (often written USDT-TRC20) is hugely popular for payments because transfers are fast and cheap. It works just like lesson 8: you call the USDT contract and it updates its ledger.</p>
-      <p>The difference is fees. Tron charges in two resources, <b>energy</b> (for running contracts) and <b>bandwidth</b> (for data size). You can cover them by staking TRX, renting energy, or simply burning a little TRX.</p>
-    </div>
-    <div class="xp" data-xp="tron"></div>
-  </div>
-
-  <div class="prose">
-    <h2>The Ethereum family: one address, many chains</h2>
-    <p>BNB Smart Chain, Polygon, Arbitrum, Base, Optimism, Avalanche and many others copy Ethereum's design. Same <code>0x</code> addresses, same transaction fields, same token logic, each with its own Etherscan-style explorer (bscscan.com, polygonscan.com, arbiscan.io, basescan.org).</p>
-    <p>The same private key controls the same <code>0x</code> address on all of them. That's handy, but it's also why picking the right network when you send matters so much.</p>
-  </div>
-
-  <div class="prose">
-    <h2>Solana: accounts that hold accounts</h2>
-    <p>Solana addresses are long strings of letters and numbers with no fixed prefix. Its twist: your wallet doesn't hold tokens directly. It owns a separate <b>token account</b> for each token. Explorers like Solscan show both the token account that changed and the wallet that owns it.</p>
-    <p>Solana transactions are identified by a <b>signature</b> rather than a hash, and one transaction often bundles many steps. Start with the explorer's balance-change summary.</p>
-    <p><a href="https://solscan.io/token/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" target="_blank" rel="noopener">Open the USDC page on Solscan</a> and click any recent transfer to see token accounts and owners side by side.</p>
-  </div>
-
-  <div class="block">
-    <h2>Field guide</h2>
-    <div class="tablewrap"><table>
-      <thead><tr><th>Chain</th><th>Model</th><th>Address format</th><th>Fees paid in</th><th>Explorer</th></tr></thead>
-      <tbody>
-        <tr><td>Bitcoin</td><td>Coins (UTXO)</td><td><code>1…</code> <code>3…</code> <code>bc1…</code></td><td>BTC</td><td>mempool.space</td></tr>
-        <tr><td>Litecoin, Dogecoin</td><td>Coins (UTXO)</td><td><code>L…</code> <code>ltc1…</code> / <code>D…</code></td><td>LTC / DOGE</td><td>blockchair.com</td></tr>
-        <tr><td>Ethereum</td><td>Accounts</td><td><code>0x…</code></td><td>ETH (gas)</td><td>etherscan.io</td></tr>
-        <tr><td>BNB Chain, Polygon, Arbitrum, Base</td><td>Accounts</td><td><code>0x…</code>, same as Ethereum</td><td>BNB / POL / ETH</td><td>bscscan.com, polygonscan.com, arbiscan.io, basescan.org</td></tr>
-        <tr><td>Tron</td><td>Accounts</td><td><code>T…</code></td><td>Energy and bandwidth, or TRX</td><td>tronscan.org</td></tr>
-        <tr><td>Solana</td><td>Accounts + token accounts</td><td>32–44 letters and numbers</td><td>SOL</td><td>solscan.io</td></tr>
-      </tbody>
-    </table></div>
-  </div>
-
-  <div class="closer"><span class="eyebrow">You made it</span>
-    <p>You can now open a transaction on Bitcoin, Ethereum, Tron or any Ethereum-style chain and say who sent what to whom, when, and what it cost. Try it on a transaction of your own: find it in your wallet's history, paste the hash into the right explorer, and read it field by field.</p>
-  </div>
-
-  <div class="block"><h2>Quick quiz</h2><div class="quiz" data-quiz="m9"></div></div>
-  <div class="next"><a class="btn ghost" href="#m8">Back</a><a class="btn" href="#home">Course home</a></div>
-</section>
-
-<!-- GLOSSARY -->
-<section class="view" data-view="glossary" hidden>
-  <div class="block"><span class="eyebrow">Reference</span><h1>Glossary</h1><p class="lede">Plain definitions of the words used in this course.</p></div>
-  <div class="gloss" id="gloss"></div>
-</section>
-
-</main>
 </div>
-<footer class="foot pad">JalalOnChain · Educational content, not financial advice. Transactions shown are public records from each blockchain.</footer>
+
+<div class="wrap">
+  <section class="hero">
+    <h1>The <em>Crypto Information Hub</em></h1>
+    <p>Crypto never sleeps, and neither do we. Regulators cracking down, whales making moves, new chains going live, exchanges launching and others shutting down &mdash; we&rsquo;re watching all of it, hour by hour, so you don&rsquo;t have to.</p>
+  </section>
+
+  <section class="hub-section" id="hub">
+    <div class="hub-tabs" id="hubTabs">
+      <button class="hub-tab active" data-tab="news"><span class="tab-dot"></span>News</button>
+      <button class="hub-tab" data-tab="enforcement"><span class="tab-dot"></span>Enforcement Alerts</button>
+      <button class="hub-tab" data-tab="ofac"><span class="tab-dot"></span>OFAC Sanctions</button>
+      <button class="hub-tab" data-tab="whales"><span class="tab-dot"></span>Whale Activity</button>
+      <button class="hub-tab" data-tab="chains"><span class="tab-dot"></span>New Chains</button>
+      <button class="hub-tab" data-tab="exchanges"><span class="tab-dot"></span>Exchanges</button>
+      <button class="hub-tab" data-tab="closed"><span class="tab-dot"></span>Closed Exchanges</button>
+    </div>
+
+    <div class="hub-pane active" data-pane="news" id="news">
+      <div class="feed-head-row">
+        <h3>Crypto news</h3>
+        <span class="feed-count" id="newsCount">0 items</span>
+      </div>
+      <div class="card feed-card feed-scroll-card">
+        <div class="feed-list" id="newsList"><div class="empty-state">Loading news&hellip;</div></div>
+      </div>
+    </div>
+
+    <div class="hub-pane" data-pane="enforcement" id="enforcement">
+      <div class="feed-head-row">
+        <h3>Enforcement &amp; regulatory alerts</h3>
+        <span class="feed-count" id="enfCount">0 items</span>
+      </div>
+      <div class="card feed-card feed-scroll-card" id="enfCard">
+        <div class="feed-list" id="enfList"><div class="empty-state">Loading&hellip;</div></div>
+      </div>
+    </div>
+
+    <div class="hub-pane" data-pane="ofac" id="ofac">
+      <div class="feed-head-row">
+        <h3>OFAC sanctions actions</h3>
+        <span class="feed-count" id="ofacCount">0 items</span>
+      </div>
+      <div class="card feed-card feed-scroll-card" id="ofacCard">
+        <div class="feed-list" id="ofacList"><div class="empty-state">Loading&hellip;</div></div>
+      </div>
+      <div class="source-note">Every action from the U.S. Treasury&rsquo;s OFAC &ldquo;recent actions&rdquo; feed, crypto-related or not &mdash; the broader Enforcement Alerts tab stays crypto-focused, this one is the complete OFAC record.</div>
+    </div>
+
+    <div class="hub-pane" data-pane="whales" id="hyperliquid">
+      <div class="section-head">
+        <h2>Hyperliquid whale activity &middot; $100K+ positions</h2>
+        <span class="hint"><span class="feed-count" id="hlPosCount">0</span> &middot; <span id="hlUpdated"></span></span>
+      </div>
+      <div class="card">
+        <div class="grid-cards" id="hlPositionsGrid"><div class="empty-state">Loading positions&hellip;</div></div>
+      </div>
+      <div class="source-note">Tracks Hyperliquid&rsquo;s current top accounts by size, re-selected every sync, filtered to positions of $100K or more. Tracking, not financial advice.</div>
+    </div>
+
+    <div class="hub-pane" data-pane="chains" id="chains">
+      <div class="feed-head-row">
+        <h3>New chains</h3>
+        <span class="feed-count" id="chainsCount">0 tracked</span>
+      </div>
+      <div class="card feed-card" id="chainsCard">
+        <div class="feed-list" id="chainsList"><div class="empty-state">Loading&hellip;</div></div>
+      </div>
+    </div>
+
+    <div class="hub-pane" data-pane="exchanges" id="exchanges">
+      <div class="feed-head-row">
+        <h3>Exchanges</h3>
+        <span class="feed-count" id="exchangesCount">0 tracked</span>
+      </div>
+      <div class="card feed-card feed-scroll-card" id="exchangesCard">
+        <div class="feed-list" id="exchangesList"><div class="empty-state">Loading&hellip;</div></div>
+      </div>
+      <div class="source-note">Established, currently-active centralized crypto exchanges spanning crypto&rsquo;s history &mdash; each name links directly to the exchange&rsquo;s own site. Hand-curated; not a live feed.</div>
+    </div>
+
+    <div class="hub-pane" data-pane="closed" id="closed">
+      <div class="feed-head-row">
+        <h3>Closed exchanges</h3>
+        <span class="feed-count" id="closedCount">0 tracked</span>
+      </div>
+      <div class="card feed-card feed-scroll-card" id="closedCard">
+        <div class="feed-list" id="closedList"><div class="empty-state">Loading&hellip;</div></div>
+      </div>
+      <div class="source-note">Notable crypto exchanges that have permanently shut down, been seized, or ceased operations. Kept for historical reference. Hand-curated; not a live feed.</div>
+    </div>
+  </section>
+
+  <section class="section" id="prices">
+    <div class="section-head">
+      <h2>Live prices</h2>
+      <span class="hint" id="pricesCount">0 coins</span>
+    </div>
+    <div class="pulse-bar" id="pulseBar">
+      <span class="pulse-item" id="pulseFg">Sentiment: &mdash;</span>
+      <span class="pulse-sep">&middot;</span>
+      <span class="pulse-item" id="pulseGain">Top gainer: &mdash;</span>
+      <span class="pulse-sep">&middot;</span>
+      <span class="pulse-item" id="pulseLose">Top loser: &mdash;</span>
+    </div>
+    <div class="dominance-row">
+      <span class="dom-label">Dominance</span>
+      <span id="dominanceList">&mdash;</span>
+    </div>
+    <div class="card">
+      <div class="price-search-row">
+        <input type="text" id="priceSearchInput" placeholder="Search any coin &mdash; e.g. bitcoin, sol, pepe">
+        <button class="price-search-btn" id="priceSearchBtn" type="button">Search</button>
+      </div>
+      <div class="price-search-result" id="priceSearchResult"></div>
+      <div class="price-table-scroll">
+        <div class="price-table-head" id="priceTableHead">
+          <span class="pt-col">Coin</span>
+          <span class="pt-col pt-sort" data-sort="price">Price<span class="arrow"></span></span>
+          <span class="pt-col pt-sort" data-sort="change24h">24h %<span class="arrow"></span></span>
+          <span class="pt-col pt-sort" data-sort="volume24h">24h Vol<span class="arrow"></span></span>
+          <span class="pt-col pt-sort" data-sort="marketCapUsd">Market Cap<span class="arrow"></span></span>
+        </div>
+        <div id="priceTable"><div class="empty-state">Loading prices&hellip;</div></div>
+      </div>
+    </div>
+    <div class="source-note">Top 100 coins by market cap, refreshed hourly &mdash; click a column to sort. Search looks up any coin&rsquo;s live price directly, even ones outside this list.</div>
+  </section>
+
+  <section class="section" id="tokens">
+    <div class="section-head">
+      <h2>New tokens monitor &middot; $1M+ market cap</h2>
+      <span class="hint" id="launchesCount">0 tracked</span>
+    </div>
+    <div class="card">
+      <div class="grid-cards" id="launchesGrid"><div class="empty-state">Loading tokens&hellip;</div></div>
+    </div>
+    <div class="source-note">Tokens launched in the last 30 days that have crossed $1M market cap, mostly on Solana (pump.fun, bonk.fun and other launchpads), plus up to 10 from other chains. A token only shows up if real liquidity backs its market cap, so inflated numbers are left out. Copycats that reuse a popular name or symbol on a different contract are common, and a &ldquo;name reused&rdquo; tag means exactly that, so check the contract address on the card, not just the name. New tokens are very high risk. This is tracking, not an endorsement.</div>
+  </section>
+
+  <section class="section" id="defi">
+    <div class="section-head">
+      <h2>New DeFi protocols &amp; entities</h2>
+      <span class="hint" id="defiCount">0 tracked</span>
+    </div>
+    <div class="card">
+      <div class="grid-cards" id="defiGrid"><div class="empty-state">Loading new protocols&hellip;</div></div>
+    </div>
+    <div class="source-note">Recently-listed DeFi protocols by TVL &mdash; new lending markets, DEXs, restaking and yield entities that crossed a minimum TVL floor. Tracking, not an endorsement or audit.</div>
+  </section>
+
+  <div class="ad-slot ad-leaderboard">AD</div>
+
+  <div class="layout">
+    <div class="feed-col">
+      <div class="card k-card" id="learn">
+        <div class="k-eyebrow"><span id="kEyebrowLabel">Daily briefing</span><time id="kDate">&mdash;</time></div>
+        <div class="k-title" id="kTitle">Loading today&rsquo;s insight&hellip;</div>
+        <div class="k-body" id="kBody"></div>
+        <div class="k-tags" id="kTags"></div>
+        <div class="k-back-today" id="kBackToday" style="display:none;margin-top:10px;">&larr; back to today&rsquo;s briefing</div>
+        <div class="k-hist-nested">
+          <h4>Past briefings</h4>
+          <div class="k-hist-scroll" id="kHistList"></div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="side">
+      <div class="card sub-card" id="subscribe">
+        <h4>Get the daily briefing by email</h4>
+        <p>One short on-chain or off-chain lesson a day &mdash; no noise, no price calls. Unsubscribe any time.</p>
+        <form class="sub-form" id="subForm">
+          <input type="email" id="subEmail" placeholder="you@email.com" required>
+          <input type="hidden" name="access_key" value="PENDING_WEB3FORMS_KEY">
+          <input type="hidden" name="subject" value="New JalalOnChain subscriber">
+          <button class="sub-btn" type="submit">Subscribe</button>
+        </form>
+        <div class="sub-msg" id="subMsg"></div>
+      </div>
+
+      <div class="ad-slot ad-rect">AD</div>
+    </aside>
+  </div>
+
+  <footer class="page-foot">
+    <div class="foot-support" id="support">
+      <div class="foot-support-head">
+        <h4 class="foot-support-tagline-main">The chain leaves clues. Your support helps me follow them.</h4>
+      </div>
+      <div class="card support-card">
+        <div class="support-tabs" id="supportTabs">
+          <button class="support-tab active" data-mode="currency">By currency</button>
+          <button class="support-tab" data-mode="direct">Direct addresses</button>
+        </div>
+        <div id="supportBody"></div>
+      </div>
+    </div>
+
+    <div class="foot-contact">
+      <a class="foot-contact-link" href="mailto:contact@jalalonchain.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0-.621.504-1.125 1.125-1.125h17.25c.621 0 1.125.504 1.125 1.125v10.5c0 .621-.504 1.125-1.125 1.125H3.375A1.125 1.125 0 0 1 2.25 17.25V6.75Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m3 7 9 6 9-6"/></svg>
+        contact@jalalonchain.com
+      </a>
+      <a class="foot-contact-link" href="https://x.com/JalalOnChain" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        @JalalOnChain
+      </a>
+    </div>
+    <div class="foot-bottom">
+      <span>JalalOnChain &middot; explore new DeFi protocols, new $1M+ tokens, tracing tools and crypto news &mdash; not financial advice</span>
+      <span id="footSync">Waiting for first sync&hellip;</span>
+    </div>
+    <div class="foot-credit">Live price data and protocol TVL are pulled from public, no-key market-data APIs. Individual articles link straight to their original publisher.</div>
+  </footer>
+</div>
 
 <script>
-const LESSONS=[
- {id:"m1",n:"01",t:"Money, and why crypto exists",d:"What money really is, where Bitcoin came from, and what crypto is and isn't.",g:"b"},
- {id:"m2",n:"02",t:"How a blockchain works",d:"Blocks, hashes and confirmations, with a chain you can try to break.",g:"b"},
- {id:"m3",n:"03",t:"Wallets, keys and seed phrases",d:"Addresses, private keys, seed phrases, and exchange vs self-custody.",g:"b"},
- {id:"m4",n:"04",t:"Coins, tokens and stablecoins",d:"The different kinds of crypto assets and how to tell them apart.",g:"b"},
- {id:"m5",n:"05",t:"Buying, sending and fees",d:"Your first purchase, sending safely, picking the right network, and why fees exist.",g:"b"},
- {id:"m6",n:"06",t:"A Bitcoin transaction",d:"Coins, change and fees through three real transactions from 2009, 2010 and this week.",g:"t"},
- {id:"m7",n:"07",t:"An Ethereum transaction",d:"Accounts, nonces and gas, using the first ETH transfer ever made.",g:"t"},
- {id:"m8",n:"08",t:"Token transfers",d:"How USDT really moves and why the To field can mislead.",g:"t"},
- {id:"m9",n:"09",t:"Other chains",d:"Tron, the Ethereum family and Solana, plus a field guide to explorers.",g:"t"}
-];
+(function(){
+  "use strict";
+  var state = { knowledge: [], launches: [], news: [], prices: [], defi: [], chains: [], exchanges: [], closedExchanges: [], hlPositions: [], sentiment: null, dominance: null, updatedAt: null };
+  var priceSortState = { field: null, dir: -1 };
+  var priceFilterQuery = "";
 
-const XP={
- btc170:{title:"Satoshi → Hal Finney",chain:"Bitcoin · block 170",link:"https://mempool.space/tx/f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16",site:"mempool.space",rows:[
-  ["Transaction ID","f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16","The unique fingerprint of this transaction. Paste it into any Bitcoin explorer and you'll land on exactly this record."],
-  ["Block","170","The 170th block after the very first one. Every block added since then is another confirmation, and there are now more than 970,000 blocks."],
-  ["Time","2009-01-12 03:30:25 UTC (09:00:25 IST)","The time of the block, set by the miner. Explorers show UTC. It's accurate to within minutes, not seconds."],
-  ["Input","50 BTC from tx 0437cd7f…a597c9, output 0","The coin being spent: Satoshi's 50 BTC mining reward from block 9. An input always points back to an earlier output, which is how every bitcoin can be followed back to where it was created."],
-  ["Output 0","10 BTC → Hal Finney","The payment. Very early outputs like this pay a public key directly, so explorers work out an address to display: 1Q2TWHE3GMdB6BZKafqwxXtWAWgFt5Jvm3."],
-  ["Output 1","40 BTC → back to Satoshi","The change. 50 in, 10 to Hal, so 40 comes back. A single 50 BTC coin can't be split without creating change."],
-  ["Fee","0 BTC","50 in, 50 out. In 2009 blocks were nearly empty and miners included transactions for free."]
- ]},
- pizza:{title:"The pizza payment",chain:"Bitcoin · block 57,043",link:"https://mempool.space/tx/a1075db55d416d3ca199f55b6084e2115b9345e16c5cf302fc80e9d5fbf5d48d",site:"mempool.space",rows:[
-  ["Transaction ID","a1075db55d416d3ca199f55b6084e2115b9345e16c5cf302fc80e9d5fbf5d48d","Open it on the explorer and scroll. The long list of inputs is the point of this example."],
-  ["Time","2010-05-22 18:16:31 UTC (23:46:31 IST)","Explorers show UTC. In India this was nearly midnight."],
-  ["Inputs","131 coins, all from 1XPTgDRhN8RFnzniWCddobD9iKZatrvH4","Laszlo mined Bitcoin on his own computer and earned many small rewards. To pay 10,000 BTC, his wallet had to spend 131 of them at once."],
-  ["Output","10,000 BTC → 17SkEw2md5avVNyYgj6RiXuQKNwkXaxFyQ","One output, no change. The inputs added up to about 10,000.99 BTC, and everything above 10,000 went to the miner."],
-  ["Fee","≈ 0.99 BTC","Inputs minus outputs. A big fee for the time, partly because 131 inputs make a large transaction."]
- ]},
- btcRecent:{title:"Everyday payment",chain:"Bitcoin · block 973,818",link:"https://mempool.space/tx/9cb51ae80998f84e7def0735fb2029dc0bebd292ae27f33da1dcad47f6082d45",site:"mempool.space",rows:[
-  ["Transaction ID","9cb51ae80998f84e7def0735fb2029dc0bebd292ae27f33da1dcad47f6082d45","A normal transaction picked from a recent block."],
-  ["Time","2026-10-30 11:43:45 UTC (17:13:45 IST)","Block time. Before a transaction is confirmed, explorers also show when it first appeared in the mempool, the queue of waiting transactions."],
-  ["Input","0.39975281 BTC from bc1qwfgdjyy95aay2686fn74h6a4nu9eev6np7q4fn204dkj3274frlqrskvx0","One coin spent. This long bc1q address is a script address, often used by shared or multi-signature wallets."],
-  ["Output 0","0.00210196 BTC → bc1qtr9slpm8n3gdgzpglns83fl832ep89kn257s7t","The payment to the other person."],
-  ["Output 1","0.39763957 BTC → bc1qwfgd…rskvx0 (same as the input)","The change, sent back to the very address it came from. Reusing addresses like this is common, but it makes your history easier for others to follow."],
-  ["Fee","1,128 sats","Inputs minus outputs. Explorers also show the fee rate: 1,128 sats ÷ 188.5 virtual bytes ≈ 6 sat/vB. The rate, not the total, decides how fast a transaction confirms."]
- ]},
- eth1:{title:"First ETH transfer",chain:"Ethereum · block 46,147",link:"https://etherscan.io/tx/0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060",site:"etherscan.io",rows:[
-  ["Transaction hash","0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060","Ethereum hashes start with 0x and are 66 characters long. Same job as Bitcoin's transaction ID."],
-  ["Status","Success","Ethereum transactions can fail and still be recorded, and the fee is still charged. Always check the status first."],
-  ["Block / time","46147 · 2015-08-07 03:30:33 UTC (09:00:33 IST)","Ethereum blocks come much faster than Bitcoin's: every 12 seconds today, around 15 back then."],
-  ["From","0xA1E4380A3B1f749673E270229993eE55F35663b4","The sending account. An Ethereum transaction always has exactly one sender, the account whose key signed it."],
-  ["To","0x5DF9B87991262F6BA471F09758CDE1c0FC1De734","The receiving account. Here it's an ordinary account. In lesson 8 you'll see it can also be a contract."],
-  ["Value","31,337 wei (0.000000000000031337 ETH)","A tiny amount sent as a joke. Explorers show ETH, raw data uses wei."],
-  ["Nonce","0","The sender's first ever outgoing transaction. Their next one would be nonce 1."],
-  ["Gas used × price","21,000 × 50,000 gwei","A plain transfer always uses 21,000 gas. The gas price was set extremely high in those early days."],
-  ["Fee","1.05 ETH","21,000 × 0.00005 ETH. About 33 trillion times more than the amount sent."]
- ]},
- usdt:{title:"USDT transfer",chain:"Ethereum · block 26,313,072",link:"https://etherscan.io/tx/0x3763da0ca71742d07d7277ee7094d99b5d6cfea31f4e9d1547ea5c5be801cb12",site:"etherscan.io",rows:[
-  ["Transaction hash","0x3763da0ca71742d07d7277ee7094d99b5d6cfea31f4e9d1547ea5c5be801cb12","A real USDT transfer from 31 October 2026."],
-  ["Time","2026-10-31 13:34:11 UTC (19:04:11 IST)","Block time."],
-  ["From","0xb21B7C28c5BeFC80d58B326600305cDD62A4A58A","The account that signed and paid the gas. Here it's also the account the USDT came from."],
-  ["To","0xdAC17F958D2ee523a2206206994597C13D831ec7 (Tether: USDT)","This is the USDT contract, not the person who got paid. The most common misreading on any explorer."],
-  ["Value","0 ETH","No ETH moved. The dollars moved inside the contract's own ledger."],
-  ["Method","transfer","The function called on the contract. Decoded, it says: send 129128964 units to 0x7D8D1DEB0D9626219F99ee2E8bF74D7A1CD81a7D."],
-  ["Token transfer","129.128964 USDT → 0x7D8D1DEB0D9626219F99ee2E8bF74D7A1CD81a7D","The real recipient, taken from the contract's Transfer event. 129128964 ÷ 10^6, because USDT has 6 decimals."],
-  ["Nonce","71,984","This account has sent almost 72,000 transactions, so it's almost certainly an exchange or payment service, not a person."],
-  ["Fee","0.000004698583640940 ETH","46,109 gas × 0.1019 gwei. Fees on Ethereum are now tiny compared with earlier years."]
- ]},
- tron:{title:"USDT on Tron",chain:"Tron · block 87,593,532",link:"https://tronscan.org/#/transaction/6cdaf25459a3b122d74048d7069c42bdd75457585b8f24604223cc3f510a6379",site:"tronscan.org",rows:[
-  ["Transaction hash","6cdaf25459a3b122d74048d7069c42bdd75457585b8f24604223cc3f510a6379","Tron hashes are 64 characters with no 0x in front."],
-  ["Time","2026-10-31 13:40:21 UTC (19:10:21 IST)","Tron adds a block every 3 seconds."],
-  ["Result","SUCCESS","Check this first. Failed contract calls are recorded too."],
-  ["Owner (from)","TYr4QQfuRmV3QUWNS7HkNNnwv8NV5bY1p4","The account that signed the transaction."],
-  ["Contract","TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t (Tether USD)","The official USDT contract on Tron. Just like on Ethereum, this is where the instruction went, not who received the money."],
-  ["Method","transfer(address _to, uint256 _value)","Identical to Ethereum's. Tron reuses Ethereum's contract format, so token transfers read the same way."],
-  ["Token transfer","1,000 USDT → TBLEen5ouDbXvxZ7fNWJUveRDJzhWjf2JG","The real recipient. Raw amount 1000000000, with 6 decimals."],
-  ["Energy used","130,285","Tron's version of gas. This account covered it with staked or rented energy, so it didn't have to burn TRX."]
- ]}
-};
+  function fmtUsd(n){
+    n = Number(n)||0;
+    if (n >= 1e9) return "$"+(n/1e9).toFixed(2)+"B";
+    if (n >= 1e6) return "$"+(n/1e6).toFixed(2)+"M";
+    if (n >= 1e3) return "$"+(n/1e3).toFixed(0)+"K";
+    return "$"+n.toFixed(0);
+  }
+  function fmtPrice(n){
+    n = Number(n)||0;
+    if(n === 0) return "$0";
+    if(n >= 1000) return "$"+n.toLocaleString(undefined,{maximumFractionDigits:0});
+    if(n >= 1) return "$"+n.toFixed(2);
+    if(n >= 0.01) return "$"+n.toFixed(4);
+    return "$"+n.toFixed(8).replace(/0+$/,"").replace(/\.$/,"");
+  }
+  function fmtChg(n){
+    n = Number(n)||0;
+    return (n>=0?"+":"")+n.toFixed(2)+"%";
+  }
+  function timeAgo(iso){
+    if(!iso) return "";
+    var t = new Date(iso).getTime();
+    if(isNaN(t)) return "";
+    var diff = Math.max(0, Date.now()-t);
+    var m = Math.floor(diff/60000);
+    if(m < 1) return "just now";
+    if(m < 60) return m+"m ago";
+    var h = Math.floor(m/60);
+    if(h < 24) return h+"h ago";
+    return Math.floor(h/24)+"d ago";
+  }
+  function esc(s){
+    return String(s==null?"":s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+  function fmtDate(ymd){
+    if(!ymd) return "";
+    var d = new Date(ymd+"T00:00:00Z");
+    if(isNaN(d.getTime())) return ymd;
+    return d.toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric", timeZone:"UTC" });
+  }
 
-const QUIZ={
- m1:[
-  {q:"When you pay someone by UPI, what actually happens?",o:["Cash travels between banks","Banks update the numbers in their records","The government approves each payment","A coin moves on a blockchain"],a:1,w:"Most money is a record. A payment is the banks updating who owns what."},
-  {q:"What problem was Bitcoin designed to solve?",o:["Making payments anonymous","Keeping a trusted shared record without a bank in charge","Replacing all bank accounts","Making transactions reversible"],a:1,w:"Bitcoin lets thousands of computers keep and agree on one ledger, so no single middleman is needed."},
-  {q:"Which of these is true about most crypto payments?",o:["They can be cancelled within 24 hours","They are invisible to everyone","They are public and permanent","Their value is guaranteed"],a:2,w:"Most blockchains are public ledgers, and confirmed payments can't be reversed."},
-  {q:"The best word to describe Bitcoin is…",o:["Anonymous","Pseudonymous","Private","Encrypted"],a:1,w:"Names aren't recorded, but every payment is public and tied to an address."}
- ],
- m2:[
-  {q:"What links one block to the next?",o:["A timestamp","The previous block's hash","The miner's name","A password"],a:1,w:"Each block stores the fingerprint (hash) of the one before it."},
-  {q:"In the demo, you edit block 2. Which blocks break?",o:["Only block 2","Blocks 2, 3 and 4","Only block 1","None"],a:1,w:"Block 2's fingerprint changes, so block 3's stored fingerprint no longer matches, and so on down the chain."},
-  {q:"What does 'six confirmations' mean?",o:["Six people approved it","It's in a block with five more blocks on top","It was sent six times","The fee was paid six times"],a:1,w:"The first block counts as one confirmation and each block after adds another."},
-  {q:"Ethereum's validators secure the network by…",o:["Solving puzzles with computing power","Locking up ETH as a deposit","Voting by email","Asking banks to approve"],a:1,w:"That's proof of stake. Bitcoin's miners use computing power, which is proof of work."}
- ],
- m3:[
-  {q:"Where are your coins actually stored?",o:["In your wallet app","On the blockchain","On your phone's SIM","At the wallet company"],a:1,w:"Coins live on the blockchain. Your wallet holds the keys that control them."},
-  {q:"Which one is safe to share?",o:["Your seed phrase","Your private key","Your address","None of these"],a:2,w:"Your address is public, like an account number. Never share your seed phrase or private key."},
-  {q:"A 'support agent' asks for your 12 words to fix your wallet. You should…",o:["Share them, they're support","Share only the first six","Refuse. It's a scam","Type them on their website"],a:2,w:"No genuine company ever asks for your seed phrase."},
-  {q:"If an exchange holds your crypto, who controls the keys?",o:["You","The exchange","The blockchain","Nobody"],a:1,w:"That's custodial. Convenient, but you depend on the exchange staying safe and solvent."}
- ],
- m4:[
-  {q:"Which of these is a coin rather than a token?",o:["USDT","USDC","ETH","UNI"],a:2,w:"ETH is built into Ethereum and pays its fees. The others are tokens created by contracts."},
-  {q:"USDT on Tron and USDT on Ethereum are…",o:["Exactly the same thing","Separate tokens on separate chains","Both on Bitcoin","Interchangeable on any network"],a:1,w:"Each lives in its own contract on its own chain."},
-  {q:"What makes a token genuine?",o:["Its name","Its logo","Its contract address","Its price"],a:2,w:"Anyone can copy a name or logo. The contract address is what identifies the real token."},
-  {q:"What are USDT and USDC designed to do?",o:["Rise in value over time","Stay worth about $1","Pay Bitcoin fees","Reward miners"],a:1,w:"They're stablecoins, built to track the US dollar."}
- ],
- m5:[
-  {q:"You withdraw USDT from an exchange. What must match the receiving wallet?",o:["The token logo","The network","The time of day","The exchange's country"],a:1,w:"Sending on a network the receiving address doesn't expect can lose the funds."},
-  {q:"To send USDT on Ethereum, you also need…",o:["Some BTC","Some ETH for the fee","A bank account","Nothing else"],a:1,w:"Fees are always paid in the chain's own coin."},
-  {q:"You sent crypto to the wrong address. What can you do?",o:["Ask the blockchain to cancel it","Wait 24 hours for a refund","Only the receiver can send it back","Call the miner"],a:2,w:"Confirmed transactions can't be reversed."},
-  {q:"Why might a stranger send you 0 USDT?",o:["A free airdrop","To plant a look-alike address in your history","A refund","A network error"],a:1,w:"That's address poisoning. Always check every character of an address."}
- ],
- m6:[
-  {q:"Inputs are 0.5 BTC. Outputs are 0.3 and 0.1999 BTC. What's the fee?",o:["0.0001 BTC","0.2 BTC","0.3 BTC","Can't tell"],a:0,w:"Fee = inputs − outputs = 0.5 − 0.4999 = 0.0001 BTC."},
-  {q:"Why did the pizza transaction have 131 inputs?",o:["It paid 131 people","The wallet combined many small coins to reach 10,000 BTC","Each pizza needed separate inputs","Bitcoin requires one input per BTC"],a:1,w:"Inputs are whole coins, and Laszlo had lots of small mining rewards."},
-  {q:"In example 3, how can you tell which output is the change?",o:["It's always the bigger one","It went back to the address that paid","It's always listed second","Explorers label it"],a:1,w:"Here the change went back to the same address. Size and order aren't reliable rules on their own."},
-  {q:"How many satoshis in one bitcoin?",o:["1,000","1,000,000","100,000,000","10^18"],a:2,w:"1 BTC = 100,000,000 sats. 10^18 is the number of wei in one ether."}
- ],
- m7:[
-  {q:"A transaction shows nonce 0. What does that tell you?",o:["It failed","It's the sender's first outgoing transaction","It had no fee","It went to a contract"],a:1,w:"The nonce counts outgoing transactions, starting at 0."},
-  {q:"A plain ETH transfer uses 21,000 gas at 2 gwei. What's the fee?",o:["42,000 gwei (0.000042 ETH)","21,000 ETH","2 gwei","0.021 ETH"],a:0,w:"21,000 × 2 gwei = 42,000 gwei = 0.000042 ETH."},
-  {q:"A transaction says 'Fail'. Was a fee paid?",o:["No, failures are free","Yes, the gas used is still charged","Only for contracts","It's refunded later"],a:1,w:"The network still did the work, so the fee is charged."},
-  {q:"An account has nonce 250,000. Most likely it's…",o:["A careful saver","An exchange or service wallet","A brand-new wallet","A smart contract"],a:1,w:"No person sends that many transactions by hand."}
- ],
- m8:[
-  {q:"In a USDT transfer on Etherscan, the To field shows…",o:["The person who got the USDT","The USDT contract","The sender's change","The validator"],a:1,w:"The real recipient is in the decoded input and the Transfer event."},
-  {q:"A raw USDT value is 2500000000. How much is that?",o:["2,500,000,000 USDT","2,500 USDT","2.5 USDT","25 USDT"],a:1,w:"USDT has 6 decimals: 2,500,000,000 ÷ 1,000,000 = 2,500."},
-  {q:"Where do explorers get their token-transfer list from?",o:["The wallet app","The token's website","The contract's Transfer events","The Value field"],a:2,w:"Contracts emit Transfer events, and explorers read them."},
-  {q:"The Value field shows 0 ETH on a USDT transfer. Why?",o:["The transfer failed","No ETH moved, only USDT inside the contract","It was free","The explorer is broken"],a:1,w:"Token amounts live in the contract's own ledger, not the ETH value field."}
- ],
- m9:[
-  {q:"Which address is a Tron address?",o:["bc1qtr9slpm8n3gdg…","0x7D8D1DEB0D96…","TBLEen5ouDbXvxZ7f…","EPjFWdd5AufqSSq…"],a:2,w:"Tron addresses start with T. bc1 is Bitcoin, 0x is the Ethereum family, the last is Solana-style."},
-  {q:"Your 0x address on Ethereum also works on…",o:["Nothing else","BNB Chain, Polygon, Arbitrum, Base and similar chains","Bitcoin","Tron"],a:1,w:"The same key controls the same 0x address on every Ethereum-style chain."},
-  {q:"What does Tron use instead of gas?",o:["Satoshis","Energy and bandwidth","Nonces","Lamports"],a:1,w:"Energy covers contract work and bandwidth covers data size."},
-  {q:"On Solana, who controls a token account?",o:["The token's creator","The wallet that owns it","The validator","Nobody"],a:1,w:"Each token account belongs to an owner wallet, which controls the funds."}
- ]
-};
+  function setHubTab(tab){
+    document.querySelectorAll(".hub-tab").forEach(function(b){ b.classList.toggle("active", b.dataset.tab===tab); });
+    document.querySelectorAll(".hub-pane").forEach(function(p){ p.classList.toggle("active", p.dataset.pane===tab); });
+  }
+  document.getElementById("hubTabs").addEventListener("click", function(e){
+    var btn = e.target.closest(".hub-tab"); if(!btn) return;
+    setHubTab(btn.dataset.tab);
+  });
+  document.querySelectorAll(".nav-tab-link").forEach(function(a){
+    a.addEventListener("click", function(){ setHubTab(a.dataset.tab); });
+  });
 
-const GLOSS=[
- ["Address","A public identifier that can receive funds, like an account number. Controlled by whoever holds its private key."],
- ["Address poisoning","A scam that sends tiny or zero-value transfers from look-alike addresses, hoping you copy the wrong one later."],
- ["Block","A batch of transactions added to the chain together, linked to the previous block by its hash."],
- ["Block explorer","A website for searching and reading a blockchain: mempool.space, etherscan.io, tronscan.org, solscan.io."],
- ["Change","In Bitcoin, the output that returns leftover value to the sender."],
- ["Coin","The built-in currency of a blockchain, used to pay its fees: BTC, ETH, TRX, SOL."],
- ["Confirmation","Each block added on top of the one containing your transaction."],
- ["Custodial","When a company, usually an exchange, holds the keys to your crypto for you."],
- ["Decimals","How many decimal places a token uses. USDT uses 6, most tokens use 18."],
- ["Energy / bandwidth","Tron's two fee resources, for running contracts and for data size."],
- ["Event log","A record a contract writes when something happens, such as Transfer(from, to, value)."],
- ["Exchange","A company where you buy, sell and hold crypto, usually after verifying your identity."],
- ["Fee","What you pay to get a transaction into a block. Bitcoin: inputs minus outputs. Ethereum: gas used × gas price."],
- ["Gas","The unit of computing work on Ethereum and similar chains. A plain transfer uses 21,000."],
- ["Gwei / wei","Small units of ETH. 1 ETH = 10^9 gwei = 10^18 wei."],
- ["Hash","A short fingerprint of data. Change one character and the hash changes completely."],
- ["Mempool","The queue where transactions wait before they're added to a block."],
- ["Network","The blockchain a token is sent on, such as Ethereum, Tron or BNB Chain. Sender and receiver must match."],
- ["Nonce","On Ethereum, a counter of outgoing transactions from an account, starting at 0."],
- ["Private key","The secret that signs transactions. Whoever has it controls the funds."],
- ["Proof of stake / work","How a chain decides who adds the next block: locked-up coins (stake) or computing power (work)."],
- ["Pseudonymous","Identified by addresses rather than names. Public, but not labelled."],
- ["Satoshi (sat)","The smallest unit of bitcoin. 1 BTC = 100,000,000 sats."],
- ["Seed phrase","12 or 24 words that can restore every key in a wallet. Never share it."],
- ["Smart contract","A program stored at its own address on chains like Ethereum and Tron."],
- ["Stablecoin","A token designed to hold a steady price, usually $1. USDT and USDC are the biggest."],
- ["Token","An asset created by a smart contract on an existing chain."],
- ["Token account","On Solana, a separate account a wallet owns to hold one specific token."],
- ["Transaction hash / ID","The unique fingerprint used to look up a transaction on an explorer."],
- ["UTXO","Unspent transaction output. A Bitcoin 'coin' that can be spent as an input."],
- ["Wallet","An app or device that stores your keys and signs transactions."]
-];
+  function showKnowledgeDoc(doc, isToday){
+    if(!doc) return;
+    document.getElementById("kEyebrowLabel").textContent = isToday ? "Daily briefing" : "Past briefing";
+    document.getElementById("kDate").innerHTML = "<a href=\"/learn/"+esc(doc.slug||doc.id)+"/\">"+esc(doc.id)+"</a>";
+    document.getElementById("kTitle").textContent = doc.title||"On-chain insight";
+    document.getElementById("kBody").textContent = doc.body||"";
+    document.getElementById("kTags").innerHTML = (doc.tags||[]).map(function(tg){ return "<span class=\"k-tag\">"+esc(tg)+"</span>"; }).join("");
+    document.getElementById("kBackToday").style.display = isToday ? "none" : "block";
+    var items = document.querySelectorAll("#kHistList .k-hist-item");
+    for(var i=0;i<items.length;i++){ items[i].classList.toggle("active", items[i].getAttribute("data-id")===doc.id); }
+  }
 
-const KEY="joc-course-progress-v1";
-let done={};
-try{done=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){done={}}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(done))}catch(e){}}
-function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+  function renderKnowledge(){
+    var docs = state.knowledge.slice().sort(function(a,b){ return b.id.localeCompare(a.id); });
+    state.knowledgeDocs = docs;
+    var today = docs[0];
+    if(today) showKnowledgeDoc(today, true);
+    var hist = docs.slice(1,8);
+    document.getElementById("kHistList").innerHTML = (hist.map(function(d){
+      return "<a class=\"k-hist-item\" href=\"/learn/"+esc(d.slug||d.id)+"/\" data-id=\""+esc(d.id)+"\"><div class=\"ht\">"+esc(d.title||"")+"</div><div class=\"hd\">"+esc(d.id)+"</div></a>";
+    }).join("") || "<div class=\"hd\">More briefings appear here daily.</div>") + "<a class=\"k-hist-more\" href=\"/learn/\">View all briefings &rarr;</a>";
+  }
 
-function renderProgress(){
-  const n=LESSONS.filter(m=>done[m.id]).length;
-  document.getElementById("progText").textContent=n+" of 9 lessons done";
-  document.getElementById("progBar").style.width=(n/9*100)+"%";
-  document.querySelectorAll("[data-state]").forEach(el=>el.classList.toggle("done",!!done[el.dataset.state]));
-  const card=m=>`<a class="mcard" href="#${m.id}"><div class="row"><span class="mnum">${m.n}</span>${done[m.id]?'<span class="pill done">Done</span>':''}</div><h3>${esc(m.t)}</h3><p>${esc(m.d)}</p></a>`;
-  document.getElementById("cardsBasics").innerHTML=LESSONS.filter(m=>m.g==="b").map(card).join("");
-  document.getElementById("cardsTx").innerHTML=LESSONS.filter(m=>m.g==="t").map(card).join("");
-}
+  function renderLaunches(){
+    var list = state.launches.slice().sort(function(a,b){ return (Number(b.marketCapUsd)||0)-(Number(a.marketCapUsd)||0); });
+    document.getElementById("launchesCount").textContent = list.length+(list.length===1?" token":" tokens");
+    var el = document.getElementById("launchesGrid");
+    if(!list.length){ el.innerHTML = "<div class=\"empty-state\">No qualifying launches yet &mdash; check back after the next sync.</div>"; return; }
+    // pump.fun/DexScreener are full of copycat tokens that reuse a popular name+symbol
+    // on a different contract — flag those so a repeated name isn't mistaken for a dup.
+    var nameCounts = {};
+    list.forEach(function(t){
+      var key = (t.name||"").trim().toLowerCase()+"|"+(t.symbol||"").trim().toLowerCase();
+      nameCounts[key] = (nameCounts[key]||0)+1;
+    });
+    el.innerHTML = list.map(function(t){
+      var link = t.link ? "<a href=\""+esc(t.link)+"\" target=\"_blank\" rel=\"noopener\">view</a>" : "";
+      var key = (t.name||"").trim().toLowerCase()+"|"+(t.symbol||"").trim().toLowerCase();
+      var isDupName = nameCounts[key] > 1 && (t.name||"").trim() !== "";
+      var dupBadge = isDupName ? "<span class=\"platform-badge dup-warn\" title=\"Different contract than other tokens on this list using the same name/symbol — always verify the address before trading\">name reused</span>" : "";
+      var addrLine = t.address ? "<div class=\"lc-addr\" title=\""+esc(t.address)+"\">"+esc(shortAddr(t.address))+"</div>" : "";
+      return "<div class=\"launch-card\">"+
+        "<div class=\"lc-top\"><span class=\"lc-name\">"+esc(t.name||"Unknown")+"</span><span class=\"lc-sym\">"+esc(t.symbol||"")+"</span></div>"+
+        "<div class=\"lc-mc\">"+fmtUsd(t.marketCapUsd)+"</div>"+
+        addrLine+
+        "<div class=\"lc-meta\"><span class=\"platform-badge\">"+esc(t.platform||t.chain||"")+"</span><span class=\"lc-meta-right\">"+dupBadge+link+"</span></div>"+
+      "</div>";
+    }).join("");
+  }
 
-document.querySelectorAll("[data-xp]").forEach(host=>{
-  const x=XP[host.dataset.xp];
-  host.innerHTML=`<div class="xp-head"><div><div class="t">${esc(x.title)}</div><div class="chain">${esc(x.chain)}</div></div><a href="${x.link}" target="_blank" rel="noopener">Open on ${x.site} ↗</a></div>`+
-    x.rows.map((r,i)=>`<button type="button" class="xp-row" aria-expanded="false"><span class="pin">${i+1}</span><span class="xp-k">${esc(r[0])}</span><span class="xp-v">${esc(r[1])}</span><span class="xp-note" hidden>${esc(r[2])}</span></button>`).join("")+
-    `<div class="xp-foot">Click a field to see what it means, then open the real explorer and find the same field.</div>`;
-  host.querySelectorAll(".xp-row").forEach(row=>row.addEventListener("click",()=>{
-    const open=row.getAttribute("aria-expanded")==="true";
-    row.setAttribute("aria-expanded",String(!open));
-    row.querySelector(".xp-note").hidden=open;
-  }));
-  const first=host.querySelector(".xp-row");first.setAttribute("aria-expanded","true");first.querySelector(".xp-note").hidden=false;
-});
+  function renderDefi(){
+    var list = state.defi.slice().sort(function(a,b){ return (Number(b.tvlUsd)||0)-(Number(a.tvlUsd)||0); });
+    document.getElementById("defiCount").textContent = list.length+(list.length===1?" protocol":" protocols");
+    var el = document.getElementById("defiGrid");
+    if(!list.length){ el.innerHTML = "<div class=\"empty-state\">No newly-listed protocols yet &mdash; check back after the next sync.</div>"; return; }
+    el.innerHTML = list.map(function(p){
+      var link = p.link ? "<a href=\""+esc(p.link)+"\" target=\"_blank\" rel=\"noopener\">view</a>" : "";
+      var chains = (p.chains||[]).slice(0,3).join(", ");
+      return "<div class=\"launch-card\">"+
+        "<div class=\"lc-top\"><span class=\"lc-name\">"+esc(p.name||"Unknown")+"</span><span class=\"lc-sym\">"+esc(p.symbol||"")+"</span></div>"+
+        "<div class=\"lc-mc\">"+fmtUsd(p.tvlUsd)+" TVL</div>"+
+        "<div class=\"lc-meta\"><span class=\"platform-badge\">"+esc(p.category||chains||"")+"</span>"+link+"</div>"+
+      "</div>";
+    }).join("");
+  }
 
-document.querySelectorAll("[data-quiz]").forEach(host=>{
-  const id=host.dataset.quiz, qs=QUIZ[id]; let right=0, answered=0;
-  host.innerHTML=qs.map((q,qi)=>`<div class="q"><p>${qi+1}. ${esc(q.q)}</p><div class="opts">${q.o.map((o,oi)=>`<button type="button" class="opt" data-q="${qi}" data-o="${oi}">${esc(o)}</button>`).join("")}</div><p class="why" hidden></p></div>`).join("")+
-    `<div class="actions"><span class="score">Answer all ${qs.length} to finish the lesson.</span><button type="button" class="btn ghost" data-retry>Try again</button></div>`;
-  const score=host.querySelector(".score");
-  host.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>{
-    const qi=+b.dataset.q, oi=+b.dataset.o, q=qs[qi], box=b.closest(".q");
-    box.querySelectorAll(".opt").forEach(x=>{x.disabled=true; if(+x.dataset.o===q.a)x.classList.add("right")});
-    if(oi!==q.a)b.classList.add("wrong"); else right++;
-    answered++;
-    const why=box.querySelector(".why"); why.hidden=false; why.textContent=(oi===q.a?"Right. ":"Not quite. ")+q.w;
-    if(answered===qs.length){
-      if(right>=qs.length-1){done[id]=true;save();renderProgress();score.textContent=`${right} of ${qs.length} right. Lesson done.`}
-      else score.textContent=`${right} of ${qs.length} right. Get ${qs.length-1} or more to finish the lesson.`;
+  function shortAddr(a){
+    a = a || "";
+    return a.length > 12 ? (a.slice(0,6)+"…"+a.slice(-4)) : a;
+  }
+
+  function renderHyperliquid(){
+    var updEl = document.getElementById("hlUpdated");
+    if(updEl) updEl.textContent = state.hlUpdatedAt ? ("synced "+timeAgo(state.hlUpdatedAt)) : "";
+
+    var positions = state.hlPositions.slice().sort(function(a,b){ return (Number(b.positionValueUsd)||0)-(Number(a.positionValueUsd)||0); });
+    document.getElementById("hlPosCount").textContent = positions.length+(positions.length===1?" position":" positions");
+    var posEl = document.getElementById("hlPositionsGrid");
+    if(!positions.length){
+      posEl.innerHTML = "<div class=\"empty-state\">No qualifying positions yet &mdash; check back after the next sync.</div>";
+    } else {
+      posEl.innerHTML = positions.map(function(p){
+        var sideClass = p.side==="long" ? "side-long" : (p.side==="short" ? "side-short" : "");
+        var sideLabel = p.side==="spot" ? "SPOT" : (p.side||"").toUpperCase()+(p.leverage?" "+p.leverage+"x":"");
+        var pnlHtml = "";
+        if(p.unrealizedPnlUsd !== null && p.unrealizedPnlUsd !== undefined){
+          var pnlClass = Number(p.unrealizedPnlUsd) >= 0 ? "up" : "down";
+          pnlHtml = "<span class=\"platform-badge hl-pnl "+pnlClass+"\">"+(Number(p.unrealizedPnlUsd)>=0?"+":"")+fmtUsd(p.unrealizedPnlUsd)+" PnL</span>";
+        }
+        var link = p.link ? "<a href=\""+esc(p.link)+"\" target=\"_blank\" rel=\"noopener\">"+esc(shortAddr(p.address))+"</a>" : esc(shortAddr(p.address));
+        return "<div class=\"launch-card\">"+
+          "<div class=\"lc-top\"><span class=\"lc-name\">"+esc(p.coin||"")+"</span><span class=\"lc-sym "+sideClass+"\">"+esc(sideLabel)+"</span></div>"+
+          "<div class=\"lc-mc\">"+fmtUsd(p.positionValueUsd)+"</div>"+
+          "<div class=\"lc-meta\">"+pnlHtml+link+"</div>"+
+        "</div>";
+      }).join("");
     }
-  }));
-  host.querySelector("[data-retry]").addEventListener("click",()=>{
-    right=0;answered=0;
-    host.querySelectorAll(".opt").forEach(x=>{x.disabled=false;x.classList.remove("right","wrong")});
-    host.querySelectorAll(".why").forEach(w=>w.hidden=true);
-    score.textContent=`Answer all ${qs.length} to finish the lesson.`;
+  }
+
+  function newsRowHtml(n){
+    var catClass = n.category==="enforcement" ? "cat-enforcement" : (n.category==="ofac" ? "cat-ofac" : "cat-market-news");
+    var catLabel = n.category==="enforcement" ? "Enforcement" : (n.category==="ofac" ? "OFAC" : "News");
+    return "<div class=\"news-row\">"+
+      "<div class=\"n-top\"><span class=\"cat-badge "+catClass+"\">"+catLabel+"</span><span class=\"n-time\">"+esc(timeAgo(n.publishedAt||n.fetchedAt))+"</span></div>"+
+      "<div class=\"n-title\">"+(n.link?"<a href=\""+esc(n.link)+"\" target=\"_blank\" rel=\"noopener\">"+esc(n.title)+"</a>":esc(n.title))+"</div>"+
+      (n.summary?"<div class=\"n-summary\">"+esc(n.summary)+"</div>":"")+
+    "</div>";
+  }
+  function renderNews(){
+    var all = state.news.slice().sort(function(a,b){ return new Date(b.publishedAt||b.fetchedAt) - new Date(a.publishedAt||a.fetchedAt); });
+
+    var enf = all.filter(function(n){ return n.category==="enforcement"; });
+    document.getElementById("enfCount").textContent = enf.length+(enf.length===1?" item":" items");
+    document.getElementById("enfList").innerHTML = enf.length ? enf.slice(0,60).map(newsRowHtml).join("") :
+      "<div class=\"empty-state\">No enforcement alerts synced yet &mdash; check back after the next sync.</div>";
+
+    // Dedicated OFAC feed: every OFAC action regardless of crypto relevance
+    // (category is "enforcement" for the crypto-relevant subset, "ofac" for
+    // the rest — both belong here since this tab is the full OFAC record).
+    var ofac = all.filter(function(n){ return n.source==="OFAC (U.S. Treasury)"; });
+    document.getElementById("ofacCount").textContent = ofac.length+(ofac.length===1?" item":" items");
+    document.getElementById("ofacList").innerHTML = ofac.length ? ofac.slice(0,60).map(newsRowHtml).join("") :
+      "<div class=\"empty-state\">No OFAC actions synced yet &mdash; check back after the next sync.</div>";
+
+    // Crypto news is market-news only now — enforcement has its own tab, so it's
+    // no longer duplicated into this list too. Non-crypto OFAC items ("ofac"
+    // category) also stay out of the general News feed.
+    var newsOnly = all.filter(function(n){ return n.category!=="enforcement" && n.category!=="ofac"; });
+    document.getElementById("newsCount").textContent = newsOnly.length+(newsOnly.length===1?" item":" items");
+    var el = document.getElementById("newsList");
+    el.innerHTML = newsOnly.length ? newsOnly.slice(0,80).map(newsRowHtml).join("") :
+      "<div class=\"empty-state\">No news synced yet &mdash; check back after the next sync.</div>";
+  }
+
+  function chainRowHtml(c){
+    var typeClass = c.type==="L1" ? "cat-l1" : "cat-l2";
+    var nameHtml = c.link ? "<a href=\""+esc(c.link)+"\" target=\"_blank\" rel=\"noopener\">"+esc(c.name)+"</a>" : esc(c.name);
+    return "<div class=\"chain-row\">"+
+      "<div class=\"ch-left\"><span class=\"cat-badge "+typeClass+"\">"+esc(c.type||"")+"</span><span class=\"ch-name\">"+nameHtml+"</span></div>"+
+      "<span class=\"ch-meta\">ID "+esc(c.chainId)+" &middot; "+esc(fmtDate(c.launchDate))+"</span>"+
+    "</div>";
+  }
+  function renderChains(){
+    var list = (state.chains||[]).slice().sort(function(a,b){ return new Date(b.launchDate||0) - new Date(a.launchDate||0); });
+    document.getElementById("chainsCount").textContent = list.length+(list.length===1?" chain":" chains");
+    var el = document.getElementById("chainsList");
+    el.innerHTML = list.length ? list.map(chainRowHtml).join("") :
+      "<div class=\"empty-state\">No new chains tracked yet.</div>";
+  }
+
+  function exchangeRowHtml(v){
+    var nameHtml = v.link ? "<a href=\""+esc(v.link)+"\" target=\"_blank\" rel=\"noopener\">"+esc(v.name)+"</a>" : esc(v.name);
+    var hq = v.headquarters ? esc(v.headquarters) : "HQ not disclosed";
+    var founded = v.founded ? esc(v.founded) : "—";
+    return "<div class=\"vasp-row\">"+
+      "<div class=\"row-top\"><div class=\"ch-left\"><span class=\"cat-badge cat-exchange\">Exchange</span><span class=\"ch-name\">"+nameHtml+"</span></div>"+
+      "<span class=\"ch-meta\">Est. "+founded+"</span></div>"+
+      "<div class=\"vasp-sub\">"+esc(v.primaryBusiness||"")+" &middot; "+hq+"</div>"+
+    "</div>";
+  }
+  function renderExchanges(){
+    var list = (state.exchanges||[]).slice().sort(function(a,b){ return (a.founded||9999) - (b.founded||9999); });
+    document.getElementById("exchangesCount").textContent = list.length+(list.length===1?" exchange":" exchanges");
+    var el = document.getElementById("exchangesList");
+    el.innerHTML = list.length ? list.map(exchangeRowHtml).join("") :
+      "<div class=\"empty-state\">No exchanges tracked yet.</div>";
+  }
+
+  function closedExchangeRowHtml(v){
+    var nameHtml = v.link ? "<a href=\""+esc(v.link)+"\" target=\"_blank\" rel=\"noopener\">"+esc(v.name)+"</a>" : esc(v.name);
+    var hq = v.headquarters ? esc(v.headquarters) : "HQ not disclosed";
+    var years = v.activeYears ? esc(v.activeYears) : "—";
+    return "<div class=\"vasp-row\">"+
+      "<div class=\"row-top\"><div class=\"ch-left\"><span class=\"cat-badge cat-closed\">Closed</span><span class=\"ch-name\">"+nameHtml+"</span></div>"+
+      "<span class=\"ch-meta\">"+years+"</span></div>"+
+      "<div class=\"vasp-sub\">"+esc(v.primaryBusiness||"")+" &middot; "+hq+"</div>"+
+      "<div class=\"vasp-sub\">"+esc(v.closedReason||"")+"</div>"+
+    "</div>";
+  }
+  function renderClosedExchanges(){
+    var list = (state.closedExchanges||[]).slice().sort(function(a,b){ return (a.name||"").localeCompare(b.name||""); });
+    document.getElementById("closedCount").textContent = list.length+(list.length===1?" exchange":" exchanges");
+    var el = document.getElementById("closedList");
+    el.innerHTML = list.length ? list.map(closedExchangeRowHtml).join("") :
+      "<div class=\"empty-state\">No closed exchanges tracked yet.</div>";
+  }
+
+  function renderPulse(){
+    var fg = state.sentiment;
+    var fgEl = document.getElementById("pulseFg");
+    if(fg && typeof fg.value === "number" && !isNaN(fg.value)){
+      var cls = fg.value>=55 ? "pulse-fg-greed" : (fg.value<=45 ? "pulse-fg-fear" : "pulse-fg-neutral");
+      fgEl.innerHTML = "Sentiment: <b class=\""+cls+"\">"+esc(fg.label||"")+" ("+fg.value+")</b>";
+    } else {
+      fgEl.textContent = "Sentiment: —";
+    }
+    var gainEl = document.getElementById("pulseGain"), loseEl = document.getElementById("pulseLose");
+    var list = (state.prices||[]).filter(function(p){ return p.change24h!==null && p.change24h!==undefined && !isNaN(Number(p.change24h)); });
+    if(list.length){
+      var sorted = list.slice().sort(function(a,b){ return Number(b.change24h)-Number(a.change24h); });
+      var top = sorted[0], bottom = sorted[sorted.length-1];
+      gainEl.innerHTML = "Top gainer: <b class=\"pulse-up\">"+esc(top.symbol)+" "+fmtChg(Number(top.change24h))+"</b>";
+      loseEl.innerHTML = "Top loser: <b class=\"pulse-down\">"+esc(bottom.symbol)+" "+fmtChg(Number(bottom.change24h))+"</b>";
+    } else {
+      gainEl.textContent = "Top gainer: —";
+      loseEl.textContent = "Top loser: —";
+    }
+  }
+
+  function renderDominance(){
+    var dom = state.dominance;
+    var el = document.getElementById("dominanceList");
+    var items = (dom && dom.items) || [];
+    if(!items.length){ el.textContent = "—"; return; }
+    el.innerHTML = items.map(function(d){
+      return "<span class=\"dom-chip\">"+esc(d.symbol)+" <span class=\"dom-pct\">"+Number(d.pct).toFixed(1)+"%</span></span>";
+    }).join(" ");
+  }
+
+  function sortedPrices(){
+    var list = (state.prices||[]).slice();
+    var f = priceSortState.field, dir = priceSortState.dir;
+    if(!f){
+      list.sort(function(a,b){ return (Number(a.marketCapRank)||9999)-(Number(b.marketCapRank)||9999); });
+    } else {
+      list.sort(function(a,b){
+        var av = Number(a[f])||0, bv = Number(b[f])||0;
+        return dir === 1 ? av-bv : bv-av;
+      });
+    }
+    return list;
+  }
+
+  function priceRowHtml(p){
+    var chgClass = Number(p.change24h)>=0 ? "up" : "down";
+    return "<div class=\"price-row\">"+
+      "<span class=\"pt-name\">"+esc(p.name||p.symbol)+" <span class=\"pt-sym\">"+esc(p.symbol)+"</span></span>"+
+      "<span class=\"pt-num\">"+fmtPrice(p.price)+"</span>"+
+      "<span class=\"pt-num t-chg "+chgClass+"\">"+fmtChg(Number(p.change24h))+"</span>"+
+      "<span class=\"pt-num\">"+fmtUsd(p.volume24h)+"</span>"+
+      "<span class=\"pt-num\">"+fmtUsd(p.marketCapUsd)+"</span>"+
+    "</div>";
+  }
+
+  function renderPriceTable(){
+    var list = sortedPrices();
+    document.getElementById("pricesCount").textContent = list.length+(list.length===1?" coin":" coins");
+    var q = priceFilterQuery.trim().toLowerCase();
+    var filtered = q ? list.filter(function(p){
+      return (p.symbol||"").toLowerCase().indexOf(q)!==-1 || (p.name||"").toLowerCase().indexOf(q)!==-1;
+    }) : list;
+    var el = document.getElementById("priceTable");
+    el.innerHTML = filtered.length ? filtered.map(priceRowHtml).join("") :
+      "<div class=\"empty-state\">No matching coins in the top 100 &mdash; try Search for a live lookup.</div>";
+    document.querySelectorAll("#priceTableHead .pt-sort").forEach(function(c){
+      var isActive = c.dataset.sort === priceSortState.field;
+      c.classList.toggle("active", isActive);
+      var arrow = c.querySelector(".arrow");
+      if(arrow) arrow.textContent = isActive ? (priceSortState.dir===1?" ▲":" ▼") : "";
+    });
+  }
+
+  function clearSearchResult(){ document.getElementById("priceSearchResult").innerHTML = ""; }
+
+  function liveLookupCard(c){
+    var chgClass = Number(c.change24h)>=0 ? "up" : "down";
+    return "<div class=\"launch-card\">"+
+      "<div class=\"lc-top\"><span class=\"lc-name\">"+esc(c.name)+"</span><span class=\"platform-badge\">live lookup</span></div>"+
+      "<div class=\"lc-mc\">"+fmtPrice(c.price)+"</div>"+
+      "<div class=\"lc-meta\"><span class=\"t-chg "+chgClass+"\">"+fmtChg(Number(c.change24h))+"</span>"+(c.marketCapUsd?("<span>"+fmtUsd(c.marketCapUsd)+" mkt cap</span>"):"")+"</div>"+
+    "</div>";
+  }
+
+  function doPriceSearch(){
+    var q = document.getElementById("priceSearchInput").value.trim();
+    priceFilterQuery = q;
+    renderPriceTable();
+    if(!q){ clearSearchResult(); return; }
+    var qLower = q.toLowerCase();
+    var localHit = (state.prices||[]).some(function(p){
+      return (p.symbol||"").toLowerCase()===qLower || (p.name||"").toLowerCase().indexOf(qLower)!==-1;
+    });
+    if(localHit){ clearSearchResult(); return; }
+    document.getElementById("priceSearchResult").innerHTML = "<div class=\"empty-state\" style=\"padding:14px 0;\">Searching&hellip;</div>";
+    fetch("https://api.coingecko.com/api/v3/search?query="+encodeURIComponent(q))
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(data){
+        var coins = (data && data.coins) || [];
+        if(!coins.length){
+          document.getElementById("priceSearchResult").innerHTML = "<div class=\"empty-state\" style=\"padding:14px 0;\">No coin found for &ldquo;"+esc(q)+"&rdquo;.</div>";
+          return null;
+        }
+        return { id: coins[0].id, name: coins[0].name };
+      })
+      .then(function(hit){
+        if(!hit) return;
+        return fetch("https://api.coingecko.com/api/v3/simple/price?ids="+encodeURIComponent(hit.id)+"&vs_currencies=usd&include_24hr_change=true&include_market_cap=true")
+          .then(function(r){ return r.ok ? r.json() : null; })
+          .then(function(data){
+            var row = data && data[hit.id];
+            if(!row){
+              document.getElementById("priceSearchResult").innerHTML = "<div class=\"empty-state\" style=\"padding:14px 0;\">Couldn&rsquo;t load live data for that coin &mdash; try again shortly.</div>";
+              return;
+            }
+            document.getElementById("priceSearchResult").innerHTML = liveLookupCard({
+              name: hit.name, price: row.usd, change24h: row.usd_24h_change, marketCapUsd: row.usd_market_cap
+            });
+          });
+      })
+      .catch(function(){
+        document.getElementById("priceSearchResult").innerHTML = "<div class=\"empty-state\" style=\"padding:14px 0;\">Live lookup failed &mdash; try again in a moment.</div>";
+      });
+  }
+
+  document.getElementById("priceSearchBtn").addEventListener("click", doPriceSearch);
+  document.getElementById("priceSearchInput").addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); doPriceSearch(); } });
+  document.getElementById("priceSearchInput").addEventListener("input", function(e){ priceFilterQuery = e.target.value; renderPriceTable(); clearSearchResult(); });
+  document.getElementById("priceTableHead").addEventListener("click", function(e){
+    var col = e.target.closest(".pt-sort"); if(!col) return;
+    var field = col.dataset.sort;
+    if(priceSortState.field === field){ priceSortState.dir *= -1; }
+    else { priceSortState.field = field; priceSortState.dir = -1; }
+    renderPriceTable();
   });
-});
 
-document.getElementById("gloss").innerHTML=GLOSS.sort((a,b)=>a[0].localeCompare(b[0])).map(g=>`<div><b>${esc(g[0])}</b>${esc(g[1])}</div>`).join("");
+  var SUPPORT_ADDRESSES = [
+    {symbol:"BTC", name:"Bitcoin", address:"bc1q38sx46ccw2vha3rs46u76z0te4hzzpz00m5zxh"},
+    {symbol:"EVM", name:"Ethereum & EVM chains", address:"0x027362F7937652F46E56d84beA74a9db3ccE5DCD"},
+    {symbol:"SOL", name:"Solana", address:"GWWfWA5i2vgviRfC1v3FsUR3RNvyQ8PvqH5PP6Aq8miL"},
+    {symbol:"TRX", name:"Tron", address:"TDUQgihTSbcHBsg4oTsjCMoaHrMDaiH3cn"}
+  ];
+  var supportState = { mode:"currency", selected:"BTC" };
 
-const START=["Asha pays Ben 5\nBen pays Chen 2","Chen pays Dev 1\nAsha pays Dev 3","Dev pays Ben 4","Ben pays Asha 2\nChen pays Asha 1"];
-const demo=document.getElementById("chainDemo");
-let sealed=[];
-async function sha(s){
-  try{const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
-  catch(e){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)>>>0}return h.toString(16).padStart(8,"0").repeat(8)}
-}
-async function hashes(texts){const out=[];let prev="0".repeat(64);for(const t of texts){const h=await sha(prev+"|"+t);out.push(h);prev=h}return out}
-function buildDemo(){
-  demo.innerHTML=START.map((t,i)=>`<div class="blk"><h4><span>Block ${i+1}</span><span class="st ok">Valid</span></h4><label for="blk${i}">Payments</label><textarea id="blk${i}" rows="3">${t}</textarea><div><div class="lbl">Previous block's fingerprint</div><div class="h prev"></div></div><div><div class="lbl">This block's fingerprint</div><div class="h self"></div></div></div>`).join("");
-  demo.querySelectorAll("textarea").forEach(t=>t.addEventListener("input",refresh));
-}
-async function refresh(){
-  const texts=[...demo.querySelectorAll("textarea")].map(t=>t.value);
-  const now=await hashes(texts); let broken=-1;
-  demo.querySelectorAll(".blk").forEach((b,i)=>{
-    const prevStored=i===0?"0".repeat(64):sealed[i-1];
-    const prevNow=i===0?"0".repeat(64):now[i-1];
-    const bad=now[i]!==sealed[i]||prevStored!==prevNow;
-    if(bad&&broken<0)broken=i;
-    b.classList.toggle("broken",bad);
-    const st=b.querySelector(".st");st.textContent=bad?"Broken":"Valid";st.className="st "+(bad?"bad":"ok");
-    b.querySelector(".prev").textContent=prevStored.slice(0,20)+"…";
-    b.querySelector(".self").textContent=now[i].slice(0,20)+"…";
+  function fallbackCopy(text){
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); }catch(e){}
+    document.body.removeChild(ta);
+  }
+  function copyToClipboard(text, btn){
+    var old = btn.textContent;
+    function done(){ btn.textContent = "Copied"; btn.classList.add("copied"); setTimeout(function(){ btn.textContent = old; btn.classList.remove("copied"); }, 1500); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text); done(); });
+    } else { fallbackCopy(text); done(); }
+  }
+  function findCoin(sym){
+    for(var i=0;i<SUPPORT_ADDRESSES.length;i++){ if(SUPPORT_ADDRESSES[i].symbol===sym) return SUPPORT_ADDRESSES[i]; }
+    return SUPPORT_ADDRESSES[0];
+  }
+  function addrBoxHtml(addr){
+    return "<div class=\"addr-box\"><span class=\"addr-text\">"+esc(addr)+"</span><button class=\"copy-btn\" data-copy=\""+esc(addr)+"\">Copy</button></div>";
+  }
+  function renderSupport(){
+    var body = document.getElementById("supportBody");
+    if(supportState.mode === "currency"){
+      var pills = SUPPORT_ADDRESSES.map(function(c){
+        return "<button class=\"coin-pill"+(c.symbol===supportState.selected?" active":"")+"\" data-sym=\""+esc(c.symbol)+"\">"+esc(c.symbol)+"</button>";
+      }).join("");
+      var sel = findCoin(supportState.selected);
+      body.innerHTML = "<div class=\"coin-pills\">"+pills+"</div>"+addrBoxHtml(sel.address);
+    } else {
+      body.innerHTML = SUPPORT_ADDRESSES.map(function(c){
+        return "<div class=\"addr-row\"><div class=\"addr-label\"><span class=\"coin-sym\">"+esc(c.symbol)+"</span>"+esc(c.name)+"</div>"+addrBoxHtml(c.address)+"</div>";
+      }).join("");
+    }
+  }
+
+  function renderStatus(){
+    var dot = document.getElementById("liveDot"), txt = document.getElementById("liveText"), foot = document.getElementById("footSync");
+    if(!state.updatedAt){ dot.className="live-dot"; txt.textContent="waiting for first sync"; foot.textContent="Waiting for first sync."; return; }
+    var ageMin = (Date.now() - new Date(state.updatedAt).getTime())/60000;
+    var cls="live", label="<b>LIVE</b> · synced "+timeAgo(state.updatedAt);
+    if(ageMin>180){ cls=""; label="sync stalled · last update "+timeAgo(state.updatedAt); }
+    else if(ageMin>75){ label="sync delayed · last update "+timeAgo(state.updatedAt); }
+    dot.className = "live-dot "+cls;
+    txt.innerHTML = label;
+    foot.textContent = "Data refreshes roughly hourly.";
+  }
+
+  function loadData(){
+    var bust = "?t=" + Date.now();
+    Promise.all([
+      fetch("./data/knowledge.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/launches.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/news.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/prices.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/defi.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/hyperliquid.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/chains.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/exchanges.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/closed-exchanges.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/sentiment.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch("./data/dominance.json"+bust).then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
+    ]).then(function(results){
+      var kData = results[0], launchData = results[1], newsData = results[2], priceData = results[3], defiData = results[4], hlData = results[5], chainsData = results[6], exchangesData = results[7], closedData = results[8], sentimentData = results[9], dominanceData = results[10];
+      if(kData && kData.items){ state.knowledge = kData.items; }
+      if(launchData && launchData.items){ state.launches = launchData.items; }
+      if(newsData && newsData.items){ state.news = newsData.items; }
+      if(priceData && priceData.items){ state.prices = priceData.items; }
+      if(defiData && defiData.items){ state.defi = defiData.items; }
+      if(chainsData && chainsData.items){ state.chains = chainsData.items; }
+      if(exchangesData && exchangesData.items){ state.exchanges = exchangesData.items; }
+      if(closedData && closedData.items){ state.closedExchanges = closedData.items; }
+      if(sentimentData){ state.sentiment = sentimentData; }
+      if(dominanceData){ state.dominance = dominanceData; }
+      if(hlData && hlData.positions){ state.hlPositions = hlData.positions; }
+      if(hlData && hlData.updatedAt){ state.hlUpdatedAt = hlData.updatedAt; }
+      state.updatedAt = (newsData && newsData.updatedAt) || (launchData && launchData.updatedAt) || (priceData && priceData.updatedAt) || state.updatedAt;
+      renderKnowledge(); renderLaunches(); renderNews(); renderPriceTable(); renderDefi(); renderChains(); renderExchanges(); renderClosedExchanges(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
+    });
+  }
+
+  document.getElementById("subForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var msg = document.getElementById("subMsg");
+    var form = e.target;
+    var accessKey = form.access_key.value;
+    if(!accessKey || accessKey === "PENDING_WEB3FORMS_KEY"){
+      msg.textContent = "Subscriptions open shortly — check back soon.";
+      msg.className = "sub-msg err";
+      return;
+    }
+    msg.textContent = "Subscribing…"; msg.className = "sub-msg";
+    fetch("https://api.web3forms.com/submit", {
+      method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ access_key: accessKey, subject: "New JalalOnChain subscriber", email: document.getElementById("subEmail").value })
+    }).then(function(r){ return r.json(); }).then(function(data){
+      if(data.success){ msg.textContent = "Subscribed — welcome aboard."; msg.className = "sub-msg"; form.reset(); }
+      else { msg.textContent = "Something went wrong. Try again."; msg.className = "sub-msg err"; }
+    }).catch(function(){ msg.textContent = "Something went wrong. Try again."; msg.className = "sub-msg err"; });
   });
-  document.getElementById("chainMsg").textContent=broken<0?"All four blocks link up.":`Block ${broken+1} was changed, so it and every block after it no longer match what the network agreed on.`;
-}
-async function resetDemo(){buildDemo();sealed=await hashes(START);refresh()}
-document.getElementById("chainReset").addEventListener("click",resetDemo);
-resetDemo();
 
-const ROUTES=["home","m1","m2","m3","m4","m5","m6","m7","m8","m9","glossary"];
-function route(){
-  let r=(location.hash||"#home").slice(1); if(!ROUTES.includes(r))r="home";
-  document.querySelectorAll("[data-view]").forEach(v=>v.hidden=v.dataset.view!==r);
-  document.querySelectorAll(".mlink").forEach(a=>{if(a.dataset.route===r)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
-  window.scrollTo(0,0);
-}
-window.addEventListener("hashchange",route);
-renderProgress(); route();
+  document.getElementById("kHistList").addEventListener("click", function(e){
+    var item = e.target.closest(".k-hist-item"); if(!item) return;
+    if(e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+    e.preventDefault();
+    var id = item.getAttribute("data-id");
+    var doc = (state.knowledgeDocs||[]).find(function(d){ return d.id===id; });
+    if(doc) showKnowledgeDoc(doc, false);
+  });
+  document.getElementById("kBackToday").addEventListener("click", function(){
+    var docs = state.knowledgeDocs||[];
+    if(docs[0]) showKnowledgeDoc(docs[0], true);
+  });
+
+  document.getElementById("supportTabs").addEventListener("click", function(e){
+    var btn = e.target.closest(".support-tab"); if(!btn) return;
+    document.querySelectorAll("#supportTabs .support-tab").forEach(function(b){ b.classList.remove("active"); });
+    btn.classList.add("active"); supportState.mode = btn.dataset.mode; renderSupport();
+  });
+  document.getElementById("supportBody").addEventListener("click", function(e){
+    var pill = e.target.closest(".coin-pill");
+    if(pill){ supportState.selected = pill.dataset.sym; renderSupport(); return; }
+    var copyBtn = e.target.closest(".copy-btn");
+    if(copyBtn){ copyToClipboard(copyBtn.dataset.copy, copyBtn); }
+  });
+
+  renderKnowledge(); renderLaunches(); renderNews(); renderSupport(); renderPriceTable(); renderDefi(); renderChains(); renderExchanges(); renderClosedExchanges(); renderHyperliquid(); renderPulse(); renderDominance(); renderStatus();
+  loadData();
+  setInterval(loadData, 90000);
+  setInterval(renderStatus, 30000);
+})();
+</script>
+<script>
+(function(){
+  var dd=document.getElementById("toolsDd"); if(!dd) return;
+  var btn=dd.querySelector(".nav-dd-btn");
+  btn.addEventListener("click",function(e){ e.stopPropagation(); var o=dd.classList.toggle("open"); btn.setAttribute("aria-expanded",o?"true":"false"); });
+  document.addEventListener("click",function(){ dd.classList.remove("open"); btn.setAttribute("aria-expanded","false"); });
+})();
 </script>
 </body>
 </html>

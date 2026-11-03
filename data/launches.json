@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02T17:26:48Z",
+  "updatedAt": "2026-11-03T00:02:31Z",
   "items": [
     {
       "id": "ds-0x65b98b81f2525efd6c3f49c44de56db7ea662551",
@@ -34,12 +34,12 @@
       "chain": "Base",
       "chainId": "base",
       "platform": "Base",
-      "marketCapUsd": 31511336.0,
+      "marketCapUsd": 31117556.0,
       "createdAt": null,
-      "fetchedAt": "2026-11-02T17:26:44Z",
+      "fetchedAt": "2026-11-03T00:02:27Z",
       "link": "https://dexscreener.com/base/0xe30d5bf485f7476ac15884a28ffb3c9cea635dcb",
       "address": "0x696f9436b67233384889472cd7cd58a6fb5df4f1",
-      "liquidityUsd": 594006.83
+      "liquidityUsd": 589151.72
     },
     {
       "id": "pf-a9mnzCYaFmjQ7v3oREkNScu78A6ofrYo3ApLKfLpump",
@@ -55,18 +55,32 @@
       "address": "a9mnzCYaFmjQ7v3oREkNScu78A6ofrYo3ApLKfLpump"
     },
     {
+      "id": "ds-fjpkugnf5zbpdev18gt8fjctxh3mkrfkoeyekgyr1win",
+      "name": "1win Token",
+      "symbol": "1WIN",
+      "chain": "Solana",
+      "chainId": "solana",
+      "platform": "Solana",
+      "marketCapUsd": 19913563.0,
+      "liquidityUsd": 326849.79,
+      "createdAt": "2026-10-31T16:03:36Z",
+      "fetchedAt": "2026-11-03T00:02:30Z",
+      "link": "https://dexscreener.com/solana/e8eq1j7r1eaknrfkfktrtuaefbrw5rzcjgl7kzj3wnf3",
+      "address": "FjPKUGnF5zBpdEv18gT8FJCtxh3MKrFkoeYekgYr1win"
+    },
+    {
       "id": "ds-0x6d34013052c8fe696805dde682ae8086be5655cc",
       "name": "Super Inu",
       "symbol": "SI",
       "chain": "Ethereum",
       "chainId": "ethereum",
       "platform": "Ethereum",
-      "marketCapUsd": 19694769.0,
+      "marketCapUsd": 15892673.0,
       "createdAt": "2026-10-29T02:48:59Z",
-      "fetchedAt": "2026-11-02T17:26:45Z",
+      "fetchedAt": "2026-11-03T00:02:28Z",
       "link": "https://dexscreener.com/ethereum/0x66e4c63873c716c16433ede4b22911631923de96",
       "address": "0x6d34013052c8fe696805dde682ae8086be5655cc",
-      "liquidityUsd": 421549.63
+      "liquidityUsd": 377759.92
     },
     {
       "id": "pf-QreCV24giHAXE9eofxhNXKX1uATsp82ReumMFCVpump",
@@ -205,12 +219,12 @@
       "chain": "Hyperevm",
       "chainId": "hyperevm",
       "platform": "Hyperevm",
-      "marketCapUsd": 12863693.0,
+      "marketCapUsd": 11860954.0,
       "createdAt": "2026-10-20T16:03:18Z",
-      "fetchedAt": "2026-11-02T17:26:45Z",
+      "fetchedAt": "2026-11-03T00:02:28Z",
       "link": "https://dexscreener.com/hyperevm/0x05db494929c683d67d7fba09da9aaa9caf2487d8",
       "address": "0x6b73113ac6d5455c17332098377a4b99ae553237",
-      "liquidityUsd": 540030.2
+      "liquidityUsd": 498676.06
     },
     {
       "id": "pf-zVY4cxtA2nUa4zY5nntfDKtX7FPpUmgrssgV1Zxpump",
@@ -224,6 +238,20 @@
       "fetchedAt": "2026-11-02T07:39:37Z",
       "link": "https://pump.fun/zVY4cxtA2nUa4zY5nntfDKtX7FPpUmgrssgV1Zxpump",
       "address": "zVY4cxtA2nUa4zY5nntfDKtX7FPpUmgrssgV1Zxpump"
+    },
+    {
+      "id": "ds-chtxwj3qa2ozs9vqkxhr3mmnwkouqkh3icgxgzpepump",
+      "name": "BUY THE FEAR",
+      "symbol": "FEAR",
+      "chain": "Solana",
+      "chainId": "solana",
+      "platform": "Solana \u00b7 pump.fun",
+      "marketCapUsd": 10527703.0,
+      "liquidityUsd": 2785917.66,
+      "createdAt": "2026-11-02T15:41:03Z",
+      "fetchedAt": "2026-11-03T00:02:30Z",
+      "link": "https://dexscreener.com/solana/bzvn52yur6sxptrfpqr6zdxxsrknkkz4m9wu7tb7koia",
+      "address": "CHtXwJ3qa2ozS9vQkxhR3MmNwkoUqkh3icGXgZPepump"
     },
     {
       "id": "pf-pvRLSbbBJ93DQW4i2eNwQN3NXPvQafdv5HAA6vBpump",
@@ -310,40 +338,12 @@
       "chain": "BNB Chain",
       "chainId": "bsc",
       "platform": "BNB Chain",
-      "marketCapUsd": 6053038.0,
+      "marketCapUsd": 6138323.0,
       "createdAt": "2026-10-22T14:08:05Z",
-      "fetchedAt": "2026-11-02T17:26:44Z",
+      "fetchedAt": "2026-11-03T00:02:27Z",
       "link": "https://dexscreener.com/bsc/0x3079ae2e87dc2e0c75c9b98d65bc622ad10f326c",
       "address": "0x4f0ed1f48beaa4797a62202a21804cadc2170d6b",
-      "liquidityUsd": 89381.01
-    },
-    {
-      "id": "ds-9pq7alabhdg2ttns22cm6kuyszvczplfe368hwuypump",
-      "name": "DogWifJob",
-      "symbol": "JOB",
-      "chain": "Solana",
-      "chainId": "solana",
-      "platform": "Solana \u00b7 pump.fun",
-      "marketCapUsd": 3380802.0,
-      "liquidityUsd": 167328.4,
-      "createdAt": "2026-10-27T19:13:28Z",
-      "fetchedAt": "2026-11-02T17:26:45Z",
-      "link": "https://dexscreener.com/solana/hauvbmnthcfmg9srxmvz1gaxnpu955hkpdsasc2cx4c8",
-      "address": "9Pq7aLAbhDG2tTnS22cm6kuysZVcZpLFE368HWuypump"
-    },
-    {
-      "id": "ds-8s4bnqezth1jp7mku747umr7ackcqdiv47fdqyndpump",
-      "name": "Anakin Coin",
-      "symbol": "ANAKIN",
-      "chain": "Solana",
-      "chainId": "solana",
-      "platform": "Solana \u00b7 pump.fun",
-      "marketCapUsd": 3271813.0,
-      "liquidityUsd": 163962.87,
-      "createdAt": "2026-11-01T22:28:31Z",
-      "fetchedAt": "2026-11-02T17:26:45Z",
-      "link": "https://dexscreener.com/solana/hcgpz2exv8sfcmvq9fjpbd71brljvzutd2avvv86gwbk",
-      "address": "8s4bNqEztH1JP7mkU747uMr7AckCQdiV47FDqYnDpump"
+      "liquidityUsd": 90406.45
     },
     {
       "id": "ds-8xg89xt8ve34skiyqyums46mycresca2f362uscrpump",
@@ -352,12 +352,26 @@
       "chain": "Solana",
       "chainId": "solana",
       "platform": "Solana \u00b7 pump.fun",
-      "marketCapUsd": 2928418.0,
-      "liquidityUsd": 154376.81,
+      "marketCapUsd": 3845453.0,
+      "liquidityUsd": 176574.09,
       "createdAt": "2026-10-16T15:34:48Z",
-      "fetchedAt": "2026-11-02T17:26:45Z",
+      "fetchedAt": "2026-11-03T00:02:28Z",
       "link": "https://dexscreener.com/solana/em6rvzgxhd35pz7cvujctpenv4jaztscavhaxbxcbcg7",
       "address": "8Xg89xT8Ve34sKiYqYuMs46mycREsCA2F362UscRpump"
+    },
+    {
+      "id": "ds-9pq7alabhdg2ttns22cm6kuyszvczplfe368hwuypump",
+      "name": "DogWifJob",
+      "symbol": "JOB",
+      "chain": "Solana",
+      "chainId": "solana",
+      "platform": "Solana \u00b7 pump.fun",
+      "marketCapUsd": 2945577.0,
+      "liquidityUsd": 155756.34,
+      "createdAt": "2026-10-27T19:13:28Z",
+      "fetchedAt": "2026-11-03T00:02:28Z",
+      "link": "https://dexscreener.com/solana/hauvbmnthcfmg9srxmvz1gaxnpu955hkpdsasc2cx4c8",
+      "address": "9Pq7aLAbhDG2tTnS22cm6kuysZVcZpLFE368HWuypump"
     },
     {
       "id": "ds-a75xx6seftamwduv9kgwb2gcjxuahxozccucys9jpump",
@@ -366,40 +380,12 @@
       "chain": "Solana",
       "chainId": "solana",
       "platform": "Solana \u00b7 pump.fun",
-      "marketCapUsd": 2435076.0,
-      "liquidityUsd": 133769.5,
+      "marketCapUsd": 2862695.0,
+      "liquidityUsd": 142922.51,
       "createdAt": "2026-10-13T13:03:11Z",
-      "fetchedAt": "2026-11-02T17:26:45Z",
+      "fetchedAt": "2026-11-03T00:02:28Z",
       "link": "https://dexscreener.com/solana/ewsyhiuznynqh5f65ypfsoqblq2kyetuvhm5un7wsfdg",
       "address": "A75Xx6SeftAmWduv9KGwb2GCjXUAhxozcCUCys9jpump"
-    },
-    {
-      "id": "ds-9rzr9ncqbaibvotwvpifn8z1vckvfshnsatuajrxpump",
-      "name": "The Black Bull",
-      "symbol": "Slingoor",
-      "chain": "Solana",
-      "chainId": "solana",
-      "platform": "Solana \u00b7 pump.fun",
-      "marketCapUsd": 1912747.0,
-      "liquidityUsd": 116721.09,
-      "createdAt": "2026-11-02T15:10:09Z",
-      "fetchedAt": "2026-11-02T17:26:47Z",
-      "link": "https://dexscreener.com/solana/hc4r8zmxkkpvdrsacuh1yxasvhmykud85ckavctb2gjo",
-      "address": "9rZR9nCQbaiBvotWVpifN8z1vckVFshnsATuAJrXpump"
-    },
-    {
-      "id": "ds-ejaxervku4kevxn3narjvrtgamajyp9zumeka7jjpump",
-      "name": "Choo Choo",
-      "symbol": "CHOO",
-      "chain": "Solana",
-      "chainId": "solana",
-      "platform": "Solana \u00b7 pump.fun",
-      "marketCapUsd": 1901820.0,
-      "liquidityUsd": 133649.68,
-      "createdAt": "2026-10-21T18:49:45Z",
-      "fetchedAt": "2026-11-02T17:26:45Z",
-      "link": "https://dexscreener.com/solana/3ung5b7czbspnmjfrzzznyqvpk8q3lerr6baynfohdfz",
-      "address": "EJAxERvKU4kEVXn3NarjvRtgaMaJyP9ZuMeKA7JJpump"
     },
     {
       "id": "ds-dtcicpcktkeah7tdeztym3hxeohaomibdyjhmyxzpump",
@@ -408,26 +394,40 @@
       "chain": "Solana",
       "chainId": "solana",
       "platform": "Solana \u00b7 pump.fun",
-      "marketCapUsd": 1701798.0,
-      "liquidityUsd": 142118.55,
+      "marketCapUsd": 1863030.0,
+      "liquidityUsd": 148924.29,
       "createdAt": "2026-10-06T18:29:53Z",
-      "fetchedAt": "2026-11-02T17:26:45Z",
+      "fetchedAt": "2026-11-03T00:02:28Z",
       "link": "https://dexscreener.com/solana/b4cp45pgifvm5faxfh6aev8qz3eunqnqgbw7kuc7mhnb",
       "address": "DtcicPCKTKeAh7TDEzTym3hXeoHAoMiBdYJhMYxZpump"
     },
     {
-      "id": "ds-exxzybtt3jwu5muxuw2f4toybtldfwthsjyacn6xpump",
-      "name": "Anakin Skywalker",
-      "symbol": "Anakin",
+      "id": "ds-ejaxervku4kevxn3narjvrtgamajyp9zumeka7jjpump",
+      "name": "Choo Choo",
+      "symbol": "CHOO",
       "chain": "Solana",
       "chainId": "solana",
       "platform": "Solana \u00b7 pump.fun",
-      "marketCapUsd": 1524627.0,
-      "liquidityUsd": 119874.12,
-      "createdAt": "2026-10-29T19:28:53Z",
-      "fetchedAt": "2026-11-02T17:26:45Z",
-      "link": "https://dexscreener.com/solana/hja61kefsawrt3dw9p15mlh6u5maqgzgbe51ngg7bytt",
-      "address": "ExxzYBTt3jwU5MUxuw2F4toYbTLdFwThSjyaCn6Xpump"
+      "marketCapUsd": 1756770.0,
+      "liquidityUsd": 128340.67,
+      "createdAt": "2026-10-21T18:49:45Z",
+      "fetchedAt": "2026-11-03T00:02:28Z",
+      "link": "https://dexscreener.com/solana/3ung5b7czbspnmjfrzzznyqvpk8q3lerr6baynfohdfz",
+      "address": "EJAxERvKU4kEVXn3NarjvRtgaMaJyP9ZuMeKA7JJpump"
+    },
+    {
+      "id": "ds-gexthzhgaswpaq7fi8qrhfubjpimunsyhjiaa7xzpump",
+      "name": "WASTED",
+      "symbol": "WASTED",
+      "chain": "Solana",
+      "chainId": "solana",
+      "platform": "Solana \u00b7 pump.fun",
+      "marketCapUsd": 1474281.0,
+      "liquidityUsd": 114533.78,
+      "createdAt": "2026-10-30T18:09:35Z",
+      "fetchedAt": "2026-11-03T00:02:30Z",
+      "link": "https://dexscreener.com/solana/tt7dks9yjjzj1fwmgopmkbmdrezzymamrhodcgdfwqn",
+      "address": "GexThZHgaswpAQ7Fi8QrHFubjPimUNSYhJiAA7XZpump"
     },
     {
       "id": "ds-526f62696e686f6f640000000000000000000000.robinhxxnxvhxfqdm63jk3ggcyainyfta",
@@ -443,18 +443,18 @@
       "address": "526f62696e686f6f640000000000000000000000.robinhxxnxvhxfqdm63jk3ggcyainyfta"
     },
     {
-      "id": "ds-hastkxyvv65zm7j6cu5o5pczsikmqyo5oz4wpjgqwp6k",
-      "name": "jeff",
-      "symbol": "jeff",
+      "id": "ds-exxzybtt3jwu5muxuw2f4toybtldfwthsjyacn6xpump",
+      "name": "Anakin Skywalker",
+      "symbol": "Anakin",
       "chain": "Solana",
       "chainId": "solana",
-      "platform": "Solana",
-      "marketCapUsd": 1232665.0,
-      "liquidityUsd": 91979.08,
-      "createdAt": "2026-10-28T00:58:54Z",
-      "fetchedAt": "2026-11-02T17:26:45Z",
-      "link": "https://dexscreener.com/solana/jcxwfczgjgjc8nza5qb6jp3cgvqw4vgug4tqj87g5zny",
-      "address": "HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k"
+      "platform": "Solana \u00b7 pump.fun",
+      "marketCapUsd": 1279303.0,
+      "liquidityUsd": 110098.36,
+      "createdAt": "2026-10-29T19:28:53Z",
+      "fetchedAt": "2026-11-03T00:02:28Z",
+      "link": "https://dexscreener.com/solana/hja61kefsawrt3dw9p15mlh6u5maqgzgbe51ngg7bytt",
+      "address": "ExxzYBTt3jwU5MUxuw2F4toYbTLdFwThSjyaCn6Xpump"
     },
     {
       "id": "ds-gd52vfopzdad4hinpg4unjtdgss4wim3mqs8j1czpump",
@@ -463,12 +463,40 @@
       "chain": "Solana",
       "chainId": "solana",
       "platform": "Solana \u00b7 pump.fun",
-      "marketCapUsd": 1055694.0,
-      "liquidityUsd": 317801.36,
+      "marketCapUsd": 1043988.0,
+      "liquidityUsd": 467934.68,
       "createdAt": "2026-11-02T08:12:35Z",
-      "fetchedAt": "2026-11-02T17:26:47Z",
+      "fetchedAt": "2026-11-03T00:02:28Z",
       "link": "https://dexscreener.com/solana/fcvbygwdrwsl8ney1mlp3xawpcuzqk6cjhebsrgnjqbg",
       "address": "GD52VfoPZdad4hiNPg4UnjtDGsS4WiM3mqS8j1czpump"
+    },
+    {
+      "id": "ds-hastkxyvv65zm7j6cu5o5pczsikmqyo5oz4wpjgqwp6k",
+      "name": "jeff",
+      "symbol": "jeff",
+      "chain": "Solana",
+      "chainId": "solana",
+      "platform": "Solana",
+      "marketCapUsd": 962949.0,
+      "liquidityUsd": 81494.78,
+      "createdAt": "2026-10-28T00:58:54Z",
+      "fetchedAt": "2026-11-03T00:02:28Z",
+      "link": "https://dexscreener.com/solana/jcxwfczgjgjc8nza5qb6jp3cgvqw4vgug4tqj87g5zny",
+      "address": "HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k"
+    },
+    {
+      "id": "ds-9rzr9ncqbaibvotwvpifn8z1vckvfshnsatuajrxpump",
+      "name": "The Black Bull",
+      "symbol": "Slingoor",
+      "chain": "Solana",
+      "chainId": "solana",
+      "platform": "Solana \u00b7 pump.fun",
+      "marketCapUsd": 821889.0,
+      "liquidityUsd": 77416.24,
+      "createdAt": "2026-11-02T15:10:09Z",
+      "fetchedAt": "2026-11-03T00:02:28Z",
+      "link": "https://dexscreener.com/solana/hc4r8zmxkkpvdrsacuh1yxasvhmykud85ckavctb2gjo",
+      "address": "9rZR9nCQbaiBvotWVpifN8z1vckVFshnsATuAJrXpump"
     }
   ]
 }

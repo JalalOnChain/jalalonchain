@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T00:02:25Z",
+  "updatedAt": "2026-11-03T06:43:21Z",
   "items": [
     {
       "id": "news-a93eeb1eb981",
@@ -42,6 +42,16 @@
       "summary": "$2.85 billion of the $6.43 billion stolen from Binance has been frozen or seized, compared with about 3% in the Bybit hack, as North Korea\u2019s automated laundering spans 12,000 wallets."
     },
     {
+      "id": "news-1c111a33e765",
+      "title": "Nvidia and Nike Lead Biggest Wave Yet of Tokenized Stock Objections",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382348/nvidia-nike-biggest-wave-yet-tokenized-stock-objections",
+      "publishedAt": "2026-11-02T17:36:03Z",
+      "fetchedAt": "2026-11-03T06:43:20Z",
+      "summary": "Nvidia, Costco, Nike and nine other companies objected to trading of their shares on the planned OKX-ICE tokenized stock venue, bringing the total to 50."
+    },
+    {
       "id": "news-d18da4ec4732",
       "title": "Brazil's Largest Exchange Mercado Bitcoin Halts Withdrawals After $40 Million Hack",
       "source": "Decrypt",
@@ -80,6 +90,36 @@
       "publishedAt": "2026-11-02T13:34:02Z",
       "fetchedAt": "2026-11-02T17:26:41Z",
       "summary": "Uptober was far from it, with the Binance hack punctuating a red month. Will November be better? Or will the Binance hack hang over crypto?"
+    },
+    {
+      "id": "news-0c2b8c3dcd26",
+      "title": "Strategy Resumes Bitcoin Buys With $66M Purchase",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382333/strategy-resumes-bitcoin-buys-with-66m-purchase",
+      "publishedAt": "2026-11-02T13:19:36Z",
+      "fetchedAt": "2026-11-03T06:43:20Z",
+      "summary": "The Bitcoin treasury firm also spent $208.2 million buying back its STRC preferred stock, cutting its USD Cash balance to $132.7 million."
+    },
+    {
+      "id": "news-de40181fe154",
+      "title": "BTCPay Tells Merchants to Switch Off Servers Amid Hot Wallet Attack Reports",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382324/btcpay-tells-merchants-to-switch-off-servers-amid-hot-wallet-attack-reports",
+      "publishedAt": "2026-11-02T12:24:18Z",
+      "fetchedAt": "2026-11-03T06:43:20Z",
+      "summary": "The Bitcoin payment software says attacks targeted versions 2.4.1 and older, days after it shipped an emergency fix for a critical flaw."
+    },
+    {
+      "id": "news-df02806d54e3",
+      "title": "FBI Blames North Korea for $6B Binance Hack as Exchange Reopens Withdrawals",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382316/fbi-blames-north-korea-for-6b-binance-hack-as-exchange-reopens-withdrawals",
+      "publishedAt": "2026-11-02T10:36:19Z",
+      "fetchedAt": "2026-11-03T06:43:20Z",
+      "summary": "Binance saw $3.64 billion in net outflows in the first nine and a half hours after reopening withdrawals, or 2.1% of its assets, it said."
     },
     {
       "id": "news-b5ad4c70a76a",
@@ -1460,46 +1500,6 @@
       "publishedAt": "2026-10-16T12:22:18Z",
       "fetchedAt": "2026-10-16T16:36:00Z",
       "summary": "The funds came from a task scam that paid people to fake product sales and reviews, then demanded deposits before releasing their pay."
-    },
-    {
-      "id": "news-dd16783ef03b",
-      "title": "Morning Minute: Google Clears a Major Quantum Hurdle, Bitcoin Still Safe",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381138/morning-minute-google-clears-a-major-quantum-hurdle-bitcoin-still-safe",
-      "publishedAt": "2026-10-16T11:46:54Z",
-      "fetchedAt": "2026-10-16T11:54:42Z",
-      "summary": "Plus, crypto majors rebound despite hot PPI and Saylor\u2019s Strategy is at risk of removal from a major index."
-    },
-    {
-      "id": "news-f97693f6c797",
-      "title": "OpenAI Model Used Testnet Ethereum Wallet Without Permission to Finish Coding Task",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381123/openai-model-used-testnet-ethereum-wallet-without-permission-to-finish-coding-task",
-      "publishedAt": "2026-10-16T10:39:08Z",
-      "fetchedAt": "2026-10-16T11:54:42Z",
-      "summary": "The internal model derived keys from public developer recovery phrases, spent another account's test ETH, and left it out of its report."
-    },
-    {
-      "id": "news-c56261fe5daa",
-      "title": "GTA 6 Trailer Features Meme Coin\u2014And Solana Copycat Soars 2,900%",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381122/gta-6-trailer-features-meme-coin-and-solana-copycat-soars-2900",
-      "publishedAt": "2026-10-16T10:16:06Z",
-      "fetchedAt": "2026-10-16T11:54:42Z",
-      "summary": "Rockstar released the launch trailer for GTA VI, revealing a potential meme coin in the upcoming game and sending degens wild."
-    },
-    {
-      "id": "news-58e7cbc95711",
-      "title": "What Is a Hardware Wallet? Crypto Cold Storage Explained",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/resources/what-is-a-hardware-wallet-crypto-cold-storage-explained",
-      "publishedAt": "2026-10-16T09:10:48Z",
-      "fetchedAt": "2026-10-16T11:54:42Z",
-      "summary": "Hardware wallets keep your crypto keys offline. Learn how devices from Ledger, Trezor and others protect your Bitcoin and Ethereum."
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T10:49:32Z",
+  "updatedAt": "2026-11-05T18:43:27Z",
   "items": [
     {
       "id": "defi-54acb9696ee2",
@@ -9,10 +9,10 @@
       "chains": [
         "Tron"
       ],
-      "tvlUsd": 3149447235.89,
-      "change1d": -1.0566160679898502,
+      "tvlUsd": 3129989999.83,
+      "change1d": -1.1941373845047139,
       "listedAt": "2026-09-23T04:25:28Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://app.justlend.org/strx?lang=en-US"
     },
     {
@@ -23,10 +23,10 @@
       "chains": [
         "Hyperliquid L1"
       ],
-      "tvlUsd": 1595776812.43,
-      "change1d": -1.874050719114564,
+      "tvlUsd": 1519541399.98,
+      "change1d": -6.144078275061943,
       "listedAt": "2026-10-21T09:50:13Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://app.hyperliquid.xyz/earn"
     },
     {
@@ -38,10 +38,10 @@
         "Ethereum",
         "Optimism"
       ],
-      "tvlUsd": 605652156.6,
-      "change1d": 3.04056607152215,
+      "tvlUsd": 574614526.34,
+      "change1d": -5.903806736160732,
       "listedAt": "2026-09-30T21:35:01Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://nonce-capital.xyz/"
     },
     {
@@ -52,10 +52,10 @@
       "chains": [
         "Bittensor"
       ],
-      "tvlUsd": 422281014.42,
-      "change1d": 2.6647487945467674,
+      "tvlUsd": 388823285.33,
+      "change1d": -7.945006863730214,
       "listedAt": "2026-09-19T02:25:23Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://bittensor.com"
     },
     {
@@ -66,10 +66,10 @@
       "chains": [
         "Solana"
       ],
-      "tvlUsd": 304145443.76,
-      "change1d": 4.039246384338298,
+      "tvlUsd": 282777151.95,
+      "change1d": -7.120367697981848,
       "listedAt": "2026-09-30T22:00:32Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://www.forwardindustries.com/"
     },
     {
@@ -80,11 +80,39 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 181760559.77,
-      "change1d": 1.5872248028870928,
+      "tvlUsd": 174573501.92,
+      "change1d": -4.577057310870387,
       "listedAt": "2026-10-08T10:18:53Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://app.derive.xyz"
+    },
+    {
+      "id": "defi-f8337a0adb62",
+      "name": "Theo Network thUSD",
+      "symbol": "-",
+      "category": "RWA",
+      "chains": [
+        "Ethereum"
+      ],
+      "tvlUsd": 138572410.64,
+      "change1d": 4.827966448088276,
+      "listedAt": "2026-09-10T00:48:33Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
+      "link": "https://app.theo.xyz/"
+    },
+    {
+      "id": "defi-623de423b7fc",
+      "name": "SunSwap V4",
+      "symbol": "SUN",
+      "category": "Dexs",
+      "chains": [
+        "Tron"
+      ],
+      "tvlUsd": 131594759.06,
+      "change1d": -0.9013293000690084,
+      "listedAt": "2026-10-08T21:00:05Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
+      "link": "https://sun.io"
     },
     {
       "id": "defi-05f57cde1f69",
@@ -97,39 +125,11 @@
         "Optimism",
         "Arbitrum"
       ],
-      "tvlUsd": 143283060.97,
-      "change1d": 7.698015070906877,
+      "tvlUsd": 124016790.68,
+      "change1d": -4.203063421094512,
       "listedAt": "2026-09-18T20:57:27Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://aero.xyz/"
-    },
-    {
-      "id": "defi-f8337a0adb62",
-      "name": "Theo Network thUSD",
-      "symbol": "-",
-      "category": "RWA",
-      "chains": [
-        "Ethereum"
-      ],
-      "tvlUsd": 138586514.37,
-      "change1d": 4.838587862232302,
-      "listedAt": "2026-09-10T00:48:33Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
-      "link": "https://app.theo.xyz/"
-    },
-    {
-      "id": "defi-623de423b7fc",
-      "name": "SunSwap V4",
-      "symbol": "SUN",
-      "category": "Dexs",
-      "chains": [
-        "Tron"
-      ],
-      "tvlUsd": 132173525.13,
-      "change1d": -0.6861217347003219,
-      "listedAt": "2026-10-08T21:00:05Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
-      "link": "https://sun.io"
     },
     {
       "id": "defi-9a479f62de30",
@@ -139,10 +139,10 @@
       "chains": [
         "Solana"
       ],
-      "tvlUsd": 106567619.47,
-      "change1d": 4.05776395411776,
+      "tvlUsd": 99142341.07,
+      "change1d": -7.08654573520387,
       "listedAt": "2026-08-27T19:03:37Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://defillama.com/protocol/phase-delegation"
     },
     {
@@ -156,7 +156,7 @@
       "tvlUsd": 97413381.0,
       "change1d": -1.7560654770123705,
       "listedAt": "2026-10-21T10:01:41Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://app.lighter.xyz"
     },
     {
@@ -167,10 +167,10 @@
       "chains": [
         "Stellar"
       ],
-      "tvlUsd": 93424139.06,
-      "change1d": 7.88198996453859,
+      "tvlUsd": 92266207.49,
+      "change1d": 6.110788435181618,
       "listedAt": "2026-08-14T18:56:13Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://stellardefihub.com/"
     },
     {
@@ -182,10 +182,10 @@
         "Arc",
         "Ethereum"
       ],
-      "tvlUsd": 83274363.52,
-      "change1d": 0.22754141533421546,
+      "tvlUsd": 83275919.63,
+      "change1d": 0.2263491596768148,
       "listedAt": "2026-09-02T12:33:38Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://keyrock.com/"
     },
     {
@@ -197,25 +197,11 @@
         "Arbitrum",
         "Morph"
       ],
-      "tvlUsd": 76673751.65,
-      "change1d": -0.016830252814301616,
+      "tvlUsd": 76798658.99,
+      "change1d": 0.16341235626255468,
       "listedAt": "2026-09-29T21:26:47Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://popdex.xyz/"
-    },
-    {
-      "id": "defi-a69ed093069b",
-      "name": "Wise Token",
-      "symbol": "WISE",
-      "category": "Yield",
-      "chains": [
-        "Ethereum"
-      ],
-      "tvlUsd": 68585032.9,
-      "change1d": 4.290207018810307,
-      "listedAt": "2026-08-18T19:27:37Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
-      "link": "https://app.wisetoken.com/"
     },
     {
       "id": "defi-433169d5d9bc",
@@ -225,11 +211,25 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 67928795.24,
-      "change1d": 0.3584238954130683,
+      "tvlUsd": 68100984.83,
+      "change1d": 0.29482065989417094,
       "listedAt": "2026-08-20T22:09:11Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://axis.to"
+    },
+    {
+      "id": "defi-a69ed093069b",
+      "name": "Wise Token",
+      "symbol": "WISE",
+      "category": "Yield",
+      "chains": [
+        "Ethereum"
+      ],
+      "tvlUsd": 64532673.81,
+      "change1d": -6.584511168886806,
+      "listedAt": "2026-08-18T19:27:37Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
+      "link": "https://app.wisetoken.com/"
     },
     {
       "id": "defi-c521ec9e499a",
@@ -242,10 +242,10 @@
         "Robinhood Chain",
         "Ethereum"
       ],
-      "tvlUsd": 63312611.91,
-      "change1d": 5.85841115377508,
+      "tvlUsd": 55987203.62,
+      "change1d": -9.66243066716008,
       "listedAt": "2026-10-20T20:46:47Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://aero.xyz/"
     },
     {
@@ -257,10 +257,10 @@
         "Bitcoin",
         "Ethereum"
       ],
-      "tvlUsd": 48872029.28,
-      "change1d": 2.41865810016904,
+      "tvlUsd": 46303796.39,
+      "change1d": -5.4579694324895485,
       "listedAt": "2026-08-18T01:48:11Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://defillama.com/protocol/niza"
     },
     {
@@ -271,10 +271,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 40878482.48,
-      "change1d": 2.1534569149782783,
+      "tvlUsd": 40082476.19,
+      "change1d": -3.1549299746679083,
       "listedAt": "2026-09-02T01:30:45Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://www.flowdesk.co/"
     },
     {
@@ -285,10 +285,10 @@
       "chains": [
         "BOT Chain"
       ],
-      "tvlUsd": 30619095.33,
-      "change1d": -2.2959221023529324,
+      "tvlUsd": 30705118.2,
+      "change1d": 0.08010388071302543,
       "listedAt": "2026-08-24T20:46:23Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://dex.botchain.ai/"
     },
     {
@@ -299,10 +299,10 @@
       "chains": [
         "Solana"
       ],
-      "tvlUsd": 30491992.21,
-      "change1d": 5.227277999878098,
+      "tvlUsd": 28299211.37,
+      "change1d": -6.2277757911879945,
       "listedAt": "2026-09-30T22:01:07Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://www.definity.finance/"
     },
     {
@@ -315,25 +315,11 @@
         "Arbitrum",
         "Aleo"
       ],
-      "tvlUsd": 26318379.66,
-      "change1d": -0.092149716618664,
+      "tvlUsd": 26323670.08,
+      "change1d": 0.04809182768636333,
       "listedAt": "2026-10-02T14:08:52Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://defillama.com/protocol/jusd-finance"
-    },
-    {
-      "id": "defi-d7d273f830ea",
-      "name": "Pacifica Bridge",
-      "symbol": "-",
-      "category": "Bridge",
-      "chains": [
-        "Solana"
-      ],
-      "tvlUsd": 23578478.15,
-      "change1d": 0.926896351901334,
-      "listedAt": "2026-10-13T06:55:00Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
-      "link": "https://app.pacifica.fi"
     },
     {
       "id": "defi-1cb42f39651f",
@@ -343,25 +329,25 @@
       "chains": [
         "Hyperliquid L1"
       ],
-      "tvlUsd": 23449734.25,
-      "change1d": -7.8359994682332115,
+      "tvlUsd": 24104318.47,
+      "change1d": -1.8355062772702837,
       "listedAt": "2026-10-09T07:42:31Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://papertrade.xyz"
     },
     {
-      "id": "defi-c7e1f2951bae",
-      "name": "Fables",
-      "symbol": "FABLES",
-      "category": "Dexs",
+      "id": "defi-d7d273f830ea",
+      "name": "Pacifica Bridge",
+      "symbol": "-",
+      "category": "Bridge",
       "chains": [
-        "Robinhood Chain"
+        "Solana"
       ],
-      "tvlUsd": 23403654.44,
-      "change1d": 1.7050232499140634,
-      "listedAt": "2026-08-26T01:26:59Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
-      "link": "https://www.fables.fi/"
+      "tvlUsd": 23282441.96,
+      "change1d": -1.1906184460548133,
+      "listedAt": "2026-10-13T06:55:00Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
+      "link": "https://app.pacifica.fi"
     },
     {
       "id": "defi-32dfb596712f",
@@ -371,11 +357,25 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 21767175.04,
-      "change1d": -0.48287222052231016,
+      "tvlUsd": 21603229.97,
+      "change1d": -0.980340985346686,
       "listedAt": "2026-09-03T18:17:47Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://www.waterline.build"
+    },
+    {
+      "id": "defi-c7e1f2951bae",
+      "name": "Fables",
+      "symbol": "FABLES",
+      "category": "Dexs",
+      "chains": [
+        "Robinhood Chain"
+      ],
+      "tvlUsd": 21566864.14,
+      "change1d": -8.961366573792702,
+      "listedAt": "2026-08-26T01:26:59Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
+      "link": "https://www.fables.fi/"
     },
     {
       "id": "defi-e51ef7c547a6",
@@ -385,10 +385,10 @@
       "chains": [
         "Polygon"
       ],
-      "tvlUsd": 21389475.71,
-      "change1d": 0.42954956779719566,
+      "tvlUsd": 21370962.93,
+      "change1d": 0.3512749811064282,
       "listedAt": "2026-10-21T22:08:13Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://lend.rnt.finance/"
     },
     {
@@ -399,10 +399,10 @@
       "chains": [
         "Solana"
       ],
-      "tvlUsd": 21207142.7,
-      "change1d": 1.3756724280670483,
+      "tvlUsd": 20784258.69,
+      "change1d": -2.063029569241877,
       "listedAt": "2026-08-26T18:59:07Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://defillama.com/protocol/bisonfi"
     },
     {
@@ -413,11 +413,25 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 20814947.49,
-      "change1d": 1.9685745099820195,
+      "tvlUsd": 20280579.5,
+      "change1d": -3.0139926660063594,
       "listedAt": "2026-09-19T02:31:47Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://nemo.trading/"
+    },
+    {
+      "id": "defi-81baa705ed56",
+      "name": "Gamma Research",
+      "symbol": "-",
+      "category": "Risk Curators",
+      "chains": [
+        "Monad"
+      ],
+      "tvlUsd": 17980844.38,
+      "change1d": -0.054469177902177535,
+      "listedAt": "2026-09-03T04:51:25Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
+      "link": "https://gammaresearch.xyz/"
     },
     {
       "id": "defi-788226df4acd",
@@ -430,25 +444,11 @@
         "Ethereum",
         "Base"
       ],
-      "tvlUsd": 18611882.08,
-      "change1d": 1.703729465837796,
+      "tvlUsd": 17977064.45,
+      "change1d": -2.4655223477910795,
       "listedAt": "2026-10-12T23:19:47Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://www.metric.xyz/"
-    },
-    {
-      "id": "defi-81baa705ed56",
-      "name": "Gamma Research",
-      "symbol": "-",
-      "category": "Risk Curators",
-      "chains": [
-        "Monad"
-      ],
-      "tvlUsd": 17987534.57,
-      "change1d": 0.017988486388119895,
-      "listedAt": "2026-09-03T04:51:25Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
-      "link": "https://gammaresearch.xyz/"
     },
     {
       "id": "defi-f29b7826b80c",
@@ -459,10 +459,10 @@
         "Sui",
         "Ethereum"
       ],
-      "tvlUsd": 17877473.93,
-      "change1d": -0.9106282204022591,
+      "tvlUsd": 17485327.27,
+      "change1d": -2.981696852201509,
       "listedAt": "2026-10-28T17:56:28Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://www.naviprotocol.io/"
     },
     {
@@ -473,10 +473,10 @@
       "chains": [
         "Base"
       ],
-      "tvlUsd": 17186111.6,
-      "change1d": 2.732181199800877,
+      "tvlUsd": 16244436.43,
+      "change1d": -5.6534372439371765,
       "listedAt": "2026-08-19T20:59:47Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://syntetika.io/"
     },
     {
@@ -487,26 +487,11 @@
       "chains": [
         "Solana"
       ],
-      "tvlUsd": 17015046.8,
-      "change1d": 3.6175856027910243,
+      "tvlUsd": 15828527.22,
+      "change1d": -7.437144626244475,
       "listedAt": "2026-09-19T02:31:55Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://stake.raiku.com"
-    },
-    {
-      "id": "defi-25a382e70495",
-      "name": "August Digital",
-      "symbol": "-",
-      "category": "Risk Curators",
-      "chains": [
-        "Monad",
-        "Ethereum"
-      ],
-      "tvlUsd": 12578990.73,
-      "change1d": 0.27841727258008575,
-      "listedAt": "2026-09-02T17:22:43Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
-      "link": "https://augustdigital.io/"
     },
     {
       "id": "defi-799769789c41",
@@ -516,10 +501,10 @@
       "chains": [
         "Ethereum"
       ],
-      "tvlUsd": 12330753.46,
-      "change1d": -2.8698710527424396,
+      "tvlUsd": 14013354.92,
+      "change1d": 12.556422440423077,
       "listedAt": "2026-10-19T17:25:02Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://defillama.com/protocol/communityv3"
     },
     {
@@ -530,11 +515,26 @@
       "chains": [
         "Solana"
       ],
-      "tvlUsd": 12325815.22,
-      "change1d": 3.5605377692955926,
+      "tvlUsd": 13324491.64,
+      "change1d": 7.945968054693793,
       "listedAt": "2026-09-17T17:49:17Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://japansol.com/"
+    },
+    {
+      "id": "defi-25a382e70495",
+      "name": "August Digital",
+      "symbol": "-",
+      "category": "Risk Curators",
+      "chains": [
+        "Monad",
+        "Ethereum"
+      ],
+      "tvlUsd": 12404563.6,
+      "change1d": 2.5541965061016043,
+      "listedAt": "2026-09-02T17:22:43Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
+      "link": "https://augustdigital.io/"
     },
     {
       "id": "defi-efe68dd63f7c",
@@ -546,10 +546,10 @@
         "Ethereum",
         "Fluent"
       ],
-      "tvlUsd": 11523664.72,
-      "change1d": 0.4293342009895582,
+      "tvlUsd": 11521518.61,
+      "change1d": 0.36803972331030366,
       "listedAt": "2026-09-03T04:48:35Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://www.sharpbyte.xyz/"
     },
     {
@@ -560,27 +560,26 @@
       "chains": [
         "Solana"
       ],
-      "tvlUsd": 11172582.5,
-      "change1d": 62.84504903507482,
+      "tvlUsd": 10545832.87,
+      "change1d": 45.8669415950275,
       "listedAt": "2026-08-29T00:54:41Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
       "link": "https://defillama.com/protocol/tessera-v"
     },
     {
-      "id": "defi-aada41a40a2a",
-      "name": "Bitwise",
+      "id": "defi-c14023abafc5",
+      "name": "Pangolins",
       "symbol": "-",
       "category": "Risk Curators",
       "chains": [
-        "Ethereum",
-        "Arc",
-        "Base"
+        "Base",
+        "Binance"
       ],
-      "tvlUsd": 10136362.78,
-      "change1d": -3.7185225436949736,
-      "listedAt": "2026-09-03T18:17:57Z",
-      "fetchedAt": "2026-11-05T10:49:32Z",
-      "link": "https://app.morpho.org/curator/bitwise"
+      "tvlUsd": 8573039.91,
+      "change1d": -3.320318440191869,
+      "listedAt": "2026-09-04T18:22:41Z",
+      "fetchedAt": "2026-11-05T18:43:27Z",
+      "link": "https://pangolins.io/"
     }
   ]
 }

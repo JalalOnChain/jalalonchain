@@ -1,6 +1,26 @@
 {
-  "updatedAt": "2026-11-06T21:04:06Z",
+  "updatedAt": "2026-11-07T00:55:00Z",
   "items": [
+    {
+      "id": "news-d4e41a020e30",
+      "title": "5th EMPACT Hackathon leads to the detection of 51 potential victims",
+      "source": "Europol",
+      "category": "enforcement",
+      "link": "https://www.europol.europa.eu/media-press/newsroom/news/5th-empact-hackathon-leads-to-detection-of-51-potential-victims",
+      "publishedAt": "2026-11-07T00:54:58Z",
+      "fetchedAt": "2026-11-07T00:54:58Z",
+      "summary": "An international operation involving 40 experts and investigators from 20 countries has identified 51 potential victims of human trafficking, as well as five suspects. Held in Amsterdam from 23 to 25 September 2026, the fifth EMPACT Hackathon against the digital aspects of human "
+    },
+    {
+      "id": "news-21233cb76c96",
+      "title": "Treasury Cuts Crypto Exchange MEXC Off From US Financial System",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382758/treasury-cuts-off-crypto-exchange-mexc-us-financial-system",
+      "publishedAt": "2026-11-06T21:06:03Z",
+      "fetchedAt": "2026-11-07T00:54:59Z",
+      "summary": "FinCEN\u2019s order, part of Operation Economic Outcast, bars U.S. institutions from any transfers to or from MEXC, which Treasury says facilitated $16 billion in illicit finance tied to Iran, North Korea and Russia."
+    },
     {
       "id": "news-dc2cc9c6dc3f",
       "title": "Greece Passes Crypto Tax Law With 10% Gains Levy, 15% on Staking and DeFi",
@@ -40,6 +60,26 @@
       "publishedAt": "2026-11-06T17:42:31Z",
       "fetchedAt": "2026-11-06T21:04:06Z",
       "summary": "OFAC targeted offshore companies and associates it says helped Prince Group executives hide assets and dodge earlier sanctions."
+    },
+    {
+      "id": "news-e762ab134715",
+      "title": "Crypto Card Provider Gnosis Pay Says Hackers Accessed Customer Data",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382718/crypto-card-provider-gnosis-pay-hackers-customer-data",
+      "publishedAt": "2026-11-06T16:41:29Z",
+      "fetchedAt": "2026-11-07T00:54:59Z",
+      "summary": "Gnosis Pay said hackers accessed customer information on the legacy system behind its branded cards, though funds weren\u2019t affected and its enterprise card platform was untouched."
+    },
+    {
+      "id": "news-6cb465c91bba",
+      "title": "Crypto Liquidations Top $1 Billion as Bitcoin Tests 11-Week Low",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382717/bitcoin-price-11-week-low-crypto-liquidations-ai-stock",
+      "publishedAt": "2026-11-06T16:34:07Z",
+      "fetchedAt": "2026-11-07T00:54:59Z",
+      "summary": "Bitcoin fell toward $75,500 after AI stocks plunged, and over $1 billion in the crypto derivatives market has been wiped out."
     },
     {
       "id": "news-6eaf68bc94d6",
@@ -1460,46 +1500,6 @@
       "publishedAt": "2026-10-22T15:45:07Z",
       "fetchedAt": "2026-10-22T18:52:08Z",
       "summary": "Neoclouds like CoreWeave and Nebius rent Nvidia GPUs to AI labs, and several started out mining crypto. Here's how the AI cloud model works."
-    },
-    {
-      "id": "news-6520272edeb4",
-      "title": "SoFi Launches Tokenized Deposit That Earns 4.4% and Converts to a Stablecoin",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381174/sofi-launches-tokenized-deposit-that-earns-4-4-and-moves-like-a-stablecoin",
-      "publishedAt": "2026-10-22T12:01:03Z",
-      "fetchedAt": "2026-10-22T14:41:06Z",
-      "summary": "Each SOFIE token represents $1 on deposit at SoFi Bank, earning 4.40% APY with FDIC insurance\u2014a yield-and-protection combination ordinary stablecoins lack."
-    },
-    {
-      "id": "news-e6c9bf82d559",
-      "title": "Justice Department Opens Investigation into Alleged Firearm Permitting Abuses in Two Connecticut Municipalities",
-      "source": "U.S. Dept. of Justice",
-      "category": "enforcement",
-      "link": "https://www.justice.gov/opa/pr/justice-department-opens-investigation-alleged-firearm-permitting-abuses-two-connecticut",
-      "publishedAt": "2026-10-22T12:00:00Z",
-      "fetchedAt": "2026-10-22T22:18:04Z",
-      "summary": "Today, the Justice Department opened an investigation into  Middletown  and  Waterbury , Connecticut, to determine whether they unnecessarily delay the issuance of firearm permits to their residents. The Second Amendment protects the right of law-abiding citizens to keep and bear"
-    },
-    {
-      "id": "news-a216f9b09a9e",
-      "title": "Italy Busts Mafia 'Secret Bank' That Laundered Money Through Crypto, Seizes $24M",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381589/italy-busts-mafia-secret-bank-that-laundered-money-through-crypto-seizes-24m",
-      "publishedAt": "2026-10-22T10:45:13Z",
-      "fetchedAt": "2026-10-22T14:41:06Z",
-      "summary": "Police say a car-rental firm near Milan was an underground bank for 'Ndrangheta and Camorra figures, moving money abroad and into crypto."
-    },
-    {
-      "id": "news-af7f98c9d100",
-      "title": "Chinese Prosecutors Seek to Confiscate $5.1B in Bitcoin Seized by UK in Qian Case",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381580/chinese-prosecutors-seek-to-confiscate-5-1b-in-bitcoin-seized-by-uk-in-qian-case",
-      "publishedAt": "2026-10-22T10:09:42Z",
-      "fetchedAt": "2026-10-22T14:41:06Z",
-      "summary": "A Tianjin court will hear the application after a six-month notice period, while a parallel fight over the same coins continues in London."
     }
   ]
 }

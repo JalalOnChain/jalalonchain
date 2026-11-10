@@ -1,6 +1,36 @@
 {
-  "updatedAt": "2026-11-10T17:47:14Z",
+  "updatedAt": "2026-11-10T23:16:12Z",
   "items": [
+    {
+      "id": "news-590939ddad1e",
+      "title": "Bitcoin Miner HIVE Eyes $45 Million in Annual Revenue From AI Deal",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382982/bitcoin-miner-hive-eyes-45-million-ai-data-center",
+      "publishedAt": "2026-11-10T22:46:02Z",
+      "fetchedAt": "2026-11-10T23:16:11Z",
+      "summary": "The Bitcoin miner says its Boden facility could generate $45 million annually, but a June letter of intent remains nonbinding as executives negotiate financing and customer protections for the project."
+    },
+    {
+      "id": "news-f870046bedaf",
+      "title": "Trump Media Posts $410 Million Profit. Bitcoin Gains Did the Heavy Lifting",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382967/trump-media-posts-410-million-profit-bitcoin-gains",
+      "publishedAt": "2026-11-10T21:36:03Z",
+      "fetchedAt": "2026-11-10T23:16:11Z",
+      "summary": "Truth Social\u2019s parent booked $409.7 million in quarterly income largely from crypto investments, even as its stock remained more than 94% below its March 2024 peak."
+    },
+    {
+      "id": "news-42d1a6068240",
+      "title": "Goldman, Citi and Global Banks Commit $270 Million to Challenge Crypto\u2019s Stablecoin Giants",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382953/goldman-citi-global-banks-270-million-challenge-crypto-stablecoin-giants",
+      "publishedAt": "2026-11-10T18:33:37Z",
+      "fetchedAt": "2026-11-10T23:16:11Z",
+      "summary": "The funding, backing a U.S.-incorporated issuer codenamed \u201cProject Faro,\u201d covers five years of operations as traditional lenders move to challenge crypto-native giants Tether and Circle."
+    },
     {
       "id": "news-a9750bee5d28",
       "title": "Bitcoin Falls as Hot US Inflation Fuels Fears of Bigger Fed Rate Hike",
@@ -40,6 +70,16 @@
       "publishedAt": "2026-11-10T14:01:02Z",
       "fetchedAt": "2026-11-10T17:47:13Z",
       "summary": "The testnet pilot used Chainlink\u2019s CCIP to distribute Moody\u2019s ratings simultaneously across permissioned and permissionless blockchains, while preserving the firm\u2019s existing publication and governance processes."
+    },
+    {
+      "id": "news-62c7e4123207",
+      "title": "Morning Minute: Vitalik Recasts ETH as a Store of Value",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382931/morning-minute-vitalik-recasts-eth-as-a-store-of-value",
+      "publishedAt": "2026-11-10T13:24:51Z",
+      "fetchedAt": "2026-11-10T23:16:11Z",
+      "summary": "It\u2019s a big shift for Ethereum from the \u201cultrasound money\u201d days. But can ETH compete as a store-of-value play?"
     },
     {
       "id": "news-5e16a7697dcb",
@@ -1460,46 +1500,6 @@
       "publishedAt": "2026-10-25T14:01:03Z",
       "fetchedAt": "2026-10-25T15:02:52Z",
       "summary": "Spot Bitcoin ETFs finished the week with about $301 million in net inflows, ending a two-week losing streak, even as two straight days of outflows kept October in the red."
-    },
-    {
-      "id": "news-25b160717f9b",
-      "title": "Hong Kong\u2019s Biggest Bank Puts a Stablecoin in 3 Million Wallets",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381760/hong-kong-bank-hsbc-stablecoin-3-million-wallets",
-      "publishedAt": "2026-10-24T13:01:02Z",
-      "fetchedAt": "2026-10-24T14:53:42Z",
-      "summary": "HSBC switched on its Hong Kong dollar stablecoin inside PayMe on Friday, testing whether a bank-issued token can become everyday money."
-    },
-    {
-      "id": "news-779c7e8c1569",
-      "title": "Netanyahu Considering Crypto Plan to Dodge Banking Sanctions on Israel",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381758/netanyahu-crypto-plan-banking-sanctions-israel",
-      "publishedAt": "2026-10-23T21:16:03Z",
-      "fetchedAt": "2026-10-23T23:07:28Z",
-      "summary": "Days before Israel\u2019s election, Netanyahu said he has asked for a blockchain plan in case banks are hit with sanctions, and told Israelis to prepare for a rainy day after Trump."
-    },
-    {
-      "id": "news-f64143226d4e",
-      "title": "Senate Democrat Probes Tether Payments to Ex-White House Crypto Adviser\u2019s Firm",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381755/senate-democrat-tether-payments-ex-white-house-crypto-adviser",
-      "publishedAt": "2026-10-23T20:16:02Z",
-      "fetchedAt": "2026-10-23T23:07:28Z",
-      "summary": "Sen. Richard Blumenthal demanded Tether\u2019s records on payments to Nxum, a firm co-owned by former White House crypto adviser Bo Hines."
-    },
-    {
-      "id": "news-8efca5b91f8f",
-      "title": "Europol urges early action to protect cryptocurrencies and sensitive data from quantum threats",
-      "source": "Europol",
-      "category": "enforcement",
-      "link": "https://www.europol.europa.eu/media-press/newsroom/news/europol-urges-early-action-to-protect-cryptocurrencies-and-sensitive-data-quantum-threats",
-      "publishedAt": "2026-10-23T19:56:41Z",
-      "fetchedAt": "2026-10-23T19:56:41Z",
-      "summary": "The timing of these capabilities remains uncertain. However, this should not be the main concern. Adapting systems and coordinating security upgrades will take time. Therefore, regardless of the nature of the threats that may emerge, crypto-agility should be pursued proactively t"
     }
   ]
 }

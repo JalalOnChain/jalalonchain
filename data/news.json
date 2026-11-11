@@ -1,6 +1,16 @@
 {
-  "updatedAt": "2026-11-10T23:16:12Z",
+  "updatedAt": "2026-11-11T03:01:20Z",
   "items": [
+    {
+      "id": "news-8efca5b91f8f",
+      "title": "Europol urges early action to protect cryptocurrencies and sensitive data from quantum threats",
+      "source": "Europol",
+      "category": "enforcement",
+      "link": "https://www.europol.europa.eu/media-press/newsroom/news/europol-urges-early-action-to-protect-cryptocurrencies-and-sensitive-data-quantum-threats",
+      "publishedAt": "2026-11-11T03:01:19Z",
+      "fetchedAt": "2026-11-11T03:01:19Z",
+      "summary": "The timing of these capabilities remains uncertain. However, this should not be the main concern. Adapting systems and coordinating security upgrades will take time. Therefore, regardless of the nature of the threats that may emerge, crypto-agility should be pursued proactively t"
+    },
     {
       "id": "news-590939ddad1e",
       "title": "Bitcoin Miner HIVE Eyes $45 Million in Annual Revenue From AI Deal",
@@ -80,6 +90,36 @@
       "publishedAt": "2026-11-10T13:24:51Z",
       "fetchedAt": "2026-11-10T23:16:11Z",
       "summary": "It\u2019s a big shift for Ethereum from the \u201cultrasound money\u201d days. But can ETH compete as a store-of-value play?"
+    },
+    {
+      "id": "news-401236b51d43",
+      "title": "Binance Warns of Apple iOS Flaw That Could Expose iPhone Users' Private Keys",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382928/binance-warns-of-apple-ios-flaw-that-could-expose-iphone-users-private-keys",
+      "publishedAt": "2026-11-10T12:45:34Z",
+      "fetchedAt": "2026-11-11T03:01:20Z",
+      "summary": "Apple has not publicly confirmed the \"worse_query\" bug, which a researcher published days before its latest iOS security update."
+    },
+    {
+      "id": "news-2dff7466f3eb",
+      "title": "Binance Halts MEXC Transfers as FinCEN Cuts Exchange Off From US Financial System",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382926/binance-halts-mexc-transfers-as-fincen-cuts-exchange-off-from-us-financial-system",
+      "publishedAt": "2026-11-10T12:13:27Z",
+      "fetchedAt": "2026-11-11T03:01:20Z",
+      "summary": "The exchange will reject withdrawals to MEXC and hold deposits from it for review, after FinCEN tied it to $16 billion in suspicious flows."
+    },
+    {
+      "id": "news-8374c09ef50d",
+      "title": "'Tough Questions' Ahead: Warren Targets Prediction Markets, Trump Crypto as Banking Chair",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/382910/tough-questions-ahead-warren-targets-prediction-markets-trump-crypto-as-banking-chair",
+      "publishedAt": "2026-11-10T10:41:06Z",
+      "fetchedAt": "2026-11-11T03:01:20Z",
+      "summary": "An aide said Trump family crypto businesses should \"preserve their documents\" as Warren prepares to take over the Senate Banking Committee."
     },
     {
       "id": "news-5e16a7697dcb",
@@ -1460,46 +1500,6 @@
       "publishedAt": "2026-10-26T13:01:02Z",
       "fetchedAt": "2026-10-26T15:10:10Z",
       "summary": "Galaxy Research says Bitcoin\u2019s bear market ended in June, pointing to a reclaimed 50-week moving average, fading selling pressure, and a strengthening debasement case."
-    },
-    {
-      "id": "news-bfdc0227d655",
-      "title": "Morning Minute: Bitcoin Breaks Below $80,000 as Iran Fears Hit the Weekend",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381797/morning-minute-bitcoin-breaks-below-80000-as-iran-fears-hit-the-weekend",
-      "publishedAt": "2026-10-26T12:16:12Z",
-      "fetchedAt": "2026-10-26T15:10:10Z",
-      "summary": "Some relief is appearing this morning as oil and rates fall, with a big macro week ahead featuring major earnings, FOMC and key data drops."
-    },
-    {
-      "id": "news-0a6c53b2d3a8",
-      "title": "Israel's Central Bank Rebukes Netanyahu Plan to Use Crypto to Dodge Sanctions",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381789/israels-central-bank-rebukes-netanyahu-plan-to-use-crypto-to-dodge-sanctions",
-      "publishedAt": "2026-10-26T11:34:08Z",
-      "fetchedAt": "2026-10-26T20:29:45Z",
-      "summary": "Over 100 economists, including former governor Jacob Frenkel, warned of deeper isolation ahead of Israel's October 27 national election."
-    },
-    {
-      "id": "news-b6f31ad74095",
-      "title": "Wells Fargo, Cisco, Intuit Among 6 More Companies Objecting to Tokenized Stocks",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381784/wells-fargo-cisco-intuit-more-companies-object-tokenized-stocks",
-      "publishedAt": "2026-10-25T16:01:03Z",
-      "fetchedAt": "2026-10-25T18:23:43Z",
-      "summary": "Twenty-two companies have now objected to having their shares traded on the planned OKX-ICE tokenized stock venue, after Wells Fargo, Cisco, Marvell, Arm, Moderna. and Intuit joined the list."
-    },
-    {
-      "id": "news-c79b97ceb39e",
-      "title": "Bitcoin ETFs Snap Two-Week Losing Streak Despite Late-Week Slide",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381777/bitcoin-etfs-snap-two-week-losing-streak-despite-late-week-slide",
-      "publishedAt": "2026-10-25T14:01:03Z",
-      "fetchedAt": "2026-10-25T15:02:52Z",
-      "summary": "Spot Bitcoin ETFs finished the week with about $301 million in net inflows, ending a two-week losing streak, even as two straight days of outflows kept October in the red."
     }
   ]
 }

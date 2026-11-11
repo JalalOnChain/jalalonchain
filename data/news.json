@@ -1,6 +1,46 @@
 {
-  "updatedAt": "2026-11-11T10:52:19Z",
+  "updatedAt": "2026-11-11T18:40:31Z",
   "items": [
+    {
+      "id": "news-3095cd79b623",
+      "title": "Bitcoin Faces First Back-to-Back Annual Losses in History, But There's a Catch",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/383049/bitcoin-first-back-to-back-annual-losses-history",
+      "publishedAt": "2026-11-11T17:56:02Z",
+      "fetchedAt": "2026-11-11T18:40:30Z",
+      "summary": "Bitcoin is heading toward its first consecutive losing years, breaking an 18-year pattern. But there's some nuance in the data."
+    },
+    {
+      "id": "news-1976fc307997",
+      "title": "What Are Solana Privacy Rings? Inside Helius\u2019 Privacy Protocol for Solana",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/resources/what-are-solana-privacy-rings-inside-helius-privacy-protocol-for-solana",
+      "publishedAt": "2026-11-11T17:09:18Z",
+      "fetchedAt": "2026-11-11T18:40:30Z",
+      "summary": "Solana Privacy Rings encrypt balances and transfer amounts without leaving Solana. Here's how they work, and how they compare."
+    },
+    {
+      "id": "news-5dbd32193190",
+      "title": "A High-Severity Bug Could Have Stalled Bitcoin Mining\u2014Bitcoin Core Has a Fix",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/383044/bitcoin-core-patches-bug-could-have-stalled-btc-mining",
+      "publishedAt": "2026-11-11T16:58:57Z",
+      "fetchedAt": "2026-11-11T18:40:30Z",
+      "summary": "Three bugs\u2014spanning denial-of-service and privacy issues rather than coin theft\u2014have all been patched, with the most serious capable of halting a miner\u2019s ability to build new blocks."
+    },
+    {
+      "id": "news-2cb144d53176",
+      "title": "OKX-ICE Tokenized Stock Venue Sets Launch, Turning to Crypto Companies After Big Tech Opts Out",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/383040/okx-ice-tokenized-stock-venue-sets-launch-crypto-companies-big-tech-opts-out",
+      "publishedAt": "2026-11-11T16:14:01Z",
+      "fetchedAt": "2026-11-11T18:40:30Z",
+      "summary": "OKXICE will open its tokenized securities venue Nov. 23 with more than 70 assets, led by crypto companies like Coinbase, Circle, Robinhood and Strategy, after 67 companies objected to having their shares listed."
+    },
     {
       "id": "news-522fe71e8168",
       "title": "Prisoner Jailed for 8 Years Over $2.7M Crypto Theft Plot Run From His Cell",
@@ -1460,46 +1500,6 @@
       "publishedAt": "2026-10-26T17:41:21Z",
       "fetchedAt": "2026-10-26T20:29:45Z",
       "summary": "A confirmed exploit let rogue servers replace Electrum\u2019s pending transactions, tricking users into redirecting Bitcoin to attacker addresses."
-    },
-    {
-      "id": "news-8fb369bd2f91",
-      "title": "India\u2019s CoinDCX Confirms $16 Million Loss Days After CEO Called It a \u2018False Alarm\u2019",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381834/india-coindcx-confirms-16-million-loss-ceo-called-false-alarm",
-      "publishedAt": "2026-10-26T16:36:03Z",
-      "fetchedAt": "2026-10-26T20:29:45Z",
-      "summary": "The Mumbai-based exchange says 15.99 million USDT was drained from wallets it retired after last year\u2019s $44 million hack, bringing its combined losses to nearly $60 million\u2014and it\u2019s absorbing the hit."
-    },
-    {
-      "id": "news-29dee9cae201",
-      "title": "Tom Lee's Bitmine Keeps Buying Ethereum But Pivots to Record Share Buybacks",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381826/tom-lee-bitmine-keeps-buying-ethereum-share-buybacks",
-      "publishedAt": "2026-10-26T15:36:03Z",
-      "fetchedAt": "2026-10-26T20:29:45Z",
-      "summary": "The firm added 10,452 ETH to reach 4.95% of supply, but its bigger move was repurchasing 2.04 million of its own shares\u2014part of what it calls the largest equity buyback any crypto treasury company has run."
-    },
-    {
-      "id": "news-31d4e9d08736",
-      "title": "Strategy Pauses Bitcoin Buying, Spends $205M Buying Back STRC",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381811/strategy-pauses-bitcoin-buying-spends-205m-buying-back-strc",
-      "publishedAt": "2026-10-26T13:24:38Z",
-      "fetchedAt": "2026-10-26T15:10:10Z",
-      "summary": "The Bitcoin treasury firm's USD Cash balance fell to $242.4 million after its biggest weekly STRC buyback in more than a month."
-    },
-    {
-      "id": "news-1876999d0cc2",
-      "title": "Bitcoin Dips Below $80,000 Ahead of Fed Decision, Midterms",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381802/bitcoin-dips-below-80000-ahead-of-fed-decision-midterms",
-      "publishedAt": "2026-10-26T13:02:43Z",
-      "fetchedAt": "2026-10-26T15:10:10Z",
-      "summary": "Analysts point to a sell-off in AI stocks and ETF outflows, with HashKey's Tim Sun flagging $75,000 as the next key support level."
     }
   ]
 }

@@ -1,6 +1,56 @@
 {
-  "updatedAt": "2026-11-12T08:18:17Z",
+  "updatedAt": "2026-11-12T17:04:21Z",
   "items": [
+    {
+      "id": "news-e3f234a37012",
+      "title": "6.4 million victim datasets secured in international operation against malware networks",
+      "source": "Europol",
+      "category": "enforcement",
+      "link": "https://www.europol.europa.eu/media-press/newsroom/news/64-million-victim-datasets-secured-in-international-operation-against-malware-networks",
+      "publishedAt": "2026-11-12T17:04:19Z",
+      "fetchedAt": "2026-11-12T17:04:19Z",
+      "summary": "Europol, alongside global partners, has dismantled the criminal infrastructure behind Gootloader, CastleRAT, and StealC malware. In coordinated actions, law enforcement seized 235 servers and 257 domains, severely crippling these malware distribution networks."
+    },
+    {
+      "id": "news-f9df20188c66",
+      "title": "Tron, Tether and Chainalysis Form a New Crypto-Crime Task Force\u2014Replacing One That Just Collapsed",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/383139/tron-tether-chainalysis-new-crypto-crime-task-force-replacing-trm",
+      "publishedAt": "2026-11-12T16:36:02Z",
+      "fetchedAt": "2026-11-12T17:04:20Z",
+      "summary": "The Digital Crime Task Force aims to proactively trace illicit USDT on Tron and freeze funds before they move\u2014just weeks after the trio\u2019s near-identical T3 unit, built with rival firm TRM Labs, quietly collapsed."
+    },
+    {
+      "id": "news-056ffb9e968d",
+      "title": "Anchorage Digital\u2019s Stablecoins Can Now Settle Payments on Visa\u2019s Network",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/383098/anchorage-digital-stablecoins-settle-payments-visa-network",
+      "publishedAt": "2026-11-12T16:01:03Z",
+      "fetchedAt": "2026-11-12T17:04:20Z",
+      "summary": "Visa and eligible companies can now use Western Union\u2019s USDPT\u2014issued and custodied by the federally chartered Anchorage Digital Bank\u2014to settle VisaNet obligations."
+    },
+    {
+      "id": "news-27633c4315f7",
+      "title": "Tether Gold Gets Clean KPMG Audit Confirming $2.2B in Physical Gold Backing",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/383137/tether-gold-gets-clean-kpmg-audit-confirming-2-2b-in-physical-gold-backing",
+      "publishedAt": "2026-11-12T15:55:38Z",
+      "fetchedAt": "2026-11-12T17:04:20Z",
+      "summary": "KPMG counted every gold bar behind XAUT, making it Tether's second stablecoin to complete a full audit by a Big Four accounting firm."
+    },
+    {
+      "id": "news-80ca21fb1978",
+      "title": "SoFi Brings Its Bank-Issued Stablecoin to Polygon\u2019s Payments Stack",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/383096/sofi-brings-bank-issued-stablecoin-polygon-payments-stack",
+      "publishedAt": "2026-11-12T14:01:02Z",
+      "fetchedAt": "2026-11-12T17:04:20Z",
+      "summary": "SoFiUSD, the first stablecoin from a U.S. national bank, is now live on Polygon Open Money Stack alongside Ethereum and Solana."
+    },
     {
       "id": "news-35239e7bedcf",
       "title": "Stablecoin Drain, ETF Outflows Leave Bitcoin 'Running on Empty'",
@@ -1450,56 +1500,6 @@
       "publishedAt": "2026-10-27T20:16:02Z",
       "fetchedAt": "2026-10-27T20:41:04Z",
       "summary": "Ripple's RLUSD stablecoin is live on Robinhood Chain and Bitstamp, and heads to the Robinhood app later this year as the companies deepen ties in treasury and institutional trading."
-    },
-    {
-      "id": "news-4f4d6771016e",
-      "title": "Anchorage Positions Itself as Custody Backbone of US-Mexico Stablecoin Corridor",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381988/anchorage-custody-backbone-us-mexico-stablecoin-corridor",
-      "publishedAt": "2026-10-27T19:46:02Z",
-      "fetchedAt": "2026-10-27T20:41:04Z",
-      "summary": "An expanded deal with Bitso puts Anchorage Digital Bank\u2019s custody beneath both sides of the US-Mexico remittance route."
-    },
-    {
-      "id": "news-9af5fe52d5fc",
-      "title": "Intel, Oracle, IBM Join Objections to OKX-ICE Tokenized Stock Venue, Bringing Total to 26",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381998/intel-oracle-ibm-join-objections-okx-ice-tokenized-stock-total-26",
-      "publishedAt": "2026-10-27T18:46:02Z",
-      "fetchedAt": "2026-10-27T20:41:04Z",
-      "summary": "Intel, Oracle, IBM, and IonQ became the latest companies to object to trading of their shares on the planned OKX-ICE tokenized stock venue, bringing the total to 26."
-    },
-    {
-      "id": "news-23dffbf47718",
-      "title": "Bitcoin Wallet Maker Keystone Pulls Devices as Stolen Key Opens Door to Fakes",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381983/bitcoin-wallet-keystone-devices-destroyed-stolen-key",
-      "publishedAt": "2026-10-27T18:16:02Z",
-      "fetchedAt": "2026-10-27T20:41:04Z",
-      "summary": "Attackers obtained the factory key that proves Keystone's hardware wallets are genuine, and 25,964 buyer records were affected. The company says recovery phrases and private keys were not involved."
-    },
-    {
-      "id": "news-b962c67e68cb",
-      "title": "Circle Pushes Deeper Into Latin America With USDC Settlement in Colombia",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381982/circle-pushes-deeper-latin-america-usdc-settlement-colombia",
-      "publishedAt": "2026-10-27T17:45:18Z",
-      "fetchedAt": "2026-10-28T00:03:27Z",
-      "summary": "A collaboration with payments-tech firm ACI Worldwide will pilot folding USDC settlement into Colombia\u2019s instant-payments network."
-    },
-    {
-      "id": "news-8778216e9c41",
-      "title": "OpenAI Proves ETH Is False, and Crypto Twitter Has Questions",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/381956/opena-eth-false-crypto-twitter-has-questions",
-      "publishedAt": "2026-10-27T16:53:13Z",
-      "fetchedAt": "2026-10-28T00:03:27Z",
-      "summary": "A new OpenAI paper declares ETH false, a claim that hundreds of research papers lean on. Crypto Twitter degens and serious mathematicians are abuzz."
     }
   ]
 }

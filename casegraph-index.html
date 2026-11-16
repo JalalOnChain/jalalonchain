@@ -1,0 +1,1029 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Graph</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#131B2B">
+<link rel="icon" type="image/png" href="/assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{ --bg:#F4F6F9; --surface:#FFFFFF; --border:#DCE3EC; --text:#131B2B; --text-muted:#5C6B84; --text-faint:#93A1B8; --accent:#B4700F; --teal:#0E8E89; --bad:#B23B3B; --grid:#E6EBF2; color-scheme: light; }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0B1220; --surface:#121B2E; --border:#233047; --text:#E7ECF5; --text-muted:#93A1B8; --text-faint:#5C6B84; --accent:#E3A857; --teal:#3FD1C9; --bad:#E3897F; --grid:#141F33; color-scheme: dark; }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; height:100%; overflow:hidden; background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",system-ui,sans-serif; font-size:13.5px; }
+  button,input,select,textarea{ font:inherit; color:inherit; }
+  .mono{ font-family:"IBM Plex Mono",monospace; }
+
+  /* top bar */
+  #top{ position:fixed; top:0; left:0; right:0; height:52px; display:flex; align-items:center; gap:10px; padding:0 14px; background:var(--surface); border-bottom:1px solid var(--border); z-index:20; }
+  #top a.home img{ width:28px; height:28px; border-radius:6px; display:block; }
+  #title{ border:1px solid transparent; background:none; font-weight:600; font-size:15px; padding:5px 8px; border-radius:7px; width:260px; min-width:120px; }
+  #title:hover{ border-color:var(--border); }
+  #title:focus{ outline:none; border-color:var(--teal); }
+  #status{ font-size:12px; color:var(--text-faint); white-space:nowrap; }
+  .spacer{ flex:1; }
+  .btn{ background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 11px; cursor:pointer; white-space:nowrap; font-size:13px; }
+  .btn:hover{ border-color:var(--text-faint); }
+  .btn.primary{ background:var(--accent); border-color:var(--accent); color:#1a1200; font-weight:600; }
+  .btn.small{ padding:4px 9px; font-size:12px; }
+  .btn:disabled{ opacity:.5; cursor:default; }
+  .menu{ position:relative; }
+  .menu-list{ position:absolute; right:0; top:calc(100% + 6px); background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:5px; min-width:200px; display:none; box-shadow:0 8px 24px rgba(0,0,0,.12); }
+  .menu.open .menu-list{ display:block; }
+  .menu-list button{ display:block; width:100%; text-align:left; background:none; border:none; padding:7px 10px; border-radius:6px; cursor:pointer; }
+  .menu-list button:hover{ background:var(--bg); }
+  .menu-list hr{ border:none; border-top:1px solid var(--border); margin:4px 0; }
+
+  /* left palette */
+  #palette{ position:fixed; top:64px; left:12px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:6px; display:flex; flex-direction:column; gap:2px; z-index:10; width:132px; }
+  #palette .lbl{ font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); padding:6px 8px 3px; font-family:"IBM Plex Mono",monospace; }
+  .ptype{ display:flex; align-items:center; gap:8px; padding:6px 8px; border-radius:7px; cursor:pointer; border:1px solid transparent; background:none; text-align:left; }
+  .ptype:hover{ background:var(--bg); }
+  .ptype.on{ border-color:var(--border); background:var(--bg); font-weight:600; }
+  .ptype canvas{ flex:none; }
+  #palette .tog{ display:flex; align-items:center; gap:7px; padding:5px 8px; font-size:12.5px; color:var(--text-muted); cursor:pointer; }
+
+  /* fetch bar */
+  #fetchbar{ position:fixed; left:12px; bottom:12px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:8px; display:flex; gap:6px; align-items:center; z-index:10; }
+  #fetchbar input{ width:340px; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 9px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; }
+  #fetchbar select{ background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px; font-size:12.5px; }
+  #search{ position:fixed; right:12px; bottom:12px; z-index:10; }
+  #search input{ width:220px; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:8px 11px; }
+
+  /* inspector */
+  #insp{ position:fixed; top:64px; right:12px; width:300px; max-height:calc(100% - 130px); overflow:auto; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px; z-index:10; display:none; }
+  #insp.show{ display:block; }
+  #insp h3{ margin:0 0 10px; font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--text-faint); font-family:"IBM Plex Mono",monospace; display:flex; justify-content:space-between; align-items:center; }
+  .f{ margin-bottom:9px; }
+  .f label{ display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:3px; }
+  .f input,.f select,.f textarea{ width:100%; background:var(--bg); border:1px solid var(--border); border-radius:7px; padding:6px 8px; font-size:13px; }
+  .f textarea{ min-height:70px; resize:vertical; }
+  .f input.mono{ font-size:12px; }
+  .f input:focus,.f select:focus,.f textarea:focus{ outline:none; border-color:var(--teal); }
+  .row2{ display:flex; gap:8px; } .row2 .f{ flex:1; min-width:0; }
+  .links{ font-size:12px; margin:-2px 0 10px; } .links a{ color:var(--teal); margin-right:10px; }
+  .actions{ display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; padding-top:10px; border-top:1px solid var(--border); }
+  .pull{ margin-top:10px; padding:10px; background:var(--bg); border-radius:9px; border:1px solid var(--border); }
+  .pull .row2 .f{ margin-bottom:6px; }
+
+  #banner{ position:fixed; top:52px; left:0; right:0; z-index:15; background:var(--accent); color:#1a1200; text-align:center; font-size:12.5px; padding:4px; display:none; }
+  #help{ position:fixed; left:156px; top:64px; font-size:12px; color:var(--text-faint); z-index:5; pointer-events:none; line-height:1.7; }
+  #toast{ position:fixed; left:50%; bottom:70px; transform:translateX(-50%); background:var(--text); color:var(--bg); padding:8px 14px; border-radius:9px; font-size:13px; z-index:50; opacity:0; transition:opacity .2s; pointer-events:none; max-width:80vw; }
+  #toast.show{ opacity:1; }
+  canvas#cv{ position:fixed; top:52px; left:0; display:block; touch-action:none; }
+
+  /* modal */
+  #modal{ position:fixed; inset:0; background:rgba(5,10,20,.45); display:none; align-items:center; justify-content:center; z-index:60; }
+  #modal.show{ display:flex; }
+  #modal .box{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px 22px; width:min(440px,92vw); max-height:86vh; overflow:auto; }
+  #modal h2{ margin:0 0 6px; font-size:16px; }
+  #modal p{ margin:0 0 12px; color:var(--text-muted); font-size:13px; line-height:1.55; }
+  #modal .f input{ padding:8px 10px; }
+  #modal .btns{ display:flex; justify-content:flex-end; gap:8px; margin-top:14px; }
+  #modal .err{ color:var(--bad); font-size:12.5px; min-height:18px; }
+  .copyrow{ display:flex; gap:6px; } .copyrow input{ flex:1; }
+  .glist{ list-style:none; padding:0; margin:0; }
+  .glist li{ display:flex; justify-content:space-between; align-items:center; gap:8px; padding:7px 0; border-bottom:1px solid var(--border); }
+  .glist li span{ font-size:11.5px; color:var(--text-faint); }
+  .viewonly .edit-only{ display:none !important; }
+</style>
+</head>
+<body>
+<div id="top">
+  <a class="home" href="/" title="JalalOnChain"><img src="/assets/logo.png" alt=""></a>
+  <input id="title" value="Untitled case" spellcheck="false" class="edit-only-input">
+  <span id="status"></span>
+  <div class="spacer"></div>
+  <button class="btn edit-only" id="undoBtn" title="Undo (Ctrl+Z)">Undo</button>
+  <button class="btn edit-only" id="layoutBtn" title="Shake the layout">Re-layout</button>
+  <div class="menu edit-only" id="fileMenu">
+    <button class="btn">Graphs ▾</button>
+    <div class="menu-list">
+      <button data-act="new">New graph</button>
+      <button data-act="mine">My saved graphs</button>
+      <hr>
+      <button data-act="importEnc">Open encrypted file…</button>
+      <button data-act="importJson">Import JSON…</button>
+      <hr>
+      <button data-act="settings">GitHub token…</button>
+    </div>
+  </div>
+  <div class="menu" id="exportMenu">
+    <button class="btn">Export ▾</button>
+    <div class="menu-list">
+      <button data-act="png">PNG image</button>
+      <button data-act="json" class="edit-only">JSON (unencrypted)</button>
+      <button data-act="enc" class="edit-only">Encrypted file</button>
+    </div>
+  </div>
+  <button class="btn edit-only" id="saveBtn">Save</button>
+  <button class="btn primary edit-only" id="shareBtn">Share</button>
+</div>
+<div id="banner"></div>
+
+<div id="palette" class="edit-only">
+  <div class="lbl">New node</div>
+  <div id="ptypes"></div>
+  <div class="lbl">Options</div>
+  <label class="tog"><input type="checkbox" id="physics" checked> Physics</label>
+  <label class="tog"><input type="checkbox" id="edgeLabels" checked> Edge labels</label>
+</div>
+<div id="help" class="edit-only">Double-click to add a node · Shift+drag to connect · Del to remove</div>
+
+<canvas id="cv"></canvas>
+
+<div id="fetchbar" class="edit-only">
+  <select id="chainSel" title="Chain"></select>
+  <input id="fetchInput" placeholder="Paste address or tx hash" spellcheck="false">
+  <button class="btn" id="fetchBtn">Add</button>
+</div>
+<div id="search"><input id="searchInput" placeholder="Find node…" spellcheck="false"></div>
+
+<div id="insp"></div>
+<div id="toast"></div>
+<div id="modal"><div class="box" id="modalBox"></div></div>
+
+<input type="file" id="fileIn" hidden>
+
+<script>
+(function(){
+"use strict";
+
+/* ------------------------------------------------------------------ config */
+var ETHERSCAN_API_KEY = "F4JZ76GDDH4HN1KDGZ9F3W532QAS46JCZ3";
+var ETHERSCAN_BASE = "https://api.etherscan.io/v2/api";
+var CHAINS = {
+  "1":     { name:"Ethereum", sym:"ETH",  explorer:"https://etherscan.io" },
+  "42161": { name:"Arbitrum", sym:"ETH",  explorer:"https://arbiscan.io" },
+  "137":   { name:"Polygon",  sym:"POL",  explorer:"https://polygonscan.com" },
+  "8453":  { name:"Base",     sym:"ETH",  explorer:"https://basescan.org" },
+  "10":    { name:"Optimism", sym:"ETH",  explorer:"https://optimistic.etherscan.io" },
+  "56":    { name:"BNB Chain",sym:"BNB",  explorer:"https://bscscan.com" }
+};
+var GIST_FILE = "cg.enc.json";
+var KDF_ITER = 310000;
+
+var TYPES = {
+  address:  { name:"Address",  color:"#0E8E89", dark:"#3FD1C9", r:15 },
+  tx:       { name:"Tx",       color:"#5C6B84", dark:"#93A1B8", r:11 },
+  exchange: { name:"Exchange", color:"#2F6FB0", dark:"#6FA8E6", r:17 },
+  mixer:    { name:"Mixer",    color:"#B23B3B", dark:"#E3897F", r:17 },
+  entity:   { name:"Entity",   color:"#B4700F", dark:"#E3A857", r:17 },
+  note:     { name:"Note",     color:"#7D7350", dark:"#C9BC8C", r:0 }
+};
+var RISK = { "":null, low:"#5E9C5A", medium:"#C98A1B", high:"#C0392B" };
+
+/* ------------------------------------------------------------------ state */
+var doc = blankDoc();
+var meta = { gistId:null, password:null, owner:true };   // password lives in memory only
+var readOnly = false;
+var sel = null;              // {kind:'node'|'edge', id}
+var curType = "address";
+var view = { x:0, y:0, k:1 };
+var hist = [], redo = [];
+var dirty = false, alpha = 1;
+var dark = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches;
+
+function blankDoc(){ return { v:1, title:"Untitled case", nodes:[], edges:[], updated:Date.now() }; }
+function uid(){ return Math.random().toString(36).slice(2,10); }
+function $(id){ return document.getElementById(id); }
+var nidx = {};
+function reindex(){ nidx = {}; doc.nodes.forEach(function(n){ nidx[n.id]=n; }); }
+function nodeById(id){ if (nidx[id]) return nidx[id]; for (var i=0;i<doc.nodes.length;i++) if (doc.nodes[i].id===id){ nidx[id]=doc.nodes[i]; return doc.nodes[i]; } return null; }
+function edgeById(id){ for (var i=0;i<doc.edges.length;i++) if (doc.edges[i].id===id) return doc.edges[i]; return null; }
+function short(a){ return a && a.length>14 ? a.slice(0,6)+"…"+a.slice(-4) : (a||""); }
+function isAddr(s){ return /^0x[a-fA-F0-9]{40}$/.test(s); }
+function isHash(s){ return /^0x[a-fA-F0-9]{64}$/.test(s); }
+function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+function typeColor(t){ var T=TYPES[t]||TYPES.address; return dark?T.dark:T.color; }
+
+function toast(msg, ms){ var t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(function(){ t.classList.remove("show"); }, ms||2600); }
+
+/* ------------------------------------------------------------------ history / persistence */
+function snapshot(){ return JSON.stringify({nodes:doc.nodes, edges:doc.edges, title:doc.title}); }
+function pushHist(){ if (readOnly) return; hist.push(snapshot()); if (hist.length>60) hist.shift(); redo=[]; }
+function restore(s){ var o=JSON.parse(s); doc.nodes=o.nodes; doc.edges=o.edges; reindex(); doc.title=o.title; $("title").value=doc.title; sel=null; renderInsp(); changed(true); }
+function undo(){ if(!hist.length) return; redo.push(snapshot()); restore(hist.pop()); }
+function redoFn(){ if(!redo.length) return; hist.push(snapshot()); restore(redo.pop()); }
+
+var saveT;
+function persistLocal(){
+  if (readOnly) return;
+  clearTimeout(saveT);
+  saveT = setTimeout(function(){
+    try { localStorage.setItem("cg.current", JSON.stringify({ doc:cleanDoc(), gistId:meta.gistId, dirty:dirty })); } catch(e){}
+  }, 400);
+}
+function changed(noReheat){
+  if (readOnly) return;
+  doc.updated = Date.now(); dirty = true; setStatus();
+  if (!noReheat) alpha = Math.max(alpha, 0.3);
+  persistLocal();
+}
+function setStatus(){
+  var s = readOnly ? "View only" : (meta.gistId ? (dirty ? "Unsaved changes" : "Saved") : "Draft on this device");
+  $("status").textContent = s + " · " + doc.nodes.length + " nodes";
+}
+
+/* ------------------------------------------------------------------ crypto */
+var enc = new TextEncoder(), dec = new TextDecoder();
+function b64(u8){ var s=""; for (var i=0;i<u8.length;i+=0x8000) s+=String.fromCharCode.apply(null, u8.subarray(i,i+0x8000)); return btoa(s); }
+function unb64(s){ var b=atob(s), u=new Uint8Array(b.length); for (var i=0;i<b.length;i++) u[i]=b.charCodeAt(i); return u; }
+async function deriveKey(pw, salt, iter){
+  var base = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name:"PBKDF2", salt:salt, iterations:iter, hash:"SHA-256" }, base, { name:"AES-GCM", length:256 }, false, ["encrypt","decrypt"]);
+}
+async function encryptDoc(d, pw){
+  var salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  var key = await deriveKey(pw, salt, KDF_ITER);
+  var ct = new Uint8Array(await crypto.subtle.encrypt({ name:"AES-GCM", iv:iv }, key, enc.encode(JSON.stringify(d))));
+  return JSON.stringify({ cg:1, kdf:"PBKDF2-SHA256", iter:KDF_ITER, salt:b64(salt), iv:b64(iv), ct:b64(ct) });
+}
+async function decryptDoc(text, pw){
+  var o = JSON.parse(text);
+  if (!o || o.cg!==1) throw new Error("Not a case graph file.");
+  var key = await deriveKey(pw, unb64(o.salt), o.iter||KDF_ITER);
+  try {
+    var pt = await crypto.subtle.decrypt({ name:"AES-GCM", iv:unb64(o.iv) }, key, unb64(o.ct));
+  } catch(e){ throw new Error("Wrong password."); }
+  return JSON.parse(dec.decode(pt));
+}
+
+/* ------------------------------------------------------------------ GitHub gist storage */
+function ghToken(){ try { return localStorage.getItem("cg.ghToken") || ""; } catch(e){ return ""; } }
+function myGraphs(){ try { return JSON.parse(localStorage.getItem("cg.index")||"[]"); } catch(e){ return []; } }
+function setMyGraphs(a){ try { localStorage.setItem("cg.index", JSON.stringify(a)); } catch(e){} }
+function rememberGraph(id, title){
+  var a = myGraphs().filter(function(g){ return g.id!==id; });
+  a.unshift({ id:id, title:title, updated:Date.now() }); setMyGraphs(a);
+}
+async function gh(method, path, body){
+  var res = await fetch("https://api.github.com"+path, {
+    method:method,
+    headers:{ "Accept":"application/vnd.github+json", "Authorization":"Bearer "+ghToken(), "Content-Type":"application/json" },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if (!res.ok){ var t=""; try{ t=(await res.json()).message; }catch(e){} throw new Error("GitHub "+res.status+(t?": "+t:"")); }
+  return res.json();
+}
+async function saveCloud(){
+  if (!ghToken()){ openSettings(true); return; }
+  if (!meta.password && meta.gistId){
+    var g0; try { g0 = await fetchGist(meta.gistId); } catch(e){ toast(e.message,5000); return; }
+    var r0 = await askPassword("Unlock to save", "Enter this graph's current password so the update keeps working for the people you shared it with.", function(pw){ return decryptDoc(g0.content, pw); });
+    if (!r0) return;
+    meta.password = r0.pw;
+  }
+  if (!meta.password){ var pw = await askNewPassword(); if (!pw) return; meta.password = pw; }
+  $("saveBtn").disabled = true; $("saveBtn").textContent = "Saving…";
+  try {
+    var payload = await encryptDoc(doc, meta.password);
+    var files = {}; files[GIST_FILE] = { content: payload };
+    if (meta.gistId){
+      await gh("PATCH", "/gists/"+meta.gistId, { files:files });
+    } else {
+      var g = await gh("POST", "/gists", { description:"cg", public:false, files:files });
+      meta.gistId = g.id;
+    }
+    rememberGraph(meta.gistId, doc.title);
+    dirty = false; setStatus(); persistLocal();
+    toast("Saved (encrypted)");
+    return true;
+  } catch(e){ toast(e.message, 5000); }
+  finally { $("saveBtn").disabled=false; $("saveBtn").textContent="Save"; }
+}
+async function fetchGist(id){
+  var res = await fetch("https://api.github.com/gists/"+encodeURIComponent(id), { headers:{ "Accept":"application/vnd.github+json" } });
+  if (res.status===404) throw new Error("Graph not found. The link may be wrong or the graph was deleted.");
+  if (!res.ok) throw new Error("Couldn't load graph (HTTP "+res.status+"). Try again in a bit.");
+  var g = await res.json(), f = g.files && g.files[GIST_FILE];
+  if (!f) throw new Error("This link doesn't point to a case graph.");
+  var content = f.content;
+  if (f.truncated){ var r = await fetch(f.raw_url); content = await r.text(); }
+  return { content:content, owner: g.owner && g.owner.login };
+}
+
+/* ------------------------------------------------------------------ modal helpers */
+function modal(html){ $("modalBox").innerHTML = html; $("modal").classList.add("show"); var i=$("modalBox").querySelector("input"); if(i) setTimeout(function(){ i.focus(); },30); }
+function closeModal(){ $("modal").classList.remove("show"); }
+$("modal").addEventListener("mousedown", function(e){ if (e.target===$("modal") && !$("modal").dataset.locked) closeModal(); });
+
+function askNewPassword(){
+  return new Promise(function(resolve){
+    modal('<h2>Set a password for this graph</h2><p>The graph is encrypted in your browser before it leaves your device. Anyone you share it with needs this password, so send it to them separately (not in the same message as the link). If you lose it, the graph can\'t be recovered.</p>'+
+      '<div class="f"><label>Password</label><input type="password" id="pw1" autocomplete="new-password"></div>'+
+      '<div class="f"><label>Confirm</label><input type="password" id="pw2" autocomplete="new-password"></div><div class="err" id="pwErr"></div>'+
+      '<div class="btns"><button class="btn" id="pwCancel">Cancel</button><button class="btn primary" id="pwOk">Encrypt &amp; save</button></div>');
+    function ok(){ var a=$("pw1").value, b=$("pw2").value;
+      if (a.length<10){ $("pwErr").textContent="Use at least 10 characters."; return; }
+      if (a!==b){ $("pwErr").textContent="Passwords don't match."; return; }
+      closeModal(); resolve(a); }
+    $("pwOk").onclick = ok; $("pw2").onkeydown=function(e){ if(e.key==="Enter") ok(); };
+    $("pwCancel").onclick = function(){ closeModal(); resolve(null); };
+  });
+}
+// verify(pw) must resolve with a value or throw; the dialog stays open until it succeeds or is cancelled
+function askPassword(title, text, verify){
+  return new Promise(function(resolve){
+    $("modal").dataset.locked = "1";
+    modal('<h2>'+title+'</h2><p>'+text+'</p><div class="f"><input type="password" id="pwIn" autocomplete="current-password" placeholder="Password"></div><div class="err" id="pwErr"></div>'+
+      '<div class="btns"><button class="btn" id="pwCancel">Cancel</button><button class="btn primary" id="pwOk">Open</button></div>');
+    var busy = false;
+    var tryIt = async function(){
+      if (busy) return; busy = true; $("pwErr").textContent = ""; $("pwOk").textContent = "Checking…";
+      var pw = $("pwIn").value;
+      try { var out = await verify(pw); delete $("modal").dataset.locked; closeModal(); resolve({ pw:pw, value:out }); }
+      catch(e){ $("pwErr").textContent = e.message; $("pwOk").textContent = "Open"; $("pwIn").select(); }
+      busy = false;
+    };
+    $("pwOk").onclick = tryIt; $("pwIn").onkeydown=function(e){ if(e.key==="Enter") tryIt(); };
+    $("pwCancel").onclick = function(){ delete $("modal").dataset.locked; closeModal(); resolve(null); };
+  });
+}
+function openSettings(thenSave){
+  modal('<h2>GitHub token</h2><p>Graphs are stored as <b>secret gists</b> on your GitHub account, and only the encrypted data is uploaded. Create a fine-grained or classic token with only the <span class="mono">gist</span> permission at github.com/settings/tokens and paste it here. It\'s kept in this browser only.</p>'+
+    '<div class="f"><input type="password" id="tokIn" class="mono" placeholder="ghp_… or github_pat_…" value=""></div><div class="err" id="tokErr"></div>'+
+    '<div class="btns"><button class="btn" id="tokClear">Remove</button><button class="btn" id="tokCancel">Cancel</button><button class="btn primary" id="tokOk">Save token</button></div>');
+  $("tokIn").value = ghToken();
+  $("tokCancel").onclick = closeModal;
+  $("tokClear").onclick = function(){ try{ localStorage.removeItem("cg.ghToken"); }catch(e){} closeModal(); toast("Token removed"); };
+  $("tokOk").onclick = async function(){
+    var t = $("tokIn").value.trim(); if (!t) return;
+    try { localStorage.setItem("cg.ghToken", t); } catch(e){}
+    try { await gh("GET", "/gists?per_page=1"); } catch(e){ $("tokErr").textContent = "Token didn't work: "+e.message; return; }
+    closeModal(); toast("Token saved"); if (thenSave) saveCloud();
+  };
+}
+function shareLink(){ return location.origin + location.pathname + "#g=" + meta.gistId; }
+async function openShare(){
+  if (!meta.gistId || dirty){ var ok = await saveCloud(); if (!ok && !meta.gistId) return; }
+  if (!meta.gistId) return;
+  modal('<h2>Share this graph</h2><p>Send the link to the people you want to see it, and send the password through a different channel. They get a view-only copy. Every time you hit Save they see the latest version.</p>'+
+    '<div class="f"><label>Link</label><div class="copyrow"><input id="shLink" class="mono" readonly><button class="btn" id="shCopy">Copy</button></div></div>'+
+    '<p style="margin-top:12px">To cut someone off, use <b>Change password</b>. Old passwords stop working right away, and you re-share the new one with whoever should keep access. <b>Delete</b> removes the stored graph completely.</p>'+
+    '<div class="btns"><button class="btn" id="shDel" style="margin-right:auto;color:var(--bad)">Delete</button><button class="btn" id="shPw">Change password</button><button class="btn primary" id="shDone">Done</button></div>');
+  $("shLink").value = shareLink();
+  $("shCopy").onclick = function(){ $("shLink").select(); navigator.clipboard.writeText($("shLink").value).then(function(){ toast("Link copied"); }); };
+  $("shDone").onclick = closeModal;
+  $("shPw").onclick = async function(){ closeModal(); var pw = await askNewPassword(); if (!pw) return; meta.password = pw; dirty=true; await saveCloud(); toast("Password changed. Old password no longer works"); };
+  $("shDel").onclick = async function(){
+    if (!confirmInline()) return;
+    try { await gh("DELETE", "/gists/"+meta.gistId); } catch(e){ toast(e.message,5000); return; }
+    setMyGraphs(myGraphs().filter(function(g){ return g.id!==meta.gistId; }));
+    meta.gistId=null; meta.password=null; dirty=true; setStatus(); closeModal(); toast("Deleted from GitHub. The draft is still open here");
+  };
+  function confirmInline(){ var b=$("shDel"); if (b.dataset.armed) return true; b.dataset.armed="1"; b.textContent="Click again to delete"; return false; }
+}
+function openMine(){
+  var a = myGraphs();
+  var html = '<h2>My saved graphs</h2>';
+  if (!a.length) html += '<p>Nothing saved to GitHub from this browser yet.</p>';
+  else html += '<ul class="glist">'+a.map(function(g){ return '<li><div><div class="t"></div><span>'+new Date(g.updated).toLocaleString("en-IN",{timeZone:"Asia/Kolkata",dateStyle:"medium",timeStyle:"short"})+' IST</span></div><button class="btn small" data-id="'+g.id+'">Open</button></li>'; }).join("")+'</ul>';
+  html += '<div class="btns"><button class="btn" id="mClose">Close</button></div>';
+  modal(html);
+  var lis = $("modalBox").querySelectorAll(".glist li");
+  a.forEach(function(g,i){ lis[i].querySelector(".t").textContent = g.title || "Untitled"; });
+  $("mClose").onclick = closeModal;
+  $("modalBox").querySelectorAll("button[data-id]").forEach(function(b){ b.onclick=function(){ closeModal(); location.hash = "g="+b.dataset.id; }; });
+}
+
+/* ------------------------------------------------------------------ loading */
+function loadDoc(d, opts){
+  doc = d; doc.nodes = doc.nodes||[]; doc.edges = doc.edges||[]; reindex();
+  doc.nodes.forEach(function(n){ n.vx=0; n.vy=0; if (typeof n.x!=="number"){ n.x=(Math.random()-.5)*300; n.y=(Math.random()-.5)*300; } });
+  $("title").value = doc.title || "Untitled case";
+  sel = null; hist=[]; redo=[]; renderInsp(); alpha = 0.4;
+  fit(); setStatus();
+}
+async function openShared(id){
+  var text, mine = false;
+  try { var g = await fetchGist(id); text = g.content; } catch(e){ toast(e.message, 6000); return; }
+  if (ghToken()){
+    if (myGraphs().some(function(x){ return x.id===id; })) mine = true;
+    else { try { var u = await gh("GET","/user"); mine = !!(u && g.owner && u.login===g.owner); } catch(e){} }
+  }
+  var r = await askPassword(mine ? "Open graph" : "Shared case graph", mine ? "Enter this graph's password." : "Someone shared an encrypted case graph with you. Enter the password they gave you.", function(pw){ return decryptDoc(text, pw); });
+  if (!r){ if (!doc.nodes.length) loadLocal(); return; }
+  var d = r.value;
+  meta = { gistId:id, password: mine ? r.pw : null, owner:mine };
+  setReadOnly(!mine); loadDoc(d); dirty=false; setStatus();
+  if (mine){ rememberGraph(id, d.title); persistLocal(); }
+}
+function loadLocal(){
+  setReadOnly(false);
+  try {
+    var s = JSON.parse(localStorage.getItem("cg.current")||"null");
+    if (s && s.doc){ meta = { gistId:s.gistId||null, password:null, owner:true }; loadDoc(s.doc); dirty = !!s.dirty; setStatus(); return; }
+  } catch(e){}
+  meta = { gistId:null, password:null, owner:true }; loadDoc(blankDoc());
+}
+function setReadOnly(v){
+  readOnly = v; document.body.classList.toggle("viewonly", v);
+  $("title").readOnly = v;
+  $("banner").style.display = v ? "block" : "none";
+  $("banner").textContent = "View only. This graph was shared with you. You can move things around and export a PNG, but nothing is saved.";
+  sel=null; renderInsp(); setStatus();
+}
+function route(){
+  var m = location.hash.match(/g=([a-f0-9]+)/i);
+  if (m){ if (meta.gistId!==m[1] || readOnly) openShared(m[1]); }
+  else if (readOnly || !doc.nodes.length) loadLocal();
+}
+window.addEventListener("hashchange", route);
+
+/* ------------------------------------------------------------------ canvas */
+var cv = $("cv"), ctx = cv.getContext("2d"), W=0, H=0, DPR=1;
+function resize(){ DPR = window.devicePixelRatio||1; W = innerWidth; H = innerHeight-52; cv.width=W*DPR; cv.height=H*DPR; cv.style.width=W+"px"; cv.style.height=H+"px"; }
+window.addEventListener("resize", resize); resize();
+view.x = W/2; view.y = H/2;
+
+function toWorld(sx,sy){ return { x:(sx-view.x)/view.k, y:(sy-view.y)/view.k }; }
+
+function noteBox(n){
+  var lines = wrap(n.label||"Note", 150, "12px 'IBM Plex Sans', sans-serif");
+  var w = 30 + Math.max.apply(null, lines.map(function(l){ ctx.font="12px 'IBM Plex Sans', sans-serif"; return ctx.measureText(l).width; }).concat([40]));
+  return { w:Math.min(w,180), h:16+lines.length*15, lines:lines };
+}
+function wrap(text, maxW, font){
+  ctx.font = font; var out=[];
+  String(text).split("\n").forEach(function(par){
+    var words = par.split(/\s+/), line="";
+    words.forEach(function(w){ var t=line?line+" "+w:w; if (ctx.measureText(t).width>maxW && line){ out.push(line); line=w; } else line=t; });
+    out.push(line);
+  });
+  return out.slice(0,8);
+}
+function nodeLabel(n){ if (n.type==="note") return ""; return n.label || (n.value ? short(n.value) : TYPES[n.type].name); }
+
+function shapePath(c, type, x, y, r){
+  c.beginPath();
+  if (type==="tx"){ c.moveTo(x,y-r*1.25); c.lineTo(x+r*1.25,y); c.lineTo(x,y+r*1.25); c.lineTo(x-r*1.25,y); c.closePath(); }
+  else if (type==="exchange"){ rrect(c, x-r, y-r, 2*r, 2*r, 5); }
+  else if (type==="mixer"){ for (var i=0;i<6;i++){ var a=Math.PI/3*i+Math.PI/6; c[i?"lineTo":"moveTo"](x+r*1.1*Math.cos(a), y+r*1.1*Math.sin(a)); } c.closePath(); }
+  else if (type==="entity"){ c.moveTo(x,y-r*1.15); c.lineTo(x+r*1.1,y+r*.85); c.lineTo(x-r*1.1,y+r*.85); c.closePath(); }
+  else c.arc(x,y,r,0,Math.PI*2);
+}
+function rrect(c,x,y,w,h,r){ c.moveTo(x+r,y); c.arcTo(x+w,y,x+w,y+h,r); c.arcTo(x+w,y+h,x,y+h,r); c.arcTo(x,y+h,x,y,r); c.arcTo(x,y,x+w,y,r); c.closePath(); }
+
+function edgeGeom(e, offsets){
+  var a=nodeById(e.source), b=nodeById(e.target); if(!a||!b) return null;
+  var off = offsets[e.id]||0;
+  if (a===b){ return { self:true, a:a, x:a.x, y:a.y-34-off*0.6, r:16+Math.abs(off)*0.25 }; }
+  var mx=(a.x+b.x)/2, my=(a.y+b.y)/2, dx=b.x-a.x, dy=b.y-a.y, len=Math.hypot(dx,dy)||1;
+  // normal is computed against a fixed id order so parallel edges fan out consistently
+  var flip = a.id<b.id ? 1 : -1;
+  var nx=-dy/len*flip, ny=dx/len*flip;
+  return { a:a, b:b, cx:mx+nx*off*2, cy:my+ny*off*2, mx:mx+nx*off, my:my+ny*off };
+}
+function computeOffsets(){
+  var groups={}, o={};
+  doc.edges.forEach(function(e){ var k=e.source<e.target?e.source+"|"+e.target:e.target+"|"+e.source; (groups[k]=groups[k]||[]).push(e); });
+  Object.keys(groups).forEach(function(k){ var g=groups[k], n=g.length; g.forEach(function(e,i){ o[e.id] = n===1 ? 0 : (i-(n-1)/2)*22; }); });
+  return o;
+}
+function nodeRadius(n){ return n.type==="note" ? 0 : TYPES[n.type].r; }
+function edgeText(e){
+  if (e.label) return e.label;
+  var s = e.amount ? fmtAmt(e.amount)+" "+(e.token||"") : (e.token||"");
+  if (e.count>1) s += " ×"+e.count;
+  return s.trim();
+}
+function fmtAmt(v){ var n=Number(v); if (!isFinite(n)) return String(v); if (n===0) return "0"; if (Math.abs(n)>=1000) return n.toLocaleString("en-US",{maximumFractionDigits:0}); if (Math.abs(n)>=1) return n.toLocaleString("en-US",{maximumFractionDigits:3}); return n.toPrecision(3); }
+
+function endpointOnNode(n, fromX, fromY){
+  var dx=fromX-n.x, dy=fromY-n.y, d=Math.hypot(dx,dy)||1;
+  var r = n.type==="note" ? 0 : nodeRadius(n)+3;
+  if (n.type==="note"){ var bx=noteBox(n); var sx=bx.w/2/Math.abs(dx||1e-9), sy=bx.h/2/Math.abs(dy||1e-9); var s=Math.min(sx,sy); return { x:n.x+dx*s+dx/d*3, y:n.y+dy*s+dy/d*3 }; }
+  return { x:n.x+dx/d*r, y:n.y+dy/d*r };
+}
+
+function draw(c, opt){
+  opt = opt||{};
+  var text = css("--text"), muted = css("--text-muted"), faint=css("--text-faint"), surface=css("--surface"), teal=css("--teal"), accent=css("--accent");
+  var offsets = computeOffsets();
+  var showEL = $("edgeLabels").checked && (opt.export || view.k>0.55);
+  var hl = searchHits;
+
+  // edges
+  doc.edges.forEach(function(e){
+    var g = edgeGeom(e, offsets); if (!g) return;
+    var isSel = sel && sel.kind==="edge" && sel.id===e.id;
+    c.strokeStyle = isSel ? accent : (e.color || muted);
+    c.globalAlpha = isSel ? 1 : 0.75;
+    c.lineWidth = (isSel?2.2:1.4) * (e.flag ? 1.6 : 1);
+    if (g.self){
+      c.beginPath(); c.arc(g.x, g.y, g.r, 0, Math.PI*2); c.stroke(); c.globalAlpha=1;
+      e._lx=g.x; e._ly=g.y-g.r-6;
+    } else {
+      var p1 = endpointOnNode(g.a, g.cx, g.cy), p2 = endpointOnNode(g.b, g.cx, g.cy);
+      c.beginPath(); c.moveTo(p1.x,p1.y); c.quadraticCurveTo(g.cx,g.cy,p2.x,p2.y); c.stroke();
+      // arrow head
+      var ang = Math.atan2(p2.y-g.cy, p2.x-g.cx), L=9;
+      c.fillStyle = c.strokeStyle; c.beginPath(); c.moveTo(p2.x,p2.y);
+      c.lineTo(p2.x-L*Math.cos(ang-0.4), p2.y-L*Math.sin(ang-0.4)); c.lineTo(p2.x-L*Math.cos(ang+0.4), p2.y-L*Math.sin(ang+0.4)); c.closePath(); c.fill();
+      c.globalAlpha=1;
+      e._lx = (p1.x+2*g.cx+p2.x)/4; e._ly=(p1.y+2*g.cy+p2.y)/4;
+    }
+    if (showEL){
+      var t = edgeText(e);
+      if (t){
+        c.font = "500 10.5px 'IBM Plex Mono', monospace"; var w=c.measureText(t).width;
+        c.fillStyle = surface; c.globalAlpha=.9; c.fillRect(e._lx-w/2-3, e._ly-7, w+6, 14); c.globalAlpha=1;
+        c.fillStyle = isSel ? accent : muted; c.textAlign="center"; c.textBaseline="middle"; c.fillText(t, e._lx, e._ly);
+      }
+    }
+  });
+
+  // link preview
+  if (linking && !opt.export){
+    c.strokeStyle = teal; c.setLineDash([5,4]); c.lineWidth=1.5; c.beginPath(); c.moveTo(linking.from.x, linking.from.y); c.lineTo(linking.x, linking.y); c.stroke(); c.setLineDash([]);
+  }
+
+  // nodes
+  doc.nodes.forEach(function(n){
+    var isSel = sel && sel.kind==="node" && sel.id===n.id;
+    var col = n.color || typeColor(n.type);
+    if (n.type==="note"){
+      var bx = noteBox(n);
+      c.fillStyle = surface; c.strokeStyle = isSel ? accent : col; c.lineWidth = isSel?2:1.2;
+      c.beginPath(); rrect(c, n.x-bx.w/2, n.y-bx.h/2, bx.w, bx.h, 6); c.fill(); c.stroke();
+      c.fillStyle = col; c.fillRect(n.x-bx.w/2, n.y-bx.h/2+6, 3, bx.h-12);
+      c.fillStyle = text; c.font="12px 'IBM Plex Sans', sans-serif"; c.textAlign="left"; c.textBaseline="top";
+      bx.lines.forEach(function(l,i){ c.fillText(l, n.x-bx.w/2+12, n.y-bx.h/2+8+i*15); });
+      return;
+    }
+    var r = nodeRadius(n);
+    if (hl && hl.indexOf(n)>=0){ c.fillStyle = accent; c.globalAlpha=.25; c.beginPath(); c.arc(n.x,n.y,r+10,0,Math.PI*2); c.fill(); c.globalAlpha=1; }
+    var rc = RISK[n.risk||""];
+    if (rc){ c.strokeStyle=rc; c.lineWidth=3; shapePath(c, n.type, n.x, n.y, r+5); c.stroke(); }
+    shapePath(c, n.type, n.x, n.y, r);
+    c.fillStyle = col; c.fill();
+    if (isSel){ c.strokeStyle = accent; c.lineWidth=2.5; shapePath(c, n.type, n.x, n.y, r+2.5); c.stroke(); }
+    // glyph
+    c.fillStyle = "#fff"; c.font = "600 "+Math.round(r*0.85)+"px 'IBM Plex Sans', sans-serif"; c.textAlign="center"; c.textBaseline="middle";
+    var gl = { address:"", tx:"", exchange:"$", mixer:"≈", entity:"", note:"" }[n.type];
+    if (gl) c.fillText(gl, n.x, n.y+1);
+    // label
+    var lab = nodeLabel(n);
+    if (view.k>0.35 || opt.export){
+      c.font = (n.label?"500 12px 'IBM Plex Sans', sans-serif":"500 11px 'IBM Plex Mono', monospace"); c.fillStyle = text; c.textBaseline="top";
+      c.fillText(lab, n.x, n.y+r+6);
+      if (n.label && n.value && (isSel || opt.export)){ c.font="10.5px 'IBM Plex Mono', monospace"; c.fillStyle=faint; c.fillText(short(n.value), n.x, n.y+r+21); }
+    }
+  });
+}
+
+function frame(){
+  reindex();
+  tick();
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  ctx.clearRect(0,0,W,H);
+  // dot grid
+  var gs = 28*view.k; if (gs>9){ ctx.fillStyle = css("--grid"); var ox=view.x%gs, oy=view.y%gs; for (var x=ox;x<W;x+=gs) for (var y=oy;y<H;y+=gs) ctx.fillRect(x-1,y-1,2,2); }
+  ctx.setTransform(DPR*view.k,0,0,DPR*view.k,DPR*view.x,DPR*view.y);
+  draw(ctx);
+  requestAnimationFrame(frame);
+}
+
+/* ------------------------------------------------------------------ physics */
+function tick(){
+  if (!$("physics").checked || alpha < 0.004) return;
+  var N = doc.nodes, i, j;
+  for (i=0;i<N.length;i++){
+    var a=N[i];
+    for (j=i+1;j<N.length;j++){
+      var b=N[j], dx=b.x-a.x, dy=b.y-a.y, d2=dx*dx+dy*dy;
+      if (d2<1){ dx=Math.random()-.5; dy=Math.random()-.5; d2=1; }
+      if (d2>360000) continue;
+      var f = 2600/d2 * alpha, d=Math.sqrt(d2);
+      a.vx -= dx/d*f; a.vy -= dy/d*f; b.vx += dx/d*f; b.vy += dy/d*f;
+    }
+  }
+  doc.edges.forEach(function(e){
+    var a=nodeById(e.source), b=nodeById(e.target); if(!a||!b||a===b) return;
+    var dx=b.x-a.x, dy=b.y-a.y, d=Math.hypot(dx,dy)||1, f=(d-150)*0.03*alpha;
+    a.vx += dx/d*f; a.vy += dy/d*f; b.vx -= dx/d*f; b.vy -= dy/d*f;
+  });
+  var cx=0, cy=0; N.forEach(function(n){ cx+=n.x; cy+=n.y; }); if (N.length){ cx/=N.length; cy/=N.length; }
+  N.forEach(function(n){
+    if (n.pinned || (drag && drag.node===n)) { n.vx=n.vy=0; return; }
+    n.vx += (cx-n.x)*0.0015*alpha; n.vy += (cy-n.y)*0.0015*alpha;
+    n.vx*=0.82; n.vy*=0.82;
+    var sp=Math.hypot(n.vx,n.vy); if (sp>30){ n.vx*=30/sp; n.vy*=30/sp; }
+    n.x+=n.vx; n.y+=n.vy;
+  });
+  alpha *= 0.985;
+  if (alpha<0.004) persistLocal();
+}
+
+/* ------------------------------------------------------------------ hit testing */
+function hitNode(p){
+  for (var i=doc.nodes.length-1;i>=0;i--){
+    var n=doc.nodes[i];
+    if (n.type==="note"){ var b=noteBox(n); if (Math.abs(p.x-n.x)<=b.w/2 && Math.abs(p.y-n.y)<=b.h/2) return n; }
+    else if (Math.hypot(p.x-n.x,p.y-n.y) <= nodeRadius(n)+5) return n;
+  }
+  return null;
+}
+function hitEdge(p){
+  var offs = computeOffsets(), best=null, bd=8/view.k;
+  doc.edges.forEach(function(e){
+    var g=edgeGeom(e,offs); if(!g) return;
+    if (g.self){ var d=Math.abs(Math.hypot(p.x-g.x,p.y-g.y)-g.r); if (d<bd){ bd=d; best=e; } return; }
+    for (var t=0;t<=1;t+=0.05){
+      var x=(1-t)*(1-t)*g.a.x+2*(1-t)*t*g.cx+t*t*g.b.x, y=(1-t)*(1-t)*g.a.y+2*(1-t)*t*g.cy+t*t*g.b.y;
+      var d=Math.hypot(p.x-x,p.y-y); if (d<bd){ bd=d; best=e; }
+    }
+    if (e._lx!=null && Math.abs(p.x-e._lx)<30 && Math.abs(p.y-e._ly)<8){ best=e; bd=0; }
+  });
+  return best;
+}
+
+/* ------------------------------------------------------------------ pointer interaction */
+var drag=null, pan=null, linking=null, lastClick=0;
+cv.addEventListener("pointerdown", function(e){
+  cv.setPointerCapture(e.pointerId);
+  var p = toWorld(e.offsetX, e.offsetY), n = hitNode(p);
+  if (n && (e.shiftKey || e.altKey) && !readOnly){ linking = { from:n, x:p.x, y:p.y }; return; }
+  if (n){ select("node", n.id); drag = { node:n, dx:p.x-n.x, dy:p.y-n.y, moved:false, start:snapshot() }; return; }
+  var ed = hitEdge(p);
+  if (ed){ select("edge", ed.id); return; }
+  select(null);
+  pan = { sx:e.clientX, sy:e.clientY, vx:view.x, vy:view.y };
+});
+cv.addEventListener("pointermove", function(e){
+  var p = toWorld(e.offsetX, e.offsetY);
+  if (linking){ linking.x=p.x; linking.y=p.y; return; }
+  if (drag){
+    if (!drag.moved && readOnly===false) { hist.push(drag.start); redo=[]; }
+    drag.moved = true; drag.node.x = p.x-drag.dx; drag.node.y = p.y-drag.dy; drag.node.pinned = true; alpha=Math.max(alpha,0.12); return;
+  }
+  if (pan){ view.x = pan.vx + e.clientX-pan.sx; view.y = pan.vy + e.clientY-pan.sy; return; }
+  cv.style.cursor = hitNode(p) ? (e.shiftKey?"crosshair":"grab") : (hitEdge(p)?"pointer":"default");
+});
+cv.addEventListener("pointerup", function(e){
+  var p = toWorld(e.offsetX, e.offsetY);
+  if (linking){
+    var t = hitNode(p);
+    if (t){ pushHist(); var ed = { id:uid(), source:linking.from.id, target:t.id }; doc.edges.push(ed); select("edge", ed.id); changed(); }
+    linking=null; return;
+  }
+  if (drag){ if (drag.moved) changed(true); renderInsp(); drag=null; return; }
+  pan=null;
+});
+cv.addEventListener("dblclick", function(e){
+  if (readOnly) return;
+  var p = toWorld(e.offsetX, e.offsetY), n = hitNode(p);
+  if (n){ select("node", n.id); var f=$("insp").querySelector("[data-k=label]"); if (f) f.focus(); return; }
+  var nn = addNode({ type:curType, x:p.x, y:p.y, pinned:true });
+  select("node", nn.id);
+  setTimeout(function(){ var f=$("insp").querySelector(curType==="note"?"[data-k=label]":(curType==="address"||curType==="tx"?"[data-k=value]":"[data-k=label]")); if (f) f.focus(); }, 20);
+});
+cv.addEventListener("wheel", function(e){
+  e.preventDefault();
+  var k = Math.min(4, Math.max(0.12, view.k * Math.exp(-e.deltaY*0.0015)));
+  var p = toWorld(e.offsetX, e.offsetY);
+  view.k = k; view.x = e.offsetX - p.x*k; view.y = e.offsetY - p.y*k;
+}, { passive:false });
+
+document.addEventListener("keydown", function(e){
+  var inField = /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
+  if ((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==="z" && !inField){ e.preventDefault(); e.shiftKey?redoFn():undo(); return; }
+  if ((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==="s"){ e.preventDefault(); if(!readOnly) saveCloud(); return; }
+  if (inField) return;
+  if ((e.key==="Delete"||e.key==="Backspace") && sel && !readOnly){ e.preventDefault(); removeSel(); }
+  if (e.key==="Escape"){ select(null); }
+  if (e.key==="f"){ fit(); }
+});
+
+function addNode(o){
+  pushHist();
+  var n = { id:uid(), type:o.type||"address", label:o.label||"", value:o.value||"", chain:o.chain||$("chainSel").value, tags:o.tags||"", notes:o.notes||"", risk:o.risk||"",
+            x:o.x!=null?o.x:(Math.random()-.5)*200, y:o.y!=null?o.y:(Math.random()-.5)*200, vx:0, vy:0, pinned:!!o.pinned };
+  doc.nodes.push(n); changed(); return n;
+}
+function removeSel(){
+  pushHist();
+  if (sel.kind==="node"){ var id=sel.id; doc.nodes=doc.nodes.filter(function(n){return n.id!==id;}); doc.edges=doc.edges.filter(function(e){ return e.source!==id && e.target!==id; }); }
+  else doc.edges = doc.edges.filter(function(e){ return e.id!==sel.id; });
+  sel=null; reindex(); renderInsp(); changed();
+}
+function select(kind, id){ sel = kind ? { kind:kind, id:id } : null; renderInsp(); }
+
+function fit(){
+  var N=doc.nodes; if (!N.length){ view={x:W/2,y:H/2,k:1}; return; }
+  var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9; N.forEach(function(n){ x0=Math.min(x0,n.x); y0=Math.min(y0,n.y); x1=Math.max(x1,n.x); y1=Math.max(y1,n.y); });
+  var k = Math.min(1.4, Math.min((W-360)/(x1-x0+160), (H-120)/(y1-y0+160)));
+  view.k = Math.max(0.15,k); view.x = W/2 - (x0+x1)/2*view.k; view.y = H/2 - (y0+y1)/2*view.k;
+}
+
+/* ------------------------------------------------------------------ inspector */
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function chainOpts(v){ return Object.keys(CHAINS).map(function(k){ return '<option value="'+k+'"'+(k===String(v)?" selected":"")+'>'+CHAINS[k].name+'</option>'; }).join(""); }
+function renderInsp(){
+  var box = $("insp");
+  if (!sel){ box.classList.remove("show"); box.innerHTML=""; return; }
+  var ro = readOnly ? " disabled" : "";
+  if (sel.kind==="node"){
+    var n = nodeById(sel.id); if (!n){ sel=null; return renderInsp(); }
+    var ex = (CHAINS[n.chain]||CHAINS["1"]).explorer, links="";
+    if (isAddr(n.value)) links = '<a href="'+ex+'/address/'+n.value+'" target="_blank" rel="noopener noreferrer">Explorer ↗</a>';
+    if (isHash(n.value)) links = '<a href="'+ex+'/tx/'+n.value+'" target="_blank" rel="noopener noreferrer">Explorer ↗</a>';
+    if (n.value) links += '<a href="#" id="copyVal">Copy</a>';
+    var conn = doc.edges.filter(function(e){ return e.source===n.id||e.target===n.id; }).length;
+    box.innerHTML =
+      '<h3><span>'+TYPES[n.type].name+' node</span><span>'+conn+' link'+(conn===1?'':'s')+'</span></h3>'+
+      '<div class="row2"><div class="f"><label>Type</label><select data-k="type"'+ro+'>'+Object.keys(TYPES).map(function(t){ return '<option value="'+t+'"'+(t===n.type?" selected":"")+'>'+TYPES[t].name+'</option>'; }).join("")+'</select></div>'+
+      '<div class="f"><label>Risk</label><select data-k="risk"'+ro+'><option value="">None</option><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select></div></div>'+
+      (n.type==="note" ? '<div class="f"><label>Text</label><textarea data-k="label"'+ro+'></textarea></div>' :
+      '<div class="f"><label>Label</label><input data-k="label"'+ro+' placeholder="e.g. Binance hot wallet 14"></div>'+
+      '<div class="f"><label>'+(n.type==="tx"?"Tx hash":"Address / identifier")+'</label><input data-k="value" class="mono"'+ro+' spellcheck="false"></div>'+
+      '<div class="links">'+links+'</div>'+
+      '<div class="row2"><div class="f"><label>Chain</label><select data-k="chain"'+ro+'>'+chainOpts(n.chain)+'</select></div><div class="f"><label>Tags</label><input data-k="tags"'+ro+' placeholder="victim, cex…"></div></div>'+
+      '<div class="f"><label>Notes</label><textarea data-k="notes"'+ro+'></textarea></div>')+
+      '<div class="actions edit-only"><button class="btn small" id="pinBtn">'+(n.pinned?"Unpin":"Pin")+'</button><button class="btn small" id="delBtn" style="color:var(--bad)">Delete</button></div>'+
+      (isAddr(n.value) && !readOnly ? pullHtml() : "");
+    fill(box, n);
+    if ($("copyVal")) $("copyVal").onclick = function(ev){ ev.preventDefault(); navigator.clipboard.writeText(n.value); toast("Copied"); };
+    if ($("pinBtn")){ $("pinBtn").onclick = function(){ pushHist(); n.pinned=!n.pinned; changed(); renderInsp(); };
+      $("delBtn").onclick = removeSel; }
+    if ($("pullBtn")) $("pullBtn").onclick = function(){ pullTxs(n); };
+  } else {
+    var e = edgeById(sel.id); if (!e){ sel=null; return renderInsp(); }
+    var a=nodeById(e.source), b=nodeById(e.target), exE=(CHAINS[e.chain||(a&&a.chain)]||CHAINS["1"]).explorer;
+    box.innerHTML =
+      '<h3><span>Connection</span></h3>'+
+      '<div style="font-size:12.5px;margin-bottom:10px">'+esc(a?nodeLabel(a)||"Note":"?")+' → '+esc(b?nodeLabel(b)||"Note":"?")+'</div>'+
+      '<div class="row2"><div class="f"><label>Amount</label><input data-k="amount" class="mono"'+ro+'></div><div class="f"><label>Token</label><input data-k="token"'+ro+' placeholder="ETH"></div></div>'+
+      '<div class="f"><label>Tx hash</label><input data-k="hash" class="mono"'+ro+' spellcheck="false"></div>'+
+      (isHash(e.hash) ? '<div class="links"><a href="'+exE+'/tx/'+e.hash+'" target="_blank" rel="noopener noreferrer">Explorer ↗</a></div>' : '')+
+      (e.hashes && e.hashes.length>1 ? '<div class="f"><label>All txs ('+e.hashes.length+')</label><textarea class="mono" readonly style="font-size:11px;min-height:54px">'+esc(e.hashes.join("\n"))+'</textarea></div>' : '')+
+      '<div class="f"><label>Time (IST)</label><input data-k="time" type="datetime-local"'+ro+'></div>'+
+      '<div class="f"><label>Label (overrides amount on the graph)</label><input data-k="label"'+ro+'></div>'+
+      '<div class="f"><label>Notes</label><textarea data-k="notes"'+ro+'></textarea></div>'+
+      '<label class="tog edit-only" style="font-size:12.5px;display:flex;gap:6px;align-items:center"><input type="checkbox" data-k="flag"> Highlight this flow</label>'+
+      '<div class="actions edit-only"><button class="btn small" id="revBtn">Reverse direction</button><button class="btn small" id="delBtn" style="color:var(--bad)">Delete</button></div>';
+    fill(box, e);
+    if ($("revBtn")){ $("revBtn").onclick=function(){ pushHist(); var t=e.source; e.source=e.target; e.target=t; changed(); renderInsp(); };
+      $("delBtn").onclick = removeSel; }
+  }
+  box.classList.add("show");
+}
+// time is stored as epoch ms, edited as IST wall-clock
+function msToIst(ms){ if(!ms) return ""; return new Date(ms+19800000).toISOString().slice(0,16); }
+function istToMs(s){ if(!s) return null; return Date.parse(s+":00Z")-19800000; }
+function fill(box, obj){
+  box.querySelectorAll("[data-k]").forEach(function(el){
+    var k = el.dataset.k;
+    if (el.type==="checkbox") el.checked = !!obj[k];
+    else if (k==="time") el.value = msToIst(obj.time);
+    else el.value = obj[k]==null ? "" : obj[k];
+    var first = true;
+    var h = function(){
+      if (readOnly) return;
+      if (first){ pushHist(); first=false; }
+      if (el.type==="checkbox") obj[k]=el.checked;
+      else if (k==="time") obj.time = istToMs(el.value);
+      else obj[k] = el.value;
+      if (k==="value") obj.value = el.value.trim();
+      changed(true);
+      if (k==="type"||k==="chain") renderInsp();
+    };
+    el.addEventListener(el.tagName==="SELECT"||el.type==="checkbox"||k==="time" ? "change" : "input", h);
+    el.addEventListener("blur", function(){ first=true; if (k==="value") renderInsp(); });
+  });
+}
+function pullHtml(){
+  return '<div class="pull"><div style="font-weight:600;font-size:12.5px;margin-bottom:8px">Pull transactions</div>'+
+    '<div class="row2"><div class="f"><label>Direction</label><select id="pDir"><option value="both">In &amp; out</option><option value="out">Outgoing</option><option value="in">Incoming</option></select></div>'+
+    '<div class="f"><label>Latest</label><select id="pN"><option>10</option><option selected>25</option><option>50</option><option>100</option></select></div></div>'+
+    '<div class="row2"><div class="f"><label>Include</label><select id="pKind"><option value="all">Native + tokens</option><option value="native">Native only</option><option value="token">Tokens only</option></select></div>'+
+    '<div class="f"><label>Group</label><select id="pGroup"><option value="1">By counterparty</option><option value="0">One edge per tx</option></select></div></div>'+
+    '<label style="font-size:12px;color:var(--text-muted);display:flex;gap:6px;align-items:center;margin:2px 0 8px"><input type="checkbox" id="pDust" checked> Skip zero-value and dust</label>'+
+    '<button class="btn small primary" id="pullBtn">Pull from Etherscan</button></div>';
+}
+
+/* ------------------------------------------------------------------ Etherscan */
+var lastCall = 0;
+async function es(chain, params){
+  var wait = 260 - (Date.now()-lastCall); if (wait>0) await new Promise(function(r){ setTimeout(r,wait); }); lastCall = Date.now();
+  var url = new URL(ETHERSCAN_BASE);
+  Object.keys(params).forEach(function(k){ url.searchParams.set(k, params[k]); });
+  url.searchParams.set("chainid", chain); url.searchParams.set("apikey", ETHERSCAN_API_KEY);
+  var res = await fetch(url.toString());
+  if (!res.ok) throw new Error("Etherscan HTTP "+res.status);
+  var j = await res.json();
+  if (params.module==="proxy"){ if (j.error) throw new Error(j.error.message||"Etherscan error"); return j.result; }
+  if (j.status==="0" && !/no transactions found|no records found/i.test(j.message||"")) throw new Error(typeof j.result==="string"?j.result:(j.message||"Etherscan error"));
+  return Array.isArray(j.result) ? j.result : [];
+}
+function units(raw, dec){
+  dec = Number(dec)||0; raw = String(raw||"0").replace(/^0+/,"")||"0";
+  if (dec===0) return raw;
+  var s = raw.padStart(dec+1,"0"), i = s.slice(0,-dec), f = s.slice(-dec).replace(/0+$/,"");
+  return f ? i+"."+f.slice(0,8) : i;
+}
+function findNodeByValue(v, chain){
+  v = String(v).toLowerCase();
+  for (var i=0;i<doc.nodes.length;i++){ var n=doc.nodes[i]; if (n.value && n.value.toLowerCase()===v && (!chain || String(n.chain)===String(chain))) return n; }
+  return null;
+}
+function ensureAddrNode(addr, chain, near, idx, total){
+  var n = findNodeByValue(addr, chain); if (n) return n;
+  var ang = (idx/Math.max(total,1))*Math.PI*2 + Math.random()*0.3, R = 170 + Math.random()*40;
+  n = { id:uid(), type:"address", label:"", value:addr, chain:String(chain), tags:"", notes:"", risk:"",
+        x:(near?near.x:0)+Math.cos(ang)*R, y:(near?near.y:0)+Math.sin(ang)*R, vx:0, vy:0, pinned:false };
+  doc.nodes.push(n); return n;
+}
+async function pullTxs(n){
+  var chain = String(n.chain||"1"), me = n.value.toLowerCase(), dir=$("pDir").value, N=+$("pN").value, kind=$("pKind").value, group=$("pGroup").value==="1", skipDust=$("pDust").checked;
+  var btn=$("pullBtn"); btn.disabled=true; btn.textContent="Pulling…";
+  try {
+    var rows = [];
+    if (kind!=="token"){
+      var nat = await es(chain, { module:"account", action:"txlist", address:n.value, page:"1", offset:String(N), sort:"desc" });
+      nat.forEach(function(t){ if (t.isError==="1") return; rows.push({ hash:t.hash, from:t.from, to:t.to||t.contractAddress, amount:units(t.value,18), token:(CHAINS[chain]||CHAINS["1"]).sym, time:+t.timeStamp*1000 }); });
+    }
+    if (kind!=="native"){
+      var tok = await es(chain, { module:"account", action:"tokentx", address:n.value, page:"1", offset:String(N), sort:"desc" });
+      tok.forEach(function(t){ rows.push({ hash:t.hash, from:t.from, to:t.to, amount:units(t.value,t.tokenDecimal), token:t.tokenSymbol||short(t.contractAddress), time:+t.timeStamp*1000 }); });
+    }
+    rows = rows.filter(function(r){
+      if (!r.to) return false;
+      var out = r.from.toLowerCase()===me, inn = r.to.toLowerCase()===me;
+      if (dir==="out" && !out) return false; if (dir==="in" && !inn) return false;
+      if (skipDust && !(Number(r.amount) > 1e-6)) return false;
+      return true;
+    }).sort(function(a,b){ return b.time-a.time; }).slice(0,N);
+    if (!rows.length){ toast("No matching transactions found"); return; }
+
+    pushHist();
+    var cps = []; rows.forEach(function(r){ var cp = r.from.toLowerCase()===me ? r.to : r.from; if (cps.indexOf(cp.toLowerCase())<0) cps.push(cp.toLowerCase()); });
+    var added = 0, before = doc.nodes.length;
+    var existing = {}; doc.edges.forEach(function(e){ (e.hashes||[e.hash]).forEach(function(h){ if(h) existing[h+"|"+e.source+"|"+e.target+"|"+e.token]=1; }); });
+    rows.forEach(function(r){
+      var a = ensureAddrNode(r.from.toLowerCase()===me ? n.value : r.from, chain, n, cps.indexOf(r.from.toLowerCase()), cps.length);
+      var b = ensureAddrNode(r.to.toLowerCase()===me ? n.value : r.to, chain, n, cps.indexOf(r.to.toLowerCase()), cps.length);
+      if (r.from.toLowerCase()===me) a = n; if (r.to.toLowerCase()===me) b = n;
+      if (existing[r.hash+"|"+a.id+"|"+b.id+"|"+r.token]) return;
+      if (group){
+        var g = doc.edges.find(function(e){ return e.auto && e.source===a.id && e.target===b.id && e.token===r.token; });
+        if (g){ g.amount = String(+(Number(g.amount)+Number(r.amount)).toPrecision(12)); g.count=(g.count||1)+1; g.hashes=(g.hashes||[g.hash]).concat(r.hash); g.time=Math.min(g.time||r.time, r.time); added++; return; }
+      }
+      doc.edges.push({ id:uid(), source:a.id, target:b.id, amount:r.amount, token:r.token, hash:r.hash, hashes:[r.hash], time:r.time, chain:chain, auto:true, count:1 });
+      added++;
+    });
+    alpha = 0.8; changed();
+    toast("Added "+added+" transfer"+(added===1?"":"s")+", "+(doc.nodes.length-before)+" new address"+(doc.nodes.length-before===1?"":"es"));
+  } catch(e){ toast(e.message, 5000); }
+  finally { if ($("pullBtn")){ $("pullBtn").disabled=false; $("pullBtn").textContent="Pull from Etherscan"; } }
+}
+
+var TRANSFER_TOPIC = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+async function addFromInput(){
+  var v = $("fetchInput").value.trim(), chain = $("chainSel").value;
+  if (!v) return;
+  if (isAddr(v)){
+    var ex = findNodeByValue(v, chain);
+    if (ex){ select("node", ex.id); centerOn(ex); toast("Already on the graph"); return; }
+    var c = toWorld(W/2, H/2), n = addNode({ type:"address", value:v, chain:chain, x:c.x+(Math.random()-.5)*60, y:c.y+(Math.random()-.5)*60 });
+    select("node", n.id); $("fetchInput").value=""; return;
+  }
+  if (!isHash(v)){ toast("That's not an EVM address or tx hash"); return; }
+  var btn=$("fetchBtn"); btn.disabled=true; btn.textContent="…";
+  try {
+    var tx = await es(chain, { module:"proxy", action:"eth_getTransactionByHash", txhash:v });
+    if (!tx) throw new Error("Transaction not found on "+CHAINS[chain].name);
+    var rc = await es(chain, { module:"proxy", action:"eth_getTransactionReceipt", txhash:v });
+    var blk = await es(chain, { module:"proxy", action:"eth_getBlockByNumber", tag:tx.blockNumber, boolean:"false" });
+    var time = blk ? parseInt(blk.timestamp,16)*1000 : null, bn = parseInt(tx.blockNumber,16);
+    var transfers = [];
+    var logs = (rc && rc.logs || []).filter(function(l){ return l.topics && l.topics[0]===TRANSFER_TOPIC && l.topics.length===3; });
+    var tokens = []; logs.forEach(function(l){ if (tokens.indexOf(l.address)<0) tokens.push(l.address); });
+    for (var i=0;i<tokens.length && i<6;i++){
+      var tt = await es(chain, { module:"account", action:"tokentx", contractaddress:tokens[i], startblock:String(bn), endblock:String(bn), page:"1", offset:"200", sort:"asc" });
+      tt.filter(function(t){ return t.hash.toLowerCase()===v.toLowerCase(); }).forEach(function(t){ transfers.push({ from:t.from, to:t.to, amount:units(t.value,t.tokenDecimal), token:t.tokenSymbol }); });
+    }
+    var val = BigInt(tx.value||"0x0");
+    if (val>0n || !transfers.length) transfers.unshift({ from:tx.from, to:tx.to||(rc&&rc.contractAddress), amount:units(val.toString(),18), token:CHAINS[chain].sym, label: val>0n?"":"call" });
+    pushHist();
+    var c = toWorld(W/2, H/2), all=[]; transfers.forEach(function(t){ [t.from,t.to].forEach(function(a){ if (a && all.indexOf(a.toLowerCase())<0) all.push(a.toLowerCase()); }); });
+    var center = { x:c.x, y:c.y };
+    transfers.forEach(function(t){
+      var a = ensureAddrNode(t.from, chain, center, all.indexOf(t.from.toLowerCase()), all.length);
+      var b = ensureAddrNode(t.to, chain, center, all.indexOf(t.to.toLowerCase()), all.length);
+      doc.edges.push({ id:uid(), source:a.id, target:b.id, amount:t.amount, token:t.token, hash:v, hashes:[v], time:time, chain:chain, label:t.label||"", count:1 });
+    });
+    alpha=0.8; changed(); $("fetchInput").value="";
+    toast("Added "+transfers.length+" transfer"+(transfers.length===1?"":"s")+" from this tx");
+  } catch(e){ toast(e.message, 5000); }
+  finally { btn.disabled=false; btn.textContent="Add"; }
+}
+function centerOn(n){ view.x = W/2 - n.x*view.k; view.y = H/2 - n.y*view.k; }
+
+/* ------------------------------------------------------------------ search */
+var searchHits = null;
+$("searchInput").addEventListener("input", function(){
+  var q = this.value.trim().toLowerCase();
+  if (!q){ searchHits=null; return; }
+  searchHits = doc.nodes.filter(function(n){ return [n.label,n.value,n.tags,n.notes].join(" ").toLowerCase().indexOf(q)>=0; });
+});
+$("searchInput").addEventListener("keydown", function(e){
+  if (e.key==="Enter" && searchHits && searchHits.length){ var i=(searchHits._i=((searchHits._i||0)+1)%searchHits.length); var n=searchHits[i]; centerOn(n); select("node", n.id); }
+  if (e.key==="Escape"){ this.value=""; searchHits=null; this.blur(); }
+});
+
+/* ------------------------------------------------------------------ export / import */
+function download(name, blob){ var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500); }
+function slug(){ return (doc.title||"case-graph").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"") || "case-graph"; }
+function exportPng(){
+  if (!doc.nodes.length){ toast("Nothing to export"); return; }
+  var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
+  doc.nodes.forEach(function(n){ var w = n.type==="note"?noteBox(n).w/2:70, h=n.type==="note"?noteBox(n).h/2:40; x0=Math.min(x0,n.x-w); y0=Math.min(y0,n.y-h); x1=Math.max(x1,n.x+w); y1=Math.max(y1,n.y+h); });
+  var pad=50, top=46, S=2, w=x1-x0+pad*2, h=y1-y0+pad*2+top;
+  var maxDim = 8000/S; if (w>maxDim||h>maxDim){ S = Math.max(0.5, Math.min(8000/w, 8000/h)); }
+  var oc = document.createElement("canvas"); oc.width=Math.ceil(w*S); oc.height=Math.ceil(h*S);
+  var c = oc.getContext("2d");
+  c.fillStyle = css("--bg"); c.fillRect(0,0,oc.width,oc.height);
+  c.setTransform(S,0,0,S,0,0);
+  c.fillStyle = css("--text"); c.font="600 16px 'IBM Plex Sans', sans-serif"; c.textAlign="left"; c.textBaseline="top"; c.fillText(doc.title||"Case graph", 20, 18);
+  c.fillStyle = css("--text-faint"); c.font="11px 'IBM Plex Mono', monospace"; c.textAlign="right";
+  c.fillText(new Date().toLocaleString("en-IN",{timeZone:"Asia/Kolkata",dateStyle:"medium",timeStyle:"short"})+" IST", w-20, 21);
+  c.setTransform(S,0,0,S,(-x0+pad)*S,(-y0+pad+top)*S);
+  var keepSel = sel; sel=null; draw(c, { export:true }); sel=keepSel;
+  oc.toBlob(function(b){ download(slug()+".png", b); });
+}
+function cleanDoc(){ return JSON.parse(JSON.stringify(doc, function(k,v){ return (k==="vx"||k==="vy"||k==="_lx"||k==="_ly")?undefined:v; })); }
+async function exportEnc(){
+  var pw = meta.password || await askNewPassword(); if (!pw) return;
+  var s = await encryptDoc(cleanDoc(), pw);
+  download(slug()+".cgraph", new Blob([s],{type:"application/json"})); toast("Encrypted file downloaded");
+}
+var importMode = null;
+$("fileIn").addEventListener("change", async function(){
+  var f = this.files[0]; this.value=""; if (!f) return;
+  var text = await f.text();
+  if (importMode==="json"){
+    try { var d = JSON.parse(text); if (!d.nodes) throw 0; meta={gistId:null,password:null,owner:true}; if (location.hash) history.replaceState(null,"",location.pathname); setReadOnly(false); loadDoc(d); changed(true); toast("Imported. Save to store it in the cloud"); }
+    catch(e){ toast("That file isn't a case graph JSON"); }
+    return;
+  }
+  var r = await askPassword("Open encrypted file", "Enter the password this file was encrypted with.", function(pw){ return decryptDoc(text, pw); });
+  if (!r) return;
+  meta={gistId:null,password:r.pw,owner:true}; if (location.hash) history.replaceState(null,"",location.pathname); setReadOnly(false); loadDoc(r.value); changed(true);
+});
+
+/* ------------------------------------------------------------------ UI wiring */
+Object.keys(TYPES).forEach(function(t){
+  var b = document.createElement("button"); b.className="ptype"+(t===curType?" on":""); b.dataset.t=t;
+  var ic = document.createElement("canvas"), r=TYPES[t].r||8; ic.width=ic.height=40; ic.style.width=ic.style.height="20px";
+  var c = ic.getContext("2d"); c.scale(2,2);
+  if (t==="note"){ c.strokeStyle=typeColor(t); c.lineWidth=1.3; c.beginPath(); rrect(c,3,4,14,12,2); c.stroke(); c.fillStyle=typeColor(t); c.fillRect(3,6,2,8); }
+  else { shapePath(c, t, 10, 10, Math.min(7.5, r*0.5)); c.fillStyle=typeColor(t); c.fill(); }
+  b.appendChild(ic); b.appendChild(document.createTextNode(TYPES[t].name));
+  b.onclick = function(){ curType=t; document.querySelectorAll(".ptype").forEach(function(x){ x.classList.toggle("on", x.dataset.t===t); }); };
+  $("ptypes").appendChild(b);
+});
+$("chainSel").innerHTML = chainOpts("1");
+$("fetchBtn").onclick = addFromInput;
+$("fetchInput").addEventListener("keydown", function(e){ if (e.key==="Enter") addFromInput(); });
+$("title").addEventListener("input", function(){ if (readOnly) return; doc.title = this.value; changed(true); });
+$("undoBtn").onclick = undo;
+$("layoutBtn").onclick = function(){ pushHist(); doc.nodes.forEach(function(n){ n.pinned=false; }); alpha=1; $("physics").checked=true; setTimeout(fit, 1200); };
+$("physics").onchange = function(){ if (this.checked) alpha=Math.max(alpha,0.3); };
+$("saveBtn").onclick = saveCloud;
+$("shareBtn").onclick = openShare;
+document.querySelectorAll(".menu").forEach(function(m){
+  m.firstElementChild.onclick = function(e){ e.stopPropagation(); var o=m.classList.contains("open"); document.querySelectorAll(".menu").forEach(function(x){ x.classList.remove("open"); }); if(!o) m.classList.add("open"); };
+});
+document.addEventListener("click", function(){ document.querySelectorAll(".menu").forEach(function(x){ x.classList.remove("open"); }); });
+document.querySelectorAll(".menu-list button").forEach(function(b){
+  b.onclick = function(){
+    var a = b.dataset.act;
+    if (a==="new"){ if (doc.nodes.length && dirty && !meta.gistId && !window.confirm("Start a new graph? The current draft isn't saved to the cloud.")) return; meta={gistId:null,password:null,owner:true}; history.replaceState(null,"",location.pathname); setReadOnly(false); loadDoc(blankDoc()); changed(true); }
+    if (a==="mine") openMine();
+    if (a==="settings") openSettings(false);
+    if (a==="importEnc"){ importMode="enc"; $("fileIn").accept=".cgraph,.json"; $("fileIn").click(); }
+    if (a==="importJson"){ importMode="json"; $("fileIn").accept=".json"; $("fileIn").click(); }
+    if (a==="png") exportPng();
+    if (a==="json") download(slug()+".json", new Blob([JSON.stringify(cleanDoc(),null,1)],{type:"application/json"}));
+    if (a==="enc") exportEnc();
+  };
+});
+window.addEventListener("beforeunload", function(e){ if (dirty && meta.gistId && !readOnly){ e.preventDefault(); e.returnValue=""; } });
+if (window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function(e){ dark=e.matches; });
+
+route();
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

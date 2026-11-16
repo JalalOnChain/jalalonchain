@@ -256,7 +256,7 @@ var KDF_ITER = 310000;
 var TYPES = {
   address:  { name:"Address",  color:"#0E8E89", dark:"#3FD1C9", r:15 },
   tx:       { name:"Tx",       color:"#5C6B84", dark:"#93A1B8", r:11 },
-  exchange: { name:"Exchange", color:"#2F6FB0", dark:"#6FA8E6", r:17 },
+  exchange: { name:"Exchange", color:"#2F6FB0", dark:"#6FA8E6", r:17, hidden:true },   // retired: still drawn for old graphs, not offered for new nodes
   mixer:    { name:"Mixer",    color:"#B23B3B", dark:"#E3897F", r:17 },
   entity:   { name:"Entity",   color:"#B4700F", dark:"#E3A857", r:17, hint:"Business / service" },
   defi:     { name:"DeFi",     color:"#6B4FA0", dark:"#A88BD8", r:17 },
@@ -270,6 +270,7 @@ var KINDS = {
   suspected: { name:"Suspected link", hint:"No funds moved", dash:[4,7],   color:"#93A1B8", dark:"#5C6B84", arrow:false }
 };
 function kindOf(e){ return KINDS[e.kind] ? e.kind : "transfer"; }
+function newTypes(){ return Object.keys(TYPES).filter(function(t){ return !TYPES[t].hidden; }); }
 var RISK = { "":null, low:"#5E9C5A", medium:"#C98A1B", high:"#C0392B" };
 
 /* ------------------------------------------------------------------ state */
@@ -800,7 +801,7 @@ function draw(c, opt){
     // label
     var lab = nodeLabel(n);
     if (view.k>0.35 || opt.export){
-      c.font = (n.label?"500 12px 'IBM Plex Sans', sans-serif":"500 11px 'IBM Plex Mono', monospace"); c.fillStyle = text; c.textBaseline="top";
+      c.font = (n.label?"500 12px 'IBM Plex Sans', sans-serif":"500 11px 'IBM Plex Mono', monospace"); c.fillStyle = text; c.textAlign="center"; c.textBaseline="top";
       c.fillText(lab, n.x, n.y+r+6);
       if (n.label && n.value && (isSel || opt.export)){ c.font="10.5px 'IBM Plex Mono', monospace"; c.fillStyle=faint; c.fillText(short(n.value), n.x, n.y+r+21); }
     }
@@ -1004,7 +1005,7 @@ function openContext(cx, cy, ox, oy){
     ]));
     return;
   }
-  showMenu(e.clientX, e.clientY, "Add node here", Object.keys(TYPES).map(function(t){
+  showMenu(e.clientX, e.clientY, "Add node here", newTypes().map(function(t){
     return { label:typeName(t), run:function(){ var nn=addNode({ type:t, x:p.x, y:p.y, pinned:true }); select("node", nn.id); if (!coarse) setTimeout(function(){ var f=$("insp").querySelector("[data-k=label]"); if (f) f.focus(); },20); } };
   }));
 }
@@ -1135,7 +1136,7 @@ function renderInsp(keepFocus){
     var conn = doc.edges.filter(function(e){ return e.source===n.id||e.target===n.id; }).length;
     box.innerHTML =
       '<h3><span>'+esc(typeName(n.type))+'</span><span>'+conn+' link'+(conn===1?'':'s')+'</span></h3>'+
-      '<div class="row2"><div class="f"><label>Type</label><select data-k="type"'+ro+'>'+Object.keys(TYPES).map(function(t){ return '<option value="'+t+'"'+(t===n.type?" selected":"")+'>'+esc(typeName(t))+'</option>'; }).join("")+'</select></div>'+
+      '<div class="row2"><div class="f"><label>Type</label><select data-k="type"'+ro+'>'+Object.keys(TYPES).filter(function(t){ return !TYPES[t].hidden || t===n.type; }).map(function(t){ return '<option value="'+t+'"'+(t===n.type?" selected":"")+'>'+esc(typeName(t))+'</option>'; }).join("")+'</select></div>'+
       '<div class="f"><label>Risk</label><select data-k="risk"'+ro+'><option value="">None</option><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select></div></div>'+
       (n.type==="note" ? '<div class="f"><label>Text</label><textarea data-k="label"'+ro+'></textarea></div>' :
       '<div class="f"><label>Label</label><input data-k="label"'+ro+' placeholder="e.g. Binance hot wallet 14"></div>'+
@@ -1428,7 +1429,7 @@ $("fileIn").addEventListener("change", async function(){
 });
 
 /* ------------------------------------------------------------------ UI wiring */
-Object.keys(TYPES).forEach(function(t){
+newTypes().forEach(function(t){
   var b = document.createElement("button"); b.className="ptype"+(t===curType?" on":""); b.dataset.t=t;
   var ic = document.createElement("canvas"); ic.width=ic.height=66; ic.style.width=ic.style.height="22px";
   var c = ic.getContext("2d"); c.scale(3,3);

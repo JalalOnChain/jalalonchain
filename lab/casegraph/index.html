@@ -111,6 +111,14 @@
   .glist li{ display:flex; justify-content:space-between; align-items:center; gap:8px; padding:7px 0; border-bottom:1px solid var(--border); }
   .glist li span{ font-size:11.5px; color:var(--text-faint); }
   .viewonly .edit-only{ display:none !important; }
+  #landing{ position:fixed; inset:0; z-index:25; background:var(--bg); display:none; align-items:center; justify-content:center; padding:20px; }
+  .landing #landing{ display:flex; }
+  .landing #top, .landing #palette, .landing #fetchbar, .landing #search, .landing #help, .landing #insp, .landing canvas#cv{ display:none !important; }
+  #landing .box{ background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:28px 26px; width:min(440px,100%); text-align:center; }
+  #landing h1{ font-size:20px; margin:12px 0 4px; }
+  #landing p{ color:var(--text-muted); margin:0 0 18px; }
+  #landing input{ flex:1; min-width:0; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:9px 11px; font-size:15px; }
+  #landing .or{ color:var(--text-faint); font-size:12px; margin:14px 0 10px; }
   .mob{ display:none !important; }
   #inspX{ position:absolute; top:6px; right:8px; background:none; border:none; font-size:20px; line-height:1; color:var(--text-faint); cursor:pointer; padding:4px 6px; display:none; }
   #insp{ position:fixed; }
@@ -188,6 +196,16 @@
   <button class="btn primary edit-only" id="shareBtn">Share</button>
 </div>
 <div id="banner"></div>
+<div id="landing">
+  <div class="box">
+    <img src="/assets/logo.png" alt="" width="40" height="40" style="border-radius:9px">
+    <h1>Case Graph</h1>
+    <p>Open a graph that was shared with you.</p>
+    <div class="copyrow"><input id="landLink" placeholder="Paste the link you received" spellcheck="false"><button class="btn primary" id="landOpen">Open</button></div>
+    <div class="or">or</div>
+    <button class="btn" id="landFile">Open a file</button>
+  </div>
+</div>
 
 <div id="palette" class="edit-only">
   <div class="lbl hdr"><span>New node</span><a id="rnLink" title="Rename node types">Rename</a></div>
@@ -300,10 +318,10 @@ function changed(noReheat){
   if (readOnly) return;
   doc.updated = Date.now(); dirty = true; setStatus();
   if (!noReheat) alpha = Math.max(alpha, 0.3);
-  persistLocal();
+  persistLocal(); scheduleAutoSave();
 }
 function setStatus(){
-  var s = readOnly ? "View only" : (meta.gistId ? (dirty ? "Unsaved changes" : "Saved") : "Draft on this device");
+  var s = readOnly ? "View only" : (meta.gistId ? (dirty ? (meta.password ? "Auto-saving soon" : "Unsaved changes") : "Saved to cloud") : "Draft, not saved yet");
   $("status").textContent = s + " · " + doc.nodes.length + " nodes";
 }
 
@@ -315,21 +333,47 @@ async function deriveKey(pw, salt, iter){
   var base = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
   return crypto.subtle.deriveKey({ name:"PBKDF2", salt:salt, iterations:iter, hash:"SHA-256" }, base, { name:"AES-GCM", length:256 }, false, ["encrypt","decrypt"]);
 }
-async function encryptDoc(d, pw){
-  var salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
-  var key = await deriveKey(pw, salt, KDF_ITER);
-  var ct = new Uint8Array(await crypto.subtle.encrypt({ name:"AES-GCM", iv:iv }, key, enc.encode(JSON.stringify(d))));
-  return JSON.stringify({ cg:1, kdf:"PBKDF2-SHA256", iter:KDF_ITER, salt:b64(salt), iv:b64(iv), ct:b64(ct) });
+function b64u(u8){ return b64(u8).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,""); }
+function unb64u(s){ s=s.replace(/-/g,"+").replace(/_/g,"/"); while (s.length%4) s+="="; return unb64(s); }
+function aesKey(raw){ return crypto.subtle.importKey("raw", raw, "AES-GCM", false, ["encrypt","decrypt"]); }
+// v2 format: the graph is encrypted with a random content key (dek); the dek is wrapped with the password.
+// A view-only link carries the dek in the URL fragment (never sent to any server), so it can read but has no password.
+async function encryptDoc(d, pw, dek){
+  dek = dek || crypto.getRandomValues(new Uint8Array(32));
+  var salt = crypto.getRandomValues(new Uint8Array(16)), wiv = crypto.getRandomValues(new Uint8Array(12)), iv = crypto.getRandomValues(new Uint8Array(12));
+  var kek = await deriveKey(pw, salt, KDF_ITER);
+  var wk = new Uint8Array(await crypto.subtle.encrypt({ name:"AES-GCM", iv:wiv }, kek, dek));
+  var ct = new Uint8Array(await crypto.subtle.encrypt({ name:"AES-GCM", iv:iv }, await aesKey(dek), enc.encode(JSON.stringify(d))));
+  return { dek:dek, text: JSON.stringify({ cg:2, kdf:"PBKDF2-SHA256", iter:KDF_ITER, salt:b64(salt), wiv:b64(wiv), wk:b64(wk), iv:b64(iv), ct:b64(ct) }) };
 }
+function parseBlob(text){ var o; try { o = JSON.parse(text); } catch(e){} if (!o || (o.cg!==1 && o.cg!==2)) throw new Error("Not a case graph file."); return o; }
 async function decryptDoc(text, pw){
-  var o = JSON.parse(text);
-  if (!o || o.cg!==1) throw new Error("Not a case graph file.");
-  var key = await deriveKey(pw, unb64(o.salt), o.iter||KDF_ITER);
+  var o = parseBlob(text);
+  var kek = await deriveKey(pw, unb64(o.salt), o.iter||KDF_ITER), dek = null, key = kek;
   try {
+    if (o.cg===2){ dek = new Uint8Array(await crypto.subtle.decrypt({ name:"AES-GCM", iv:unb64(o.wiv) }, kek, unb64(o.wk))); key = await aesKey(dek); }
     var pt = await crypto.subtle.decrypt({ name:"AES-GCM", iv:unb64(o.iv) }, key, unb64(o.ct));
   } catch(e){ throw new Error("Wrong password."); }
+  return { doc: JSON.parse(dec.decode(pt)), dek: dek };
+}
+async function decryptWithKey(text, dek){
+  var o = parseBlob(text);
+  if (o.cg!==2) throw new Error("This view link is out of date. Ask for a new one.");
+  try { var pt = await crypto.subtle.decrypt({ name:"AES-GCM", iv:unb64(o.iv) }, await aesKey(dek), unb64(o.ct)); }
+  catch(e){ throw new Error("This view link no longer works. The owner may have reset it."); }
   return JSON.parse(dec.decode(pt));
 }
+// fingerprint of the evidence content (positions excluded, so moving nodes around doesn't change it)
+async function fingerprint(d){
+  var pick = function(o, skip){ var r={}; Object.keys(o).sort().forEach(function(k){ if (skip.indexOf(k)<0 && k[0]!=="_" && o[k]!=="" && o[k]!=null) r[k]=o[k]; }); return r; };
+  var c = { title:d.title||"", typeNames:d.typeNames||{},
+    nodes:(d.nodes||[]).map(function(n){ return pick(n,["x","y","vx","vy","pinned"]); }).sort(function(a,b){ return a.id<b.id?-1:1; }),
+    edges:(d.edges||[]).map(function(e){ return pick(e,[]); }).sort(function(a,b){ return a.id<b.id?-1:1; }) };
+  var h = new Uint8Array(await crypto.subtle.digest("SHA-256", enc.encode(JSON.stringify(c))));
+  var hex = Array.prototype.map.call(h, function(x){ return ("0"+x.toString(16)).slice(-2); }).join("").toUpperCase();
+  return hex.slice(0,16).match(/.{4}/g).join(" ");
+}
+function fmtWhen(ms){ return new Date(ms).toLocaleString("en-IN",{timeZone:"Asia/Kolkata",dateStyle:"medium",timeStyle:"short"})+" IST"; }
 
 /* ------------------------------------------------------------------ GitHub gist storage */
 function ghToken(){ try { return localStorage.getItem("cg.ghToken") || ""; } catch(e){ return ""; } }
@@ -348,18 +392,27 @@ async function gh(method, path, body){
   if (!res.ok){ var t=""; try{ t=(await res.json()).message; }catch(e){} throw new Error("GitHub "+res.status+(t?": "+t:"")); }
   return res.json();
 }
-async function saveCloud(){
-  if (!ghToken()){ openSettings(true); return; }
+var autoT = null, saving = false;
+function scheduleAutoSave(){
+  clearTimeout(autoT);
+  if (readOnly || !meta.gistId || !meta.password || !ghToken()) return;
+  autoT = setTimeout(function(){ if (dirty && !saving) saveCloud(true); }, 12000);
+}
+async function saveCloud(silent){
+  if (saving) return;
+  if (!ghToken()){ if (!silent) openSettings(true); return; }
   if (!meta.password && meta.gistId){
     var g0; try { g0 = await fetchGist(meta.gistId); } catch(e){ toast(e.message,5000); return; }
     var r0 = await askPassword("Unlock to save", "Enter this graph's current password so the update keeps working for the people you shared it with.", function(pw){ return decryptDoc(g0.content, pw); });
     if (!r0) return;
-    meta.password = r0.pw;
+    meta.password = r0.pw; meta.dek = r0.value.dek;
   }
   if (!meta.password){ var pw = await askNewPassword(); if (!pw) return; meta.password = pw; }
-  $("saveBtn").disabled = true; $("saveBtn").textContent = "Saving…";
+  saving = true; $("saveBtn").disabled = true; $("saveBtn").textContent = "Saving…";
   try {
-    var payload = await encryptDoc(doc, meta.password);
+    doc.updated = Date.now();
+    var out = await encryptDoc(cleanDoc(), meta.password, meta.dek); meta.dek = out.dek;
+    var payload = out.text;
     var files = {}; files[GIST_FILE] = { content: payload };
     if (meta.gistId){
       await gh("PATCH", "/gists/"+meta.gistId, { files:files });
@@ -369,14 +422,14 @@ async function saveCloud(){
     }
     rememberGraph(meta.gistId, doc.title);
     dirty = false; setStatus(); persistLocal();
-    toast("Saved (encrypted)");
+    if (!silent) toast("Saved");
     return true;
-  } catch(e){ toast(e.message, 5000); }
-  finally { $("saveBtn").disabled=false; $("saveBtn").textContent="Save"; }
+  } catch(e){ toast(silent ? "Auto-save failed: "+e.message : e.message, 5000); }
+  finally { saving = false; $("saveBtn").disabled=false; $("saveBtn").textContent="Save"; }
 }
 async function fetchGist(id){
   var res = await fetch("https://api.github.com/gists/"+encodeURIComponent(id), { headers:{ "Accept":"application/vnd.github+json" } });
-  if (res.status===404) throw new Error("Graph not found. The link may be wrong or the graph was deleted.");
+  if (res.status===404) throw new Error("Graph not found. The link may be wrong or the graph was removed.");
   if (!res.ok) throw new Error("Couldn't load graph (HTTP "+res.status+"). Try again in a bit.");
   var g = await res.json(), f = g.files && g.files[GIST_FILE];
   if (!f) throw new Error("This link doesn't point to a case graph.");
@@ -390,9 +443,9 @@ function modal(html){ $("modalBox").innerHTML = html; $("modal").classList.add("
 function closeModal(){ $("modal").classList.remove("show"); }
 $("modal").addEventListener("mousedown", function(e){ if (e.target===$("modal") && !$("modal").dataset.locked) closeModal(); });
 
-function askNewPassword(){
+function askNewPassword(title){
   return new Promise(function(resolve){
-    modal('<h2>Set a password for this graph</h2><p>The graph is encrypted in your browser before it leaves your device. Anyone you share it with needs this password, so send it to them separately (not in the same message as the link). If you lose it, the graph can\'t be recovered.</p>'+
+    modal('<h2>'+(title||'Set a password for this graph')+'</h2><p>The graph is encrypted in your browser before it leaves your device. Anyone you share it with needs this password, so send it to them separately (not in the same message as the link). If you lose it, the graph can\'t be recovered.</p>'+
       '<div class="f"><label>Password</label><input type="password" id="pw1" autocomplete="new-password"></div>'+
       '<div class="f"><label>Confirm</label><input type="password" id="pw2" autocomplete="new-password"></div><div class="err" id="pwErr"></div>'+
       '<div class="btns"><button class="btn" id="pwCancel">Cancel</button><button class="btn primary" id="pwOk">Encrypt &amp; save</button></div>');
@@ -437,36 +490,60 @@ function openSettings(thenSave){
   };
 }
 function shareLink(){ return location.origin + location.pathname + "#g=" + meta.gistId; }
+function viewLink(){ return location.origin + location.pathname + "#v=" + meta.gistId + "." + b64u(meta.dek); }
 async function openShare(){
-  if (!meta.gistId || dirty){ var ok = await saveCloud(); if (!ok && !meta.gistId) return; }
-  if (!meta.gistId) return;
-  modal('<h2>Share this graph</h2><p>Send the link to the people you want to see it, and send the password through a different channel. They get a view-only copy. Every time you hit Save they see the latest version.</p>'+
-    '<div class="f"><label>Link</label><div class="copyrow"><input id="shLink" class="mono" readonly><button class="btn" id="shCopy">Copy</button></div></div>'+
-    '<p style="margin-top:12px">To cut someone off, use <b>Change password</b>. Old passwords stop working right away, and you re-share the new one with whoever should keep access. <b>Delete</b> removes the stored graph completely.</p>'+
-    '<div class="btns"><button class="btn" id="shDel" style="margin-right:auto;color:var(--bad)">Delete</button><button class="btn" id="shPw">Change password</button><button class="btn primary" id="shDone">Done</button></div>');
-  $("shLink").value = shareLink();
-  $("shCopy").onclick = function(){ $("shLink").select(); navigator.clipboard.writeText($("shLink").value).then(function(){ toast("Link copied"); }); };
+  if (!meta.gistId || dirty || !meta.dek){ if (!meta.dek && meta.gistId) dirty = true; var ok = await saveCloud(); if (!ok) return; }
+  if (!meta.gistId || !meta.dek) return;
+  var fp = await fingerprint(doc);
+  modal('<h2>Share this graph</h2>'+
+    '<p><b>View-only link.</b> Anyone with this link can open the graph and move nodes around to read it, but they can\'t edit, delete or save anything. Your copy is never touched. No password is needed, so treat it like sending a PNG.</p>'+
+    '<div class="f"><div class="copyrow"><input id="shView" class="mono" readonly><button class="btn primary" id="shViewCopy">Copy</button></div></div>'+
+    '<p style="margin-top:14px"><b>Password link.</b> Also view-only for everyone except you. Send the password separately.</p>'+
+    '<div class="f"><div class="copyrow"><input id="shLink" class="mono" readonly><button class="btn" id="shCopy">Copy</button></div></div>'+
+    '<p style="margin-top:14px;font-size:12.5px">Evidence fingerprint <span class="mono" style="color:var(--text)">'+fp+'</span>. Viewers see the same code, so they can confirm they\'re looking at exactly what you saved on '+esc(fmtWhen(doc.updated||Date.now()))+'. Moving nodes doesn\'t change it, but any edit to the content does.</p>'+
+    '<p style="font-size:12.5px"><b>Reset view link</b> kills every view-only link sent so far. <b>Change password</b> does the same for password links. <b>Delete</b> removes the stored graph completely.</p>'+
+    '<div class="btns" style="flex-wrap:wrap"><button class="btn" id="shDel" style="margin-right:auto;color:var(--bad)">Delete</button><button class="btn" id="shReset">Reset view link</button><button class="btn" id="shPw">Change password</button><button class="btn primary" id="shDone">Done</button></div>');
+  $("shView").value = viewLink(); $("shLink").value = shareLink();
+  var cp = function(inp, msg){ inp.select(); navigator.clipboard.writeText(inp.value).then(function(){ toast(msg); }, function(){ toast("Select the link and copy it"); }); };
+  $("shViewCopy").onclick = function(){ cp($("shView"), "View-only link copied"); };
+  $("shCopy").onclick = function(){ cp($("shLink"), "Password link copied"); };
   $("shDone").onclick = closeModal;
-  $("shPw").onclick = async function(){ closeModal(); var pw = await askNewPassword(); if (!pw) return; meta.password = pw; dirty=true; await saveCloud(); toast("Password changed. Old password no longer works"); };
+  $("shPw").onclick = async function(){ closeModal(); var pw = await askNewPassword(); if (!pw) return; meta.password = pw; dirty=true; if (await saveCloud()) toast("Password changed. Old password no longer works"); };
+  $("shReset").onclick = async function(){
+    var b=$("shReset"); if (!b.dataset.armed){ b.dataset.armed="1"; b.textContent="Click again to reset"; return; }
+    meta.dek = null; dirty = true; closeModal();
+    if (await saveCloud()){ toast("Old view links stopped working"); openShare(); }
+  };
   $("shDel").onclick = async function(){
     if (!confirmInline()) return;
     try { await gh("DELETE", "/gists/"+meta.gistId); } catch(e){ toast(e.message,5000); return; }
     setMyGraphs(myGraphs().filter(function(g){ return g.id!==meta.gistId; }));
-    meta.gistId=null; meta.password=null; dirty=true; setStatus(); closeModal(); toast("Deleted from GitHub. The draft is still open here");
+    meta.gistId=null; meta.password=null; meta.dek=null; dirty=true; setStatus(); closeModal(); toast("Deleted from GitHub. The draft is still open here");
   };
   function confirmInline(){ var b=$("shDel"); if (b.dataset.armed) return true; b.dataset.armed="1"; b.textContent="Click again to delete"; return false; }
 }
-function openMine(){
-  var a = myGraphs();
+async function openMine(){
+  if (!ghToken()){ openSettings(false); return; }
+  modal('<h2>My saved graphs</h2><p>Loading…</p>');
+  var list = [];
+  try {
+    for (var page=1; page<=5; page++){
+      var arr = await gh("GET", "/gists?per_page=100&page="+page);
+      arr.forEach(function(g){ if (g.files && g.files[GIST_FILE]) list.push({ id:g.id, updated:Date.parse(g.updated_at) }); });
+      if (arr.length<100) break;
+    }
+  } catch(e){ modal('<h2>My saved graphs</h2><p>'+esc(e.message)+'</p><div class="btns"><button class="btn" id="mClose">Close</button></div>'); $("mClose").onclick=closeModal; return; }
+  var known = {}; myGraphs().forEach(function(g){ known[g.id]=g.title; });
+  list.sort(function(a,b){ return b.updated-a.updated; });
   var html = '<h2>My saved graphs</h2>';
-  if (!a.length) html += '<p>Nothing saved to GitHub from this browser yet.</p>';
-  else html += '<ul class="glist">'+a.map(function(g){ return '<li><div><div class="t"></div><span>'+new Date(g.updated).toLocaleString("en-IN",{timeZone:"Asia/Kolkata",dateStyle:"medium",timeStyle:"short"})+' IST</span></div><button class="btn small" data-id="'+g.id+'">Open</button></li>'; }).join("")+'</ul>';
+  if (!list.length) html += '<p>No saved graphs yet.</p>';
+  else html += '<p style="font-size:12.5px">Titles you haven\'t opened on this device show as "Locked graph" until you enter the password.</p><ul class="glist">'+list.map(function(g){ return '<li><div><div class="t"></div><span>'+fmtWhen(g.updated)+'</span></div><button class="btn small" data-id="'+g.id+'">Open</button></li>'; }).join("")+'</ul>';
   html += '<div class="btns"><button class="btn" id="mClose">Close</button></div>';
   modal(html);
   var lis = $("modalBox").querySelectorAll(".glist li");
-  a.forEach(function(g,i){ lis[i].querySelector(".t").textContent = g.title || "Untitled"; });
+  list.forEach(function(g,i){ lis[i].querySelector(".t").textContent = known[g.id] || "Locked graph"; });
   $("mClose").onclick = closeModal;
-  $("modalBox").querySelectorAll("button[data-id]").forEach(function(b){ b.onclick=function(){ closeModal(); location.hash = "g="+b.dataset.id; }; });
+  $("modalBox").querySelectorAll("button[data-id]").forEach(function(b){ b.onclick=function(){ closeModal(); if (location.hash==="#g="+b.dataset.id) openShared(b.dataset.id); else location.hash = "g="+b.dataset.id; }; });
 }
 
 /* ------------------------------------------------------------------ loading */
@@ -486,30 +563,54 @@ async function openShared(id){
     else { try { var u = await gh("GET","/user"); mine = !!(u && g.owner && u.login===g.owner); } catch(e){} }
   }
   var r = await askPassword(mine ? "Open graph" : "Shared case graph", mine ? "Enter this graph's password." : "Someone shared an encrypted case graph with you. Enter the password they gave you.", function(pw){ return decryptDoc(text, pw); });
-  if (!r){ if (!doc.nodes.length) loadLocal(); return; }
-  var d = r.value;
-  meta = { gistId:id, password: mine ? r.pw : null, owner:mine };
-  setReadOnly(!mine); loadDoc(d); dirty=false; setStatus();
+  if (!r){ if (!isOwnerDevice()){ history.replaceState(null,"",location.pathname); setLanding(true); } else if (!doc.nodes.length) loadLocal(); return; }
+  var d = r.value.doc;
+  meta = { gistId:id, password: mine ? r.pw : null, dek: mine ? r.value.dek : null, owner:mine };
+  setReadOnly(!mine, "link"); loadDoc(d); dirty=false; setStatus(); updateBanner();
   if (mine){ rememberGraph(id, d.title); persistLocal(); }
+}
+async function openView(id, keyStr){
+  var dk; try { dk = unb64u(keyStr); if (dk.length!==32) throw 0; } catch(e){ toast("This view link is broken. Ask for it again.", 6000); return; }
+  toast("Loading shared graph…", 1500);
+  try {
+    var g = await fetchGist(id), d = await decryptWithKey(g.content, dk);
+    meta = { gistId:id, view:true, owner:false, password:null, dek:null };
+    setReadOnly(true, "link"); loadDoc(d); dirty=false; setStatus(); updateBanner();
+  } catch(e){ toast(e.message, 7000); }
 }
 function loadLocal(){
   setReadOnly(false);
   try {
     var s = JSON.parse(localStorage.getItem("cg.current")||"null");
-    if (s && s.doc){ meta = { gistId:s.gistId||null, password:null, owner:true }; loadDoc(s.doc); dirty = !!s.dirty; setStatus(); return; }
+    if (s && s.doc){ meta = { gistId:s.gistId||null, password:null, dek:null, owner:true }; loadDoc(s.doc); dirty = !!s.dirty; setStatus(); return; }
   } catch(e){}
-  meta = { gistId:null, password:null, owner:true }; loadDoc(blankDoc());
+  meta = { gistId:null, password:null, dek:null, owner:true }; loadDoc(blankDoc());
 }
 function setReadOnly(v){
   readOnly = v; document.body.classList.toggle("viewonly", v);
   $("title").readOnly = v;
   $("banner").style.display = v ? "block" : "none";
-  $("banner").textContent = "View only. This graph was shared with you. You can move things around and export a PNG, but nothing is saved.";
-  sel=null; renderInsp(); setStatus();
+  $("banner").textContent = "View only. You can move nodes around to read the graph, but nothing can be changed or saved.";
+  hideMenu(); connectFrom = null; sel=null; renderInsp(); setStatus();
 }
+async function updateBanner(){
+  if (!readOnly) return;
+  var fp = await fingerprint(doc);
+  $("banner").textContent = "View only · Evidence copy" + (doc.updated ? " · last saved " + fmtWhen(doc.updated) : "") + " · fingerprint " + fp + ". You can move nodes around and export a PNG, but nothing can be changed or saved.";
+}
+function isOwnerDevice(){
+  if (ghToken()) return true;
+  try { var s = JSON.parse(localStorage.getItem("cg.current")||"null"); return !!(s && s.doc && s.doc.nodes && s.doc.nodes.length); } catch(e){ return false; }
+}
+function setLanding(v){ document.body.classList.toggle("landing", v); }
 function route(){
+  if (/^#owner$/.test(location.hash)){ history.replaceState(null,"",location.pathname); setLanding(false); loadLocal(); openSettings(false); return; }
+  setLanding(!location.hash && !isOwnerDevice());
+  if (document.body.classList.contains("landing")) return;
+  var v = location.hash.match(/v=([a-f0-9]+)\.([A-Za-z0-9_-]+)/i);
+  if (v){ if (!(meta.view && meta.gistId===v[1])) openView(v[1], v[2]); return; }
   var m = location.hash.match(/g=([a-f0-9]+)/i);
-  if (m){ if (meta.gistId!==m[1] || readOnly) openShared(m[1]); }
+  if (m){ if (meta.gistId!==m[1] || readOnly || meta.view) openShared(m[1]); }
   else if (readOnly || !doc.nodes.length) loadLocal();
 }
 window.addEventListener("hashchange", route);
@@ -1271,11 +1372,12 @@ $("searchInput").addEventListener("keydown", function(e){
 /* ------------------------------------------------------------------ export / import */
 function download(name, blob){ var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500); }
 function slug(){ return (doc.title||"case-graph").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"") || "case-graph"; }
-function exportPng(){
+async function exportPng(){
   if (!doc.nodes.length){ toast("Nothing to export"); return; }
+  var fp = await fingerprint(doc);
   var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
   doc.nodes.forEach(function(n){ var w = n.type==="note"?noteBox(n).w/2:70, h=n.type==="note"?noteBox(n).h/2:40; x0=Math.min(x0,n.x-w); y0=Math.min(y0,n.y-h); x1=Math.max(x1,n.x+w); y1=Math.max(y1,n.y+h); });
-  var pad=50, top=46, S=2, w=x1-x0+pad*2, h=y1-y0+pad*2+top;
+  var pad=50, top=52, S=2, w=x1-x0+pad*2, h=y1-y0+pad*2+top;
   var maxDim = 8000/S; if (w>maxDim||h>maxDim){ S = Math.max(0.5, Math.min(8000/w, 8000/h)); }
   var oc = document.createElement("canvas"); oc.width=Math.ceil(w*S); oc.height=Math.ceil(h*S);
   var c = oc.getContext("2d");
@@ -1283,16 +1385,29 @@ function exportPng(){
   c.setTransform(S,0,0,S,0,0);
   c.fillStyle = css("--text"); c.font="600 16px 'IBM Plex Sans', sans-serif"; c.textAlign="left"; c.textBaseline="top"; c.fillText(doc.title||"Case graph", 20, 18);
   c.fillStyle = css("--text-faint"); c.font="11px 'IBM Plex Mono', monospace"; c.textAlign="right";
-  c.fillText(new Date().toLocaleString("en-IN",{timeZone:"Asia/Kolkata",dateStyle:"medium",timeStyle:"short"})+" IST", w-20, 21);
+  c.fillText("Exported "+fmtWhen(Date.now()), w-20, 14);
+  c.fillText("Fingerprint "+fp, w-20, 29);
   c.setTransform(S,0,0,S,(-x0+pad)*S,(-y0+pad+top)*S);
   var keepSel = sel; sel=null; draw(c, { export:true }); sel=keepSel;
   oc.toBlob(function(b){ download(slug()+".png", b); });
 }
 function cleanDoc(){ return JSON.parse(JSON.stringify(doc, function(k,v){ return (k==="vx"||k==="vy"||k==="_lx"||k==="_ly")?undefined:v; })); }
 async function exportEnc(){
-  var pw = meta.password || await askNewPassword(); if (!pw) return;
-  var s = await encryptDoc(cleanDoc(), pw);
-  download(slug()+".cgraph", new Blob([s],{type:"application/json"})); toast("Encrypted file downloaded");
+  var choice = await new Promise(function(resolve){
+    modal('<h2>Export encrypted file</h2><p>Who is this file for?</p>'+
+      '<label style="display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;cursor:pointer"><input type="radio" name="xo" value="view" checked style="margin-top:3px"><span><b>Someone else, view only</b><br><span style="color:var(--text-muted);font-size:12.5px">Opens read-only. They can move nodes and export a PNG, but can\'t edit, delete or save.</span></span></label>'+
+      '<label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer"><input type="radio" name="xo" value="edit" style="margin-top:3px"><span><b>Me, editable backup</b><br><span style="color:var(--text-muted);font-size:12.5px">Opens fully editable. Don\'t send this one to others.</span></span></label>'+
+      '<div class="btns"><button class="btn" id="xoCancel">Cancel</button><button class="btn primary" id="xoOk">Next</button></div>');
+    $("xoCancel").onclick = function(){ closeModal(); resolve(null); };
+    $("xoOk").onclick = function(){ var v = $("modalBox").querySelector("input[name=xo]:checked").value; closeModal(); resolve(v); };
+  });
+  if (!choice) return;
+  var pw = (choice==="edit" && meta.password) || await askNewPassword(choice==="view" ? "Password for this file" : null); if (!pw) return;
+  var d = cleanDoc(); d.updated = d.updated || Date.now();
+  if (choice==="view") d._viewOnly = true;
+  var out = await encryptDoc(d, pw, null);
+  download(slug()+(choice==="view"?"-view":"")+".cgraph", new Blob([out.text],{type:"application/octet-stream"}));
+  toast(choice==="view" ? "View-only file downloaded. Send the password separately" : "Editable backup downloaded");
 }
 var importMode = null;
 $("fileIn").addEventListener("change", async function(){
@@ -1305,7 +1420,11 @@ $("fileIn").addEventListener("change", async function(){
   }
   var r = await askPassword("Open encrypted file", "Enter the password this file was encrypted with.", function(pw){ return decryptDoc(text, pw); });
   if (!r) return;
-  meta={gistId:null,password:r.pw,owner:true}; if (location.hash) history.replaceState(null,"",location.pathname); setReadOnly(false); loadDoc(r.value); changed(true);
+  var d2 = r.value.doc, vo = !!d2._viewOnly; delete d2._viewOnly;
+  setLanding(false);
+  if (location.hash) history.replaceState(null,"",location.pathname);
+  if (vo || !isOwnerDevice()){ meta={gistId:null,password:null,dek:null,owner:false,view:true}; setReadOnly(true); loadDoc(d2); dirty=false; setStatus(); updateBanner(); return; }
+  meta={gistId:null,password:r.pw,dek:null,owner:true}; setReadOnly(false); loadDoc(d2); changed(true);
 });
 
 /* ------------------------------------------------------------------ UI wiring */
@@ -1353,6 +1472,13 @@ $("rnReset").onclick = function(){ pushHist(); doc.typeNames = {}; changed(true)
 refreshPalette();
 $("chainSel").innerHTML = chainOpts("1");
 $("fetchBtn").onclick = addFromInput;
+$("landOpen").onclick = function(){
+  var t = $("landLink").value.trim(), i = t.indexOf("#");
+  if (i<0 || !/#(v|g)=/.test(t.slice(i))){ toast("That doesn't look like a shared graph link"); return; }
+  location.hash = t.slice(i+1);
+};
+$("landLink").addEventListener("keydown", function(e){ if (e.key==="Enter") $("landOpen").click(); });
+$("landFile").onclick = function(){ importMode="enc"; $("fileIn").removeAttribute("accept"); $("fileIn").click(); };
 $("fetchInput").addEventListener("keydown", function(e){ if (e.key==="Enter") addFromInput(); });
 $("title").addEventListener("input", function(){ if (readOnly) return; doc.title = this.value; changed(true); });
 $("undoBtn").onclick = undo;

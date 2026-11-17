@@ -1,6 +1,46 @@
 {
-  "updatedAt": "2026-11-16T19:51:35Z",
+  "updatedAt": "2026-11-17T02:54:45Z",
   "items": [
+    {
+      "id": "news-3e67ea202b5c",
+      "title": "Bitcoin Wallet Maker Trezor Says Customer Data Was Exposed Again",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/383397/bitcoin-wallet-trezor-third-party-breach-customer-data",
+      "publishedAt": "2026-11-16T22:18:03Z",
+      "fetchedAt": "2026-11-17T02:54:44Z",
+      "summary": "A second Trezor shipping partner was breached in three months, exposing buyers' addresses and order details."
+    },
+    {
+      "id": "news-7ffb6a8a2315",
+      "title": "Bitcoin's $2 Billion Liquidation Weekend Leaves Traders Watching $60,000",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/383366/bitcoin-2-billion-liquidation-weekend-traders-watching-60000",
+      "publishedAt": "2026-11-16T21:46:03Z",
+      "fetchedAt": "2026-11-17T02:54:44Z",
+      "summary": "Bitcoin fell near $62,100 as forced liquidations swept crypto markets. ETF withdrawals and a crowded options trade offer a closer look at the damage left behind."
+    },
+    {
+      "id": "news-6799736e2abf",
+      "title": "Hackers Redirected Bitcoin Miner Rewards via AI Attack, Luxor CEO Says",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/383392/hackers-redirected-bitcoin-miner-rewards-ai-attack-luxor",
+      "publishedAt": "2026-11-16T21:16:03Z",
+      "fetchedAt": "2026-11-17T02:54:44Z",
+      "summary": "Luxor said hackers redirected hashrate from just over a dozen client accounts through its Commander tool, and its CEO blamed a \u201csophisticated AI-enabled vector.\u201d"
+    },
+    {
+      "id": "news-d3b164156f4e",
+      "title": "Tom Lee Blames Nvidia and Anthropic IPO for Ethereum Plunge as Bitmine Buys the Dip",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/383364/tom-lee-blames-nvidia-anthropic-ipo-ethereum-plunge-bitmine-buys",
+      "publishedAt": "2026-11-16T20:36:03Z",
+      "fetchedAt": "2026-11-17T02:54:44Z",
+      "summary": "The firm\u2019s stash fell to $11.8 billion from $14.3 billion a week earlier as ETH slid 28% in two weeks, a \u201cwaterfall\u201d drop chairman Tom Lee blames on Nvidia fallout and cash-raising ahead of Anthropic\u2019s IPO."
+    },
     {
       "id": "news-0e5201082065",
       "title": "Clarity Act Defeat \u2018Failure of American Leadership\u2019: Trump\u2019s Former Crypto Chief",
@@ -1460,46 +1500,6 @@
       "publishedAt": "2026-10-30T16:25:06Z",
       "fetchedAt": "2026-10-30T22:57:32Z",
       "summary": "After Musk appeared to mock Binance\u2019s $6.3 billion hack, CZ reminded him that the exchange\u2019s $500 million bet on his Twitter takeover is now worth over $1 billion in SpaceX shares."
-    },
-    {
-      "id": "news-5bd4e9555ae0",
-      "title": "What is EIP-7702? The Ethereum Upgrade Behind the $6.4B Binance Hack",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/resources/what-is-eip-7702-the-ethereum-upgrade-behind-the-6-4b-binance-hack",
-      "publishedAt": "2026-10-30T14:17:34Z",
-      "fetchedAt": "2026-10-30T22:57:32Z",
-      "summary": "EIP-7702 lets ordinary Ethereum wallets run smart contract code, enabling batched and sponsored transactions. Here's how it works."
-    },
-    {
-      "id": "news-3af29c7f756f",
-      "title": "Five TEFAF robbery suspects added to EU Most Wanted",
-      "source": "Europol",
-      "category": "enforcement",
-      "link": "https://www.europol.europa.eu/media-press/newsroom/news/five-tefaf-robbery-suspects-added-to-eu-most-wanted",
-      "publishedAt": "2026-10-30T13:34:34Z",
-      "fetchedAt": "2026-10-30T13:34:34Z",
-      "summary": "As of 29 October 2026, five new fugitives, four men and one woman, have been added to the EU Most Wanted list. According to the Limburg Public Prosecutor's Office (Openbaar Ministerie) and the Dutch Police (Politie), all five suspects are involved in the European Fine Art Fair (T"
-    },
-    {
-      "id": "news-bc9a0feab5e8",
-      "title": "Morning Minute: Binance\u2019s $6.4B Hack Overshadows Hyperliquid\u2019s Biggest Day",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/382225/morning-minute-binances-6-4b-hack-overshadows-hyperliquids-biggest-day",
-      "publishedAt": "2026-10-30T12:31:30Z",
-      "fetchedAt": "2026-10-30T13:34:35Z",
-      "summary": "Just as Hyperliquid opened the door to a fully regulated perps offering inside the U.S., Binance suffered the biggest hack in crypto history."
-    },
-    {
-      "id": "news-e03adbf1a049",
-      "title": "TRM and Chainalysis Tie $6.4B Binance Hack to North Korea's TraderTraitor",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/382224/trm-and-chainalysis-tie-6-4b-binance-hack-to-north-koreas-tradertraitor",
-      "publishedAt": "2026-10-30T12:22:04Z",
-      "fetchedAt": "2026-10-30T13:34:35Z",
-      "summary": "Both firms blame the group behind the Bybit hack, as Binance says it has set aside $6.34 billion of its own funds to cover user losses."
     }
   ]
 }

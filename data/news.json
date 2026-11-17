@@ -1,6 +1,46 @@
 {
-  "updatedAt": "2026-11-17T02:54:45Z",
+  "updatedAt": "2026-11-17T11:46:46Z",
   "items": [
+    {
+      "id": "news-3af29c7f756f",
+      "title": "Five TEFAF robbery suspects added to EU Most Wanted",
+      "source": "Europol",
+      "category": "enforcement",
+      "link": "https://www.europol.europa.eu/media-press/newsroom/news/five-tefaf-robbery-suspects-added-to-eu-most-wanted",
+      "publishedAt": "2026-11-17T11:46:45Z",
+      "fetchedAt": "2026-11-17T11:46:45Z",
+      "summary": "As of 29 October 2026, five new fugitives, four men and one woman, have been added to the EU Most Wanted list. According to the Limburg Public Prosecutor's Office (Openbaar Ministerie) and the Dutch Police (Politie), all five suspects are involved in the European Fine Art Fair (T"
+    },
+    {
+      "id": "news-75e02419b3ec",
+      "title": "Optimizely Hack Hijacked Ledger, BBC and 176 Other Sites to Swap Crypto Wallet Addresses",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/383414/optimizely-hack-hijacked-ledger-bbc-and-176-other-sites-to-swap-crypto-wallet-addresses",
+      "publishedAt": "2026-11-17T11:05:25Z",
+      "fetchedAt": "2026-11-17T11:46:46Z",
+      "summary": "Malicious code served through the website testing platform replaced visitors' wallet addresses with the attacker's and skimmed cards."
+    },
+    {
+      "id": "news-a441de65b268",
+      "title": "Judge Acquits MIT Brothers in $25M Ethereum MEV Case, Ending Prosecution",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/383408/judge-acquits-mit-brothers-in-25m-ethereum-mev-case-ending-prosecution",
+      "publishedAt": "2026-11-17T09:27:29Z",
+      "fetchedAt": "2026-11-17T11:46:46Z",
+      "summary": "A federal judge ruled prosecutors failed to prove the material misrepresentation needed for wire fraud, a year after a jury deadlocked."
+    },
+    {
+      "id": "news-ac79535a7d1e",
+      "title": "Solana Foundation Backs CoinGecko as Crypto Data Giant Eyes Trading",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/383401/solana-foundation-backs-coingecko-eyes-trading",
+      "publishedAt": "2026-11-17T09:01:03Z",
+      "fetchedAt": "2026-11-17T11:46:46Z",
+      "summary": "CoinGecko has received backing from the Solana Foundation to expand into market intelligence and explore trading."
+    },
     {
       "id": "news-3e67ea202b5c",
       "title": "Bitcoin Wallet Maker Trezor Says Customer Data Was Exposed Again",
@@ -80,6 +120,16 @@
       "publishedAt": "2026-11-16T16:14:22Z",
       "fetchedAt": "2026-11-16T19:51:34Z",
       "summary": "Solana's 1.0 designation gives developers a common way to track network rules. Here's what it means for users and builders."
+    },
+    {
+      "id": "news-903ace905b7e",
+      "title": "DTCC, Barclays Say Tokenization's Real Prize Is Unlocking Idle Collateral",
+      "source": "Decrypt",
+      "category": "market-news",
+      "link": "https://decrypt.co/383316/dtcc-barclays-say-tokenizations-real-prize-is-unlocking-idle-collateral",
+      "publishedAt": "2026-11-16T16:11:31Z",
+      "fetchedAt": "2026-11-17T11:46:46Z",
+      "summary": "Executives from the U.S. settlement giant and Barclays told Solana's Breakpoint that adoption is early, but accelerating."
     },
     {
       "id": "news-4ce7829f817b",
@@ -1450,56 +1500,6 @@
       "publishedAt": "2026-10-30T20:06:03Z",
       "fetchedAt": "2026-10-30T22:57:32Z",
       "summary": "Analysts at Cantor Fitzgerald, TD Cowen and Compass Point say the record $6.4 billion theft is a Binance security failure, not a crypto-wide threat, pointing clients toward proxies like Coinbase, Robinhood, and Strategy."
-    },
-    {
-      "id": "news-453755ae36c4",
-      "title": "Binance Hack: Why Bitcoin Didn't Crash Like It Did in 2018",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/382257/binance-hack-why-bitcoin-didnt-crash",
-      "publishedAt": "2026-10-30T18:45:03Z",
-      "fetchedAt": "2026-10-30T18:51:58Z",
-      "summary": "Binance lost about $6.4 billion, the largest crypto hack on record, yet Bitcoin fell about 3%, against nearly 11% in 2018 when the exchange was last attacked."
-    },
-    {
-      "id": "news-1da3bce7e239",
-      "title": "$8 Million Crypto Kidnapping Lands Texas Brothers 15-Year Prison Terms",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/382269/crypto-kidnapping-texas-brothers-15-year-prison",
-      "publishedAt": "2026-10-30T18:16:02Z",
-      "fetchedAt": "2026-10-30T18:51:58Z",
-      "summary": "Raymond and Isiah Garcia held a Minnesota family at gunpoint for more than nine hours, forcing the father to transfer over $8 million in crypto, in one of the clearest \u201cwrench attack\u201d prosecutions yet."
-    },
-    {
-      "id": "news-cb8b66f7fd5d",
-      "title": "Secret Service, FBI Join Binance Hack Probe as Circle Freezes $823 Million",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/382268/secret-service-fbi-binance-hack-probe",
-      "publishedAt": "2026-10-30T17:50:26Z",
-      "fetchedAt": "2026-10-30T18:51:58Z",
-      "summary": "Binance says it has set aside $6.34 billion to cover losses from the breach and the FBI and Secret Service are now working with the exchange as investigators trace the stolen funds."
-    },
-    {
-      "id": "news-fa39b8fdc36a",
-      "title": "Binance Sets Aside $6.34B to Cover Hack Losses, CEO Says 'Your Assets Are Safe'",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/382237/binance-sets-aside-6-34b-to-cover-hack-losses-ceo-says-your-assets-are-safe",
-      "publishedAt": "2026-10-30T16:34:21Z",
-      "fetchedAt": "2026-10-30T18:51:58Z",
-      "summary": "Richard Teng said the attacker used a self-destruct mechanism and an EIP-7702 delegation that bypassed Binance's normal approval controls."
-    },
-    {
-      "id": "news-18fbdd2c7639",
-      "title": "Elon Musk, CZ Trade Blows Over SpaceX Shares After $6.4B Binance Hack",
-      "source": "Decrypt",
-      "category": "market-news",
-      "link": "https://decrypt.co/382236/elon-musk-cz-trade-blows-spacex-shares-binance-hack",
-      "publishedAt": "2026-10-30T16:25:06Z",
-      "fetchedAt": "2026-10-30T22:57:32Z",
-      "summary": "After Musk appeared to mock Binance\u2019s $6.3 billion hack, CZ reminded him that the exchange\u2019s $500 million bet on his Twitter takeover is now worth over $1 billion in SpaceX shares."
     }
   ]
 }

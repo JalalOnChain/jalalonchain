@@ -1004,6 +1004,13 @@ MAX_DEFI = 40
 DEFI_MIN_TVL = 100_000
 DEFI_MAX_AGE_DAYS = 90
 
+# DefiLlama sometimes files a perp DEX's deposit contract as a "Bridge".
+# Fix those here, keyed by DefiLlama slug, so the auto-sync doesn't undo it.
+DEFI_OVERRIDES = {
+    "popdex-bridge": {"name": "PopDEX", "category": "Derivatives"},     # perp DEX on Morph Tachyon; TVL = USDT deposit contracts
+    "pacifica-bridge": {"name": "Pacifica", "category": "Derivatives"},  # perp DEX on Solana; TVL = USDC deposit contract
+}
+
 
 def fetch_new_defi_protocols():
     out = []
@@ -1038,6 +1045,7 @@ def fetch_new_defi_protocols():
                 "listedAt": listed_dt.strftime("%Y-%m-%dT%H:%M:%SZ"),
                 "fetchedAt": now_iso(),
                 "link": p.get("url") or (f"https://defillama.com/protocol/{slug}" if slug else ""),
+                **DEFI_OVERRIDES.get(p.get("slug") or "", {}),
             })
         except Exception:
             continue

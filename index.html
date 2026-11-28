@@ -290,6 +290,14 @@
   .section-head h2{ font-size:15px; text-transform:uppercase; letter-spacing:.06em; color:var(--text); font-weight:800; }
   .section-head .hint{ font-size:11.5px; color:var(--text-faint); }
 
+  /* ---- boxed section panels ---- */
+  .hub-section, .section{
+    border:1px solid var(--border); border-radius:14px;
+    padding:20px 20px 16px; margin:24px 0;
+    background:color-mix(in srgb, var(--surface-2) 45%, transparent);
+  }
+  @media (max-width:600px){ .hub-section, .section{ padding:14px 12px 12px; margin:16px 0; border-radius:12px; } }
+
   .grid-cards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; padding:16px; align-content:start; max-height:620px; overflow-y:auto; }
   .launch-card{ background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
   .launch-card .lc-top{ display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
@@ -534,7 +542,7 @@
 
   <section class="section" id="defi">
     <div class="section-head">
-      <h2>New DeFi protocols &amp; entities</h2>
+      <h2>New DeFi protocols</h2>
       <span class="hint" id="defiCount">0 tracked</span>
     </div>
     <div class="card">
@@ -580,7 +588,7 @@
   <footer class="page-foot">
     <div class="foot-support" id="support">
       <div class="foot-support-head">
-        <h4 class="foot-support-tagline-main">The chain leaves clues. Your support helps me follow them.</h4>
+        <h4 class="foot-support-tagline-main">The ledger never sleeps. Neither does the espresso machine.</h4>
       </div>
       <div class="card support-card">
         <div class="support-tabs" id="supportTabs">
